@@ -103,9 +103,35 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     persistRun(null);
   }, [persistRun]);
 
+  // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
+  useEffect(() => {
+    if (!run || !quizData) return;
+
+    const vorhandeneIds = new Set(quizData.fragen.map(f => f.id));
+    const fehlendeIds = run.frageIds.filter(id => !vorhandeneIds.has(id));
+
+    if (fehlendeIds.length > 0) {
+      console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
+      const bereinigteIds = run.frageIds.filter(id => vorhandeneIds.has(id));
+      const bereinigteAntworten: Record<string, string> = {};
+      for (const id of bereinigteIds) {
+        if (run.antworten[id] !== undefined) {
+          bereinigteAntworten[id] = run.antworten[id];
+        }
+      }
+      const bereinigterIndex = Math.min(run.aktuellerIndex, bereinigteIds.length - 1);
+      persistRun({
+        ...run,
+        frageIds: bereinigteIds,
+        antworten: bereinigteAntworten,
+        aktuellerIndex: bereinigterIndex,
+      });
+    }
+  }, [run, quizData, persistRun]);
+
   // Abgeleitete Daten
   const aktiveFragen: Frage[] = run && quizData
-    ? run.frageIds.map(id => quizData.fragen.find(f => f.id === id)).filter(Boolean) as Frage[]
+    ? run.frageIds.map(id => quizData.fragen.find(f => f.id === id)).filter((f): f is Frage => f !== undefined)
     : [];
 
   const aktuelleFrage = aktiveFragen[run?.aktuellerIndex ?? 0] || null;
