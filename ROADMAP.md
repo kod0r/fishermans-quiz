@@ -42,7 +42,6 @@ _Keine aktiven Tickets._
 | ROADMAP # | GitHub Issue                                            | Titel                              | Priorität | Status |
 | --------- | ------------------------------------------------------- | ---------------------------------- | --------- | ------ |
 | #07       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Antworten nachträglich korrigieren | low       | offen  |
-| #08       | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik         | low       | offen  |
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -61,6 +60,7 @@ _Keine aktiven Tickets._
 | 2026-04-20 | #04       | —                                                       | Lazy Loading Quiz-Daten         | 2026-04-20 |
 | 2026-04-20 | #05       | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design               | 2026-04-20 |
 | 2026-04-20 | #06       | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard)  | 2026-04-20 |
+| 2026-04-20 | #08       | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik      | 2026-04-20 |
 
 ---
 
