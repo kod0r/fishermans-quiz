@@ -1,40 +1,82 @@
 # ROADMAP
 
-> **Hinweis:** Diese Datei ist eine temporäre Übersicht. Sobald ein GitHub-Repository existiert, werden alle Tickets in **GitHub Issues** überführt. Diese Datei dient dann nur noch als grobe Roadmap.
+> **Lebendes Dokument:** Diese Datei verbindet strategische Planung mit operativem Tracking.
+> 
+> **Workflow:** ROADMAP (Plan) → GitHub Issue (Tracking) → Branch/Commit (Umsetzung) → Changelog (Dokumentation)
 
 ---
 
-## Offene Tickets
+## 🔄 Unser Entwicklungsprozess
 
-> **Jetzt auf GitHub:** [github.com/kod0r/fishermans-quiz/issues](https://github.com/kod0r/fishermans-quiz/issues)
-> Neue Tickets bitte direkt als GitHub Issues anlegen. Diese Tabelle dient nur als Übersicht.
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────────┐
+│  ROADMAP    │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
+│  (Planung)  │     │ (Tracking)   │     │ (Umsetzung) │     │ (Release)   │
+└─────────────┘     └──────────────┘     └─────────────┘     └─────────────┘
+```
 
-| # | Ticket | Beschreibung | Priorität | Status |
-|---|--------|--------------|-----------|--------|
-| #05 | Responsive Design | Mobile Layouts prüfen & optimieren (aktuell max-w-3xl/4xl) | medium | offen |
-| #06 | Accessibility | ARIA-Labels, Keyboard-Navigation, Screenreader-Support | medium | offen |
-| #07 | Antwort-Korrektur | Bereits beantwortete Fragen nachträglich ändern lassen | low | offen |
-| #08 | Unit-Tests | Store-Logik (quizRun, metaProgress) mit vitest testen | low | offen |
+### Schritt-für-Schritt
 
----
-
-## Erledigte Tickets
-
-| # | Ticket | Beschreibung | Abgeschlossen |
-|---|--------|--------------|---------------|
-| #01 | Projekt-Initialisierung | ZIP entpackt, npm install, Build-Test | 2026-04-20 |
-| #02 | AGENTS.md | Projekt-Kontext & Conventions dokumentiert | 2026-04-20 |
-| #03 | Sidebar topleft | Navigation oben links verankert | 2026-04-20 |
-| #03a | Falsche Antworten klappbar | ProgressView: Collapsible für falsche Antworten | 2026-04-20 |
-| #03b | Meta-Progress-Box | Comprehensive Box zwischen Run & Bereichsauswahl | 2026-04-20 |
-| #03c | Logik-Review | Bugfix: starteQuiz() ohne Daten-Schutz | 2026-04-20 |
-| #04 | Lazy Loading Quiz-Daten | 420KB JSON → 28KB Meta + 6 Bereichs-Chunks | 2026-04-20 |
+1. **Idee erfassen** → In ROADMAP unter "Geplante Features" oder "Backlog" eintragen
+2. **Ticket erstellen** → [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new) mit Label (`enhancement`, `bug`, `docs`)
+3. **Issue-Nummer notieren** → In ROADMAP die Issue-Nummer verlinken (`#42`)
+4. **Entwickeln** → Branch erstellen (optional), Commits mit Conventional Commits + Issue-Referenz:
+   ```bash
+   git commit -m "feat(ui): add responsive grid for mobile (#5)"
+   ```
+5. **Abschließen** → Issue schließen, ROADMAP als "erledigt" markieren
+6. **Changelog** → Eintrag in [CHANGELOG.md](./CHANGELOG.md) unter `[Unreleased]`
 
 ---
 
-## Regeln
+## 🚧 Aktueller Sprint
 
-1. **Neues Ticket:** Nächste freie Nummer vergeben, in Tabelle eintragen
-2. **Start:** Status auf "in Bearbeitung" setzen
-3. **Erledigt:** In "Erledigte Tickets" verschieben, mit Datum versehen
-4. **GitHub-Migration:** Bei Repo-Erstellung alle offenen Tickets als GitHub Issues anlegen und hier verlinken
+### In Bearbeitung
+
+*Keine aktiven Tickets.*
+
+---
+
+## 📋 Offene Tickets
+
+| ROADMAP # | GitHub Issue | Titel | Priorität | Status |
+|-----------|--------------|-------|-----------|--------|
+| #05 | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design für mobile Geräte | medium | offen |
+| #06 | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard, Screenreader) | medium | offen |
+| #07 | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Antworten nachträglich korrigieren | low | offen |
+| #08 | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik | low | offen |
+
+**→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
+
+---
+
+## ✅ Erledigte Tickets
+
+| Sprint | ROADMAP # | GitHub Issue | Titel | Datum |
+|--------|-----------|--------------|-------|-------|
+| 2026-04-20 | #01 | — | Projekt-Initialisierung | 2026-04-20 |
+| 2026-04-20 | #02 | — | AGENTS.md & Conventions | 2026-04-20 |
+| 2026-04-20 | #03 | — | Sidebar topleft verankern | 2026-04-20 |
+| 2026-04-20 | #03a | — | Falsche Antworten klappbar | 2026-04-20 |
+| 2026-04-20 | #03b | — | Meta-Progress-Box comprehensive | 2026-04-20 |
+| 2026-04-20 | #03c | — | Logik-Review & Bugfix | 2026-04-20 |
+| 2026-04-20 | #04 | — | Lazy Loading Quiz-Daten | 2026-04-20 |
+
+---
+
+## 💡 Geplante Features (Backlog)
+
+- [ ] Dunkel-/Hell-Modus Umschaltung
+- [ ] Fragen-Favoriten markieren
+- [ ] Zeitgesteuerte Prüfungssimulation
+- [ ] Statistik-Export (CSV/JSON)
+- [ ] Mehrere Fragenkataloge (Saarland, Baden-Württemberg, etc.)
+
+---
+
+## Regeln für dieses Dokument
+
+- **Wöchentlich reviewen:** Was wurde geschafft? Was ist neu dazugekommen?
+- **Issue-Nummern pflegen:** Sobald ein GitHub Issue existiert, hier verlinken
+- **Nicht duplizieren:** Details gehören ins GitHub Issue, nicht in die ROADMAP
+- **Sprint-Grenzen:** Erledigte Tickets nach 2–4 Wochen in "Archiv" verschieben
