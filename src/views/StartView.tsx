@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Fish, BookOpen, Scale, Droplets, Leaf, Eye, HelpCircle, Trophy, Target, Flame, RotateCcw, ChevronDown, BarChart3, Trash2, CheckCircle } from 'lucide-react';
+import { Fish, BookOpen, Scale, Droplets, Leaf, Eye, HelpCircle, Trophy, Target, Flame, RotateCcw, ChevronDown, BarChart3, Trash2, CheckCircle, Zap, Shield } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 const BEREICHE = [
@@ -197,6 +197,52 @@ export default function StartView({ quiz }: Props) {
                     </Tooltip>
                   </div>
                 </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* ── Game Mode Toggle ── */}
+          <Card className={`mb-4 sm:mb-6 border backdrop-blur-sm ${quiz.gameMode === 'arcade' ? 'bg-amber-900/20 border-amber-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
+            <CardContent className="pt-4 sm:pt-5 pb-4 sm:pb-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  {quiz.gameMode === 'arcade' ? (
+                    <Zap className="w-5 h-5 text-amber-400 flex-shrink-0" aria-hidden="true" />
+                  ) : (
+                    <Shield className="w-5 h-5 text-red-400 flex-shrink-0" aria-hidden="true" />
+                  )}
+                  <div>
+                    <p className="text-white font-medium text-sm">Spielmodus</p>
+                    <p className="text-slate-400 text-xs">
+                      {quiz.gameMode === 'arcade'
+                        ? 'Arcade — Sofort-Feedback, 2nd-Chance bei Falsch'
+                        : 'Hardcore — Antwort bestätigen, kein Zurück'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 bg-slate-900/50 rounded-lg p-1">
+                  <button
+                    onClick={() => !isActive && quiz.setGameMode('arcade')}
+                    disabled={isActive}
+                    aria-pressed={quiz.gameMode === 'arcade'}
+                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] ${quiz.gameMode === 'arcade' ? 'bg-amber-500 text-white' : 'text-slate-400 hover:text-white'} ${isActive ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    title={isActive ? 'Moduswechsel während aktivem Run nicht möglich' : 'Arcade-Modus wählen'}
+                  >
+                    Arcade
+                  </button>
+                  <button
+                    onClick={() => !isActive && quiz.setGameMode('hardcore')}
+                    disabled={isActive}
+                    aria-pressed={quiz.gameMode === 'hardcore'}
+                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] ${quiz.gameMode === 'hardcore' ? 'bg-red-500 text-white' : 'text-slate-400 hover:text-white'} ${isActive ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    title={isActive ? 'Moduswechsel während aktivem Run nicht möglich' : 'Hardcore-Modus wählen'}
+                  >
+                    Hardcore
+                  </button>
+                </div>
+              </div>
+              {isActive && (
+                <p className="text-slate-500 text-xs mt-2">Moduswechsel während eines aktiven Runs ist deaktiviert.</p>
               )}
             </CardContent>
           </Card>

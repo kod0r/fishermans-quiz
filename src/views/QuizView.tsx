@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import {
   Tooltip,
@@ -7,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ChevronLeft, ChevronRight, BarChart3, Square, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, BarChart3, Square, ChevronDown, AlertTriangle } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
@@ -19,18 +20,50 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
   const {
     aktuelleFrage, aktuellerIndex, aktiveFragen, antworten,
     beantworteFrage, naechsteFrage, vorherigeFrage,
-    springeZuFrage, unterbrecheRun,
+    springeZuFrage, unterbrecheRun, gameMode,
   } = quiz;
 
   const [showNav, setShowNav] = useState(false);
+  const [pendingWrongAnswer, setPendingWrongAnswer] = useState<string | null>(null);
 
   if (!aktuelleFrage) return null;
 
   const userAntwort = antworten[aktuelleFrage.id];
+  const hasAnswered = userAntwort !== undefined;
+  const isPending = pendingWrongAnswer !== null;
   const fortschritt = ((aktuellerIndex + 1) / aktiveFragen.length) * 100;
   const korrekt = aktiveFragen.filter(f => antworten[f.id] === f.richtige_antwort).length;
   const falsch = aktiveFragen.filter(f => antworten[f.id] && antworten[f.id] !== f.richtige_antwort).length;
   const offen = aktiveFragen.filter(f => !antworten[f.id]).length;
+
+  // ── Arcade-Modus: Antwort-Logik ──
+  const handleAnswerClick = (buchstabe: string) => {
+    if (hasAnswered || isPending) return;
+
+    const isCorrect = buchstabe === aktuelleFrage.richtige_antwort;
+
+    if (isCorrect) {
+      // Richtig → sofort speichern
+      beantworteFrage(aktuelleFrage.id, buchstabe);
+    } else if (gameMode === 'arcade') {
+      // Arcade + Falsch → Preview, "Sicher?" Dialog
+      setPendingWrongAnswer(buchstabe);
+    } else {
+      // Hardcore + Falsch → sofort speichern (später: Submit-Step)
+      beantworteFrage(aktuelleFrage.id, buchstabe);
+    }
+  };
+
+  const handleConfirmWrong = () => {
+    if (pendingWrongAnswer) {
+      beantworteFrage(aktuelleFrage.id, pendingWrongAnswer);
+    }
+    setPendingWrongAnswer(null);
+  };
+
+  const handleCancelWrong = () => {
+    setPendingWrongAnswer(null);
+  };
 
   return (
     <TooltipProvider delayDuration={800}>
@@ -41,6 +74,9 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-2">
             <div className="flex items-center gap-2">
               <span className="text-slate-500 text-xs uppercase tracking-wider">Quiz-Run</span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${gameMode === 'arcade' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
+                {gameMode === 'arcade' ? 'Arcade' : 'Hardcore'}
+              </span>
             </div>
             <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
               <div
@@ -136,31 +172,39 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
               {(['A', 'B', 'C'] as const).map(buchstabe => {
                 const isSelected = userAntwort === buchstabe;
                 const isCorrect = aktuelleFrage.richtige_antwort === buchstabe;
-                const hasAnswered = userAntwort !== undefined;
+                const isPendingSelection = pendingWrongAnswer === buchstabe;
+
                 let cls = 'border-slate-600/50 bg-slate-700/30 hover:bg-slate-700/50 hover:border-slate-500/50';
                 if (hasAnswered) {
                   if (isSelected && isCorrect) cls = 'border-emerald-500 bg-emerald-500/10';
                   else if (isSelected && !isCorrect) cls = 'border-red-500 bg-red-500/10';
                   else if (isCorrect) cls = 'border-emerald-500/50 bg-emerald-500/5';
-                } else if (isSelected) cls = 'border-teal-400 bg-teal-400/10';
+                } else if (isPendingSelection) {
+                  // Arcade: Pending wrong answer preview
+                  cls = 'border-red-500 bg-red-500/10';
+                } else if (isSelected) {
+                  cls = 'border-teal-400 bg-teal-400/10';
+                }
+
+                const isDisabled = hasAnswered || (isPending && !isPendingSelection);
 
                 return (
                   <button
                     key={buchstabe}
-                    onClick={() => !hasAnswered && beantworteFrage(aktuelleFrage.id, buchstabe)}
-                    disabled={hasAnswered}
-                    aria-pressed={isSelected}
-                    aria-disabled={hasAnswered}
+                    onClick={() => handleAnswerClick(buchstabe)}
+                    disabled={isDisabled}
+                    aria-pressed={isSelected || isPendingSelection}
+                    aria-disabled={isDisabled}
                     aria-label={`Antwort ${buchstabe}: ${aktuelleFrage.antworten[buchstabe]}`}
-                    className={`w-full text-left p-4 md:p-5 min-h-[44px] rounded-xl border transition-all flex items-start gap-3 sm:gap-4 ${cls} ${hasAnswered ? 'cursor-default' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'}`}
+                    className={`w-full text-left p-4 md:p-5 min-h-[44px] rounded-xl border transition-all flex items-start gap-3 sm:gap-4 ${cls} ${isDisabled ? 'cursor-default' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'}`}
                   >
                     <span
-                      className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
+                      className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isPendingSelection ? 'bg-red-500 text-white' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
                       aria-hidden="true"
                     >
                       {buchstabe}
                     </span>
-                    <span className={`flex-1 pt-1.5 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : 'text-slate-200'}`}>
+                    <span className={`flex-1 pt-1.5 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : isPendingSelection ? 'text-red-300' : 'text-slate-200'}`}>
                       {aktuelleFrage.antworten[buchstabe]}
                     </span>
                     {hasAnswered && isCorrect && (
@@ -173,10 +217,47 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     )}
+                    {isPendingSelection && (
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    )}
                   </button>
                 );
               })}
             </div>
+
+            {/* ── Arcade: Sicher? Dialog ── */}
+            {isPending && gameMode === 'arcade' && (
+              <Card className="mt-4 border-amber-500/30 bg-amber-500/10">
+                <CardContent className="pt-4 pb-4">
+                  <div className="flex items-start gap-3 mb-3">
+                    <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <div>
+                      <p className="text-amber-300 font-medium text-sm">Bist du sicher?</p>
+                      <p className="text-slate-400 text-xs mt-0.5">Diese Antwort ist falsch. Du kannst noch eine andere wählen.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={handleCancelWrong}
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                    >
+                      Nochmal wählen
+                    </Button>
+                    <Button
+                      onClick={handleConfirmWrong}
+                      size="sm"
+                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                    >
+                      Bestätigen
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Live-Region für Feedback */}
             <div aria-live="polite" aria-atomic="true" className="sr-only">
@@ -214,7 +295,7 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
               <TooltipTrigger asChild>
                 <Button
                   onClick={naechsteFrage}
-                  disabled={aktuellerIndex === aktiveFragen.length - 1}
+                  disabled={aktuellerIndex === aktiveFragen.length - 1 || isPending}
                   variant="outline"
                   aria-label="Nächste Frage"
                   className="border-slate-600 text-slate-300 hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"

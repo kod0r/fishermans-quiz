@@ -4,7 +4,7 @@ import { useMetaProgress } from '@/store/metaProgress';
 
 describe('useMetaProgress', () => {
   it('sollte initial leere Meta-Daten haben', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     expect(result.current.meta.stats.totalRuns).toBe(0);
     expect(result.current.meta.stats.totalQuestionsAnswered).toBe(0);
@@ -14,7 +14,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei richtiger Antwort erhöhen', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -27,7 +27,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei 3 richtigen Antworten zu Meister machen', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -40,7 +40,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei falscher Antwort zurücksetzen', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -54,7 +54,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte beste Serie (bestStreak) tracken', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -74,7 +74,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte totalRuns erhöhen', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordRunStart();
@@ -84,7 +84,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte alles zurücksetzen', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -107,7 +107,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte getFrageMeta für bekannte Fragen zurückgeben', () => {
-    const { result } = renderHook(() => useMetaProgress());
+    const { result } = renderHook(() => useMetaProgress('arcade'));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -119,5 +119,18 @@ describe('useMetaProgress', () => {
 
     const unknown = result.current.getFrageMeta('unknown');
     expect(unknown).toBeUndefined();
+  });
+
+  it('sollte Meta-Daten pro Modus getrennt speichern', () => {
+    const { result: arcade } = renderHook(() => useMetaProgress('arcade'));
+    const { result: hardcore } = renderHook(() => useMetaProgress('hardcore'));
+
+    act(() => {
+      arcade.current.recordAnswer('q1', true);
+      hardcore.current.recordAnswer('q1', false);
+    });
+
+    expect(arcade.current.meta.fragen['q1'].correctStreak).toBe(1);
+    expect(hardcore.current.meta.fragen['q1'].correctStreak).toBe(0);
   });
 });

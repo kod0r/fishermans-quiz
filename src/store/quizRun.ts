@@ -1,16 +1,21 @@
-import { useState, useCallback } from 'react';
-import type { Frage, QuizRun, QuizData } from '@/types/quiz';
+import { useState, useCallback, useEffect } from 'react';
+import type { Frage, QuizRun, QuizData, GameMode } from '@/types/quiz';
 import { RunStorage } from '@/utils/storage';
 
-export function useQuizRun(quizData: QuizData | null) {
-  const [run, setRun] = useState<QuizRun | null>(RunStorage.load);
+export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
+  const [run, setRun] = useState<QuizRun | null>(() => RunStorage.load(gameMode));
+
+  // Wenn sich der Modus ändert → neu laden
+  useEffect(() => {
+    setRun(RunStorage.load(gameMode));
+  }, [gameMode]);
 
   // Persistiere Run bei Änderungen
   const persistRun = useCallback((next: QuizRun | null) => {
     setRun(next);
-    if (next) RunStorage.save(next);
-    else RunStorage.clear();
-  }, []);
+    if (next) RunStorage.save(gameMode, next);
+    else RunStorage.clear(gameMode);
+  }, [gameMode]);
 
   // Starte neuen Run oder erweitere bestehenden
   const starteRun = useCallback((bereiche: string[], overrideData?: QuizData) => {
@@ -62,37 +67,37 @@ export function useQuizRun(quizData: QuizData | null) {
     setRun(prev => {
       if (!prev || prev.antworten[frageId]) return prev;
       const next = { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
-      RunStorage.save(next);
+      RunStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   const naechsteFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex >= prev.frageIds.length - 1) return prev;
       const next = { ...prev, aktuellerIndex: prev.aktuellerIndex + 1 };
-      RunStorage.save(next);
+      RunStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   const vorherigeFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex <= 0) return prev;
       const next = { ...prev, aktuellerIndex: prev.aktuellerIndex - 1 };
-      RunStorage.save(next);
+      RunStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   const springeZuFrage = useCallback((index: number) => {
     setRun(prev => {
       if (!prev || index < 0 || index >= prev.frageIds.length) return prev;
       const next = { ...prev, aktuellerIndex: index };
-      RunStorage.save(next);
+      RunStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   const unterbrecheRun = useCallback(() => {
     persistRun(null);
