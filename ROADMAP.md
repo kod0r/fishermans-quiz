@@ -36,8 +36,6 @@ _Keine aktiven Tickets._
 
 | Thema | GitHub Issue | Priorität |
 |-------|-------------|-----------|
-| Erstes GitHub Release v0.1.0 | [#12](https://github.com/kod0r/fishermans-quiz/issues/12) | high |
-| App als Package publizieren (Docker / GitHub Pages) | [#13](https://github.com/kod0r/fishermans-quiz/issues/13) | high |
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
@@ -58,6 +56,16 @@ _Keine aktiven Tickets._
 | Unit-Tests für Store-Logik | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | 2026-04-20 |
 | Arcade-Modus + Settings-Toggle | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
 | Hardcore-Modus (sofortiges Sperren, keine 2nd-Chance) | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
+| Erstes GitHub Release v0.1.0 | [#12](https://github.com/kod0r/fishermans-quiz/issues/12) | 2026-04-20 |
+| App als Package publizieren | [#13](https://github.com/kod0r/fishermans-quiz/issues/13) | 2026-04-20 |
+| Workflow-Audit: Kritische Fixes (CI, Vite, Zod) | [#14](https://github.com/kod0r/fishermans-quiz/issues/14) | 2026-04-20 |
+| Workflow-Audit: High-Priority Fixes (Storage, Tests, QuizRun) | [#16](https://github.com/kod0r/fishermans-quiz/issues/16) | 2026-04-20 |
+| Workflow-Audit: Daten-Inkonsistenz-Fix | [#17](https://github.com/kod0r/fishermans-quiz/issues/17) | 2026-04-20 |
+| ZIP-Artefakte entfernt | [#18](https://github.com/kod0r/fishermans-quiz/issues/18) | 2026-04-20 |
+| Node-Version-Lock (.nvmrc, engines) | [#19](https://github.com/kod0r/fishermans-quiz/issues/19) | 2026-04-20 |
+| Dead Dependencies bereinigt | [#21](https://github.com/kod0r/fishermans-quiz/issues/21) | 2026-04-20 |
+| Dependabot konfiguriert | [#22](https://github.com/kod0r/fishermans-quiz/issues/22) | 2026-04-20 |
+| Release-Validation Scripts | [#23](https://github.com/kod0r/fishermans-quiz/issues/23) | 2026-04-20 |
 
 ### Erledigt (vor GitHub-Issue-System)
 
