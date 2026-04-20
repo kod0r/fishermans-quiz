@@ -102,22 +102,28 @@ Idee ──→ GitHub Issue ──→ Entwickeln ──→ Commit (#N) ──→
 6. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
 7. **Changelog** → Wenn User-sichtbar: Eintrag in `[Unreleased]`
 
-### ⚠️ Wichtig: Commit & Push nur nach Erlaubnis
+### ⚠️ Wichtig: Commit & Push — Wann ist Erlaubnis nötig?
 
-> **Der Nutzer möchte, dass Kimi vor jedem `git commit` und `git push` explizit um Erlaubnis fragt.**
->
-> Das gilt auch für:
-> - `git commit` (alle Varianten)
-> - `git push` (auch `--force`)
-> - `git push --set-upstream`
-> - Uploads via GitHub API / MCP
->
-> **Ablauf:**
-> 1. Kimi zeigt die geänderten Dateien und die vorgeschlagene Commit-Message
-> 2. Kimi fragt: "Erlaubnis für Commit & Push?"
-> 3. Erst nach Bestätigung des Nutzers wird ausgeführt
->
-> **Ausnahme:** `git add` und lokale `git status` sind ohne Erlaubnis erlaubt (nur Vorbereitung).
+> **Nicht jede Änderung muss sofort gepusht werden.**
+
+| Situation | Vorgehen |
+|-----------|----------|
+| **Hotfix / kritischer Bug** | Sofort fixen, Benutzer informieren, autonom committen & pushen |
+| **Fertiges Feature / Abschluss einer Session** | Commit vorschlagen, auf Erlaubnis warten, dann pushen |
+| **Kleine Zwischenänderungen** | Lokal sammeln, nicht nach jedem Schritt fragen |
+| **Dokumentation / Refactor** | Mit anderen Änderungen bündeln oder am Session-Ende |
+
+**Ablauf bei "Fertiges Feature":**
+1. Kimi zeigt die gesammelten Änderungen
+2. Kimi fragt: "Soll ich committen und pushen?"
+3. Erst nach Bestätigung des Nutzers wird ausgeführt
+
+**Ablauf bei "Hotfix":**
+1. Kimi fixt den Bug
+2. Kimi informiert den Nutzer: "Hotfix committet & gepusht: [Commit-URL]"
+3. Keine explizite Erlaubnis nötig — aber immer informieren
+
+**Ausnahme:** `git add` und lokale `git status` sind immer ohne Erlaubnis erlaubt.
 
 ### Commit-Messages: Conventional Commits
 
