@@ -245,4 +245,54 @@ describe('useQuizRun', () => {
     expect(arcade.current.isActive).toBe(true);
     expect(hardcore.current.isActive).toBe(false);
   });
+
+  it('sollte fehlende Fragen aus dem Run bereinigen (Issue #17)', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie']);
+    });
+
+    expect(result.current.aktiveFragen.length).toBe(3);
+
+    // Simuliere: Frage wurde aus QuizData entfernt
+    const reducedQuizData = {
+      ...mockQuizData,
+      fragen: mockQuizData.fragen.filter(f => f.id !== '1'),
+    };
+
+    const { result: result2 } = renderHook(() => useQuizRun(reducedQuizData, 'arcade'));
+
+    // Nach Bereinigung sollten nur noch 2 Fragen aktiv sein
+    expect(result2.current.aktiveFragen.length).toBe(2);
+    expect(result2.current.statistiken.gesamt).toBe(2);
+  });
+
+  it('sollte aktuellen Index anpassen wenn Fragen entfernt werden (Issue #17)', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie']);
+    });
+
+    // Zu letzter Frage navigieren (Index 2)
+    act(() => {
+      result.current.naechsteFrage();
+      result.current.naechsteFrage();
+    });
+
+    expect(result.current.aktuellerIndex).toBe(2);
+
+    // Simuliere: Alle Fragen außer der ersten entfernt
+    const reducedQuizData = {
+      ...mockQuizData,
+      fragen: mockQuizData.fragen.filter(f => f.id === '1'),
+    };
+
+    const { result: result2 } = renderHook(() => useQuizRun(reducedQuizData, 'arcade'));
+
+    // Index sollte auf 0 zurückgesetzt werden (letzter verbleibender Index)
+    expect(result2.current.aktuellerIndex).toBe(0);
+    expect(result2.current.aktiveFragen.length).toBe(1);
+  });
 });
