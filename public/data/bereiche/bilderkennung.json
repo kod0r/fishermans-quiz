@@ -1,0 +1,707 @@
+{
+  "bereich": "Bilderkennung",
+  "fragen": [
+    {
+      "id": "B1.1",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt?",
+      "antworten": {
+        "A": "Steinfliegenlarve",
+        "B": "Kleinlibellenlarve",
+        "C": "Eintagsfliegenlarve"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page146_img1.jpeg"
+    },
+    {
+      "id": "B1.2",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt?",
+      "antworten": {
+        "A": "Eintagsfliegenlarve",
+        "B": "Steinfliegenlarve",
+        "C": "Kleinlibellenlarve"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page146_img2.jpeg"
+    },
+    {
+      "id": "B1.3",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt?",
+      "antworten": {
+        "A": "Eintagsfliegenlarve",
+        "B": "Steinfliegenlarve",
+        "C": "Kleinlibellenlarve"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page146_img3.jpeg"
+    },
+    {
+      "id": "B1.4",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt?",
+      "antworten": {
+        "A": "Köcherfliegenlarve ohne Köcher",
+        "B": "Kleinlibellenlarve",
+        "C": "Eintagsfliegenlarve"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page146_img4.jpeg"
+    },
+    {
+      "id": "B1.5",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt? © T. Woitzik",
+      "antworten": {
+        "A": "Köcherfliegenlarve mit Köcher",
+        "B": "Großlibellenlarve",
+        "C": "Larve des Schlammröhrenwurms"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page146_img0.jpeg"
+    },
+    {
+      "id": "B1.6",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Insektenlarve ist hier dargestellt?",
+      "antworten": {
+        "A": "Großlibellenlarve",
+        "B": "Larve des Wasserläufers",
+        "C": "Köcherfliegenlarve ohne Köcher"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page146_img5.jpeg"
+    },
+    {
+      "id": "B2.1",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Seesaibling",
+        "C": "Bachsaibling"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page142_img0.jpeg"
+    },
+    {
+      "id": "B2.2",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Güster",
+        "B": "Zobel",
+        "C": "Brachse"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page142_img1.jpeg"
+    },
+    {
+      "id": "B2.3",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Perlfisch",
+        "B": "Aitel (Döbel)",
+        "C": "Hasel"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page142_img2.jpeg"
+    },
+    {
+      "id": "B2.4",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Gangfisch",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page142_img3.jpeg"
+    },
+    {
+      "id": "B2.5",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Seesaibling",
+        "C": "Bachsaibling"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page142_img4.jpeg"
+    },
+    {
+      "id": "B2.6",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Seesaibling",
+        "C": "Bachsaibling"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page142_img5.jpeg"
+    },
+    {
+      "id": "B2.7",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Gründling",
+        "B": "Schlammpeitzger",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page143_img3.jpeg"
+    },
+    {
+      "id": "B2.8",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Flussbarsch",
+        "B": "Zander",
+        "C": "Zingel"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page143_img4.jpeg"
+    },
+    {
+      "id": "B2.9",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Güster",
+        "B": "Brachse",
+        "C": "Nerfling (Aland)"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page143_img5.jpeg"
+    },
+    {
+      "id": "B2.10",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Kaulbarsch",
+        "B": "Marmorierte Grundel",
+        "C": "Mühlkoppe"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page143_img0.jpeg"
+    },
+    {
+      "id": "B2.11",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Schied (Rapfen)",
+        "B": "Zährte (Seerüßling)",
+        "C": "Nase"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page143_img1.jpeg"
+    },
+    {
+      "id": "B2.12",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page143_img2.jpeg"
+    },
+    {
+      "id": "B2.13",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Gründling",
+        "B": "Schmerle (Bartgrundel)",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page144_img0.jpeg"
+    },
+    {
+      "id": "B2.14",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Bitterling",
+        "B": "Karausche",
+        "C": "Schneider"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page144_img1.jpeg"
+    },
+    {
+      "id": "B2.15",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Zingel",
+        "B": "Schrätzer",
+        "C": "Streber"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page144_img2.jpeg"
+    },
+    {
+      "id": "B2.16",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Mühlkoppe",
+        "B": "Zwergwels",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page144_img3.jpeg"
+    },
+    {
+      "id": "B2.17",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Kaulbarsch",
+        "B": "Flussbarsch",
+        "C": "Zander"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page144_img4.jpeg"
+    },
+    {
+      "id": "B2.18",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Stint",
+        "B": "Zander",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page144_img5.jpeg"
+    },
+    {
+      "id": "B2.19",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Wildkarpfen",
+        "B": "Lederkarpfen",
+        "C": "Spiegelkarpfen"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page145_img0.jpeg"
+    },
+    {
+      "id": "B2.20",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Dreistachliger Stichling",
+        "B": "Zwergstichling",
+        "C": "Mühlkoppe"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page145_img1.jpeg"
+    },
+    {
+      "id": "B2.21",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Karausche",
+        "B": "Giebel",
+        "C": "Schleie"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page145_img2.jpeg"
+    },
+    {
+      "id": "B2.22",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Giebel",
+        "C": "Karausche"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page145_img3.jpeg"
+    },
+    {
+      "id": "B2.23",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Karausche",
+        "C": "Giebel"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page145_img4.jpeg"
+    },
+    {
+      "id": "B2.24",
+      "bereich": "Bilderkennung",
+      "frage": "Welche Fischart ist hier abgebildet?",
+      "antworten": {
+        "A": "Hasel",
+        "B": "Aitel (Döbel)",
+        "C": "Nerfling (Aland)"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page145_img5.jpeg"
+    },
+    {
+      "id": "B3.1",
+      "bereich": "Bilderkennung",
+      "frage": "Bei welcher Art der Fischerei wird dieser Rollentyp eingesetzt?",
+      "antworten": {
+        "A": "beim Fliegenfischen",
+        "B": "beim Spinnfischen",
+        "C": "beim Hochseefischen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page147_img0.jpeg"
+    },
+    {
+      "id": "B3.2",
+      "bereich": "Bilderkennung",
+      "frage": "Charakteristisch für die Stationärrolle ist",
+      "antworten": {
+        "A": "der Schnurfangbügel für die Schnurführung",
+        "B": "der Rollenfuß",
+        "C": "die direkte Wicklung der Schnur auf dem Spulenkern"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page147_img1.jpeg"
+    },
+    {
+      "id": "B3.3",
+      "bereich": "Bilderkennung",
+      "frage": "Bei welcher Art der Fischerei wird dieser Rollentyp vorwiegend eingesetzt?",
+      "antworten": {
+        "A": "Fliegenfischen",
+        "B": "Grundangeln",
+        "C": "Spinnfischen"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page147_img2.jpeg"
+    },
+    {
+      "id": "B3.4",
+      "bereich": "Bilderkennung",
+      "frage": "Mit diesem künstlichen Köder („dropshot“) fischt man auf",
+      "antworten": {
+        "A": "Zander",
+        "B": "Elritzen",
+        "C": "Nasen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page147_img3.jpeg"
+    },
+    {
+      "id": "B3.5",
+      "bereich": "Bilderkennung",
+      "frage": "Was ist hier abgebildet?",
+      "antworten": {
+        "A": "Futterkorb",
+        "B": "Madenkörbchen",
+        "C": "Futterspirale"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page148_img0.jpeg"
+    },
+    {
+      "id": "B3.6",
+      "bereich": "Bilderkennung",
+      "frage": "Die abgebildete Montage gehört zur Ausrüstung beim",
+      "antworten": {
+        "A": "Spinnfischen",
+        "B": "Fliegenfischen",
+        "C": "Stippfischen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page148_img1.jpeg"
+    },
+    {
+      "id": "B3.7",
+      "bereich": "Bilderkennung",
+      "frage": "Welchen der abgebildeten Haken bezeichnet man als Schonhaken?",
+      "antworten": {
+        "A": "c)",
+        "B": "a)",
+        "C": "b)"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page148_img2.jpeg"
+    },
+    {
+      "id": "B3.8",
+      "bereich": "Bilderkennung",
+      "frage": "Abgebildet ist hier ein",
+      "antworten": {
+        "A": "Echolot",
+        "B": "elektronischer Bissanzeiger",
+        "C": "Gerät zur Messung der Schnurlänge"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page148_img4.jpeg"
+    },
+    {
+      "id": "B3.9",
+      "bereich": "Bilderkennung",
+      "frage": "Bei welcher Montage wird dieser Haken eingesetzt?",
+      "antworten": {
+        "A": "Haarmontage",
+        "B": "Flugangel",
+        "C": "Spinnfischen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page148_img3.jpeg"
+    },
+    {
+      "id": "B3.10",
+      "bereich": "Bilderkennung",
+      "frage": "Bei der abgebildeten Fliege handelt es sich um",
+      "antworten": {
+        "A": "eine Nymphe",
+        "B": "eine Trockenfliege",
+        "C": "einen Streamer"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page149_img3.jpeg"
+    },
+    {
+      "id": "B3.11",
+      "bereich": "Bilderkennung",
+      "frage": "Die abgebildete Unterwasserposen- montage dient zum Fang von",
+      "antworten": {
+        "A": "Welsen",
+        "B": "Karpfen",
+        "C": "Forellen"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page149_img0.jpeg"
+    },
+    {
+      "id": "B3.12",
+      "bereich": "Bilderkennung",
+      "frage": "Das abgebildete Gerät dient als",
+      "antworten": {
+        "A": "Werkzeug zum Aufspüren von Tauwürmern",
+        "B": "Landehilfe bei Raubfischen",
+        "C": "Hakenlöser"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page149_img2.jpeg"
+    },
+    {
+      "id": "B3.13",
+      "bereich": "Bilderkennung",
+      "frage": "Was charakterisiert den abgebildeten Spinnköder?",
+      "antworten": {
+        "A": "Er besitzt eine Tauchschaufel.",
+        "B": "Er besitzt ein rotierendes Metallblatt.",
+        "C": "Er besitzt keine beweglichen Teile."
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page149_img1.jpeg"
+    },
+    {
+      "id": "B3.14",
+      "bereich": "Bilderkennung",
+      "frage": "Wofür wird der abgebildete Spezialkescher überwiegend eingesetzt?",
+      "antworten": {
+        "A": "zum Hältern von Fischen beim Bootsangeln",
+        "B": "zum waidgerechten Anlanden von Fischen an Steilufern und Spundwänden",
+        "C": "zum Anlanden von Fischen, die aufgrund ihres Gewichts mit dem Teleskopkescher nicht gelandet werden können"
+      },
+      "richtige_antwort": "B",
+      "bild": true,
+      "bild_url": "/images/page150_img0.jpeg"
+    },
+    {
+      "id": "B3.15",
+      "bereich": "Bilderkennung",
+      "frage": "Bei welcher Angelmethode wird der abgebildete Unterfangkescher hauptsächlich eingesetzt?",
+      "antworten": {
+        "A": "beim Stippfischen",
+        "B": "beim Karpfenfischen",
+        "C": "beim Fliegenfischen"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page150_img1.jpeg"
+    },
+    {
+      "id": "B3.16",
+      "bereich": "Bilderkennung",
+      "frage": "Der abgebildete Köder ist",
+      "antworten": {
+        "A": "ein taumelnder Reizköder aus Metall.",
+        "B": "eine Fischimitation aus Gummi oder Weichplastik.",
+        "C": "eine große Kunstfliege."
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page150_img2.jpeg"
+    },
+    {
+      "id": "B3.17",
+      "bereich": "Bilderkennung",
+      "frage": "Bei welcher Angelmethode wird der abgebildete Kunstköder meist eingesetzt?",
+      "antworten": {
+        "A": "beim Grundangeln",
+        "B": "beim Fliegenfischen",
+        "C": "beim Spinnfischen"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page150_img3.jpeg"
+    },
+    {
+      "id": "B4.1",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Hakenschaftknoten",
+        "B": "Schlaufenverbindungsknoten",
+        "C": "Blutknoten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img0.jpeg"
+    },
+    {
+      "id": "B4.2",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Rapalaknoten",
+        "B": "Blutknoten",
+        "C": "Hakenschaftknoten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img1.jpeg"
+    },
+    {
+      "id": "B4.3",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Blutknoten",
+        "B": "Hakenschaftknoten",
+        "C": "Rapalaknoten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img2.jpeg"
+    },
+    {
+      "id": "B4.4",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Hakenschaftknoten",
+        "B": "Rapalaknoten",
+        "C": "Schlaufenverbindungskno ten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img3.jpeg"
+    },
+    {
+      "id": "B4.5",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Schlaufenverbindungskno ten",
+        "B": "Blutknoten",
+        "C": "Spulenachsenknoten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img4.jpeg"
+    },
+    {
+      "id": "B4.6",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Chirurgenknoten",
+        "B": "Rapalaknoten",
+        "C": "Blutknoten"
+      },
+      "richtige_antwort": "A",
+      "bild": true,
+      "bild_url": "/images/page151_img5.jpeg"
+    },
+    {
+      "id": "B4.7",
+      "bereich": "Bilderkennung",
+      "frage": "Welcher Knoten ist hier abgebildet?",
+      "antworten": {
+        "A": "Stopperknoten",
+        "B": "Blutknoten",
+        "C": "Clinch- oder Klammerknoten"
+      },
+      "richtige_antwort": "C",
+      "bild": true,
+      "bild_url": "/images/page151_img6.jpeg"
+    }
+  ]
+}

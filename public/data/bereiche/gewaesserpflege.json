@@ -1,0 +1,1637 @@
+{
+  "bereich": "Gewässerpflege",
+  "fragen": [
+    {
+      "id": "3.001",
+      "bereich": "Gewässerpflege",
+      "frage": "Welches öffentliche Interesse besteht an der fischereilichen Hege?",
+      "antworten": {
+        "A": "Förderung des Fischbestandes über die Ertragsfähigkeit hinaus",
+        "B": "Erhaltung und Förderung eines der Größe, Beschaffenheit und Ertragsfähigkeit des Gewässers angepassten artenreichen und gesunden Fischbestands",
+        "C": "Förderung der Befischungsmöglichkeiten an allen Gewässern"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.002",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Aspekte des Naturschutzes stehen bei der Gewässerhege im Vordergrund?",
+      "antworten": {
+        "A": "Erhaltung bzw. Wiederansiedlung von bedrohten Fischarten",
+        "B": "Pflege eines Bestandes an kapitalen Fischen",
+        "C": "Nahrungssicherung für fischfressende Vögel"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.003",
+      "bereich": "Gewässerpflege",
+      "frage": "Welchen Zweck hat das Schonmaß bei Fischen?",
+      "antworten": {
+        "A": "die Fische sollen eine bestimmte Marktgröße erreichen",
+        "B": "es soll verhindert werden, dass es in einem Gewässer zu viele große Fische gibt",
+        "C": "die Fische sollen eine Größe erreichen, die sicherstellt, dass sie sich mindestens einmal in ihrem Leben fortgepflanzt haben"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.004",
+      "bereich": "Gewässerpflege",
+      "frage": "Welchen Zweck hat die Schonzeit bei Fischen vorrangig?",
+      "antworten": {
+        "A": "Sie soll eine ungestörte Laichablage ermöglichen.",
+        "B": "Sie soll die Fischerei für einige Zeit unterbinden.",
+        "C": "Sie soll verhindern, dass Fische von geringem Marktwert angeboten werden."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.005",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Aussage über das Schonmaß ist richtig?",
+      "antworten": {
+        "A": "Es soll sicherstellen, dass Fische bis zu ihrer Entnahme einmal abgelaicht haben.",
+        "B": "Es soll sicherstellen, dass vom Aussterben bedrohte Fischarten besonders geschützt werden.",
+        "C": "Es soll sicherstellen, dass Fische nur in Speisefischgröße entnommen werden können."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.006",
+      "bereich": "Gewässerpflege",
+      "frage": "Ist regelmäßiger Fischbesatz in natürlichen Gewässern zur Bestandserhaltung generell notwendig?",
+      "antworten": {
+        "A": "ja, da sonst der Fischbestand erlischt",
+        "B": "ja, da sich Fischbestände in der freien Natur grundsätzlich nicht ausreichend vermehren",
+        "C": "nein, da sich der Fischbestand in einem geeigneten Lebensraum und bei begrenztem Fraßdruck durch Fischfeinde in der Regel selbst vermehrt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.007",
+      "bereich": "Gewässerpflege",
+      "frage": "Wonach richtet sich das Ausmaß des Fischbesatzes?",
+      "antworten": {
+        "A": "nach dem Schonmaß der einzelnen Fischarten",
+        "B": "nach der Tiefe des Gewässers",
+        "C": "nach der natürlichen Nahrungsgrundlage im Gewässer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.008",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie kann man den Fischbestand in einem Gewässer fördern?",
+      "antworten": {
+        "A": "Unterstände schaffen, Nebengewässer anbinden",
+        "B": "Entfernung aller Wasserpflanzen",
+        "C": "Besatz mit größeren Fischen der gleichen Art"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.009",
+      "bereich": "Gewässerpflege",
+      "frage": "Was geschieht, wenn ein Gewässer zu stark besetzt wird?",
+      "antworten": {
+        "A": "die großen Fische nehmen überhand",
+        "B": "geringeres Wachstum der Fische bedingt durch Nahrungskonkurrenz",
+        "C": "der Fischbestand erhöht sich nachhaltig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.010",
+      "bereich": "Gewässerpflege",
+      "frage": "Unter welchem Aspekt ist Fischbesatz berechtigt?",
+      "antworten": {
+        "A": "nach Fischsterben größeren Ausmaßes",
+        "B": "auf Wunsch der Vereinsmitglieder, eine bestimmte Fischart zu fangen",
+        "C": "zur Förderung des Fischbestandes über die Ertragsfähigkeit hinaus"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.011",
+      "bereich": "Gewässerpflege",
+      "frage": "Wann ist ein dem Gewässer angepasster Fischbesatz erforderlich?",
+      "antworten": {
+        "A": "wenn zu wenig kapitale Fische vorhanden sind",
+        "B": "wenn eine ausreichende, natürliche Vermehrung der Fische stattfindet",
+        "C": "wenn die natürlichen Laich- und Aufwuchsplätze fehlen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.012",
+      "bereich": "Gewässerpflege",
+      "frage": "Wonach sollen sich Besatzmaßnahmen richten?",
+      "antworten": {
+        "A": "nach den Wünschen der Mehrheit der Vereinsmitglieder",
+        "B": "nach ökologischen und fischereibiologischen Gesichtspunkten",
+        "C": "nach den finanziellen Möglichkeiten"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.013",
+      "bereich": "Gewässerpflege",
+      "frage": "Unter welchem Leitgedanken ist jeder Fischbesatz vorzunehmen?",
+      "antworten": {
+        "A": "lieber zu viel als zu wenig Fische besetzen",
+        "B": "die Fische nur in für sie geeignete Gewässer einbringen",
+        "C": "die Fische so billig wie möglich erwerben"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.014",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Fischbesatz zu beachten?",
+      "antworten": {
+        "A": "Durch den Besatz sollen neue Fischarten eingeführt werden.",
+        "B": "Die Satzfische sind möglichst aus dem Einzugsgebiet des Gewässersystems zu nehmen.",
+        "C": "Zur Blutauffrischung sollen möglichst oft Fische unterschiedlicher Herkunft eingesetzt werden."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.015",
+      "bereich": "Gewässerpflege",
+      "frage": "Was passiert, wenn fischtoxische Stoffe in großen Mengen ins Gewässer eingeleitet werden?",
+      "antworten": {
+        "A": "Nur eine Fischart ist betroffen.",
+        "B": "Nur die alten Fische sterben.",
+        "C": "Alle Fische verenden schlagartig."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.016",
+      "bereich": "Gewässerpflege",
+      "frage": "Unter nachhaltiger Nutzung versteht man",
+      "antworten": {
+        "A": "die Abnahme der Fischbestände ohne Besatz",
+        "B": "die Abschöpfung des natürlichen Fischertrages ohne Beeinträchtigung der Reproduktionsfähigkeit der Bestände",
+        "C": "die Erhaltung der Erträge durch jährlichen Besatz"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.017",
+      "bereich": "Gewässerpflege",
+      "frage": "Unter nachhaltiger Bewirtschaftung versteht man",
+      "antworten": {
+        "A": "Hegemaßnahmen, bei denen laufend mehr Kapital eingesetzt werden muss",
+        "B": "Hegemaßnahmen, bei denen sich der Erfolg erst nach drei Jahren zeigt",
+        "C": "Hegemaßnahmen, bei denen der Fischbestand in seinen wesentlichen Eigenschaften erhalten bleibt und auf natürliche Weise nachwachsen kann"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.018",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Erwerb von Satzfischen zu beachten?",
+      "antworten": {
+        "A": "Sie müssen besonders schnellwüchsig sein.",
+        "B": "Sie müssen gesund sein.",
+        "C": "Sie müssen besonders schön gezeichnet sein."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.019",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Erwerb von Satzfischen zu beachten?",
+      "antworten": {
+        "A": "die Fische sollen billig sein",
+        "B": "die Fische müssen frei von Parasiten und Fischkrankheiten sein",
+        "C": "alle Fische sollen gleich groß sein"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.020",
+      "bereich": "Gewässerpflege",
+      "frage": "Welcher Grundsatz gilt für die Auswahl von Satzfischen?",
+      "antworten": {
+        "A": "Satzfische sollen in der Regel geschlechtsreif sein",
+        "B": "die Mindestlänge der Satzfische soll dem Schonmaß entsprechen, damit sie nicht untermaßig verangelt werden",
+        "C": "Satzfische sollen in der Regel ein- oder zweisömmrige Jungfische sein"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.021",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Fischbesatz besonders zu beachten?",
+      "antworten": {
+        "A": "Schaulustige sind fernzuhalten",
+        "B": "in Fließgewässern ist die Einwilligung der Ober- und Unterlieger einzuholen",
+        "C": "die Temperatur des Transportwassers ist schrittweise der Temperatur des künftigen Lebensraums anzupassen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.022",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Krankheitserscheinungen (Symptome) stellen sich besonders leicht nach Verletzung der Fischhaut ein?",
+      "antworten": {
+        "A": "Wurmbefall",
+        "B": "Verpilzung der Wunde",
+        "C": "Hornhauttrübung"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.023",
+      "bereich": "Gewässerpflege",
+      "frage": "Sollte man Fische mit Kamm- und Rundschuppen gleichzeitig in einem Behälter befördern oder hältern?",
+      "antworten": {
+        "A": "nur bei genügendem Sauerstoffgehalt des Wassers",
+        "B": "ja",
+        "C": "nein"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.024",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Fischbesatz zu vermeiden?",
+      "antworten": {
+        "A": "der langsame Temperaturausgleich zwischen Transportwasser und dem Wasser des künftigen Lebensraums",
+        "B": "das Durchführen der Maßnahme bei Regenwetter",
+        "C": "das Berühren der Fische mit rauen und scharfkantigen Gegenständen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.025",
+      "bereich": "Gewässerpflege",
+      "frage": "Wozu ist ein langsamer Temperaturausgleich zwischen Transportwasser und Besatzgewässer erforderlich?",
+      "antworten": {
+        "A": "um Hautparasiten abzuschwemmen.",
+        "B": "um Stoffwechselprobleme zu vermeiden.",
+        "C": "um den Druck auf die Schwimmblase auszugleichen."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.026",
+      "bereich": "Gewässerpflege",
+      "frage": "Wozu dient eine Fischfangstatistik?",
+      "antworten": {
+        "A": "Sie ist der Nachweis für getätigten Fischbesatz.",
+        "B": "Sie wird zur Vorlage beim Finanzamt benötigt.",
+        "C": "Sie ist eine Grundlage für die fischereiliche Gewässerbewirtschaftung."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.027",
+      "bereich": "Gewässerpflege",
+      "frage": "Voraussetzung für die Vermehrung von Äsche und Nase ist",
+      "antworten": {
+        "A": "eine Wassertemperatur von über 20 °C im Sommer.",
+        "B": "ein jährlicher Besatz mit laichreifen Äschen und Nasen.",
+        "C": "ein geeigneter Laichplatz."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.028",
+      "bereich": "Gewässerpflege",
+      "frage": "Für die Vermehrung von Zander und Waller (Wels) und das Aufkommen von deren Jungfischen ist folgender Lebensraum erforderlich:",
+      "antworten": {
+        "A": "ein strukturarmer und kalter Quellaustritt",
+        "B": "ein rasch fließendes Gewässer mit kiesigem Uferbereich",
+        "C": "ein sommerwarmes, stehendes bis langsam fließendes Gewässer mit Wasserpflanzen oder Totholz"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.029",
+      "bereich": "Gewässerpflege",
+      "frage": "Welcher Lebensraum ist für die Vermehrung von Äsche und Nase und für das Aufkommen ihrer Jungfische erforderlich?",
+      "antworten": {
+        "A": "ein Fließgewässer mit kiesig, flachem Uferbereich und tiefen Rinnen in erreichbarer Entfernung",
+        "B": "ein Gewässer mit flachem und schlammigem Uferbereich sowie mit starken Wasserschwankungen im Frühjahr",
+        "C": "ein langsam fließendes Gewässer, mit schlammigem Grund und dichtem Pflanzenbewuchs"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.030",
+      "bereich": "Gewässerpflege",
+      "frage": "Das übermäßige Anfüttern von Fischen",
+      "antworten": {
+        "A": "kann die Eutrophierung eines Gewässers fördern.",
+        "B": "hat keine Auswirkungen auf das Gewässer, soweit nur hochwertige Produkte verwendet werden.",
+        "C": "unterstützt das Gewässer bei der Neutralisierung des pH-Wertes."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.031",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Tierart gefährdet den Fischbestand unserer Gewässer zunehmend?",
+      "antworten": {
+        "A": "Bisam",
+        "B": "Fischotter",
+        "C": "Waschbär"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.032",
+      "bereich": "Gewässerpflege",
+      "frage": "Warum darf man in Krebsgewässer keine Aale einsetzen?",
+      "antworten": {
+        "A": "weil sie Nahrungskonkurrenten für die Krebse sind",
+        "B": "weil sie schlecht abwachsen",
+        "C": "weil sie unter anderem Krebse kurz nach der Häutung (Butterkrebse) fressen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.033",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Fischart lebt vorzugsweise in Gewässern unter +20° C Wassertemperatur?",
+      "antworten": {
+        "A": "Karpfen",
+        "B": "Bachforelle",
+        "C": "Schleie"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.034",
+      "bereich": "Gewässerpflege",
+      "frage": "Bei welcher maximalen Wassertemperatur im Jahresverlauf ist in einem Fließgewässer ein Besatz mit Bachforellen auf keinen Fall zu vertreten?",
+      "antworten": {
+        "A": "25 °C",
+        "B": "15 °C",
+        "C": "10 °C"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.035",
+      "bereich": "Gewässerpflege",
+      "frage": "Welches Wasser ist für Forellen vorteilhaft?",
+      "antworten": {
+        "A": "fließendes, sommerkaltes und sauerstoffreiches Wasser",
+        "B": "strömendes, warmes und saures Wasser",
+        "C": "reißendes, weiches und leicht getrübtes Wasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.036",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie viel Sauerstoff etwa benötigen die Forellenartigen (Salmoniden) in einem natürlichen Gewässer?",
+      "antworten": {
+        "A": "mindestens 7 Milligramm Sauerstoff pro Liter Wasser",
+        "B": "weniger als 2 Milligramm Sauerstoff pro Liter Wasser",
+        "C": "maximal 5 Milligramm Sauerstoff pro Liter Wasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.037",
+      "bereich": "Gewässerpflege",
+      "frage": "In welchen Gewässern soll ein Besatz mit Bachforellen einem Besatz mit Regenbogenforellen vorgezogen werden?",
+      "antworten": {
+        "A": "in naturnahen und strukturreichen Gewässern der Forellenregion",
+        "B": "in sauerstoffarmen Fließgewässern mit einer Wassertemperatur von teilweise über 18 °C",
+        "C": "in strukturarmen und naturfern gestalteten Wasserläufen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.038",
+      "bereich": "Gewässerpflege",
+      "frage": "Warum sollen bei Besatzmaßnahmen in einem strukturreichen Fließgewässer der Forellenregion einsömmerige Bachforellen älteren Tieren vorgezogen werden?",
+      "antworten": {
+        "A": "weil jüngere Bachforellen bis zur Laichreife noch nicht gefangen werden dürfen",
+        "B": "weil jüngere Bachforellen das Nahrungsspektrum besser nutzen und sich den Lebensraumbedingungen leichter anpassen",
+        "C": "weil ältere Bachforellen schneller wachsen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.039",
+      "bereich": "Gewässerpflege",
+      "frage": "Unter welchen Bedingungen sollen in Baggerseen keine Forellen eingesetzt werden?",
+      "antworten": {
+        "A": "bei Vorkommen von Hechten",
+        "B": "bei Vorkommen von Schleien",
+        "C": "bei Vorkommen von Krebsen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.040",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Fischarten soll man nicht zusammen in einen Baggersee einsetzen?",
+      "antworten": {
+        "A": "Hechte und Rotaugen",
+        "B": "Hechte und Forellen",
+        "C": "Karpfen und Schleien"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.041",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Besatzkombination ist in kleinen stehenden Gewässern nicht sinnvoll?",
+      "antworten": {
+        "A": "Hechte und Forellen",
+        "B": "Hechte und Rotaugen",
+        "C": "Karpfen und Schleien"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.042",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Besatz mit einsömmerigen Hechten zu beachten?",
+      "antworten": {
+        "A": "die Hechte sollen möglichst einzeln und verteilt in das Gewässer ausgesetzt werden, um Verlusten durch Kannibalismus vorzubeugen",
+        "B": "die Hechte sollen möglichst dicht besetzt werden, um ihrem Schwarmverhalten Rechnung zu tragen",
+        "C": "da einsömmerige Hechte noch Brutpflege benötigen, dürfen sie nur zusammen mit mehrsömmerigen Hechten besetzt werden."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.043",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Forellenbesatz in Baggerseen zu beachten?",
+      "antworten": {
+        "A": "der Forellenbesatz ist schwarmweise auszubringen",
+        "B": "der Forellenbesatz ist nachts auszubringen, damit er sich besser anpasst",
+        "C": "Forellenbesatz darf nur ausgebracht werden, wenn die Wassertemperaturen geeignet sind und ausreichend Nahrung vorhanden ist."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.044",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Besatzkombination ist in flachen, weichgründigen Weihern mit ausgeprägten Wasserpflanzenbeständen sinnvoll?",
+      "antworten": {
+        "A": "Schleie, Karpfen und Hecht",
+        "B": "Renke (Felchen), Zander und Hecht",
+        "C": "Bachforelle, Schleie und Zander"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.045",
+      "bereich": "Gewässerpflege",
+      "frage": "Was soll der Fischereiberechtigte tun, wenn das Gewässer einen Überbestand an kleinwüchsigen Flussbarschen aufweist?",
+      "antworten": {
+        "A": "Er soll in ausreichender Menge Zander besetzen, da diese besser wachsen und den Flussbarsch verdrängen.",
+        "B": "Er soll großwüchsige Flussbarsche in ausreichender Menge als Besatz einbringen.",
+        "C": "Er soll die Flussbarsche intensiv befischen, z. B. mit Netzen und Reusen."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.046",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist zu tun, wenn ein Gewässer einen Überbestand an Wallern (Welsen) aufweist?",
+      "antworten": {
+        "A": "Um die Nahrungskonkurrenz zu vermindern, sollen alle anderen Fischarten intensiv befischt werden.",
+        "B": "Es sollten Futterfische besetzt werden.",
+        "C": "Der Wallerbestand soll intensiv befischt werden."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.047",
+      "bereich": "Gewässerpflege",
+      "frage": "Ein Besatz im Rahmen einer Wiederbesiedelung mit Bitterlingen in einem Gewässer ist grundsätzlich nur sinnvoll, wenn",
+      "antworten": {
+        "A": "intakte Teichmuschelbestände vorhanden sind",
+        "B": "das Gewässer großflächig mit Teichrosen bewachsen ist",
+        "C": "ausreichend kiesiges Laichsubstrat vorhanden ist"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.048",
+      "bereich": "Gewässerpflege",
+      "frage": "Fische sind für die Fortpflanzung bestimmter heimischer Muschelarten wichtig,",
+      "antworten": {
+        "A": "weil sie kleine Jungmuscheln fressen und sie andernorts unverdaut wieder ausscheiden",
+        "B": "weil sie sich bevorzugt von Muschelparasiten ernähren",
+        "C": "weil die Muschellarven einen Teil ihrer Entwicklung auf den Kiemen oder der Haut von Fischen verbringen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.049",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Krebsart soll in sommerkalten Fließgewässern gehegt werden?",
+      "antworten": {
+        "A": "Signalkrebs",
+        "B": "Kamberkrebs",
+        "C": "Steinkrebs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.050",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Fischart ist gemäß der „Roten Liste gefährdeter Tiere Bayerns“ vom Aussterben bedroht?",
+      "antworten": {
+        "A": "Moderlieschen",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Perlfisch"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.051",
+      "bereich": "Gewässerpflege",
+      "frage": "Welcher Faktor fördert die Entwicklung von pflanzlichem Plankton (Phytoplankton) in einem See wesentlich?",
+      "antworten": {
+        "A": "Eintrag von Phosphaten",
+        "B": "hoher Sauerstoffgehalt des Wassers",
+        "C": "saurer Regen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.052",
+      "bereich": "Gewässerpflege",
+      "frage": "Woran erkennt man, dass Karpfen an Sauerstoffmangel leiden?",
+      "antworten": {
+        "A": "Die Karpfen kommen an die Oberfläche und schnappen nach Luft.",
+        "B": "Die Karpfen suchen die Tiefenregion auf.",
+        "C": "Alle Karpfen gehen sofort ein."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.053",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Fischarten haben den größten Sauerstoffbedarf?",
+      "antworten": {
+        "A": "Bachforelle und Äsche",
+        "B": "Karpfen und Schleie",
+        "C": "Aal und Karausche"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.054",
+      "bereich": "Gewässerpflege",
+      "frage": "Woran erkennt man Fische, die aufgrund von Sauerstoffmangel verendet sind?",
+      "antworten": {
+        "A": "an den auffallend abstehenden Kiemendeckeln",
+        "B": "an den Glotzaugen",
+        "C": "an der gekrümmten Körperhaltung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.055",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist zu tun, wenn Sie in einem Gewässer ein Fischsterben feststellen?",
+      "antworten": {
+        "A": "die Angelfischerei intensivieren, um noch überlebende Tiere zu fangen",
+        "B": "den Gewässerwart bitten, die Bestandslücken durch Besatz auszugleichen",
+        "C": "die Polizei und die zuständige Kreisverwaltungsbehörde informieren"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.056",
+      "bereich": "Gewässerpflege",
+      "frage": "Eine Brachse mit Laichausschlag",
+      "antworten": {
+        "A": "muss sofort abgeschlagen werden, da eine Krankheit zu vermuten ist.",
+        "B": "zeigt eine Reaktion auf schlechte Wasserqualität.",
+        "C": "zeigt eine natürliche, entwicklungsbedingte Hautveränderung."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.057",
+      "bereich": "Gewässerpflege",
+      "frage": "Wodurch werden Fischparasiten besonders leicht verbreitet?",
+      "antworten": {
+        "A": "durch Verfüttern von rohen Fischeingeweiden an Fische und Krebse",
+        "B": "durch Vergraben der Fischeingeweide",
+        "C": "durch Verfüttern der Fischeingeweide an Schweine"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.058",
+      "bereich": "Gewässerpflege",
+      "frage": "Welches Verhalten lässt darauf schließen, dass ein Fisch erkrankt ist?",
+      "antworten": {
+        "A": "Der Fisch verteidigt aggressiv seinen Unterstand gegenüber Artgenossen.",
+        "B": "Der Fisch steht in der Strömung und bewegt sich kaum.",
+        "C": "Der Fisch steht apathisch im Flachwasserbereich und zeigt kein Fluchtverhalten."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.059",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie ist der Fang einer Forelle mit stark verkürztem Oberkiefer (Mopskopf) zu beurteilen?",
+      "antworten": {
+        "A": "Der verkürzte Oberkiefer weist lediglich auf eine genetische Veränderung hin; die Entnahme des Fisches muss nach den geltenden Schonbestimmungen erfolgen.",
+        "B": "Sie muss dem Gewässer entnommen werden, da sie möglicherweise den Erreger der Drehkrankheit in sich trägt.",
+        "C": "Sie muss zurückgesetzt werden, da der Oberkiefer noch nicht vollständig entwickelt ist."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.060",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Erkrankung kann leicht auftreten, wenn Fische beim Besatz nicht schonend behandelt werden?",
+      "antworten": {
+        "A": "Schwimmblasenentzündung",
+        "B": "Kiemenfäule",
+        "C": "Verpilzung der Haut"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.061",
+      "bereich": "Gewässerpflege",
+      "frage": "Mechanische Verletzungen von Fischen",
+      "antworten": {
+        "A": "sind mögliche Eintrittspforten für Keime wie Pilze, Bakterien und Viren.",
+        "B": "sind unproblematisch, da sie immer wieder verheilen.",
+        "C": "sind immer der Beginn eines Fischsterbens."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.062",
+      "bereich": "Gewässerpflege",
+      "frage": "Was sind Parasiten?",
+      "antworten": {
+        "A": "Tiere, die andere Tiere fressen",
+        "B": "Tiere oder Pflanzen, die ihren Wirten Nährstoffe liefern, die diese nicht selbst produzieren können",
+        "C": "Schmarotzer, die andere lebende Tiere oder Pflanzen befallen und ihnen Nährstoffe für den eigenen Lebensbedarf entziehen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.063",
+      "bereich": "Gewässerpflege",
+      "frage": "An welcher Stelle des Fischkörpers setzen sich Karpfenläuse fest?",
+      "antworten": {
+        "A": "nur auf den Flossen",
+        "B": "auf der gesamten Körperoberfläche",
+        "C": "nur auf den Kiemen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.064",
+      "bereich": "Gewässerpflege",
+      "frage": "Welcher Parasit schmarotzt auf der Haut von Fischen?",
+      "antworten": {
+        "A": "Karpfenlaus",
+        "B": "Riemenwurm",
+        "C": "Kratzer"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.065",
+      "bereich": "Gewässerpflege",
+      "frage": "Woran erkennt man die Grießkörnchenkrankheit bei Fischen?",
+      "antworten": {
+        "A": "an weißen Punkten, beschränkt auf Kopf und Kiemen",
+        "B": "an weißen Punkten, verteilt auf der Körperoberfläche, an Haut, Kiemen, Auge und Flossen",
+        "C": "an nur mit der Lupe erkennbaren weißen Punkten auf den Kiemen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.066",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist ein Fischegel?",
+      "antworten": {
+        "A": "ein Darmschmarotzer",
+        "B": "ein auf den Kiemen schmarotzender Kleinkrebs",
+        "C": "ein blutsaugender Hautschmarotzer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.067",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist ein Kiemenkrebs?",
+      "antworten": {
+        "A": "ein Fischnährtier",
+        "B": "eine geschwulstartige Erkrankung der Fischkiemen",
+        "C": "ein Schmarotzer auf den Fischkiemen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.068",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Kiemenfäule bei Karpfen ist eine",
+      "antworten": {
+        "A": "Virusinfektion",
+        "B": "Pilzkrankheit, die in stark eutrophen Gewässern bei hohen Wassertemperaturen und dichtem Fischbestand zu großen Verlusten führen kann",
+        "C": "Spätfolge des Kiemenkrebsbefalls"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.069",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Krebspest wird hervorgerufen durch",
+      "antworten": {
+        "A": "ein Virus",
+        "B": "einen Pilz",
+        "C": "ein Bakterium"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.070",
+      "bereich": "Gewässerpflege",
+      "frage": "Was kann auf einen Befall des Edelkrebses mit der Krebspest hindeuten?",
+      "antworten": {
+        "A": "aus dem Wasser gehoben und in Normallage gehalten lässt der Krebs Beine und Scheren kraftlos nach unten hängen",
+        "B": "der Krebs trägt schwarze Flecken auf den Scheren",
+        "C": "der Krebs trägt weiße Flecken am Hinterleib"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.071",
+      "bereich": "Gewässerpflege",
+      "frage": "Zu den Innenparasiten zählen",
+      "antworten": {
+        "A": "Kratzer und Bandwürmer",
+        "B": "Fischläuse und Kiemenkrebse",
+        "C": "Fischegel"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.072",
+      "bereich": "Gewässerpflege",
+      "frage": "Können Wasserschnecken eine Gefahr für den Fischbestand darstellen?",
+      "antworten": {
+        "A": "ja, als Zwischenwirte gefährlicher Fischparasiten",
+        "B": "nein, überhaupt nicht",
+        "C": "zeitweise, als Nahrungskonkurrenten"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.073",
+      "bereich": "Gewässerpflege",
+      "frage": "Der Hechtbandwurm braucht als Zwischenwirt",
+      "antworten": {
+        "A": "Muscheln",
+        "B": "Wasserschnecken",
+        "C": "Hüpferlinge"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.074",
+      "bereich": "Gewässerpflege",
+      "frage": "Welches sind die häufigsten Ursachen für Fischsterben?",
+      "antworten": {
+        "A": "geringes Nahrungsangebot",
+        "B": "Sauerstoffmangel, Vergiftungen, Krankheiten",
+        "C": "zu hoher Fischbestand"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.075",
+      "bereich": "Gewässerpflege",
+      "frage": "Woran erkennt man ein Fischsterben, das durch eine Krankheit hervorgerufen wird?",
+      "antworten": {
+        "A": "das Fischsterben erfasst nur die am Grund lebenden Fische",
+        "B": "das Fischsterben erfasst meist alle im Gewässer vorkommenden Fische innerhalb kurzer Zeit",
+        "C": "das Fischsterben betrifft meist nur Fische einer Art"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.076",
+      "bereich": "Gewässerpflege",
+      "frage": "Wo wirkt sich in einem Fließgewässer die Einleitung von sauerstoffzehrenden Abwässern am stärksten aus?",
+      "antworten": {
+        "A": "eine gewisse Strecke unterhalb der Einleitungsstelle",
+        "B": "oberhalb der Einleitungsstelle",
+        "C": "direkt an der Einleitungsstelle"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.077",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Stoffe haben besondere Bedeutung als Pflanzennährstoffe in Gewässern?",
+      "antworten": {
+        "A": "Wasserstoff und Sauerstoff",
+        "B": "Phosphor und Stickstoff",
+        "C": "Sand und Kies"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.078",
+      "bereich": "Gewässerpflege",
+      "frage": "Was hat bei der Feststellung eines Fischsterbens als erstes zu erfolgen?",
+      "antworten": {
+        "A": "die Anzeige bei der nächstgelegenen Polizeidienststelle",
+        "B": "die Ermittlung der Anzahl verendeter Fische",
+        "C": "die Verständigung einer staatlich anerkannten Untersuchungsstelle"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.079",
+      "bereich": "Gewässerpflege",
+      "frage": "Wo müssen bei Fischsterben in Fließgewässern Wasserproben gezogen werden, wenn als Ursache die Einleitung von Schadstoffen vermutet wird?",
+      "antworten": {
+        "A": "an der Stelle, an der die ersten toten Fische beobachtet werden, sowie 500 m unterhalb",
+        "B": "unterhalb der vermuteten Einleitungsstelle im Bereich sterbender Fische",
+        "C": "oberhalb und unterhalb sowie direkt an der vermuteten Einleitungsstelle"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.080",
+      "bereich": "Gewässerpflege",
+      "frage": "Müssen Sie als Fischereiausübungsberechtigter auch ein geeignetes Gefäß zur Entnahme von rechtsverwertbaren Wasserproben mit sich führen?",
+      "antworten": {
+        "A": "nein, für die Entnahme von Wasserproben sind Amtspersonen erforderlich",
+        "B": "ja, aber nur wenn das betreffende Gewässer mit Krankheitserregern belastet ist",
+        "C": "ja, der Fischereiausübungsberechtigte ist verpflichtet in sehr nährstoffreichen Gewässern regelmäßig Wasserproben zu entnehmen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.081",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist zu tun, wenn beim Angeln krankheitsverdächtige Fische beobachtet werden?",
+      "antworten": {
+        "A": "alle krankheitsverdächtigen Fische fangen, töten und vergraben",
+        "B": "sofort den Fischereiberechtigten verständigen",
+        "C": "dort weiterangeln, wo keine krankheitsverdächtigen Fische zu beobachten sind"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.082",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist zu tun, wenn man einen krankheitsverdächtigen Fisch gefangen hat",
+      "antworten": {
+        "A": "aus dem Gewässer entnehmen und sofort den Fischereiberechtigten verständigen",
+        "B": "in das Gewässer zurücksetzen",
+        "C": "aus dem Gewässer entnehmen, töten und vergraben"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.083",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie sollen erkrankte Fische dem Fischgesundheitsdienst überbracht werden?",
+      "antworten": {
+        "A": "tot und tiefgefroren",
+        "B": "möglichst lebend",
+        "C": "in ausgenommenem Zustand auf Eis"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.084",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Einrichtung ist befähigt krankheitsverdächtige Fische zu untersuchen?",
+      "antworten": {
+        "A": "Fischgesundheitsdienst",
+        "B": "Polizei",
+        "C": "Institut für Fischerei"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.085",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Einleitungen verursachen Schäden an Haut und Kiemen der Fische?",
+      "antworten": {
+        "A": "ätzende und schwebstoffhaltige Abwässer",
+        "B": "Einleitungen von Mühlkanälen",
+        "C": "Regenwassereinleitungen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.086",
+      "bereich": "Gewässerpflege",
+      "frage": "Warum sind Baustellenabwässer - bestehend aus Zement-, Beton- oder Baukalkabwasser - fischschädlich?",
+      "antworten": {
+        "A": "weil sie stark alkalisch sind und ätzend wirken",
+        "B": "weil sie Säuren enthalten",
+        "C": "weil sie den Sauerstoffgehalt senken"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.087",
+      "bereich": "Gewässerpflege",
+      "frage": "Sind durch Lehm- und Ton getrübte Abwässer fischschädlich?",
+      "antworten": {
+        "A": "ja, weil solche Abwässer stark faulen",
+        "B": "nein, sie sind unschädlich",
+        "C": "ja, die Funktion der Kiemen kann durch Ablagerung von Trübstoffen beeinträchtigt werden"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.088",
+      "bereich": "Gewässerpflege",
+      "frage": "Warum werden abgelassene Fischteiche mit Branntkalk behandelt?",
+      "antworten": {
+        "A": "in erster Linie zur Anreicherung des Schlamms mit Kalk",
+        "B": "in erster Linie zur Desinfektion",
+        "C": "zur Wasserreduzierung im Schlamm"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.089",
+      "bereich": "Gewässerpflege",
+      "frage": "Für welche Hegemaßnahme ist eine behördliche Genehmigung erforderlich?",
+      "antworten": {
+        "A": "Stellnetzfischerei",
+        "B": "Reusenfischerei",
+        "C": "Elektrofischerei"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.090",
+      "bereich": "Gewässerpflege",
+      "frage": "Zur Ausübung der Elektrofischerei benötigt man",
+      "antworten": {
+        "A": "einen Fischereierlaubnisschein sowie den Nachweis einer Berufsausbildung im technischen Bereich.",
+        "B": "eine Genehmigung der Kreisverwaltungsbehörde, einen Bedienungsschein sowie den staatlichen Fischereischein.",
+        "C": "keine besondere Qualifikation."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.091",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Elektrofischerei wird eingesetzt zur",
+      "antworten": {
+        "A": "Erfassung des Nährtierbestandes",
+        "B": "Erfassung des Fischbestandes",
+        "C": "Bekämpfung von Wasserpflanzen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.092",
+      "bereich": "Gewässerpflege",
+      "frage": "Bei ordnungsgemäßer Anwendung der Elektrofischerei",
+      "antworten": {
+        "A": "wird der Fischbestand nicht geschädigt.",
+        "B": "werden viele Fische unmittelbar getötet.",
+        "C": "werden die Fische von Hautparasiten befreit."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.093",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Elektrofischerei zur Erfassung des Fischbestandes ist besonders effektiv",
+      "antworten": {
+        "A": "in Seen aller Art",
+        "B": "in tiefen Kolken und Rinnen",
+        "C": "in kleinen und mittleren Fließgewässern"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.094",
+      "bereich": "Gewässerpflege",
+      "frage": "Wo erhält man Informationen darüber, welche Tiere und Pflanzen besonders gefährdet sind?",
+      "antworten": {
+        "A": "Fischereigesetz",
+        "B": "Bürgerliches Gesetzbuch",
+        "C": "Rote Liste"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.095",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche fischereiliche Bedeutung haben Kolke und Gumpen in Fließgewässern?",
+      "antworten": {
+        "A": "sie sind bevorzugte Standplätze der Fische",
+        "B": "sie werden von Fischen gemieden",
+        "C": "sie wirken sich nachteilig aus, da das Wasser dort immer sauerstoffarm ist"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.096",
+      "bereich": "Gewässerpflege",
+      "frage": "Ein strukturreiches Fließgewässer",
+      "antworten": {
+        "A": "bietet Lebensraum für viele Fisch- und Kleintierarten bei hoher Individuendichte",
+        "B": "hat in der Regel nur einen geringen ökologischen Wert.",
+        "C": "hat einen vergleichbaren ökologischen Wert wie ein Fließkanal mit betonierter Sohle."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.097",
+      "bereich": "Gewässerpflege",
+      "frage": "Was kennzeichnet ein natürliches Fließgewässer?",
+      "antworten": {
+        "A": "keine Hochwasserereignisse",
+        "B": "ein großer Anteil an Raubfischen",
+        "C": "ein sich veränderndes Gewässerbett"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.098",
+      "bereich": "Gewässerpflege",
+      "frage": "Was wirkt sich auf den Fischbestand eines Flusses nachteilig aus?",
+      "antworten": {
+        "A": "natürliche Uferbeschaffenheit",
+        "B": "Pflanzenbewuchs",
+        "C": "Flussbegradigung"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.099",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie kann sich eine Uferbegradigung (Längsverbau) auf den Fischbestand eines Fließgewässers auswirken?",
+      "antworten": {
+        "A": "bedingt durch einen monotoneren Lebensraum kommt es meist zur Verringerung der Fischarten und der Anzahl der Individuen",
+        "B": "bedingt durch einen strukturreicheren Lebensraum siedeln sich verstärkt seltene Fischarten in großer Anzahl an",
+        "C": "sie hat keinen Einfluss auf den Fischbestand"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.100",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie können sich Querbauwerke (z. B. Wehre) auf die Fischbestände eines Fließgewässers auswirken?",
+      "antworten": {
+        "A": "Sie haben keinen Einfluss auf die Fischbestände.",
+        "B": "Sie isolieren die Fischbestände und verhindern die Laichwanderungen.",
+        "C": "Sie fördern die Laichwanderungen."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.101",
+      "bereich": "Gewässerpflege",
+      "frage": "Welchen Einfluss haben Wehre, wenn sie sich in kurzen Abständen in einem Fließgewässer befinden?",
+      "antworten": {
+        "A": "Sie verbessern die Möglichkeit der Laichwanderung von Fischen.",
+        "B": "Bedingt durch die längere Verweildauer des Wassers kommt es zu einer Verbesserung der Wasserqualität.",
+        "C": "Sie verlangsamen die Fließgeschwindigkeit, der Gewässergrund verschlammt und Kieslaichplätze gehen verloren."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.102",
+      "bereich": "Gewässerpflege",
+      "frage": "Was wirkt sich in staugeregelten Fließgewässern besonders negativ auf die Tier- und Pflanzenwelt aus?",
+      "antworten": {
+        "A": "die Abkühlung im Winter",
+        "B": "ein geringes Nahrungsangebot",
+        "C": "die häufige Änderung des Wasserstandes"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.103",
+      "bereich": "Gewässerpflege",
+      "frage": "Das Betreiben eines Wasserkraftwerks im Schwellbetrieb",
+      "antworten": {
+        "A": "hat keinen Einfluss auf Fische und Fischnährtiere.",
+        "B": "ist von Vorteil, da die Fische sich in den Stauphasen erholen können.",
+        "C": "ist schädlich, weil z.B. Laichgruben der Fische im Uferbereich trocken fallen."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.104",
+      "bereich": "Gewässerpflege",
+      "frage": "Welchen Einfluss hat die Temperaturerhöhung in Folge von Kühlwassereinleitung aus Industrieanlagen und Heizkraftwerken auf die Fischfauna?",
+      "antworten": {
+        "A": "sie hat keinen Einfluss, da die Laichzeit gewässertypischer Fischarten nicht von der Wassertemperatur beeinflusst wird",
+        "B": "sie kann die Entwicklung wärmeliebender Fischarten schädigen",
+        "C": "sie kann die Entwicklung kälteliebender Fischarten schädigen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.105",
+      "bereich": "Gewässerpflege",
+      "frage": "Stauwehre von Wasserkraftanlagen sind für Wanderfischarten",
+      "antworten": {
+        "A": "positiv, da für sie im Ober- und Unterwasser von Staustufen wertvolle Lebensräume entstehen.",
+        "B": "negativ, da sie in der Regel die Durchgängigkeit des Fließgewässers verschlechtern.",
+        "C": "unbedeutend"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.106",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist in der Fischerei unter „Durchgängigkeit“ von Fließgewässern zu verstehen?",
+      "antworten": {
+        "A": "eine freie Passierbarkeit für Fische eine Flachstelle, an der der Angler",
+        "B": "das Gewässer queren kann",
+        "C": "eine gleichmäßige Strömung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.107",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche wasserbaulichen Einrichtungen fördern die Durchgängigkeit von Fließgewässern?",
+      "antworten": {
+        "A": "Uferblocksteine",
+        "B": "Querverbauungen (z. B. Wehre)",
+        "C": "Umgehungsgerinne, Fischtreppen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.108",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Wiederherstellung der Durchgängigkeit von Fließgewässern führt in der Regel",
+      "antworten": {
+        "A": "zur Verbesserung der Lebensraumbedingungen der Fischfauna.",
+        "B": "zu keiner Verbesserung aus fischereilicher Sicht.",
+        "C": "zur Verbesserung des Pflanzenbewuchses."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.109",
+      "bereich": "Gewässerpflege",
+      "frage": "Was sind Fischtreppen oder Fischpässe?",
+      "antworten": {
+        "A": "bevorzugte Routen bei Fischwanderungen in unverbauten Fließgewässern",
+        "B": "bauliche Anlagen, die den Fischern Zugang zu guten Fangplätzen ermöglichen",
+        "C": "bauliche Anlagen, die den Fischen die Überwindung von Wanderhindernissen, z. B. Stauwehren ermöglichen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.110",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche Maßnahmen sollten aus fischbiologischer Sicht an Wasserkraftwerken getroffen werden?",
+      "antworten": {
+        "A": "Schutzvorrichtungen vor dem Turbineneinlass sollen das Einschwimmen von Fischen verhindern",
+        "B": "es sind keine Maßnahmen notwendig, da die Wasserkraft zu den umweltfreundlichen Technologien zählt",
+        "C": "der Betreiber der Anlage sollte regelmäßig vor dem Stau abfischen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.111",
+      "bereich": "Gewässerpflege",
+      "frage": "Warum sollen aus fischbiologischer Sicht Fließgewässer durchgängig sein?",
+      "antworten": {
+        "A": "weil viele Fischarten flussaufwärts wie flussabwärts zu den Laichgebieten ziehen",
+        "B": "weil sich damit das Verbreitungsgebiet des Bibers vergrößern lässt",
+        "C": "weil der Bewirtschafter das Gewässer leichter queren kann."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.112",
+      "bereich": "Gewässerpflege",
+      "frage": "Was sollte bei regelmäßig durchgeführten Entlandungen kleiner Gräben (Grabenräumung) aus fischbiologischer Sicht berücksichtigt werden?",
+      "antworten": {
+        "A": "sie sollten nicht geräumt, sondern generell verrohrt werden",
+        "B": "sie sollten schnellstmöglich in ihrer gesamten Länge entlandet werden, da nur so eine hohe Effizienz erzielt wird",
+        "C": "sie sollten nicht in ihrer gesamten Länge auf einmal entlandet werden, da im Gewässer verbleibende Inseln eine Wiederbesiedlung mit Kleintieren und Kleinfischarten erleichtert"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.113",
+      "bereich": "Gewässerpflege",
+      "frage": "Die Durchgängigkeit von Fließgewässern wird von der Fischerei gefordert, weil",
+      "antworten": {
+        "A": "Nähr- und Giftstoffe schneller und effektiver abtransportiert werden.",
+        "B": "es sonst zu einer Verarmung der Artenvielfalt kommt.",
+        "C": "die Bootsfischerei leichter ausgeübt werden kann."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.114",
+      "bereich": "Gewässerpflege",
+      "frage": "Maßnahmen zur Wiederherstellung intakter Gewässerstrukturen (Renaturierung) dienen in erster Linie",
+      "antworten": {
+        "A": "der leichteren Bewirtschaftung des Gewässers",
+        "B": "der Freizeitnutzung",
+        "C": "dem Artenschutz und Erhalt der Artenvielfalt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.115",
+      "bereich": "Gewässerpflege",
+      "frage": "Können als Laichhilfen ins Gewässer eingebrachte Strukturelemente positiv beurteilt werden?",
+      "antworten": {
+        "A": "nein, sie verrotten und belasten das Gewässer mit fäulnisfähigen Stoffen",
+        "B": "ja, wenn aufgrund der Strukturarmut des Gewässers ein Mangel an natürlichen Laichplätzen besteht",
+        "C": "nein, sie werden von den Fischen grundsätzlich nicht angenommen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.116",
+      "bereich": "Gewässerpflege",
+      "frage": "Bei der Renaturierung von Fließgewässern ist eine geeignete Maßnahme,",
+      "antworten": {
+        "A": "der Einbau eines Querbauwerks um den Wasserstand zu erhöhen.",
+        "B": "das Einbringen von Totholz, weil dadurch die Lebensraumvielfalt und der Artenreichtum verbessert werden kann.",
+        "C": "eine Sohlpflasterung, um strömungsliebenden Fischen die Wanderung zu erleichtern."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.117",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie sind aus fischbiologischer Sicht Totholz (abgestorbene Bäume und Äste) in einem Gewässer zu beurteilen?",
+      "antworten": {
+        "A": "Negativ, da der freie Zug der Fische unterbrochen wird.",
+        "B": "Es hat weder positive noch negative Auswirkungen.",
+        "C": "Positiv, da es von Fischen als Unterstand angenommen und auch von einer großen Anzahl von Fischnährtieren besiedelt wird."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.118",
+      "bereich": "Gewässerpflege",
+      "frage": "Sind Altarme eines Gewässers ökologisch besonders wertvoll?",
+      "antworten": {
+        "A": "Altarme sind ökologisch weder positiv noch negativ zu bewerten",
+        "B": "ja, weil sie Fischen, Amphibien und Vögeln geeignete Lebensbedingungen bieten",
+        "C": "nein, weil sie zur Verlandung neigen und nur noch wenigen Tieren und Pflanzen geeigneten Lebensraum bieten"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.119",
+      "bereich": "Gewässerpflege",
+      "frage": "Wie ist aus fischbiologischer Sicht die Anbindung von Kiesgruben im Uferbereich größerer Fließgewässer zu beurteilen?",
+      "antworten": {
+        "A": "positiv, da sie die Lebensraumvielfalt des Flusses bereichern, sowie Fortpflanzungs- und Aufwuchsareale für viele Fischarten bieten",
+        "B": "unbedeutend, da sie nur dem Hochwasserschutz dienen",
+        "C": "negativ, da fischfressende Wasservögel einen leichteren Zugang zu den Wasserorganismen erhalten"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.120",
+      "bereich": "Gewässerpflege",
+      "frage": "Können Fische Schadstoffe aus dem Wasser aufnehmen und anreichern, wie beispielsweise Pflanzenschutzmittel und Schwermetalle?",
+      "antworten": {
+        "A": "die Stoffe werden vom Fisch zwar aufgenommen aber mit Hilfe der Niere vollständig ausgeschieden",
+        "B": "die Stoffe können vom Fisch nicht aufgenommen werden",
+        "C": "die Stoffe werden teils direkt oder indirekt über die Nahrung aufgenommen und teilweise im Körper angereichert"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.121",
+      "bereich": "Gewässerpflege",
+      "frage": "Welchen Nutzen hat ein uferbegleitender Gehölzsaum?",
+      "antworten": {
+        "A": "Er erhöht die Ertragsfähigkeit des angrenzenden Ackerlandes.",
+        "B": "Er dient unter anderem dem Rückhalt von Einschwemmungen aus dem Umland (Uferschutzstreifen) und der Beschattung des Gewässers.",
+        "C": "Er hat keinen Nutzen."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.122",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche ökologische Bedeutung hat ein uferbegleitender Gehölzsaum von Weiden und Erlen für den Lebensraum Bach?",
+      "antworten": {
+        "A": "er beschattet den Wasserkörper und wirkt damit einer Erwärmung und einem übermäßigen Wachstum an Unterwasserpflanzen entgegen",
+        "B": "er entzieht dem Gewässer nennenswerte Mengen an Nährstoffen",
+        "C": "er hat keine Bedeutung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.123",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche ökologische Bedeutung hat ein uferbegleitender Gehölzsaum von Weiden und Erlen für den Lebensraum Bach?",
+      "antworten": {
+        "A": "Er befestigt den Uferbereich durch seine Wurzeln und bietet den Fischen Unterstand.",
+        "B": "Er trägt nennenswert zur Anreicherung von Sauerstoff im Gewässer bei.",
+        "C": "Er bietet Ansitzmöglichkeiten für fischfressende Vögel beim Jagen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.124",
+      "bereich": "Gewässerpflege",
+      "frage": "Welche fischbiologische Bedeutung hat ein uferbegleitender Geländestreifen von ca. 10m Breite, der aus der landwirtschaftlichen Nutzung genommen wird (Uferschutzstreifen)?",
+      "antworten": {
+        "A": "er dient in erster Linie der Verbesserung des Landschaftbildes",
+        "B": "er minimiert den durch Abschwemmung verursachten Eintrag von Agrarchemikalien und Düngestoffen in das Gewässer",
+        "C": "er dient in erster Linie der Beschattung von Angelplätzen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.125",
+      "bereich": "Gewässerpflege",
+      "frage": "Sind flache Ufer aus Sicht der Fischbiologie positiv zu beurteilen?",
+      "antworten": {
+        "A": "ja, weil sich die Fische hier gerne aufhalten, um zu überwintern",
+        "B": "nein, weil die Fische dort besonders leicht von fischfressenden Vögeln erbeutet werden können",
+        "C": "ja, weil sie Lebensraum, Fortpflanzungs- und Aufwuchsareal für viele Fisch- und Kleintierarten bieten"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.126",
+      "bereich": "Gewässerpflege",
+      "frage": "In ein ausgebautes Fließgewässer sollen vereinzelt große Steine zur Strukturverbesserung eingebracht werden, mit folgendem Nutzen:",
+      "antworten": {
+        "A": "um den Stein herum bilden sich unterschiedliche Fließgeschwindigkeiten aus, die zu einer vielfältigen Sortierung des Bodensubstrats führen",
+        "B": "es besteht kein Nutzen, da die Steine den Weg der wanderaktiven Fischarten behindern",
+        "C": "die Steine dienen dem Angler als Tritt"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.127",
+      "bereich": "Gewässerpflege",
+      "frage": "Was ist beim Transport von lebenden Fischen zu beachten?",
+      "antworten": {
+        "A": "das Transportgefäß muss für die Fische ein ausreichend großes Wasservolumen mit ausreichender Sauerstoffversorgung bieten",
+        "B": "zur Vermeidung von unnötigen Bewegungen der Fische ist das Transportgefäß möglichst klein zu halten",
+        "C": "die Fische sind während des Transports mehrmals zu füttern"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.128",
+      "bereich": "Gewässerpflege",
+      "frage": "Dürfen erkennbar kranke Fische als Besatz in ein anderes Gewässer eingebracht werden?",
+      "antworten": {
+        "A": "nein",
+        "B": "ja",
+        "C": "ja, aber nur mit Zustimmung des Fischereiberechtigten"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.129",
+      "bereich": "Gewässerpflege",
+      "frage": "Wo parasitieren Fischegel?",
+      "antworten": {
+        "A": "im Darm",
+        "B": "in der Leibeshöhle",
+        "C": "auf der Haut"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.130",
+      "bereich": "Gewässerpflege",
+      "frage": "Totholz",
+      "antworten": {
+        "A": "wirkt sich negativ auf die Artenvielfalt im Gewässer aus.",
+        "B": "verschlechtert die Wasserqualität und soll daher immer entfernt werden.",
+        "C": "bereichert den Lebensraum und fördert die Artenvielfalt."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.131",
+      "bereich": "Gewässerpflege",
+      "frage": "In welcher Jahreszeit ist für Fische die Wahrscheinlichkeit zu erkranken am größten?",
+      "antworten": {
+        "A": "im Frühjahr, nach der Winterruhe oder dem Stress der Laichzeit",
+        "B": "im Winter, weil sie keine Nahrung finden",
+        "C": "im Herbst, durch sinkende Wassertemperaturen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.132",
+      "bereich": "Gewässerpflege",
+      "frage": "Dürfen gebietsfremde Fischarten in nicht geschlossenen Gewässern ausgesetzt werden?",
+      "antworten": {
+        "A": "Ja, da diese Arten möglicherweise gegenüber den Folgen des Klimawandels besser angepasst sind.",
+        "B": "Nein, es besteht vor allem die Gefahr, dass dadurch heimische Arten verdrängt werden.",
+        "C": "generell nur bei amtlich nachgewiesener Seuchenfreiheit der Besatzfische"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "3.133",
+      "bereich": "Gewässerpflege",
+      "frage": "Bei der Frühjahrsabfischung zeigen sich einige Karpfen mit milchigen Schleimhautwucherungen („Fischpocken“).",
+      "antworten": {
+        "A": "Auf den Besatz mit den befallenen Fischen muss verzichtet werden.",
+        "B": "Schleien und Karpfen sind gegen Fischpocken unempfindlich. Es muss sich um eine andere Erkrankung handeln.",
+        "C": "Die befallenen Tiere sind als Laichfische zu bevorzugen, da sie durch diese Parasiten widerstandsfähiger gegenüber anderen Fischkrankheiten sind."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.134",
+      "bereich": "Gewässerpflege",
+      "frage": "Bedarf der Besatz mit der aus Amerika stammenden Regenbogenforelle der Genehmigung?",
+      "antworten": {
+        "A": "Der Besatz mit Regenbogenforellen bedarf gem. AVBayFiG nicht der Genehmigung.",
+        "B": "Nein, Regenbogenforellen dürfen grundsätzlich nicht besetzt werden.",
+        "C": "Regenbogenforellen dürfen nur besetzt werden, wenn genug Hechte im Gewässer vorkommen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "3.135",
+      "bereich": "Gewässerpflege",
+      "frage": "Was sind Prädatoren?",
+      "antworten": {
+        "A": "Turbinen an Wasserkraftanlagen.",
+        "B": "Ablassvorrichtungen an Teichdämmen.",
+        "C": "Vögel wie Graureiher, Gänsesäger, Kormoran und Säugetiere wie Fischotter, Mink, die sich hauptsächlich von Fischen ernähren."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "3.136",
+      "bereich": "Gewässerpflege",
+      "frage": "Können Prädatoren Fischbestände nachhaltig schädigen?",
+      "antworten": {
+        "A": "Nein, weil sich Räuber-Beute- Beziehungen selbst regulieren.",
+        "B": "Ja, da in der Kulturlandschaft die Lebensbedingungen der Fische beeinträchtigt sind und das ökologische Gleichgewicht gestört ist.",
+        "C": "Nein, da Prädatoren keine Fische fressen."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    }
+  ]
+}
