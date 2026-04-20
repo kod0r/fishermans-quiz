@@ -78,19 +78,29 @@ interface Frage {
 
 ## Git & GitHub Workflow
 
+### 🔑 Das wichtigste Prinzip
+
+> **GitHub Issues sind die einzige Quelle der Wahrheit.**
+>
+> - ROADMAP.md hat **KEINE eigenen Nummern** — nur Links zu GitHub Issues
+> - Commits referenzieren **nur GitHub Issue-Nummern** (`#1`, `#2`, …)
+> - Nie zwei Nummerierungssysteme parallel führen
+
 ### Gesamtprozess
 
 ```
-ROADMAP.md (Planung) → GitHub Issue (Tracking) → Commit (Umsetzung) → CHANGELOG.md (Doku)
+Idee ──→ GitHub Issue ──→ Entwickeln ──→ Commit (#N) ──→ CHANGELOG
+            ↑                                   ↓
+            └────────── Issue schließen ←───────┘
 ```
 
-1. **Idee** in `ROADMAP.md` unter "Geplante Features" oder "Backlog" eintragen
-2. **GitHub Issue** anlegen mit Label (`enhancement`, `bug`, `docs`)
-3. **Issue-Nummer** in `ROADMAP.md` verlinken (z.B. `[#1](...)`)
-4. **Entwickeln** → Code schreiben und testen
-5. **Commit & Push erst nach expliziter Erlaubnis** → Siehe unten
-6. **Issue schließen** → In `ROADMAP.md` als "erledigt" markieren
-7. **Changelog** → Eintrag in `[Unreleased]` (vor Release in Version verschieben)
+1. **Idee hat?** → Direkt [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new) — nicht erst ROADMAP
+2. **ROADMAP aktualisieren** → Issue-Link in "Geplant" oder "In Arbeit" eintragen
+3. **Entwickeln** → Code schreiben, testen, bauen
+4. **Commit** → Message mit Issue-Referenz: `feat(ui): description (#42)`
+5. **Push erst nach expliziter Erlaubnis** → Siehe unten
+6. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
+7. **Changelog** → Eintrag in `[Unreleased]`
 
 ### ⚠️ Wichtig: Commit & Push nur nach Erlaubnis
 
@@ -104,20 +114,19 @@ ROADMAP.md (Planung) → GitHub Issue (Tracking) → Commit (Umsetzung) → CHAN
 >
 > **Ablauf:**
 > 1. Kimi zeigt die geänderten Dateien und die vorgeschlagene Commit-Message
-> 2. Kimi fragt: "Soll ich committen und pushen?"
+> 2. Kimi fragt: "Erlaubnis für Commit & Push?"
 > 3. Erst nach Bestätigung des Nutzers wird ausgeführt
 >
 > **Ausnahme:** `git add` und lokale `git status` sind ohne Erlaubnis erlaubt (nur Vorbereitung).
 
 ### Commit-Messages: Conventional Commits
+
 Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.org/)-Standard:
 
 ```
-<type>(<scope>): <description>
+<type>(<scope>): <description> (#<issue-nummer>)
 
 [optional body]
-
-[optional footer]
 ```
 
 **Typen:**
@@ -126,32 +135,39 @@ Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.o
 | `feat` | Neue Features |
 | `fix` | Bugfixes |
 | `docs` | Dokumentation |
-| `style` | Formatierung, Semikolons, etc. (keine Code-Änderung) |
-| `refactor` | Code-Refactoring (weder feat noch fix) |
+| `style` | Formatierung, Semikolons |
+| `refactor` | Code-Refactoring |
 | `test` | Tests hinzufügen/ändern |
-| `chore` | Build-Prozess, Dependencies, etc. |
+| `chore` | Build, Dependencies |
 
-**Scope:** Modul/Komponente (z.B. `ui`, `quiz`, `hooks`, `data`, `agents`)
+**Scope:** Modul/Komponente (`ui`, `quiz`, `hooks`, `data`, `store`)
 
 **Beispiele:**
 ```bash
-git commit -m "feat(quiz): add collapsible wrong-answers section in ProgressView (#2)"
-git commit -m "fix(hooks): prevent navigation to quiz without loaded data"
-git commit -m "perf(data): implement staged loading for quiz questions"
-git commit -m "docs(agents): add GitHub workflow conventions"
-git commit -m "chore(deps): update vite to 7.3.0"
+git commit -m "feat(quiz): add arcade mode with 2nd-chance dialog (#3)"
+git commit -m "fix(hooks): prevent navigation without loaded data (#1)"
+git commit -m "test(store): add settings hook tests (#4)"
 ```
 
-### GitHub Issues
-- **Erstellen:** [github.com/kod0r/fishermans-quiz/issues/new](https://github.com/kod0r/fishermans-quiz/issues/new)
-- **Labels:** `enhancement` (Feature), `bug` (Fehler), `docs` (Doku)
-- **Verknüpfung:** In Commits `#1`, `#2` etc. referenzieren – GitHub verlinkt automatisch
+### ROADMAP.md — Regeln
 
-### Branching (für Ein-Personen-Projekt optional)
-Für kleine Features direkt auf `main` committen. Bei größeren Änderungen:
+- **Keine eigenen IDs** — nur GitHub Issue-Links (`[#3](...)`)
+- **Drei Sektionen:** "In Arbeit", "Geplant", "Erledigt"
+- **Keine Details** — die gehören ins GitHub Issue
+- **Wöchentlich reviewen:** Erledigtes nach 2–4 Wochen archivieren
+
+### GitHub Issues — Regeln
+
+- **Erstellen:** [github.com/kod0r/fishermans-quiz/issues/new](https://github.com/kod0r/fishermans-quiz/issues/new)
+- **Labels:** `enhancement`, `bug`, `docs`
+- **Titel-Format:** `<type>(<scope>): Kurzbeschreibung`
+- **NIE wiederverwenden** — wenn ein Issue obsolet wird, schließen und neues anlegen
+
+### Branching (optional)
+
+Für kleine Features direkt auf `main`. Bei größeren Änderungen:
 ```bash
 git checkout -b feat/responsive-design
-# ... arbeiten ...
 git commit -m "feat(ui): add responsive breakpoints (#1)"
 git push -u origin feat/responsive-design
 # GitHub → Pull Request → Merge

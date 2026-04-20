@@ -1,87 +1,74 @@
 # ROADMAP
 
-> **Lebendes Dokument:** Diese Datei verbindet strategische Planung mit operativem Tracking.
+> **Lebendes Dokument:** Übersicht über geplante, laufende und erledigte Arbeit.
 >
-> **Workflow:** ROADMAP (Plan) → GitHub Issue (Tracking) → Branch/Commit (Umsetzung) → Changelog (Dokumentation)
+> **WICHTIG:** GitHub Issues sind die einzige Quelle der Wahrheit für Tracking.
+> Diese ROADMAP ist eine lesbare Übersicht — keine separate Nummerierung.
 
 ---
 
-## 🔄 Unser Entwicklungsprozess
+## 🔄 Workflow
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────────┐
-│  ROADMAP    │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
-│  (Planung)  │     │ (Tracking)   │     │ (Umsetzung) │     │ (Release)   │
+│   Idee      │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
+│  (ROADMAP)  │     │ (Tracking)   │     │ (Umsetzung) │     │ (Release)   │
 └─────────────┘     └──────────────┘     └─────────────┘     └─────────────┘
 ```
 
-### Schritt-für-Schritt
+### Regeln
 
-1. **Idee erfassen** → In ROADMAP unter "Geplante Features" oder "Backlog" eintragen
-2. **Ticket erstellen** → [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new) mit Label (`enhancement`, `bug`, `docs`)
-3. **Issue-Nummer notieren** → In ROADMAP die Issue-Nummer verlinken (`#42`)
-4. **Entwickeln** → Branch erstellen (optional), Commits mit Conventional Commits + Issue-Referenz:
-   ```bash
-   git commit -m "feat(ui): add responsive grid for mobile (#5)"
-   ```
-5. **Abschließen** → Issue schließen, ROADMAP als "erledigt" markieren
-6. **Changelog** → Eintrag in [CHANGELOG.md](./CHANGELOG.md) unter `[Unreleased]`
+1. **Jedes Feature beginnt als GitHub Issue** — nicht als ROADMAP-Eintrag mit eigener Nummer
+2. **ROADMAP hat KEINE eigenen IDs** — nur Links zu GitHub Issues (`#1`, `#2`, …)
+3. **Commits referenzieren GitHub Issues** — `feat(ui): beschreibung (#42)`
+4. **Wenn ein Issue erledigt ist:** In ROADMAP nach "Erledigt" verschieben + Datum
+5. **Wenn ein Issue obsolet wird:** Auf GitHub schließen + aus ROADMAP entfernen
 
 ---
 
-## 🚧 Aktueller Sprint
-
-### In Bearbeitung
+## 🚧 In Arbeit
 
 _Keine aktiven Tickets._
 
 ---
 
-## 📋 Offene Tickets
+## 📋 Geplant (Backlog)
 
-| ROADMAP # | GitHub Issue                                            | Titel                              | Priorität | Status |
-| --------- | ------------------------------------------------------- | ---------------------------------- | --------- | ------ |
-| #09       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Hardcore-Modus (Submit-Step)       | low       | offen  |
-
-> **Hinweis zu #3:** Ursprünglich "Antworten nachträglich korrigieren". Durch den Arcade-Modus mit 2nd-Chance-Dialog gelöst. Issue #3 wird für den Hardcore-Modus (Submit-Step) weiterverwendet.
+| Thema | GitHub Issue | Priorität |
+|-------|-------------|-----------|
+| Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
+| Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
+| Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
+| Fragen-Favoriten markieren | [#8](https://github.com/kod0r/fishermans-quiz/issues/8) | low |
+| Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | low |
+| Statistik-Export (CSV/JSON) | [#10](https://github.com/kod0r/fishermans-quiz/issues/10) | low |
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
 ---
 
-## ✅ Erledigte Tickets
+## ✅ Erledigt
 
-| Sprint     | ROADMAP # | GitHub Issue                                            | Titel                           | Datum      |
-| ---------- | --------- | ------------------------------------------------------- | ------------------------------- | ---------- |
-| 2026-04-20 | #01       | —                                                       | Projekt-Initialisierung         | 2026-04-20 |
-| 2026-04-20 | #02       | —                                                       | AGENTS.md & Conventions         | 2026-04-20 |
-| 2026-04-20 | #03       | —                                                       | Sidebar topleft verankern       | 2026-04-20 |
-| 2026-04-20 | #03a      | —                                                       | Falsche Antworten klappbar      | 2026-04-20 |
-| 2026-04-20 | #03b      | —                                                       | Meta-Progress-Box comprehensive | 2026-04-20 |
-| 2026-04-20 | #03c      | —                                                       | Logik-Review & Bugfix           | 2026-04-20 |
-| 2026-04-20 | #04       | —                                                       | Lazy Loading Quiz-Daten         | 2026-04-20 |
-| 2026-04-20 | #05       | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design               | 2026-04-20 |
-| 2026-04-20 | #06       | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard)  | 2026-04-20 |
-| 2026-04-20 | #08       | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik      | 2026-04-20 |
-| 2026-04-20 | #10       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Arcade-Modus + Settings-Toggle  | 2026-04-20 |
-
----
-
-## 💡 Geplante Features (Backlog)
-
-- [ ] Hardcore-Modus: Submit-Step für alle Antworten (kein Sofort-Feedback)
-- [ ] standalone offline Windows-version
-- [ ] Android- und iOS versions
-- [ ] Dunkel-/Hell-Modus Umschaltung
-- [ ] Fragen-Favoriten markieren
-- [ ] Zeitgesteuerte Prüfungssimulation
-- [ ] Statistik-Export (CSV/JSON)
+| Thema | GitHub Issue | Datum |
+|-------|-------------|-------|
+| Projekt-Initialisierung | — | 2026-04-20 |
+| AGENTS.md & Conventions | — | 2026-04-20 |
+| Sidebar topleft verankern | — | 2026-04-20 |
+| Falsche Antworten klappbar | — | 2026-04-20 |
+| Meta-Progress-Box comprehensive | — | 2026-04-20 |
+| Logik-Review & Bugfix | — | 2026-04-20 |
+| Lazy Loading Quiz-Daten | — | 2026-04-20 |
+| Responsive Design | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | 2026-04-20 |
+| Accessibility (ARIA, Keyboard) | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | 2026-04-20 |
+| Unit-Tests für Store-Logik | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | 2026-04-20 |
+| Arcade-Modus + Settings-Toggle | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
+| Hardcore-Modus (sofortiges Sperren, keine 2nd-Chance) | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
 
 ---
 
 ## Regeln für dieses Dokument
 
-- **Wöchentlich reviewen:** Was wurde geschafft? Was ist neu dazugekommen?
-- **Issue-Nummern pflegen:** Sobald ein GitHub Issue existiert, hier verlinken
+- **NIE eigene Nummern vergeben** — immer GitHub Issue-Nummern verwenden
+- **Wöchentlich reviewen:** Was wurde geschafft? Was ist neu?
 - **Nicht duplizieren:** Details gehören ins GitHub Issue, nicht in die ROADMAP
 - **Sprint-Grenzen:** Erledigte Tickets nach 2–4 Wochen in "Archiv" verschieben
