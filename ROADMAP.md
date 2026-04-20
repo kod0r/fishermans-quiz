@@ -42,6 +42,9 @@ _Keine aktiven Tickets._
 | Fragen-Favoriten markieren | [#8](https://github.com/kod0r/fishermans-quiz/issues/8) | low |
 | Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | low |
 | Statistik-Export (CSV/JSON) | [#10](https://github.com/kod0r/fishermans-quiz/issues/10) | low |
+| Upgrade zu Vite 8 + @vitejs/plugin-react 6 | [#37](https://github.com/kod0r/fishermans-quiz/issues/37) | medium |
+| Upgrade zu ESLint 10 + @eslint/js 10 | [#38](https://github.com/kod0r/fishermans-quiz/issues/38) | medium |
+| Evaluierung recharts 3.x Migration | [#39](https://github.com/kod0r/fishermans-quiz/issues/39) | low |
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -66,6 +69,8 @@ _Keine aktiven Tickets._
 | Dead Dependencies bereinigt | [#21](https://github.com/kod0r/fishermans-quiz/issues/21) | 2026-04-20 |
 | Dependabot konfiguriert | [#22](https://github.com/kod0r/fishermans-quiz/issues/22) | 2026-04-20 |
 | Release-Validation Scripts | [#23](https://github.com/kod0r/fishermans-quiz/issues/23) | 2026-04-20 |
+| Kimi-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
+| ROADMAP.md Regeln konsolidiert | [#20](https://github.com/kod0r/fishermans-quiz/issues/20) | 2026-04-20 |
 
 ### Erledigt (vor GitHub-Issue-System)
 
