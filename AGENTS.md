@@ -87,12 +87,27 @@ ROADMAP.md (Planung) → GitHub Issue (Tracking) → Commit (Umsetzung) → CHAN
 1. **Idee** in `ROADMAP.md` unter "Geplante Features" oder "Backlog" eintragen
 2. **GitHub Issue** anlegen mit Label (`enhancement`, `bug`, `docs`)
 3. **Issue-Nummer** in `ROADMAP.md` verlinken (z.B. `[#1](...)`)
-4. **Entwickeln** → Commits mit Conventional Commits + Issue-Referenz:
-   ```bash
-   git commit -m "feat(ui): add responsive grid for mobile (#1)"
-   ```
-5. **Issue schließen** → In `ROADMAP.md` als "erledigt" markieren
-6. **Changelog** → Eintrag in `[Unreleased]` (vor Release in Version verschieben)
+4. **Entwickeln** → Code schreiben und testen
+5. **Commit & Push erst nach expliziter Erlaubnis** → Siehe unten
+6. **Issue schließen** → In `ROADMAP.md` als "erledigt" markieren
+7. **Changelog** → Eintrag in `[Unreleased]` (vor Release in Version verschieben)
+
+### ⚠️ Wichtig: Commit & Push nur nach Erlaubnis
+
+> **Der Nutzer möchte, dass Kimi vor jedem `git commit` und `git push` explizit um Erlaubnis fragt.**
+>
+> Das gilt auch für:
+> - `git commit` (alle Varianten)
+> - `git push` (auch `--force`)
+> - `git push --set-upstream`
+> - Uploads via GitHub API / MCP
+>
+> **Ablauf:**
+> 1. Kimi zeigt die geänderten Dateien und die vorgeschlagene Commit-Message
+> 2. Kimi fragt: "Soll ich committen und pushen?"
+> 3. Erst nach Bestätigung des Nutzers wird ausgeführt
+>
+> **Ausnahme:** `git add` und lokale `git status` sind ohne Erlaubnis erlaubt (nur Vorbereitung).
 
 ### Commit-Messages: Conventional Commits
 Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.org/)-Standard:
