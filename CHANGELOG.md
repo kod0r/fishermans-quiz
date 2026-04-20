@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/kod0r/fishermans-quiz/compare/v0.1.1...v0.1.2) (2026-04-20)
+
+
+### Bug Fixes
+
+* **storage,quizRun:** resolve high-priority issues [#14](https://github.com/kod0r/fishermans-quiz/issues/14), [#16](https://github.com/kod0r/fishermans-quiz/issues/16), [#17](https://github.com/kod0r/fishermans-quiz/issues/17) ([#25](https://github.com/kod0r/fishermans-quiz/issues/25)) ([7fee224](https://github.com/kod0r/fishermans-quiz/commit/7fee22414dac4fe7d1a5fc3310b655ed4612065a)), closes [hi#priority](https://github.com/hi/issues/priority)
+* **workflow:** resolve all critical audit findings ([13d5e98](https://github.com/kod0r/fishermans-quiz/commit/13d5e980206d1e64d1c84b0a1ad9499a9e9eb14e))
 
 ## [0.1.1](https://github.com/kod0r/fishermans-quiz/compare/v0.1.0...v0.1.1) (2026-04-20)
 
