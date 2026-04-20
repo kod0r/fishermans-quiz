@@ -4,6 +4,7 @@ import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData } from '@/utils/quizLoader';
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
+import { useSettings } from '@/store/settings';
 
 export function useQuiz() {
   const [quizMeta, setQuizMeta] = useState<QuizMeta | null>(null);
@@ -11,8 +12,9 @@ export function useQuiz() {
   const [view, setView] = useState<AppView>('start');
   const [istGeladen, setIstGeladen] = useState(false);
 
-  const run = useQuizRun(quizData);
-  const meta = useMetaProgress();
+  const { gameMode, setGameMode } = useSettings();
+  const run = useQuizRun(quizData, gameMode);
+  const meta = useMetaProgress(gameMode);
 
   // Staged Loading:
   // 1. Meta sofort laden (~360 Bytes) → App wird sofort nutzbar
@@ -90,6 +92,10 @@ export function useQuiz() {
     quizData,
     istGeladen,
     view,
+
+    // Settings
+    gameMode,
+    setGameMode,
 
     // Run (Session)
     ...run,

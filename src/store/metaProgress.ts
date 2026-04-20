@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import type { FrageMeta, MetaProgression } from '@/types/quiz';
+import { useState, useCallback, useEffect } from 'react';
+import type { FrageMeta, MetaProgression, GameMode } from '@/types/quiz';
 import { MetaStorage } from '@/utils/storage';
 
 const EMPTY: MetaProgression = {
@@ -14,13 +14,18 @@ const EMPTY: MetaProgression = {
   },
 };
 
-export function useMetaProgress() {
-  const [meta, setMeta] = useState<MetaProgression>(MetaStorage.load);
+export function useMetaProgress(gameMode: GameMode) {
+  const [meta, setMeta] = useState<MetaProgression>(() => MetaStorage.load(gameMode));
+
+  // Wenn sich der Modus ändert → neu laden
+  useEffect(() => {
+    setMeta(MetaStorage.load(gameMode));
+  }, [gameMode]);
 
   const persist = useCallback((next: MetaProgression) => {
     setMeta(next);
-    MetaStorage.save(next);
-  }, []);
+    MetaStorage.save(gameMode, next);
+  }, [gameMode]);
 
   // Einzelne Antwort verarbeiten
   const recordAnswer = useCallback((frageId: string, isCorrect: boolean) => {
@@ -48,19 +53,19 @@ export function useMetaProgress() {
       }
 
       const next = { fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
-      MetaStorage.save(next);
+      MetaStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   // Neuer Durchlauf gestartet
   const recordRunStart = useCallback(() => {
     setMeta(prev => {
       const next = { ...prev, stats: { ...prev.stats, totalRuns: prev.stats.totalRuns + 1 } };
-      MetaStorage.save(next);
+      MetaStorage.save(gameMode, next);
       return next;
     });
-  }, []);
+  }, [gameMode]);
 
   // Komplett zurücksetzen
   const reset = useCallback(() => {

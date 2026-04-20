@@ -41,7 +41,9 @@ _Keine aktiven Tickets._
 
 | ROADMAP # | GitHub Issue                                            | Titel                              | Priorität | Status |
 | --------- | ------------------------------------------------------- | ---------------------------------- | --------- | ------ |
-| #07       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Antworten nachträglich korrigieren | low       | offen  |
+| #09       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Hardcore-Modus (Submit-Step)       | low       | offen  |
+
+> **Hinweis zu #3:** Ursprünglich "Antworten nachträglich korrigieren". Durch den Arcade-Modus mit 2nd-Chance-Dialog gelöst. Issue #3 wird für den Hardcore-Modus (Submit-Step) weiterverwendet.
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -61,11 +63,13 @@ _Keine aktiven Tickets._
 | 2026-04-20 | #05       | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design               | 2026-04-20 |
 | 2026-04-20 | #06       | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard)  | 2026-04-20 |
 | 2026-04-20 | #08       | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik      | 2026-04-20 |
+| 2026-04-20 | #10       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Arcade-Modus + Settings-Toggle  | 2026-04-20 |
 
 ---
 
 ## 💡 Geplante Features (Backlog)
 
+- [ ] Hardcore-Modus: Submit-Step für alle Antworten (kein Sofort-Feedback)
 - [ ] standalone offline Windows-version
 - [ ] Android- und iOS versions
 - [ ] Dunkel-/Hell-Modus Umschaltung

@@ -21,7 +21,7 @@ const mockQuizData: QuizData = {
 
 describe('useQuizRun', () => {
   it('sollte initial inaktiv sein', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     expect(result.current.isActive).toBe(false);
     expect(result.current.aktiveFragen).toEqual([]);
@@ -29,7 +29,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte einen neuen Run starten', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -42,7 +42,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte Fragen mischen (Shuffle)', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie', 'Recht']);
@@ -60,7 +60,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte eine Antwort speichern', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -77,7 +77,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte keine Antwort überschreiben', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -94,7 +94,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte zur nächsten Frage navigieren', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie', 'Recht']);
@@ -110,7 +110,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte nicht über die letzte Frage hinaus navigieren', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -132,7 +132,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte zur vorherigen Frage navigieren', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie', 'Recht']);
@@ -153,7 +153,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte nicht vor die erste Frage navigieren', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -167,7 +167,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte zu einer bestimmten Frage springen', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie', 'Recht']);
@@ -181,7 +181,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte einen Run unterbrechen', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -197,7 +197,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte Statistiken korrekt berechnen', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -217,7 +217,7 @@ describe('useQuizRun', () => {
   });
 
   it('sollte Bereiche erweitern', () => {
-    const { result } = renderHook(() => useQuizRun(mockQuizData));
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
       result.current.starteRun(['Biologie']);
@@ -232,5 +232,17 @@ describe('useQuizRun', () => {
     expect(result.current.aktiveFragen.length).toBe(6);
     expect(result.current.geladeneBereiche).toContain('Biologie');
     expect(result.current.geladeneBereiche).toContain('Recht');
+  });
+
+  it('sollte Runs pro Modus getrennt speichern', () => {
+    const { result: arcade } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+    const { result: hardcore } = renderHook(() => useQuizRun(mockQuizData, 'hardcore'));
+
+    act(() => {
+      arcade.current.starteRun(['Biologie']);
+    });
+
+    expect(arcade.current.isActive).toBe(true);
+    expect(hardcore.current.isActive).toBe(false);
   });
 });

@@ -53,5 +53,12 @@ export interface MetaProgression {
   stats: MetaStats;
 }
 
+// ── Game Mode ──
+export type GameMode = 'arcade' | 'hardcore';
+
+export interface AppSettings {
+  gameMode: GameMode;
+}
+
 // ── View-State ──
 export type AppView = 'start' | 'quiz' | 'progress';
