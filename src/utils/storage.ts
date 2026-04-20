@@ -13,12 +13,12 @@ const metaKey = (mode: GameMode) => `fmq:meta:${mode}:v2`;
 
 // ── Storage Error ──
 export class StorageError extends Error {
-  constructor(
-    message: string,
-    public readonly cause?: Error,
-  ) {
+  readonly cause?: Error;
+
+  constructor(message: string, cause?: Error) {
     super(message);
     this.name = 'StorageError';
+    this.cause = cause;
   }
 }
 
