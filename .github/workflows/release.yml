@@ -10,6 +10,10 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -28,25 +32,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate Changelog
-        run: npm run changelog
+      - name: Lint
+        run: npm run lint
 
-      - name: Commit Changelog
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
-          git commit -m "docs(changelog): update for ${GITHUB_REF_NAME}" || true
-          git push origin HEAD:main || true
+      - name: Test
+        run: npm run test:run
 
       - name: Build
         run: npm run build
+
+      - name: Generate Changelog
+        run: npm run changelog
 
       - name: Package dist
         run: zip -r dist-${GITHUB_REF_NAME}.zip dist/
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dist-*.zip
           body_path: CHANGELOG.md

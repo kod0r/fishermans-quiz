@@ -53,18 +53,25 @@ _Keine aktiven Tickets._
 
 | Thema | GitHub Issue | Datum |
 |-------|-------------|-------|
-| Projekt-Initialisierung | — | 2026-04-20 |
-| AGENTS.md & Conventions | — | 2026-04-20 |
-| Sidebar topleft verankern | — | 2026-04-20 |
-| Falsche Antworten klappbar | — | 2026-04-20 |
-| Meta-Progress-Box comprehensive | — | 2026-04-20 |
-| Logik-Review & Bugfix | — | 2026-04-20 |
-| Lazy Loading Quiz-Daten | — | 2026-04-20 |
 | Responsive Design | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | 2026-04-20 |
 | Accessibility (ARIA, Keyboard) | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | 2026-04-20 |
 | Unit-Tests für Store-Logik | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | 2026-04-20 |
 | Arcade-Modus + Settings-Toggle | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
 | Hardcore-Modus (sofortiges Sperren, keine 2nd-Chance) | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | 2026-04-20 |
+
+### Erledigt (vor GitHub-Issue-System)
+
+> Diese Arbeiten wurden erledigt bevor das Projekt auf GitHub-Issues als "single source of truth" umgestellt wurde. Sie sind hier zur Vollständigkeit dokumentiert.
+
+| Thema | Datum |
+|-------|-------|
+| Projekt-Initialisierung | 2026-04-20 |
+| AGENTS.md & Conventions | 2026-04-20 |
+| Sidebar topleft verankern | 2026-04-20 |
+| Falsche Antworten klappbar | 2026-04-20 |
+| Meta-Progress-Box comprehensive | 2026-04-20 |
+| Logik-Review & Bugfix | 2026-04-20 |
+| Lazy Loading Quiz-Daten | 2026-04-20 |
 
 ---
 

@@ -1,14 +1,37 @@
+import { z } from 'zod';
 import type { Frage, QuizData } from '@/types/quiz';
 
-export interface QuizMeta {
-  meta: {
-    titel: string;
-    anzahl_fragen: number;
-    bereiche: Record<string, number>;
-  };
-  bereiche: string[];
-  fragenIndex: Record<string, string>;
-}
+// ── Zod Schemas für Runtime-Validierung ──
+const FrageSchema = z.object({
+  id: z.string().min(1),
+  bereich: z.string().min(1),
+  frage: z.string().min(1),
+  antworten: z.object({
+    A: z.string(),
+    B: z.string(),
+    C: z.string(),
+  }),
+  richtige_antwort: z.enum(['A', 'B', 'C']),
+  bild: z.boolean().optional(),
+  bild_url: z.string().optional(),
+});
+
+const QuizMetaSchema = z.object({
+  meta: z.object({
+    titel: z.string(),
+    anzahl_fragen: z.number().int().nonnegative(),
+    bereiche: z.record(z.string(), z.number().int().nonnegative()),
+  }),
+  bereiche: z.array(z.string()),
+  fragenIndex: z.record(z.string(), z.string()),
+});
+
+const BereichDataSchema = z.object({
+  bereich: z.string(),
+  fragen: z.array(FrageSchema),
+});
+
+export type QuizMeta = z.infer<typeof QuizMetaSchema>;
 
 const BEREICH_FILENAME: Record<string, string> = {
   'Biologie': 'biologie.json',
@@ -20,7 +43,7 @@ const BEREICH_FILENAME: Record<string, string> = {
 };
 
 let metaCache: QuizMeta | null = null;
-let fragenCache: Map<string, Frage[]> = new Map();
+const fragenCache: Map<string, Frage[]> = new Map();
 
 /**
  * Lädt die Metadaten (sehr klein: ~360 Bytes).
@@ -32,7 +55,14 @@ export async function loadQuizMeta(): Promise<QuizMeta> {
   const res = await fetch('data/quiz_meta.json');
   if (!res.ok) throw new Error(`Meta laden fehlgeschlagen: ${res.status}`);
 
-  metaCache = await res.json() as QuizMeta;
+  const raw = await res.json();
+  const parsed = QuizMetaSchema.safeParse(raw);
+  if (!parsed.success) {
+    console.error('[quizLoader] Meta-Validierung fehlgeschlagen:', parsed.error.format());
+    throw new Error(`Meta-Format ungültig: ${parsed.error.message}`);
+  }
+
+  metaCache = parsed.data;
   return metaCache;
 }
 
@@ -51,9 +81,15 @@ export async function loadBereichsFragen(bereiche: string[]): Promise<Frage[]> {
       const res = await fetch(`data/bereiche/${filename}`);
       if (!res.ok) throw new Error(`Bereich ${bereich} laden fehlgeschlagen: ${res.status}`);
 
-      const data = await res.json() as { bereich: string; fragen: Frage[] };
-      fragenCache.set(bereich, data.fragen);
-      return data.fragen;
+      const raw = await res.json();
+      const parsed = BereichDataSchema.safeParse(raw);
+      if (!parsed.success) {
+        console.error(`[quizLoader] Bereich ${bereich} Validierung fehlgeschlagen:`, parsed.error.format());
+        throw new Error(`Bereich ${bereich} Format ungültig: ${parsed.error.message}`);
+      }
+
+      fragenCache.set(bereich, parsed.data.fragen);
+      return parsed.data.fragen;
     });
 
     await Promise.all(promises);
