@@ -78,6 +78,22 @@ interface Frage {
 
 ## Git & GitHub Workflow
 
+### Gesamtprozess
+
+```
+ROADMAP.md (Planung) → GitHub Issue (Tracking) → Commit (Umsetzung) → CHANGELOG.md (Doku)
+```
+
+1. **Idee** in `ROADMAP.md` unter "Geplante Features" oder "Backlog" eintragen
+2. **GitHub Issue** anlegen mit Label (`enhancement`, `bug`, `docs`)
+3. **Issue-Nummer** in `ROADMAP.md` verlinken (z.B. `[#1](...)`)
+4. **Entwickeln** → Commits mit Conventional Commits + Issue-Referenz:
+   ```bash
+   git commit -m "feat(ui): add responsive grid for mobile (#1)"
+   ```
+5. **Issue schließen** → In `ROADMAP.md` als "erledigt" markieren
+6. **Changelog** → Eintrag in `[Unreleased]` (vor Release in Version verschieben)
+
 ### Commit-Messages: Conventional Commits
 Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.org/)-Standard:
 
@@ -100,27 +116,30 @@ Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.o
 | `test` | Tests hinzufügen/ändern |
 | `chore` | Build-Prozess, Dependencies, etc. |
 
+**Scope:** Modul/Komponente (z.B. `ui`, `quiz`, `hooks`, `data`, `agents`)
+
 **Beispiele:**
 ```bash
-git commit -m "feat(quiz): add collapsible wrong-answers section in ProgressView"
+git commit -m "feat(quiz): add collapsible wrong-answers section in ProgressView (#2)"
 git commit -m "fix(hooks): prevent navigation to quiz without loaded data"
 git commit -m "perf(data): implement staged loading for quiz questions"
 git commit -m "docs(agents): add GitHub workflow conventions"
+git commit -m "chore(deps): update vite to 7.3.0"
 ```
 
-### Tickets & Planung
-- **GitHub Issues** sind das primäre Tool für Bugs, Features und Tasks
-- `ROADMAP.md` dient als lokale Übersicht, bis GitHub Issues existieren
-- `CHANGELOG.md` wird manuell gepflegt (später automatisch aus Conventional Commits)
+### GitHub Issues
+- **Erstellen:** [github.com/kod0r/fishermans-quiz/issues/new](https://github.com/kod0r/fishermans-quiz/issues/new)
+- **Labels:** `enhancement` (Feature), `bug` (Fehler), `docs` (Doku)
+- **Verknüpfung:** In Commits `#1`, `#2` etc. referenzieren – GitHub verlinkt automatisch
 
-### Branching (empfohlen für später)
-```
-main        ← Produktions-Code
-  ↑
-develop     ← Integrations-Branch
-  ↑
-feat/xyz    ← Feature-Branches
-fix/abc     ← Bugfix-Branches
+### Branching (für Ein-Personen-Projekt optional)
+Für kleine Features direkt auf `main` committen. Bei größeren Änderungen:
+```bash
+git checkout -b feat/responsive-design
+# ... arbeiten ...
+git commit -m "feat(ui): add responsive breakpoints (#1)"
+git push -u origin feat/responsive-design
+# GitHub → Pull Request → Merge
 ```
 
 ## Wichtige Dateien
