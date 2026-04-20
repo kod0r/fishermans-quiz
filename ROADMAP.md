@@ -1,7 +1,7 @@
 # ROADMAP
 
 > **Lebendes Dokument:** Diese Datei verbindet strategische Planung mit operativem Tracking.
-> 
+>
 > **Workflow:** ROADMAP (Plan) → GitHub Issue (Tracking) → Branch/Commit (Umsetzung) → Changelog (Dokumentation)
 
 ---
@@ -33,18 +33,18 @@
 
 ### In Bearbeitung
 
-*Keine aktiven Tickets.*
+_Keine aktiven Tickets._
 
 ---
 
 ## 📋 Offene Tickets
 
-| ROADMAP # | GitHub Issue | Titel | Priorität | Status |
-|-----------|--------------|-------|-----------|--------|
-| #05 | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design für mobile Geräte | medium | offen |
-| #06 | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard, Screenreader) | medium | offen |
-| #07 | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Antworten nachträglich korrigieren | low | offen |
-| #08 | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik | low | offen |
+| ROADMAP # | GitHub Issue                                            | Titel                                        | Priorität | Status |
+| --------- | ------------------------------------------------------- | -------------------------------------------- | --------- | ------ |
+| #05       | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | Responsive Design für mobile Geräte          | medium    | offen  |
+| #06       | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | Accessibility (ARIA, Keyboard, Screenreader) | medium    | offen  |
+| #07       | [#3](https://github.com/kod0r/fishermans-quiz/issues/3) | Antworten nachträglich korrigieren           | low       | offen  |
+| #08       | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | Unit-Tests für Store-Logik                   | low       | offen  |
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -52,25 +52,25 @@
 
 ## ✅ Erledigte Tickets
 
-| Sprint | ROADMAP # | GitHub Issue | Titel | Datum |
-|--------|-----------|--------------|-------|-------|
-| 2026-04-20 | #01 | — | Projekt-Initialisierung | 2026-04-20 |
-| 2026-04-20 | #02 | — | AGENTS.md & Conventions | 2026-04-20 |
-| 2026-04-20 | #03 | — | Sidebar topleft verankern | 2026-04-20 |
-| 2026-04-20 | #03a | — | Falsche Antworten klappbar | 2026-04-20 |
-| 2026-04-20 | #03b | — | Meta-Progress-Box comprehensive | 2026-04-20 |
-| 2026-04-20 | #03c | — | Logik-Review & Bugfix | 2026-04-20 |
-| 2026-04-20 | #04 | — | Lazy Loading Quiz-Daten | 2026-04-20 |
+| Sprint     | ROADMAP # | GitHub Issue | Titel                           | Datum      |
+| ---------- | --------- | ------------ | ------------------------------- | ---------- |
+| 2026-04-20 | #01       | —            | Projekt-Initialisierung         | 2026-04-20 |
+| 2026-04-20 | #02       | —            | AGENTS.md & Conventions         | 2026-04-20 |
+| 2026-04-20 | #03       | —            | Sidebar topleft verankern       | 2026-04-20 |
+| 2026-04-20 | #03a      | —            | Falsche Antworten klappbar      | 2026-04-20 |
+| 2026-04-20 | #03b      | —            | Meta-Progress-Box comprehensive | 2026-04-20 |
+| 2026-04-20 | #03c      | —            | Logik-Review & Bugfix           | 2026-04-20 |
+| 2026-04-20 | #04       | —            | Lazy Loading Quiz-Daten         | 2026-04-20 |
 
 ---
 
 ## 💡 Geplante Features (Backlog)
 
+- [ ] Android- und iOS versions
 - [ ] Dunkel-/Hell-Modus Umschaltung
 - [ ] Fragen-Favoriten markieren
 - [ ] Zeitgesteuerte Prüfungssimulation
 - [ ] Statistik-Export (CSV/JSON)
-- [ ] Mehrere Fragenkataloge (Saarland, Baden-Württemberg, etc.)
 
 ---
 

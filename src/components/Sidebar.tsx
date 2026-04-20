@@ -17,8 +17,11 @@ interface Props {
 
 export function Sidebar({ onHome, onResumeQuiz, showResume, onShowProgress, showProgress }: Props) {
   return (
-    <TooltipProvider delayDuration={1500}>
-      <nav className="fixed left-4 top-4 z-50 flex flex-col gap-3">
+    <TooltipProvider delayDuration={800}>
+      <nav
+        className="fixed left-2 top-2 z-50 flex flex-col gap-2 sm:left-4 sm:top-4 sm:gap-3"
+        aria-label="Hauptnavigation"
+      >
         {/* Home */}
         <Tooltip>
           <TooltipTrigger asChild>
@@ -26,9 +29,10 @@ export function Sidebar({ onHome, onResumeQuiz, showResume, onShowProgress, show
               onClick={onHome}
               variant="outline"
               size="icon"
-              className="w-10 h-10 rounded-full bg-slate-800/90 border-slate-600/50 text-slate-300 hover:bg-slate-700 hover:text-white shadow-lg backdrop-blur-sm"
+              aria-label="Zur Startseite"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/90 border-slate-600/50 text-slate-300 hover:bg-slate-700 hover:text-white shadow-lg backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
-              <Home className="w-4 h-4" />
+              <Home className="w-4 h-4" aria-hidden="true" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right">
@@ -44,9 +48,10 @@ export function Sidebar({ onHome, onResumeQuiz, showResume, onShowProgress, show
                 onClick={onResumeQuiz}
                 variant="outline"
                 size="icon"
-                className="w-10 h-10 rounded-full bg-teal-900/90 border-teal-500/50 text-teal-400 hover:bg-teal-800 hover:text-white shadow-lg backdrop-blur-sm animate-pulse"
+                aria-label="Quiz fortsetzen"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-teal-900/90 border-teal-500/50 text-teal-400 hover:bg-teal-800 hover:text-white shadow-lg backdrop-blur-sm animate-pulse focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               >
-                <Play className="w-4 h-4" />
+                <Play className="w-4 h-4" aria-hidden="true" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -63,9 +68,10 @@ export function Sidebar({ onHome, onResumeQuiz, showResume, onShowProgress, show
                 onClick={onShowProgress}
                 variant="outline"
                 size="icon"
-                className="w-10 h-10 rounded-full bg-slate-800/90 border-slate-600/50 text-slate-300 hover:bg-slate-700 hover:text-white shadow-lg backdrop-blur-sm"
+                aria-label="Quiz-Fortschritt anzeigen"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/90 border-slate-600/50 text-slate-300 hover:bg-slate-700 hover:text-white shadow-lg backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               >
-                <BarChart3 className="w-4 h-4" />
+                <BarChart3 className="w-4 h-4" aria-hidden="true" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
