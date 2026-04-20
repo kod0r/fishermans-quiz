@@ -168,27 +168,32 @@ git commit -m "test(store): add settings hook tests (#4)"
 - Gruppiert nach `feat` → Features, `fix` → Bug Fixes, `BREAKING` → Breaking Changes
 - Schreibt das Ergebnis in `CHANGELOG.md`
 
-**Release-Prozess (vollautomatisch nach Tag-Push):**
+**Release-Prozess (validiert & automatisiert):**
+
+Statt manuellem `git tag` verwenden wir `npm version` mit automatischer Validierung:
+
 ```
-Tests passen → Build sauber → Git Tag vX.Y.Z → Push → Action macht alles
+npm run release -- <patch|minor|major>
 ```
 
-1. `npm run test:run` → muss passen
-2. `npm run build` → muss sauber bauen
-3. `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
-4. `git push origin vX.Y.Z`
-5. GitHub Action läuft automatisch:
-   - Generiert Changelog aus Commits
-   - Committet Changelog auf main
+1. `npm run lint` → muss sauber sein
+2. `npm run test:run` → muss passen
+3. `npm run build` → muss sauber bauen
+4. `npm run changelog` → generiert Changelog
+5. `npm version` → bumped package.json + erstellt Commit + Tag
+6. `git push --follow-tags` → pusht Commit + Tag
+7. GitHub Action triggert auf Tag:
    - Baut `dist/` → ZIP
    - Erstellt Release mit Changelog + Asset
 
+**Wichtig:** Nie mehr manuell `git tag` erstellen — immer `npm run release` verwenden.
+
 **SemVer-Entscheidung:**
-| Was passiert | Neue Version |
-|-------------|-------------|
-| Bugfix / Patch | Z + 1 (0.1.1 → 0.1.2) |
-| Neues Feature | Y + 1 (0.1.1 → 0.2.0) |
-| Breaking Change | X + 1 (0.1.1 → 1.0.0) |
+| Was passiert | Befehl |
+|-------------|--------|
+| Bugfix / Patch | `npm run release -- patch` (0.1.1 → 0.1.2) |
+| Neues Feature | `npm run release -- minor` (0.1.1 → 0.2.0) |
+| Breaking Change | `npm run release -- major` (0.1.1 → 1.0.0) |
 
 ### ROADMAP.md — Regeln
 
