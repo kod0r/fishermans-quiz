@@ -11,13 +11,24 @@ const STORAGE_KEY_SETTINGS = 'fmq:settings:v1';
 const runKey = (mode: GameMode) => `fmq:run:${mode}:v2`;
 const metaKey = (mode: GameMode) => `fmq:meta:${mode}:v2`;
 
+// ── Storage Error ──
+export class StorageError extends Error {
+  constructor(
+    message: string,
+    public readonly cause?: Error,
+  ) {
+    super(message);
+    this.name = 'StorageError';
+  }
+}
+
 // ── Generic helpers ──
 export function loadJson<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
     if (raw) return JSON.parse(raw) as T;
-  } catch {
-    console.warn(`[Storage] Failed to load ${key}`);
+  } catch (err) {
+    console.warn(`[Storage] Failed to load ${key}:`, err);
   }
   return fallback;
 }
@@ -25,8 +36,17 @@ export function loadJson<T>(key: string, fallback: T): T {
 export function saveJson(key: string, value: unknown): void {
   try {
     localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    console.warn(`[Storage] Failed to save ${key}`);
+  } catch (err) {
+    if (err instanceof Error && err.name === 'QuotaExceededError') {
+      throw new StorageError(
+        `Speicher voll (${key}): Fortschritt konnte nicht gespeichert werden.`,
+        err,
+      );
+    }
+    throw new StorageError(
+      `Speicherfehler (${key}): Daten konnten nicht gespeichert werden.`,
+      err instanceof Error ? err : undefined,
+    );
   }
 }
 
@@ -36,6 +56,23 @@ export function removeKey(key: string): void {
   } catch {
     // ignore
   }
+}
+
+/**
+ * Schätzt den belegten localStorage-Speicher in Bytes.
+ * Achtung: Nicht alle Browser geben exakte Werte zurück.
+ */
+export function getStorageUsage(): { used: number; total: number | null } {
+  let used = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key) {
+      const value = localStorage.getItem(key) ?? '';
+      used += key.length + value.length;
+    }
+  }
+  // 5 MB ist die typische Grenze, aber Browser-spezifisch
+  return { used, total: 5 * 1024 * 1024 };
 }
 
 // ── Migration: Legacy v2 → Arcade mode ──
