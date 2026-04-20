@@ -100,7 +100,7 @@ Idee ──→ GitHub Issue ──→ Entwickeln ──→ Commit (#N) ──→
 4. **Commit** → Message mit Issue-Referenz: `feat(ui): description (#42)`
 5. **Push erst nach expliziter Erlaubnis** → Siehe unten
 6. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
-7. **Changelog** → Eintrag in `[Unreleased]`
+7. **Changelog** → Wenn User-sichtbar: Eintrag in `[Unreleased]`
 
 ### ⚠️ Wichtig: Commit & Push nur nach Erlaubnis
 
@@ -148,6 +148,38 @@ git commit -m "feat(quiz): add arcade mode with 2nd-chance dialog (#3)"
 git commit -m "fix(hooks): prevent navigation without loaded data (#1)"
 git commit -m "test(store): add settings hook tests (#4)"
 ```
+
+### Changelog — Automatisch
+
+> **Der Changelog wird vollautomatisch aus Conventional Commits generiert.**
+> Kein manuelles Pflegen nötig. Sprache/Format sind egal.
+
+**Wie es funktioniert:**
+- `conventional-changelog-cli` liest alle Commits seit dem letzten Tag
+- Gruppiert nach `feat` → Features, `fix` → Bug Fixes, `BREAKING` → Breaking Changes
+- Schreibt das Ergebnis in `CHANGELOG.md`
+
+**Release-Prozess (vollautomatisch nach Tag-Push):**
+```
+Tests passen → Build sauber → Git Tag vX.Y.Z → Push → Action macht alles
+```
+
+1. `npm run test:run` → muss passen
+2. `npm run build` → muss sauber bauen
+3. `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
+4. `git push origin vX.Y.Z`
+5. GitHub Action läuft automatisch:
+   - Generiert Changelog aus Commits
+   - Committet Changelog auf main
+   - Baut `dist/` → ZIP
+   - Erstellt Release mit Changelog + Asset
+
+**SemVer-Entscheidung:**
+| Was passiert | Neue Version |
+|-------------|-------------|
+| Bugfix / Patch | Z + 1 (0.1.1 → 0.1.2) |
+| Neues Feature | Y + 1 (0.1.1 → 0.2.0) |
+| Breaking Change | X + 1 (0.1.1 → 1.0.0) |
 
 ### ROADMAP.md — Regeln
 
