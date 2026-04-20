@@ -36,6 +36,8 @@ _Keine aktiven Tickets._
 
 | Thema | GitHub Issue | Priorität |
 |-------|-------------|-----------|
+| Erstes GitHub Release v0.1.0 | [#12](https://github.com/kod0r/fishermans-quiz/issues/12) | high |
+| App als Package publizieren (Docker / GitHub Pages) | [#13](https://github.com/kod0r/fishermans-quiz/issues/13) | high |
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
