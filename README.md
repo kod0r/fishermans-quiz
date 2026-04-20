@@ -1,6 +1,6 @@
 # 🐟 Fisherman's Quiz
 
-> Interaktive Web-App zum Lernen für die **staatliche Fischerprüfung** – Bayerischer Fragenkatalog (Stand: 11.03.2026).
+> Interaktive Web-App zum Lernen für die **staatliche Fischerprüfung** – aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026).
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/kod0r/fishermans-quiz)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
@@ -35,6 +35,7 @@ npm run dev
 ```
 
 **Build für Production:**
+
 ```bash
 npm run build
 ```
@@ -43,13 +44,13 @@ npm run build
 
 ## 🛠️ Tech-Stack
 
-| Bereich | Technologie |
-|---------|-------------|
-| Framework | [Vite](https://vitejs.dev) 7 + [React](https://react.dev) 19 |
-| Sprache | [TypeScript](https://www.typescriptlang.org) 5.9 |
-| Styling | [Tailwind CSS](https://tailwindcss.com) 3.4 + [shadcn/ui](https://ui.shadcn.com) |
-| State | React Hooks (Custom Stores) |
-| Icons | [Lucide React](https://lucide.dev) |
+| Bereich   | Technologie                                                                      |
+| --------- | -------------------------------------------------------------------------------- |
+| Framework | [Vite](https://vitejs.dev) 7 + [React](https://react.dev) 19                     |
+| Sprache   | [TypeScript](https://www.typescriptlang.org) 5.9                                 |
+| Styling   | [Tailwind CSS](https://tailwindcss.com) 3.4 + [shadcn/ui](https://ui.shadcn.com) |
+| State     | React Hooks (Custom Stores)                                                      |
+| Icons     | [Lucide React](https://lucide.dev)                                               |
 
 ---
 
@@ -95,5 +96,3 @@ Siehe [AGENTS.md](./AGENTS.md) für detaillierte Conventions und Projekt-Kontext
 Privates Lernprojekt – noch nicht für öffentliche Verbreitung vorgesehen.
 
 ---
-
-> 🎣 *"Gut vorbereitet ist halb bestanden."* – Bayerische Fischerprüfung 2026
