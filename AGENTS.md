@@ -86,44 +86,47 @@ interface Frage {
 > - Commits referenzieren **nur GitHub Issue-Nummern** (`#1`, `#2`, …)
 > - Nie zwei Nummerierungssysteme parallel führen
 
-### Gesamtprozess
+### Gesamtprozess (GitHub Flow)
 
 ```
-Idee ──→ GitHub Issue ──→ Entwickeln ──→ Commit (#N) ──→ CHANGELOG
-            ↑                                   ↓
-            └────────── Issue schließen ←───────┘
+Idee ──→ GitHub Issue ──→ Feature Branch ──→ PR ──→ CI grün ──→ Merge ──→ Deploy
+            ↑                                                      ↓
+            └────────────── Issue schließen ←────────────────────────┘
 ```
 
-1. **Idee hat?** → Direkt [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new) — nicht erst ROADMAP
-2. **ROADMAP aktualisieren** → Issue-Link in "Geplant" oder "In Arbeit" eintragen
+1. **Idee hat?** → Direkt [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)
+2. **Feature Branch erstellen** → `git checkout -b feat/kurzbeschreibung`
 3. **Entwickeln** → Code schreiben, testen, bauen
 4. **Commit** → Message mit Issue-Referenz: `feat(ui): description (#42)`
-5. **Push erst nach expliziter Erlaubnis** → Siehe unten
-6. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
-7. **Changelog** → Wenn User-sichtbar: Eintrag in `[Unreleased]`
+5. **Push Branch** → `git push -u origin feat/kurzbeschreibung`
+6. **Pull Request erstellen** → Auf GitHub: PR mit Issue-Link
+7. **CI muss grün sein** → Lint + Test + Build passen
+8. **Merge** → squash oder rebase merge auf `main`
+9. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
+10. **Auto-Deploy** → GitHub Pages deployt nach Merge auf `main`
 
-### ⚠️ Wichtig: Commit & Push — Wann ist Erlaubnis nötig?
+### ⚠️ Wichtig: Push-Regeln
 
-> **Nicht jede Änderung muss sofort gepusht werden.**
+> **Nie direkt auf `main` pushen.** Jede Änderung läuft über einen Feature-Branch + PR.
 
 | Situation | Vorgehen |
 |-----------|----------|
-| **Hotfix / kritischer Bug** | Sofort fixen, Benutzer informieren, autonom committen & pushen |
-| **Fertiges Feature / Abschluss einer Session** | Commit vorschlagen, auf Erlaubnis warten, dann pushen |
-| **Kleine Zwischenänderungen** | Lokal sammeln, nicht nach jedem Schritt fragen |
-| **Dokumentation / Refactor** | Mit anderen Änderungen bündeln oder am Session-Ende |
+| **Normales Feature / Refactor / Docs** | Feature-Branch → Commit → Push Branch → PR → Merge |
+| **Hotfix / kritischer Bug** | Feature-Branch `hotfix/...` → PR → schnell mergen |
+| **ROADMAP / CHANGELOG nur** | Direkt auf main OK (kein Code-Änderung) |
 
-**Ablauf bei "Fertiges Feature":**
-1. Kimi zeigt die gesammelten Änderungen
-2. Kimi fragt: "Soll ich committen und pushen?"
-3. Erst nach Bestätigung des Nutzers wird ausgeführt
+**Warum keine direkten main-Pushes?**
+- `main` ist immer deploy-fähig (GitHub Pages)
+- CI muss grün sein bevor Code live geht
+- PR-History dokumentiert jede Entscheidung
+- Jederzeit rollback-fähig via Revert
 
-**Ablauf bei "Hotfix":**
-1. Kimi fixt den Bug
-2. Kimi informiert den Nutzer: "Hotfix committet & gepusht: [Commit-URL]"
-3. Keine explizite Erlaubnis nötig — aber immer informieren
-
-**Ausnahme:** `git add` und lokale `git status` sind immer ohne Erlaubnis erlaubt.
+**Ablauf:**
+1. Kimi entwickelt auf Feature-Branch
+2. Kimi pusht Branch: `git push -u origin feat/...`
+3. Kimi erstellt PR auf GitHub (oder zeigt URL)
+4. User merged PR auf GitHub (oder sagt Kimi: "merge PR")
+5. GitHub Actions deployt automatisch nach Merge
 
 ### Commit-Messages: Conventional Commits
 
@@ -201,14 +204,41 @@ Tests passen → Build sauber → Git Tag vX.Y.Z → Push → Action macht alles
 - **Titel-Format:** `<type>(<scope>): Kurzbeschreibung`
 - **NIE wiederverwenden** — wenn ein Issue obsolet wird, schließen und neues anlegen
 
-### Branching (optional)
+### Branching — Standard Workflow
 
-Für kleine Features direkt auf `main`. Bei größeren Änderungen:
+**Jede Änderung läuft über einen Feature-Branch:**
+
 ```bash
+# 1. Branch erstellen (ausgehend von aktuellem main)
 git checkout -b feat/responsive-design
+
+# 2. Entwickeln & commiten
 git commit -m "feat(ui): add responsive breakpoints (#1)"
+
+# 3. Branch pushen
 git push -u origin feat/responsive-design
-# GitHub → Pull Request → Merge
+
+# 4. Auf GitHub: Pull Request erstellen
+# 5. CI muss grün sein
+# 6. Merge auf GitHub (oder via gh CLI)
+```
+
+**Branch-Namen:**
+| Präfix | Verwendung |
+|--------|-----------|
+| `feat/` | Neues Feature |
+| `fix/` | Bugfix |
+| `hotfix/` | Kritischer Bug (schneller Merge) |
+| `docs/` | Dokumentation |
+| `refactor/` | Code-Refactoring |
+| `test/` | Tests |
+| `chore/` | Dependencies, Build, CI |
+
+**Beispiele:**
+```bash
+git checkout -b feat/arcade-mode
+git checkout -b fix/quiz-loader-validation
+git checkout -b hotfix/vite-security-patch
 ```
 
 ## Wichtige Dateien
