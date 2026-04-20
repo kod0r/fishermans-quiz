@@ -6,6 +6,9 @@
 
 ## Offene Tickets
 
+> **Jetzt auf GitHub:** [github.com/kod0r/fishermans-quiz/issues](https://github.com/kod0r/fishermans-quiz/issues)
+> Neue Tickets bitte direkt als GitHub Issues anlegen. Diese Tabelle dient nur als Übersicht.
+
 | # | Ticket | Beschreibung | Priorität | Status |
 |---|--------|--------------|-----------|--------|
 | #05 | Responsive Design | Mobile Layouts prüfen & optimieren (aktuell max-w-3xl/4xl) | medium | offen |
