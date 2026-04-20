@@ -1,0 +1,1553 @@
+{
+  "bereich": "Gewässerkunde",
+  "fragen": [
+    {
+      "id": "2.001",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist das Säurebindungsvermögen (SBV) des Wassers?",
+      "antworten": {
+        "A": "es bezeichnet seinen Reaktionszustand",
+        "B": "es ist ein Maß für seinen Kalkgehalt",
+        "C": "es ist ein Maß für seinen Ammoniakgehalt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.002",
+      "bereich": "Gewässerkunde",
+      "frage": "Was bewirkt ein hohes Säurebindungsvermögen (SBV) im Wasser?",
+      "antworten": {
+        "A": "Das Wasser reichert sich rasch mit Sauerstoff an.",
+        "B": "Das Wasser ist gegenüber großen Schwankungen des pH-Werts gut gepuffert.",
+        "C": "Das pH-abhängige Bindungsvermögen der Wassermoleküle ist groß."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.003",
+      "bereich": "Gewässerkunde",
+      "frage": "Liegt das Säurebindungsvermögen extrem niedrig (unter 0,5), so ist das Fischwasser von",
+      "antworten": {
+        "A": "geringer Ertragsfähigkeit",
+        "B": "hoher Ertragsfähigkeit",
+        "C": "mittlerer Ertragsfähigkeit"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.004",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist zu befürchten, wenn in unmittelbarer Nähe eines kleinen stehenden Gewässers intensiv mit Gülle gedüngt wird?",
+      "antworten": {
+        "A": "Die Gülle kann leicht in das Gewässer eingeschwemmt werden und zu einem Fischsterben führen.",
+        "B": "Durch die vom Wind verwehten Faulgase werden die Schwimmblattpflanzen geschädigt.",
+        "C": "Eingeschwemmte Gülle kann die Angelschnüre beim Fischen angreifen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.005",
+      "bereich": "Gewässerkunde",
+      "frage": "Ein fischereilich ertragreiches Gewässer hat meist",
+      "antworten": {
+        "A": "einen hohen Silikatgehalt",
+        "B": "einen hohen Kalkgehalt",
+        "C": "einen hohen Gehalt an Huminsäuren"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.006",
+      "bereich": "Gewässerkunde",
+      "frage": "Bei welcher Wassertemperatur hat das Wasser die größte Dichte (höchstes spezifisches Gewicht)?",
+      "antworten": {
+        "A": "bei 0 °C",
+        "B": "bei – 1 °C",
+        "C": "bei +4 °C"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.007",
+      "bereich": "Gewässerkunde",
+      "frage": "Warum schwimmt Eis auf dem Wasser?",
+      "antworten": {
+        "A": "Eis hat ein geringeres spezifisches Gewicht als Wasser",
+        "B": "die Wasserströmung hält das Eis an der Oberfläche",
+        "C": "im Eis ist stets Luft eingeschlossen, die es schwimmfähig macht"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.008",
+      "bereich": "Gewässerkunde",
+      "frage": "Was bezeichnet man mit dem pH- Wert?",
+      "antworten": {
+        "A": "den Sauerstoffgehalt des Wassers",
+        "B": "den Eisengehalt des Wassers",
+        "C": "den Reaktionszustand des Wassers (sauer / neutral / alkalisch)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.009",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Reaktionszustand des Wassers liegt bei einem pH-Wert von 7 vor?",
+      "antworten": {
+        "A": "sauer",
+        "B": "neutral",
+        "C": "alkalisch"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.010",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Reaktionszustand des Wassers liegt bei einem pH-Wert von 9 vor?",
+      "antworten": {
+        "A": "alkalisch (basisch)",
+        "B": "sauer",
+        "C": "neutral"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.011",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche pH-Werte sind für die meisten heimischen Fischarten am besten geeignet?",
+      "antworten": {
+        "A": "pH-Werte über 9",
+        "B": "pH-Werte um 7",
+        "C": "pH-Werte unter 5"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.012",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Reaktionszustand des Wassers liegt bei einem pH-Wert von 7,5 vor?",
+      "antworten": {
+        "A": "schwach alkalisch (basisch)",
+        "B": "schwach sauer",
+        "C": "neutral"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.013",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Reaktionszustand des Wassers liegt bei einem pH-Wert von 6 vor?",
+      "antworten": {
+        "A": "neutral",
+        "B": "sauer",
+        "C": "alkalisch (basisch)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.014",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter der Selbstreinigungskraft eines Gewässers?",
+      "antworten": {
+        "A": "Im Wasser befindliche Schwebstoffe setzen sich in den ruhigen Zonen ab.",
+        "B": "Die Lebensgemeinschaften des Gewässers haben die Fähigkeit sich von Schädlingen zu befreien.",
+        "C": "Biologische Prozesse bewirken den Abbau von organischen Stoffen (z. B. von Abwässern)."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.015",
+      "bereich": "Gewässerkunde",
+      "frage": "Was wird für die Selbstreinigung des Gewässers benötigt?",
+      "antworten": {
+        "A": "Stickstoff",
+        "B": "Sauerstoff",
+        "C": "Kohlendioxid"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.016",
+      "bereich": "Gewässerkunde",
+      "frage": "Welchen Einfluss hat die Wassertemperatur auf den Sauerstoffgehalt des Wassers?",
+      "antworten": {
+        "A": "Im warmen Wasser löst sich mehr Sauerstoff.",
+        "B": "keinen",
+        "C": "Im kalten Wasser löst sich mehr Sauerstoff."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.017",
+      "bereich": "Gewässerkunde",
+      "frage": "Woher stammt der im Wasser gelöste Sauerstoff?",
+      "antworten": {
+        "A": "vom tierischen Plankton",
+        "B": "aus der Luft und von Unterwasserpflanzen",
+        "C": "aus dem Boden"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.018",
+      "bereich": "Gewässerkunde",
+      "frage": "In welchen Gewässern ist der Sauerstoffgehalt des Wassers meistens gleichbleibend hoch?",
+      "antworten": {
+        "A": "in schnell fließenden Bächen",
+        "B": "in Karpfenteichen",
+        "C": "in Baggerseen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.019",
+      "bereich": "Gewässerkunde",
+      "frage": "Bei welcher der angegebenen Temperaturen kann das Wasser den meisten Sauerstoff binden?",
+      "antworten": {
+        "A": "bei +1 °C",
+        "B": "bei +8 °C",
+        "C": "bei +4 °C"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.020",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Sättigungswert von Sauerstoff im Wasser ist abhängig",
+      "antworten": {
+        "A": "vom pH-Wert.",
+        "B": "vom Härtegrad des Wassers.",
+        "C": "von der Wassertemperatur."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.021",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter dem Sättigungswert von Sauerstoff im Wasser?",
+      "antworten": {
+        "A": "die temperatur- und druckabhängige obere Grenze für die Löslichkeit von Sauerstoff im Wasser",
+        "B": "die Veränderung des pH-Werts in Abhängigkeit des Sauerstoffgehalts",
+        "C": "das vom Härtegrad des Wassers abhängige Sauerstoffbindungsvermögen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.022",
+      "bereich": "Gewässerkunde",
+      "frage": "Welches Wasser ist meist sauerstoffarm?",
+      "antworten": {
+        "A": "Quellwasser",
+        "B": "Teichwasser",
+        "C": "Flusswasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.023",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Organismen reichern das Wasser mit Sauerstoff an?",
+      "antworten": {
+        "A": "das pflanzliche Plankton (Phytoplankton)",
+        "B": "Muscheln und Schnecken",
+        "C": "das tierische Plankton (Zooplankton)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.024",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie gelangt Sauerstoff in das Wasser?",
+      "antworten": {
+        "A": "durch Sauerstoffabgabe der grünen Unterwasserpflanzen und durch Sauerstoffaufnahme aus der Luft",
+        "B": "durch Fäulnis abgestorbener Organismen",
+        "C": "durch Verwitterung der Bodenteilchen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.025",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Faktor ist für die Sauerstofferzeugung der grünen Unterwasserpflanzen entscheidend?",
+      "antworten": {
+        "A": "das Sonnenlicht",
+        "B": "eine Wassertemperatur von über 18 °C",
+        "C": "ein pH-Wert von unter 3"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.026",
+      "bereich": "Gewässerkunde",
+      "frage": "Bis zu welcher Tiefe können grüne Pflanzen in Seen dauerhaft leben?",
+      "antworten": {
+        "A": "soweit ausreichend Licht eindringt soweit der Wasserdruck nicht zu",
+        "B": "stark ist",
+        "C": "bis zur Sprungschicht"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.027",
+      "bereich": "Gewässerkunde",
+      "frage": "Wodurch wird die Entwicklung von pflanzlichem Plankton (Phytoplankton) besonders gefördert?",
+      "antworten": {
+        "A": "durch starke Strömung",
+        "B": "durch große Wassertiefe",
+        "C": "durch Phosphorverbindungen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.028",
+      "bereich": "Gewässerkunde",
+      "frage": "Wodurch kann in einem nährstoffreichen See eine für Fische gefährliche Sauerstoffzehrung auftreten?",
+      "antworten": {
+        "A": "durch starke Algenentwicklung und anschließendes Absterben der Algen",
+        "B": "durch Absinken des pH-Wertes unter 5",
+        "C": "durch rasch ansteigenden Luftdruck"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.029",
+      "bereich": "Gewässerkunde",
+      "frage": "Was bezeichnet man in einem See als „Wasserblüte “?",
+      "antworten": {
+        "A": "eine übermäßige Entwicklung von pflanzlichem Plankton (Phytoplankton)",
+        "B": "die Blütezeit von Schwimmblattpflanzen, z. B. Teichrosen",
+        "C": "den starken Anflug von Blütenpollen auf dem Gewässer"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.030",
+      "bereich": "Gewässerkunde",
+      "frage": "Was bezeichnet man als tierisches Plankton (Zooplankton)?",
+      "antworten": {
+        "A": "teils sehr kleine tierische Organismen, die im Freiwasser schweben",
+        "B": "Kleintiere des Gewässerbodens",
+        "C": "ins Wasser gefallene Insekten"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.031",
+      "bereich": "Gewässerkunde",
+      "frage": "Was bezeichnet man als pflanzliches Plankton (Phytoplankton)?",
+      "antworten": {
+        "A": "teils sehr kleine pflanzliche Organismen (Algen), die sich an der Oberfläche von Steinen oder Pflanzen anheften",
+        "B": "den starken Anflug von Blütenpollen auf dem Gewässer",
+        "C": "teils sehr kleine pflanzliche Organismen (Algen), die im Freiwasser schweben"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.032",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanzen tragen bei Tageslicht wesentlich zur Erhöhung des Sauerstoffgehalts im Wasser bei?",
+      "antworten": {
+        "A": "Überwasserpflanzen",
+        "B": "Unterwasserpflanzen",
+        "C": "Schwimmblattpflanzen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.033",
+      "bereich": "Gewässerkunde",
+      "frage": "Welches Kriterium wird für die Bestimmung der biologischen Gewässergüte in einem Fließgewässer herangezogen?",
+      "antworten": {
+        "A": "die Artenzusammensetzung der Kleintiere",
+        "B": "die Fließgeschwindigkeit",
+        "C": "der pH-Wert"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.034",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie kann eine lang anhaltende Gewässerbelastung mit organischen Stoffen festgestellt werden?",
+      "antworten": {
+        "A": "durch regelmäßige Elektrobefischungen",
+        "B": "durch regelmäßige Analyse von Kleintieren (biologische Gewässeruntersuchung)",
+        "C": "durch regelmäßige Temperaturmessungen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.035",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart kommt mit einem vergleichsweise geringen Sauerstoffgehalt im Wasser aus?",
+      "antworten": {
+        "A": "Bachsaibling",
+        "B": "Huchen",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.036",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche der drei Fischarten hat den höchsten Sauerstoffbedarf?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Aal",
+        "C": "Bachforelle"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.037",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Organismen kommen häufig in verschmutzten Fließgewässern (Güteklasse III) vor?",
+      "antworten": {
+        "A": "Wasserasseln",
+        "B": "Hüpferlinge",
+        "C": "Steinfliegenlarven"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.038",
+      "bereich": "Gewässerkunde",
+      "frage": "Wo kommen Wasserasseln vermehrt vor?",
+      "antworten": {
+        "A": "in fischleeren versauerten Gewässern",
+        "B": "in sauberen Gebirgsbächen",
+        "C": "in organisch belasteten Gewässern"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.039",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tiere sind Bioindikatoren für stark mit fäulnisfähigen Stoffen belastete Gewässer der Güteklasse IV?",
+      "antworten": {
+        "A": "Steinfliegenlarven",
+        "B": "Bachflohkrebse",
+        "C": "Schlammröhrenwürmer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.040",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tiere sind Bioindikatoren für unbelastete Fließgewässer der Güteklasse I?",
+      "antworten": {
+        "A": "Steinfliegenlarven",
+        "B": "Rote Zuckmückenlarven",
+        "C": "Wasserassel"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.041",
+      "bereich": "Gewässerkunde",
+      "frage": "Wodurch kann in einem Bach der Sauerstoffgehalt rasch abnehmen?",
+      "antworten": {
+        "A": "durch Einleitung von Abwasser",
+        "B": "durch schnelles Absinken der Wassertemperatur um mehr als 5 °C",
+        "C": "durch Photosynthese der Wasserpflanzen bei starker Sonneneinstrahlung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.042",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Region eines Fließgewässers ist am besten mit Sauerstoff versorgt?",
+      "antworten": {
+        "A": "Barbenregion",
+        "B": "Forellenregion",
+        "C": "Brachsenregion"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.043",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart ist für die Forellenregion typisch?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Mühlkoppe",
+        "C": "Frauennerfling"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.044",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart ist in der Forellenregion nicht vertreten?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Elritze",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.045",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche durchschnittliche Wassertemperatur ist für die Forellenregion typisch?",
+      "antworten": {
+        "A": "17 °C",
+        "B": "24 °C",
+        "C": "10 °C"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.046",
+      "bereich": "Gewässerkunde",
+      "frage": "In welcher Region eines Fließgewässers ist in der Regel die Strömungsgeschwindigkeit des Wassers am größten?",
+      "antworten": {
+        "A": "Barbenregion",
+        "B": "Brachsenregion",
+        "C": "Forellenregion"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.047",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischarten leben hauptsächlich in der Äschen- und Barbenregion?",
+      "antworten": {
+        "A": "Schleie und Rotfeder",
+        "B": "Nase und Huchen",
+        "C": "Mühlkoppe und Elritze"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.048",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischarten sind für die Äschen- und Barbenregion typisch?",
+      "antworten": {
+        "A": "Waller (Wels) und Güster",
+        "B": "Bachforelle und Mühlkoppe",
+        "C": "Nase und Schneider"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.049",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Eigenschaften kennzeichnen u.a. die Barbenregion der Fließgewässer?",
+      "antworten": {
+        "A": "sandiger und kiesiger Untergrund sowie schnell fließendes Wasser",
+        "B": "felsiger Untergrund und reißende Strömung",
+        "C": "schlammiger Untergrund und langsam fließendes Wasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.050",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart ist für die Barbenregion zusammen mit dem Leitfisch kennzeichnend?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Nase",
+        "C": "Schleie"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.051",
+      "bereich": "Gewässerkunde",
+      "frage": "Die Brachsenregion ist gekennzeichnet durch",
+      "antworten": {
+        "A": "reißende Strömung",
+        "B": "keine Strömung",
+        "C": "geringe Strömung"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.052",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Die Strömungsgeschwindigkeit nimmt von der Forellen- bis zur Brachsenregion ab.",
+        "B": "Die Gewässertrübung nimmt von der Äschen- bis zur Brachsenregion ab.",
+        "C": "Der Sauerstoffgehalt ist in der Regel in der Forellenregion geringer als in der Barbenregion."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.053",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Eigenschaften kennzeichnen u.a. die Brachsenregion der Fließgewässer?",
+      "antworten": {
+        "A": "schlammiger Untergrund und langsam fließendes Wasser",
+        "B": "felsiger Untergrund und reißende Strömung",
+        "C": "sandiger und kiesiger Untergrund sowie schnell fließendes Wasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.054",
+      "bereich": "Gewässerkunde",
+      "frage": "In welcher Fischregion der Fließgewässer leben in der Regel die meisten Fischarten?",
+      "antworten": {
+        "A": "Brachsenregion",
+        "B": "Barbenregion",
+        "C": "Äschenregion"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.055",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischarten leben hauptsächlich in der Brachsenregion?",
+      "antworten": {
+        "A": "Huchen und Äschen",
+        "B": "Waller (Wels) und Flussbarsch",
+        "C": "Mühlkoppe und Nase"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.056",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischarten leben hauptsächlich in der Brachsenregion?",
+      "antworten": {
+        "A": "Mühlkoppe und Elritze",
+        "B": "Barbe und Nase",
+        "C": "Rotauge und Schleie"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.057",
+      "bereich": "Gewässerkunde",
+      "frage": "Wo laicht der Europäische Aal?",
+      "antworten": {
+        "A": "in der Sargasso-See",
+        "B": "im Mündungsbereich der Flüsse",
+        "C": "im Golf von Biskaya"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.058",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Lebensraum ist für den Edelkrebs typisch?",
+      "antworten": {
+        "A": "schnell fließende und strukturarme Fließgewässer mit Sommertemperaturen zwischen 8- 10°C",
+        "B": "flachgründige Altarme von Fließgewässern mit schlammigem Grund und dichtem Schwimmblattpflanzenbestand",
+        "C": "langsam fließende und strukturreiche Fließgewässer mit Sommertemperaturen zwischen 15-20°C"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.059",
+      "bereich": "Gewässerkunde",
+      "frage": "Auf welche Gewässer ist das Vorkommen der Flussperlmuschel beschränkt?",
+      "antworten": {
+        "A": "sauerstoffarme Gewässer",
+        "B": "kalkarme Gewässer",
+        "C": "kalkreiche Gewässer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.060",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart lebt vorzugsweise in der Freiwasserzone eines Sees?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Renke (Felchen)",
+        "C": "Güster"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.061",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist ein Altwasser?",
+      "antworten": {
+        "A": "ein Gewässer mit überaltertem Fischbestand.",
+        "B": "ein Gewässer, dessen Wasser gealtert ist.",
+        "C": "eine natürlich oder künstlich abgetrennte ehemalige Flussstrecke."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.062",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist charakteristisch für einen neu angelegten Baggersee?",
+      "antworten": {
+        "A": "eine hohe Wassertemperatur im Sommer",
+        "B": "ein geringes Nahrungsangebot für Fische",
+        "C": "ein geringer Sauerstoffgehalt an der Oberfläche"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.063",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Seentyp wird vorwiegend durch Grundwasser gespeist?",
+      "antworten": {
+        "A": "ein Baggersee",
+        "B": "ein natürlicher See",
+        "C": "ein Stausee"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.064",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist unter der Vollzirkulation eines Sees zu verstehen?",
+      "antworten": {
+        "A": "der vollständige Sauerstoffabbau im Winter unter der Eisdecke",
+        "B": "die vollständige Umsetzung der verfügbaren Nährstoffe in pflanzliche Biomasse",
+        "C": "die vollständige Umwälzung des Wasserkörpers"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.065",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter dem Begriff Sprungschicht in einem See?",
+      "antworten": {
+        "A": "die sauerstofffreie Tiefenschicht",
+        "B": "den Übergangsbereich zwischen dem warmen Oberflächen- und dem kalten Tiefenbereich",
+        "C": "die vorgeschriebene Tiefe unter einem Sprungbrett an ausgewiesenen Badestellen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.066",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter dem Begriff der Sommerstagnation in einem See?",
+      "antworten": {
+        "A": "eine gleichmäßige Sauerstoffverteilung während des Sommers",
+        "B": "ein während des Sommers stagnierendes Wachstum des Fischbestands",
+        "C": "eine stabile Temperaturschichtung im Sommer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.067",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart kommt in Hochgebirgsseen vor?",
+      "antworten": {
+        "A": "Elritze",
+        "B": "Zander",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.068",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Eigenschaften sind für einen Zandersee charakteristisch?",
+      "antworten": {
+        "A": "krautarm, unterschiedlich tief, hartgründig, trüb",
+        "B": "krautarm, tief, mit großer Sichttiefe",
+        "C": "krautreich, flach, mit großer Sichttiefe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.069",
+      "bereich": "Gewässerkunde",
+      "frage": "Wann wird der Sauerstoffgehalt in einem stehenden Gewässer gering sein?",
+      "antworten": {
+        "A": "bei Sonnenschein und Massenvorkommen von Algen oder Unterwasserpflanzen",
+        "B": "bei Dunkelheit und Massenvorkommen von Algen oder Unterwasserpflanzen",
+        "C": "der Sauerstoffgehalt in stehenden Gewässern ist immer gering"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.070",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist charakteristisch für nährstoffreiche Seen?",
+      "antworten": {
+        "A": "Am Grund befinden sich nur geringe Ablagerungen von fäulnisfähigen Stoffen.",
+        "B": "Pflanzliches Plankton (Phytoplankton) entwickelt sich im Frühjahr und Sommer in großen Mengen.",
+        "C": "Das Tiefenwasser hat das ganze Jahr einen hohen Sauerstoffgehalt."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.071",
+      "bereich": "Gewässerkunde",
+      "frage": "Was ist charakteristisch für nährstoffarme Seen?",
+      "antworten": {
+        "A": "Am Grund befinden sich regelmäßig große Ablagerungen an fäulnisfähigen, organischen Stoffen.",
+        "B": "Das Tiefenwasser ist sehr sauerstoffarm.",
+        "C": "Das Tiefenwasser hat einen hohen Sauerstoffgehalt."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.072",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter Aufwuchs?",
+      "antworten": {
+        "A": "Massenentwicklung von Schilf und Rohr",
+        "B": "Ansiedelung von Algen auf lebendem (z. B. Wasserpflanzen) und totem (z. B. Steinen) Material",
+        "C": "Massenentwicklung von pflanzlichem Plankton"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.073",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze gehört zu den Überwasserpflanzen?",
+      "antworten": {
+        "A": "Pfeilkraut",
+        "B": "Wasserlinse",
+        "C": "Fadenalge"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.074",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanzen gehören zu den Überwasserpflanzen?",
+      "antworten": {
+        "A": "Seggen und Simsen",
+        "B": "Laichkraut und Wasserpest",
+        "C": "Tausendblatt und Quellmoos"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.075",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanzen gehören zu den Schwimmblattpflanzen?",
+      "antworten": {
+        "A": "Wasserlinsen, Seerose, Froschbiss",
+        "B": "Binsen, Rohr, Schilf",
+        "C": "Wasserpest, Tausendblatt, Armleuchtergewächse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.076",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze gehört zu den Schwimmblattpflanzen?",
+      "antworten": {
+        "A": "Rohrkolben",
+        "B": "Gelbe Teichrose",
+        "C": "Armleuchtergewächs"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.077",
+      "bereich": "Gewässerkunde",
+      "frage": "Die Wasserpest ist",
+      "antworten": {
+        "A": "eine sich stark vermehrende Wasserpflanze",
+        "B": "eine Wasservergiftung",
+        "C": "eine Fischkrankheit"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.078",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze gehört zu den Unterwasserpflanzen?",
+      "antworten": {
+        "A": "Binse",
+        "B": "Wasserknöterich",
+        "C": "Wasserpest"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.079",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze gehört zu den Unterwasserpflanzen?",
+      "antworten": {
+        "A": "Froschbiss",
+        "B": "Tausendblatt",
+        "C": "Wasserschwertlilie"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.080",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze findet man überwiegend in der Forellenregion?",
+      "antworten": {
+        "A": "Wasserlinse",
+        "B": "Schwimmendes Laichkraut",
+        "C": "Quellmoos"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.081",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanzen gehören zu den Unterwasserpflanzen?",
+      "antworten": {
+        "A": "durchwachsenes, kammförmiges und krauses Laichkraut",
+        "B": "Wasserlinsen",
+        "C": "Seggen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.082",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Pflanze gehört zu den Überwasserpflanzen?",
+      "antworten": {
+        "A": "Tausendblatt",
+        "B": "Wasserlinse",
+        "C": "Flatterbinse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.083",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischart laicht auf Unterwasserpflanzen ab?",
+      "antworten": {
+        "A": "Seeforelle",
+        "B": "Hecht",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.084",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Organismen stehen am Anfang der Nahrungskette in den Gewässern?",
+      "antworten": {
+        "A": "die Fischbrut",
+        "B": "einzellige Algen",
+        "C": "das Zooplankton"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.085",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Nahrungskette ist typisch für den Lebensraum Fließgewässer?",
+      "antworten": {
+        "A": "Phytoplankton - Bachforelle - Äsche",
+        "B": "Algenaufwuchs - Nase – Huchen",
+        "C": "Zuckmückenlarven - Rotauge – Karpfen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.086",
+      "bereich": "Gewässerkunde",
+      "frage": "Haben Pflanzennährstoffe in Gewässern fischbiologische Bedeutung?",
+      "antworten": {
+        "A": "Nein, sie haben keine Bedeutung, da sie für die Fische wertlos sind.",
+        "B": "Nein, sie haben keine Bedeutung, da sie in der Regel in Lösung gehen.",
+        "C": "Ja, sie sind Voraussetzung für eine Entwicklung der Wasserpflanzen, die wiederum Grundlage für die Tierernährung darstellt."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.087",
+      "bereich": "Gewässerkunde",
+      "frage": "Welches Beispiel einer Nahrungskette ist typisch für die Brachsenregion?",
+      "antworten": {
+        "A": "Algen – Nase – Huchen",
+        "B": "Insektenlarven – Rotauge – Hecht",
+        "C": "Insektenlarven – Mühlkoppe – Bachforelle"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.088",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tiere sind eine wertvolle Fischnahrung?",
+      "antworten": {
+        "A": "Wasserläufer",
+        "B": "Zuckmückenlarven",
+        "C": "Rückenschwimmer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.089",
+      "bereich": "Gewässerkunde",
+      "frage": "Zum pflanzlichen Plankton (Phytoplankton) gehören",
+      "antworten": {
+        "A": "im Freiwasser eines Sees schwebende mikroskopisch kleine Pflanzen (Schwebalgen)",
+        "B": "die auf Steinen und Pflanzen im Gewässer wachsenden Algen (Aufwuchs)",
+        "C": "auf der Wasseroberfläche schwimmende höhere Wasserpflanzen, z. B. Wasserlinsen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.090",
+      "bereich": "Gewässerkunde",
+      "frage": "Zum tierischen Plankton (Zooplankton) zählen",
+      "antworten": {
+        "A": "rote Zuckmückenlarven und Schlammröhrenwürmer",
+        "B": "Hüpferlinge und Wasserflöhe",
+        "C": "Eintagsfliegen- und Steinfliegenlarven"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.091",
+      "bereich": "Gewässerkunde",
+      "frage": "Welcher Bereich eines stehenden Gewässers ist für Fische am nahrungsreichsten?",
+      "antworten": {
+        "A": "die Uferzone",
+        "B": "die Freiwasserzone",
+        "C": "die Tiefenzone"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.092",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tierart ist ein für den Forellenbach typisches Fischnährtier?",
+      "antworten": {
+        "A": "Schlammröhrenwurm",
+        "B": "Hüpferling",
+        "C": "Bachflohkrebs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.093",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischnährtiere leben in Forellenbächen am Gewässergrund?",
+      "antworten": {
+        "A": "Stein- und Eintagsfliegenlarven",
+        "B": "Gelbrandkäferlarven",
+        "C": "Wasserflöhe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.094",
+      "bereich": "Gewässerkunde",
+      "frage": "In welchen Gewässern kann sich Plankton entwickeln?",
+      "antworten": {
+        "A": "in Gewässern der Äschenregion",
+        "B": "in kühlen Quellaustritten der Forellenregion",
+        "C": "in gestauten Fließgewässern"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.095",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tierart hat auch als Fischnahrung große Bedeutung?",
+      "antworten": {
+        "A": "Libellenlarve",
+        "B": "Schlammröhrenwurm",
+        "C": "Rückenschwimmer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.096",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischnährtiere leben vorwiegend am Gewässergrund?",
+      "antworten": {
+        "A": "Wasserflöhe",
+        "B": "Rote Zuckmückenlarven",
+        "C": "Hüpferlinge"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.097",
+      "bereich": "Gewässerkunde",
+      "frage": "Wo leben die Schlammröhrenwürmer?",
+      "antworten": {
+        "A": "in der Uferzone auf Überwasserpflanzen",
+        "B": "im Gewässerboden",
+        "C": "im Freiwasser schwebend"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.098",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Fischnährtiere leben in der Freiwasserzone?",
+      "antworten": {
+        "A": "Steinfliegenlarven",
+        "B": "Wasserflöhe",
+        "C": "Schlammröhrenwürmer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.099",
+      "bereich": "Gewässerkunde",
+      "frage": "Kriebelmückenlarven sind",
+      "antworten": {
+        "A": "ein Anzeiger für sehr gute Wasserqualität",
+        "B": "Außenschmarotzer auf Fischen",
+        "C": "eine gute Fischnahrung"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.100",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie kann man Eintagsfliegen- und Steinfliegenlarven sicher unterscheiden?",
+      "antworten": {
+        "A": "Eintagsfliegen- und Steinfliegenlarven kann man nicht sicher unterscheiden.",
+        "B": "Steinfliegenlarven haben die Kiemenanhänge am Hinterleib und in der Regel drei Schwanzborsten.",
+        "C": "Eintagsfliegenlarven haben die Kiemenanhänge am Hinterleib und in der Regel drei Schwanzborsten."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.101",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Tiere sind in der Äschenregion als Fischnahrung wichtig?",
+      "antworten": {
+        "A": "Schlammröhrenwürmer",
+        "B": "Wasserflöhe",
+        "C": "Köcherfliegen und ihre Larven"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.102",
+      "bereich": "Gewässerkunde",
+      "frage": "Wodurch wird der Bisam besonders problematisch?",
+      "antworten": {
+        "A": "Er zerstört Dämme und Uferanlagen und frisst Muscheln",
+        "B": "er vertreibt die Fische aus ihrem Lebensraum",
+        "C": "er ist ein bedeutender Nahrungskonkurrent der Fische"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.103",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Bisam ernährt sich von",
+      "antworten": {
+        "A": "tierischem und pflanzlichem Plankton",
+        "B": "Fischen, Amphibien und Mäusen",
+        "C": "Wasser- und Uferpflanzen und deren Wurzeln, gelegentlich auch von Kleintieren und Muscheln"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.104",
+      "bereich": "Gewässerkunde",
+      "frage": "Wodurch wird der Biber besonders problematisch?",
+      "antworten": {
+        "A": "Durch den Bau von Nestern im Uferbereich verhindert er die Entwicklung einer Artenvielfalt.",
+        "B": "Er ist ein bedeutender Nahrungskonkurrent für Fische.",
+        "C": "Durch den Bau von Dämmen trägt er zur Veränderung der Gewässerstruktur bei, so dass wirtschaftliche und sicherheitsrelevante Schäden entstehen können."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.105",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Biber ernährt sich von",
+      "antworten": {
+        "A": "Pflanzen und Baumrinde",
+        "B": "Kleintieren",
+        "C": "Fischen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.106",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Insektenlarve ernährt sich auch von kleinen Fischen?",
+      "antworten": {
+        "A": "Gelbrandkäferlarve",
+        "B": "Zuckmückenlarve",
+        "C": "Kriebelmückenlarve"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.107",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Vogelarten ernähren sich vorwiegend von Fischen?",
+      "antworten": {
+        "A": "Stockente, Höckerschwan",
+        "B": "Bläßhuhn, Graugans",
+        "C": "Haubentaucher, Gänsesäger, Kormoran"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.108",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Vogelart kann aufgrund ihres Ernährungsverhaltens den Fischbestand in Fließgewässern der Äschen- und Forellenregion nachhaltig reduzieren?",
+      "antworten": {
+        "A": "Wasseramsel",
+        "B": "Kormoran",
+        "C": "Haubentaucher"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.109",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Vogelarten ernähren sich auch von Kleinfischen?",
+      "antworten": {
+        "A": "Stockente, Graugans, Höckerschwan",
+        "B": "Haubentaucher, Eisvogel, Gänsesäger",
+        "C": "Blässhuhn, Schilfrohrsänger, Wasseramsel"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.110",
+      "bereich": "Gewässerkunde",
+      "frage": "Große fischereiliche Schäden entstehen durch lokal dichte Bestände von",
+      "antworten": {
+        "A": "Lachmöwe, Kiebitz, Großer Brachvogel.",
+        "B": "Weißstorch, Blässhuhn, Bachstelze.",
+        "C": "Kormoran, Gänsesäger, Graureiher."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.111",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Kormoran ernährt sich ausschließlich von",
+      "antworten": {
+        "A": "Amphibien und Wasserspitzmäusen.",
+        "B": "Fischen aller Art.",
+        "C": "Fischnährtieren."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.112",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie jagt der Graureiher hauptsächlich nach Fischen?",
+      "antworten": {
+        "A": "stehend im Uferbereich",
+        "B": "im Sturzflug",
+        "C": "schwimmtauchend"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.113",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie jagt der Gänsesäger nach seiner Beute?",
+      "antworten": {
+        "A": "stehend im Uferbereich",
+        "B": "schwimmtauchend",
+        "C": "im Sturzflug"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.114",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie jagt der Kormoran hauptsächlich nach seiner Beute?",
+      "antworten": {
+        "A": "schwimmtauchend",
+        "B": "watend im Uferbereich",
+        "C": "stehend im Uferbereich"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.115",
+      "bereich": "Gewässerkunde",
+      "frage": "Wie jagt der Fischadler hauptsächlich nach seiner Beute?",
+      "antworten": {
+        "A": "stehend im Uferbereich",
+        "B": "schwimmtauchend",
+        "C": "im Sturzflug"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.116",
+      "bereich": "Gewässerkunde",
+      "frage": "In welchen Gewässern können Kormoran und Gänsesäger einen Bestand an Bachforellen durch Fraß besonders stark gefährden?",
+      "antworten": {
+        "A": "in tiefen Seen",
+        "B": "in strukturarmen Fließgewässern mit wenig Unterständen",
+        "C": "in strukturreichen Fließgewässern mit einer großen Anzahl an Unterständen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.117",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Fischotter ernährt sich vorwiegend von",
+      "antworten": {
+        "A": "Fischen, Flusskrebsen, Amphibien und kleinen Wasservögeln",
+        "B": "Wasserpflanzen",
+        "C": "tierischem und pflanzlichem Plankton"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.118",
+      "bereich": "Gewässerkunde",
+      "frage": "Der Graureiher ernährt sich hauptsächlich von",
+      "antworten": {
+        "A": "Wasserpflanzen",
+        "B": "Fischen, Fröschen und Mäusen",
+        "C": "tierischem und pflanzlichem Plankton"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.119",
+      "bereich": "Gewässerkunde",
+      "frage": "Welches im und am Wasser lebende Säugetier fällt Bäume und verbaut diese zu Dämmen?",
+      "antworten": {
+        "A": "Biber",
+        "B": "Bisam",
+        "C": "Fischotter"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.120",
+      "bereich": "Gewässerkunde",
+      "frage": "Ist der Biber aus Sicht der Fischerei grundsätzlich negativ zu bewerten?",
+      "antworten": {
+        "A": "Ja, er frisst täglich bis zu 2 kg Fisch. Nein, in Gewässern kann er zur",
+        "B": "Strukturvielfalt beitragen.",
+        "C": "Nein, der Biber verursacht keinerlei Schäden."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.121",
+      "bereich": "Gewässerkunde",
+      "frage": "Welchen fischökologisch negativen Einfluss können Maisfelder im Bereich von Fließgewässern haben?",
+      "antworten": {
+        "A": "Insekten können vom Wind ins Gewässer getragen werden.",
+        "B": "Düngestoffe fördern das Wachstum von Ufergehölzen.",
+        "C": "Bei Starkregen kann Bodensubstrat in das Gewässer eingetragen werden."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "2.122",
+      "bereich": "Gewässerkunde",
+      "frage": "Für welche Tierarten ist die Feinsedimentbelastung der Gewässer besonders problematisch?",
+      "antworten": {
+        "A": "Flussperlmuschel, Äsche, Nase",
+        "B": "Signalkrebs, Waller (Wels), Karpfen",
+        "C": "Kamberkrebs, Rotauge, Schleie"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.123",
+      "bereich": "Gewässerkunde",
+      "frage": "Was sind Fischpässe?",
+      "antworten": {
+        "A": "Strecken in Gewässern, die für die Wanderung der Fische bevorzugt werden",
+        "B": "Einrichtungen, die den Fischen das Überwinden von Staustufen im Gewässer ermöglichen",
+        "C": "Zugangswege der Fischer zu guten Fangplätzen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "2.124",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Maßnahme ist aus Sicht der Fischerei geeignet, um die Gewässerbelastung mit Feinsedimenten zu verringern?",
+      "antworten": {
+        "A": "Ausweisung von Uferschutzstreifen",
+        "B": "Biogasanlagen nur noch mindestens 500 m entfernt vom Gewässer errichten",
+        "C": "Ausbau der Wasserkraft"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.125",
+      "bereich": "Gewässerkunde",
+      "frage": "Sie fangen im Mai eine Brachse mit weißen „Körnchen“ auf dem Kopf. Worum handelt es sich mit großer Wahrscheinlichkeit?",
+      "antworten": {
+        "A": "Laichausschlag",
+        "B": "Tarnfärbung",
+        "C": "Erkrankung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.126",
+      "bereich": "Gewässerkunde",
+      "frage": "Unterwasserpflanzen sind in ausgewogener Dichte aus fischökologischer Sicht wünschenswert, weil sie",
+      "antworten": {
+        "A": "Sauerstoff für das Gewässer produzieren.",
+        "B": "den Schwarzanglern das Fischen erschweren.",
+        "C": "eine Beschattung des Gewässers bewirken."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.127",
+      "bereich": "Gewässerkunde",
+      "frage": "Welche Organismen können in der lichtlosen Tiefenzone von Seen leben?",
+      "antworten": {
+        "A": "Bakterien",
+        "B": "pflanzliches Plankton",
+        "C": "Unterwasserpflanzen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.128",
+      "bereich": "Gewässerkunde",
+      "frage": "Kann ein Hochwasser auch positive Folgen für ein Fließgewässer haben?",
+      "antworten": {
+        "A": "Ja, der Untergrund (z.B. Kiesbänke) wird vom Schlamm befreit.",
+        "B": "Nein, bei Hochwasser fängt man nichts.",
+        "C": "Nein, die Fische werden abgetrieben."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "2.129",
+      "bereich": "Gewässerkunde",
+      "frage": "Was versteht man unter dem Kreislauf des Wassers?",
+      "antworten": {
+        "A": "Verdunstung, Niederschlag und Abfluss des Wassers",
+        "B": "Strömung in großen Seen",
+        "C": "Strudelbewegungen im Wasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    }
+  ]
+}

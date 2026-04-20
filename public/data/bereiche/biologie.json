@@ -1,0 +1,3833 @@
+{
+  "bereich": "Biologie",
+  "fragen": [
+    {
+      "id": "1.001",
+      "bereich": "Biologie",
+      "frage": "Welche ist die artenreichste Gruppe der einheimischen Süßwasserfische?",
+      "antworten": {
+        "A": "die Gruppe der Lachsartigen (Salmoniden)",
+        "B": "die Gruppe der Barschartigen (Perciden)",
+        "C": "die Gruppe der Karpfenartigen (Cypriniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.002",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Der Sterlet gehört zu den störartigen Fischen.",
+        "B": "Der Steinbeißer gehört zu den barschartigen Fischen.",
+        "C": "Der Perlfisch gehört zu den dorschartigen Fischen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.003",
+      "bereich": "Biologie",
+      "frage": "Zu welcher Gruppe der Wirbeltiere gehören die meisten einheimischen Süßwasserfischarten?",
+      "antworten": {
+        "A": "zu den Rundmäulern",
+        "B": "zu den Knochenfischen",
+        "C": "zu den Knorpelfischen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.004",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten gehören zu den Karpfenartigen (Cypriniden)?",
+      "antworten": {
+        "A": "Kaulbarsch und Schrätzer",
+        "B": "Renke (Felchen) und Äsche",
+        "C": "Strömer und Moderlieschen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.005",
+      "bereich": "Biologie",
+      "frage": "Zu welcher Tiergruppe gehören die Neunaugen?",
+      "antworten": {
+        "A": "zu den Rundmäulern",
+        "B": "zu den Knorpelfischen",
+        "C": "zu den Knochenfischen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.006",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten gehören zu den Barschartigen (Perciden)?",
+      "antworten": {
+        "A": "Schrätzer und Streber",
+        "B": "Renke (Felchen)",
+        "C": "Elritze und Moderlieschen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.007",
+      "bereich": "Biologie",
+      "frage": "Die Goldorfe ist eine Variante von",
+      "antworten": {
+        "A": "Zährte (Seerüßling)",
+        "B": "Nerfling (Aland)",
+        "C": "Rotfeder"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.008",
+      "bereich": "Biologie",
+      "frage": "Welches Merkmal wird zur Artbestimmung bei den karpfenartigen Fischen (Cypriniden) herangezogen?",
+      "antworten": {
+        "A": "die äußere Gestalt, insbesondere die Form der Kiemendeckel",
+        "B": "die Anzahl und Stellung der Schlundzähne",
+        "C": "der Laichausschlag"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.009",
+      "bereich": "Biologie",
+      "frage": "Wo sind Streber und Zingel ursprünglich heimisch?",
+      "antworten": {
+        "A": "im Flussgebiet des Rheins",
+        "B": "im Flussgebiet von Elbe und Rhein",
+        "C": "im Flussgebiet der Donau"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.010",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten sind in Bayern ursprünglich nur im Donaueinzugsgebiet heimisch?",
+      "antworten": {
+        "A": "Huchen, Frauennerfling und Perlfisch",
+        "B": "Zährte (Seerüßling) und Dreistachliger Stichling",
+        "C": "Zope und Brachse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.011",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die natürliche Verbreitung auf das Einzugsgebiet der Donau beschränkt?",
+      "antworten": {
+        "A": "Aal",
+        "B": "Zingel",
+        "C": "Strömer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.012",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten waren ursprünglich in den bayerischen Gewässern nicht heimisch?",
+      "antworten": {
+        "A": "Zingel und Schrätzer",
+        "B": "Bachsaibling und Regenbogenforelle",
+        "C": "Huchen und Seesaibling"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.013",
+      "bereich": "Biologie",
+      "frage": "Wann bezeichnet man Bachforellen auch als Steinforellen?",
+      "antworten": {
+        "A": "wenn sie in kalten und nahrungsarmen Bächen schlecht wachsen und klein bleiben",
+        "B": "wenn beim Schlachten im Verdauungstrakt Kieselsteine festgestellt werden",
+        "C": "wenn sie in Gewässern mit reinem Gerölluntergrund leben"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.014",
+      "bereich": "Biologie",
+      "frage": "Wie hat man sich die Urform des Karpfens vorzustellen?",
+      "antworten": {
+        "A": "hochrückig und wenig Schuppen",
+        "B": "hochrückig und ohne Schuppen",
+        "C": "langgestreckt und voll beschuppt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.015",
+      "bereich": "Biologie",
+      "frage": "Die Elritze gehört zur Gruppe der",
+      "antworten": {
+        "A": "Barschartigen (Perciden)",
+        "B": "Schmerlenartigen (Cobitiden)",
+        "C": "Karpfenartigen (Cypriniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.016",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart gehört zu den Schmerlenartigen (Cobitiden)?",
+      "antworten": {
+        "A": "Schlammpeitzger",
+        "B": "Mühlkoppe",
+        "C": "Gründling"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.017",
+      "bereich": "Biologie",
+      "frage": "Was versteht man unter einem Schwarzreuter?",
+      "antworten": {
+        "A": "Zwergform des Seesaiblings",
+        "B": "Hochgebirgsform der Bachforelle",
+        "C": "Standortvariante der Regenbogenforelle"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.018",
+      "bereich": "Biologie",
+      "frage": "Woher kommt der Name „Neunauge“?",
+      "antworten": {
+        "A": "Das ausgewachsene Tier hat auf jeder Körperseite sieben sichtbare Kiemenöffnungen und ein Auge sowie mittig am Kopf eine unpaare Nasenöffnung.",
+        "B": "Das ausgewachsene Tier hat an jeder Seite je ein Auge, zwei Nasenöffnungen und sechs Kiemenöffnungen.",
+        "C": "Das ausgewachsene Tier hat an jeder Seite neun Augen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.019",
+      "bereich": "Biologie",
+      "frage": "Als Elsässer Saibling bezeichnet man die Kreuzung von",
+      "antworten": {
+        "A": "Bachsaibling und Bachforelle",
+        "B": "Seesaibling und Seeforelle",
+        "C": "Seesaibling und Bachsaibling"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.020",
+      "bereich": "Biologie",
+      "frage": "Als Tigerfisch (Tigerforelle) bezeichnet man die Kreuzung von",
+      "antworten": {
+        "A": "Bachsaibling und Bachforelle",
+        "B": "Seesaibling und Bachsaibling",
+        "C": "Seesaibling und Seeforelle"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.021",
+      "bereich": "Biologie",
+      "frage": "Welche Körperform haben in der Regel Fische, die in starker Strömung leben?",
+      "antworten": {
+        "A": "Spindel- oder Torpedoform",
+        "B": "Schlangenform",
+        "C": "hochrückige Form"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.022",
+      "bereich": "Biologie",
+      "frage": "Welche Körperform hat der Bachsaibling?",
+      "antworten": {
+        "A": "hochrückige Form",
+        "B": "Schlangenform",
+        "C": "Spindel- oder Torpedoform"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.023",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart bezeichnet man als hochrückig?",
+      "antworten": {
+        "A": "Aitel (Döbel)",
+        "B": "Brachse",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.024",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart bezeichnet man als hochrückig?",
+      "antworten": {
+        "A": "Hasel",
+        "B": "Schied (Rapfen)",
+        "C": "Karausche"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.025",
+      "bereich": "Biologie",
+      "frage": "Welche Körperform hat die Güster?",
+      "antworten": {
+        "A": "Pfeilform",
+        "B": "hochrückig und seitlich abgeflacht",
+        "C": "Torpedoform und drehrund"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.026",
+      "bereich": "Biologie",
+      "frage": "Für welche Fischart ist der Geruch nach Thymian kennzeichnend?",
+      "antworten": {
+        "A": "Blaufelchen",
+        "B": "Huchen",
+        "C": "Äsche"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.027",
+      "bereich": "Biologie",
+      "frage": "Die Bezeichnung „unterständiges Maul“ bedeutet?",
+      "antworten": {
+        "A": "Der Unterkiefer ist kürzer als der Oberkiefer.",
+        "B": "Der Unterkiefer ist länger als der Oberkiefer.",
+        "C": "Der Unterkiefer und der Oberkiefer sind gleich lang."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.028",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat ein unterständiges Maul?",
+      "antworten": {
+        "A": "Zährte (Seerüßling)",
+        "B": "Aitel (Döbel)",
+        "C": "Laube (Ukelei)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.029",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung des Mauls beim Gründling?",
+      "antworten": {
+        "A": "oberständig",
+        "B": "unterständig",
+        "C": "endständig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.030",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung des Mauls beim Frauennerfling?",
+      "antworten": {
+        "A": "unterständig",
+        "B": "endständig",
+        "C": "oberständig"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.031",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung des Mauls beim Perlfisch?",
+      "antworten": {
+        "A": "endständig",
+        "B": "leicht unterständig",
+        "C": "oberständig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.032",
+      "bereich": "Biologie",
+      "frage": "Die Äsche hat ein",
+      "antworten": {
+        "A": "oberständiges Maul mit langen Barteln",
+        "B": "endständiges großes Maul mit langer Maulspalte",
+        "C": "leicht unterständiges kleines Maul mit kurzer Maulspalte"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.033",
+      "bereich": "Biologie",
+      "frage": "Das Maul der Fischart Nase ist",
+      "antworten": {
+        "A": "endständig",
+        "B": "unterständig",
+        "C": "oberständig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.034",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung des Mauls bei der Barbe?",
+      "antworten": {
+        "A": "unterständig",
+        "B": "oberständig",
+        "C": "endständig"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.035",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat ein oberständiges Maul?",
+      "antworten": {
+        "A": "Aitel (Döbel)",
+        "B": "Zander",
+        "C": "Schied (Rapfen)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.036",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung des Mauls beim Aitel (Döbel)?",
+      "antworten": {
+        "A": "oberständig",
+        "B": "endständig",
+        "C": "unterständig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.037",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet man den Schied (Rapfen) vom Nerfling (Aland)?",
+      "antworten": {
+        "A": "Der Schied (Rapfen) hat im Gegensatz zum Nerfling (Aland) ein unterständiges Maul.",
+        "B": "Der Schied (Rapfen) hat im Gegensatz zum Nerfling (Aland) ein oberständiges Maul.",
+        "C": "Der Nerfling (Aland) hat im Gegensatz zum Schied (Rapfen) ein oberständiges Maul."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.038",
+      "bereich": "Biologie",
+      "frage": "Die Brachse ernährt sich überwiegend von",
+      "antworten": {
+        "A": "Kleintieren",
+        "B": "Pflanzen",
+        "C": "Fischen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.039",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat ein entenschnabelartiges, oberständiges Maul und einen abgeflachten Kopf?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Barbe",
+        "C": "Aitel (Döbel)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.040",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat im Vergleich die kleinste Maulspalte?",
+      "antworten": {
+        "A": "Flussbarsch",
+        "B": "Bachforelle",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.041",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist der Körper drehrund und das Maul endständig?",
+      "antworten": {
+        "A": "Barbe",
+        "B": "Schied (Rapfen)",
+        "C": "Aitel (Döbel)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.042",
+      "bereich": "Biologie",
+      "frage": "Welche Merkmale kennzeichnen den Schied (Rapfen)?",
+      "antworten": {
+        "A": "Das Maul ist endständig, die Schuppen sind dunkel umsäumt.",
+        "B": "Das Maul ist unterständig, die Schuppen besitzen einen grauen Metallglanz.",
+        "C": "Das Maul ist oberständig, groß und bis unter die Augenmitte gespalten."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.043",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheiden sich Schied (Rapfen) und Aitel (Döbel)?",
+      "antworten": {
+        "A": "Im Gegensatz zum Schied (Rapfen) hat der Aitel (Döbel) ein endständiges Maul.",
+        "B": "Im Gegensatz zum Aitel (Döbel) hat der Schied (Rapfen) ein endständiges Maul.",
+        "C": "Im Gegensatz zum Aitel (Döbel) hat der Schied (Rapfen) ein einschnürendes Maul."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.044",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine kegelförmig hervorragende, dunkle Schnauze?",
+      "antworten": {
+        "A": "Güster",
+        "B": "Zährte (Seerüßling)",
+        "C": "Giebel"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.045",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat ein rüsselartig vorstülpbares Maul?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Zander",
+        "C": "Karpfen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.046",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat ein Maul ohne auffallende Bezahnung?",
+      "antworten": {
+        "A": "Zander",
+        "B": "Schied (Rapfen)",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.047",
+      "bereich": "Biologie",
+      "frage": "Welche karpfenartigen Fische leben im Alter auch räuberisch?",
+      "antworten": {
+        "A": "Hasel und Rotfeder",
+        "B": "Schied (Rapfen) und Aitel (Döbel)",
+        "C": "Brachse und Nase"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.048",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Tierart ist das Maul mit Hornzähnen besetzt?",
+      "antworten": {
+        "A": "Neunauge",
+        "B": "Aal",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.049",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Hunds- oder Fangzähne?",
+      "antworten": {
+        "A": "Zander",
+        "B": "Schied (Rapfen)",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.050",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Hechelzähne?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Aitel (Döbel)",
+        "C": "Schied (Rapfen)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.051",
+      "bereich": "Biologie",
+      "frage": "Für welche Fischfamilie ist ein Pflugscharbein charakteristisch?",
+      "antworten": {
+        "A": "Barschartige (Perciden)",
+        "B": "Forellenartige (Salmoniden)",
+        "C": "Karpfenartige (Cypriniden)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.052",
+      "bereich": "Biologie",
+      "frage": "Welche Tierart hat eine unpaare Riechgrube?",
+      "antworten": {
+        "A": "Aal",
+        "B": "Bachneunauge",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.053",
+      "bereich": "Biologie",
+      "frage": "Die Barteln sind",
+      "antworten": {
+        "A": "Organe zur Feststellung des Wasserdrucks",
+        "B": "Gleichgewichtsorgane",
+        "C": "Geschmacks- und Tastorgane"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.054",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat nur eine Bartel am Unterkiefer?",
+      "antworten": {
+        "A": "Barbe",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.055",
+      "bereich": "Biologie",
+      "frage": "Wie viele Barteln hat der Karpfen?",
+      "antworten": {
+        "A": "Vier",
+        "B": "Keine",
+        "C": "Zwei"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.056",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet sich die Karausche vom Schuppenkarpfen?",
+      "antworten": {
+        "A": "Der Karpfen hat 4, die Karausche keine Barteln.",
+        "B": "Die Karausche hat 4, der Karpfen keine Barteln.",
+        "C": "Die Karausche hat 4, der Karpfen 2 Barteln."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.057",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Barteln?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Nase",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.058",
+      "bereich": "Biologie",
+      "frage": "Bei welchen Fischen gibt es Arten mit Barteln?",
+      "antworten": {
+        "A": "Forellenartigen (Salmoniden)",
+        "B": "Barschartigen (Perciden)",
+        "C": "Karpfenartigen (Cypriniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.059",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheiden Sie eine einsömmerige Barbe (Jungbarbe) von einem Gründling?",
+      "antworten": {
+        "A": "Die Barbe hat vier, der Gründling keine Barteln.",
+        "B": "Die Barbe hat zwei, der Gründling keine Barteln.",
+        "C": "Die Barbe hat vier, der Gründling zwei Barteln."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.060",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat vier Barteln?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Karpfen",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.061",
+      "bereich": "Biologie",
+      "frage": "Wie viele Barteln hat die Barbe?",
+      "antworten": {
+        "A": "vier",
+        "B": "zwei",
+        "C": "sechs"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.062",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheiden sich Giebel und Karpfen?",
+      "antworten": {
+        "A": "Der Giebel hat vier, der Karpfen zwei Barteln.",
+        "B": "Der Giebel hat vier, der Karpfen keine Barteln.",
+        "C": "Der Karpfen hat vier, der Giebel keine Barteln."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.063",
+      "bereich": "Biologie",
+      "frage": "Wie viele Barteln hat die Schleie?",
+      "antworten": {
+        "A": "eine lange Bartel am Unterkiefer",
+        "B": "am Maul zwei kurze Barteln",
+        "C": "an der Oberlippe vier lange, an der Unterlippe vier kurze Barteln"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.064",
+      "bereich": "Biologie",
+      "frage": "Was ist charakteristisch für die Karausche?",
+      "antworten": {
+        "A": "vier Barteln und einen nach innen gebogenen (konkaven) Rückenflossenrand",
+        "B": "keine Barteln und einen nach außen gebogenen (konvexen) Rückenflossenrand",
+        "C": "zwei Barteln und einen nach außen gebogenen (konvexen) Rückenflossenrand"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.065",
+      "bereich": "Biologie",
+      "frage": "Wie viele Barteln hat der Steinbeißer (Dorngrundel)?",
+      "antworten": {
+        "A": "sechs",
+        "B": "zehn",
+        "C": "zwei"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.066",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet sich der Waller (Wels) von der Rutte (Quappe, Trüsche)?",
+      "antworten": {
+        "A": "Der Waller (Wels) hat sechs Barteln, die Rutte (Quappe, Trüsche) eine Bartel.",
+        "B": "Der Waller (Wels) hat vier, die Rutte (Quappe, Trüsche) zwei Barteln.",
+        "C": "Der Waller (Wels) hat eine Bartel, die Rutte (Quappe, Trüsche) sechs Barteln."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.067",
+      "bereich": "Biologie",
+      "frage": "Wie viele Barteln hat der Zwergwels?",
+      "antworten": {
+        "A": "vier",
+        "B": "sechs",
+        "C": "acht"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.068",
+      "bereich": "Biologie",
+      "frage": "Welches ist ein besonderes Merkmal für den Waller (Wels)?",
+      "antworten": {
+        "A": "zwei Barteln an der Oberlippe und zwei an der Unterlippe",
+        "B": "sechs Barteln, davon zwei lange an der Oberlippe und vier an der Unterlippe",
+        "C": "sechs Barteln an der Unterlippe"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.069",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben Barteln?",
+      "antworten": {
+        "A": "Bitterling, Elritze",
+        "B": "Steinbeißer (Dorngrundel), Rutte (Quappe, Trüsche)",
+        "C": "Karausche, Giebel"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.070",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat hornige Lippen mit kantigen Rändern?",
+      "antworten": {
+        "A": "Karausche",
+        "B": "Nase",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.071",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben Schlundzähne und eine Kauplatte?",
+      "antworten": {
+        "A": "Barschartige (Perciden)",
+        "B": "Forellenartige (Salmoniden)",
+        "C": "Karpfenartige (Cypriniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.072",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Schlundzähne?",
+      "antworten": {
+        "A": "Nerfling (Aland)",
+        "B": "Zingel",
+        "C": "Aitel (Döbel)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.073",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Kauplatte?",
+      "antworten": {
+        "A": "Aitel (Döbel)",
+        "B": "Zander",
+        "C": "Schleie"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.074",
+      "bereich": "Biologie",
+      "frage": "Für welche Fische sind die Schlundknochen ein wichtiges Bestimmungsmerkmal?",
+      "antworten": {
+        "A": "Karpfenartige (Cypriniden)",
+        "B": "Barschartige (Perciden)",
+        "C": "Forellenartige (Salmoniden)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.075",
+      "bereich": "Biologie",
+      "frage": "Die Regenbogenforelle hat",
+      "antworten": {
+        "A": "keine Schwimmblase",
+        "B": "keine Schlundzähne",
+        "C": "keinen Magen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.076",
+      "bereich": "Biologie",
+      "frage": "Der von außen sichtbare Teil der Fischschuppe",
+      "antworten": {
+        "A": "ist von einer Hornhaut überlagert",
+        "B": "hat keine Hautabdeckung",
+        "C": "ist bedeckt von der Oberhaut mit darüber befindlicher Schleimschicht"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.077",
+      "bereich": "Biologie",
+      "frage": "Welche Aufgabe hat die Schleimschicht auf der Oberfläche des Fisches?",
+      "antworten": {
+        "A": "sie ist für die Färbung verantwortlich",
+        "B": "sie schützt gegen äußere Einflüsse und vermindert den Reibungswiderstand beim Schwimmen",
+        "C": "sie gibt den Schuppen Halt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.078",
+      "bereich": "Biologie",
+      "frage": "Wo wird die Schleimschicht der Fischhaut gebildet?",
+      "antworten": {
+        "A": "in der Muskelschicht unter der Haut",
+        "B": "in Drüsenzellen der Oberhaut",
+        "C": "in den Schuppentaschen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.079",
+      "bereich": "Biologie",
+      "frage": "Was geschieht, wenn ein Fisch Schuppen verliert?",
+      "antworten": {
+        "A": "die angrenzenden Schuppen vergrößern sich, bis das Schuppenkleid wieder geschlossen ist",
+        "B": "er bildet neue Schuppen (Ersatzschuppen)",
+        "C": "die Stelle bleibt frei von Schuppen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.080",
+      "bereich": "Biologie",
+      "frage": "Beim Wachstum der Fische",
+      "antworten": {
+        "A": "vergrößern sich die Schuppen unter Bildung von Wachstumsringen",
+        "B": "entstehen weitere Schuppen durch Teilung der bereits vorhandenen",
+        "C": "werden neue Schuppen in das Schuppenkleid eingefügt"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.081",
+      "bereich": "Biologie",
+      "frage": "Welcher Fisch hat Schmelzschuppen?",
+      "antworten": {
+        "A": "Mühlkoppe",
+        "B": "Sterlet",
+        "C": "Perlfisch"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.082",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Schmelzschuppen?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Kaulbarsch",
+        "C": "Stör"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.083",
+      "bereich": "Biologie",
+      "frage": "Welche Art von Schuppen haben die forellenartigen Fische (Salmoniden)?",
+      "antworten": {
+        "A": "nur Rundschuppen",
+        "B": "nur Kammschuppen",
+        "C": "Rundschuppen und Schmelzschuppen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.084",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart sind die Schuppen im Alter dunkel umrandet?",
+      "antworten": {
+        "A": "Hasel",
+        "B": "Aitel (Döbel)",
+        "C": "Schied (Rapfen)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.085",
+      "bereich": "Biologie",
+      "frage": "Kammschuppen sind an ihrem hinteren Ende",
+      "antworten": {
+        "A": "unbedornt",
+        "B": "ohne Hautbedeckung",
+        "C": "bedornt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.086",
+      "bereich": "Biologie",
+      "frage": "Was versteht man unter Kammschuppen?",
+      "antworten": {
+        "A": "mit Dornen besetzte Schuppen",
+        "B": "die durchlöcherten Schuppen an der Seitenlinie",
+        "C": "glatte Schuppen ohne Dornen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.087",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben Kammschuppen?",
+      "antworten": {
+        "A": "Schrätzer und Kaulbarsch",
+        "B": "Äsche und Blaufelchen",
+        "C": "Schied (Rapfen) und Aitel (Döbel)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.088",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Kammschuppen?",
+      "antworten": {
+        "A": "Zingel",
+        "B": "Mühlkoppe",
+        "C": "Gründling"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.089",
+      "bereich": "Biologie",
+      "frage": "Der Zander hat",
+      "antworten": {
+        "A": "keine Schuppen",
+        "B": "Rundschuppen",
+        "C": "Kammschuppen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.090",
+      "bereich": "Biologie",
+      "frage": "Der Flussbarsch hat",
+      "antworten": {
+        "A": "Kammschuppen",
+        "B": "keine Schuppen",
+        "C": "Rundschuppen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.091",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart befindet sich zwischen den Bauchflossen und dem After eine scharfe Schuppenkante?",
+      "antworten": {
+        "A": "Rotfeder",
+        "B": "Barbe",
+        "C": "Nerfling (Aland)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.092",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Seiten- und Bauchschilde am Körper?",
+      "antworten": {
+        "A": "Sterlet",
+        "B": "Gründling",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.093",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat große Schuppen?",
+      "antworten": {
+        "A": "Nase",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Spiegelkarpfen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.094",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat große Schuppen?",
+      "antworten": {
+        "A": "Huchen",
+        "B": "Moderlieschen",
+        "C": "Brachse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.095",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat sehr kleine Schuppen?",
+      "antworten": {
+        "A": "Brachse",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Zander"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.096",
+      "bereich": "Biologie",
+      "frage": "Rundschuppen sind an ihrem hinteren Ende",
+      "antworten": {
+        "A": "ohne Hautbedeckung",
+        "B": "unbedornt",
+        "C": "bedornt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.097",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben keine Rundschuppen?",
+      "antworten": {
+        "A": "Barschartige (Perciden)",
+        "B": "Forellenartige (Salmoniden)",
+        "C": "Karpfenartige (Cypriniden)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.098",
+      "bereich": "Biologie",
+      "frage": "Welche Art von Schuppen hat der Hecht?",
+      "antworten": {
+        "A": "Schmelzschuppen",
+        "B": "Kammschuppen",
+        "C": "Rundschuppen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.099",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Rundschuppen?",
+      "antworten": {
+        "A": "Brachse",
+        "B": "Zander",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.100",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Rundschuppen?",
+      "antworten": {
+        "A": "Zander",
+        "B": "Stör",
+        "C": "Aitel (Döbel)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.101",
+      "bereich": "Biologie",
+      "frage": "Welche Tierart hat kleine Rundschuppen?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Waller (Wels)",
+        "C": "Bachneunauge"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.102",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat kleine, länglich ovale Schuppen, die in einer dicken schleimigen Haut verborgen sind?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Waller (Wels)",
+        "C": "Aal"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.103",
+      "bereich": "Biologie",
+      "frage": "Der Waller (Wels) hat",
+      "antworten": {
+        "A": "besonders große Einzelschuppen an den Seiten",
+        "B": "Rundschuppen",
+        "C": "keine Schuppen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.104",
+      "bereich": "Biologie",
+      "frage": "Was kann man bei den Fischen mit Hilfe der Schuppen feststellen?",
+      "antworten": {
+        "A": "das Alter",
+        "B": "das Geschlecht",
+        "C": "den Kalkgehalt des Gewässers"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.105",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat einen nach hinten mit einem Stachel endenden Kiemendeckel?",
+      "antworten": {
+        "A": "Kaulbarsch",
+        "B": "Zander",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.106",
+      "bereich": "Biologie",
+      "frage": "Womit atmen die einheimischen Fische?",
+      "antworten": {
+        "A": "mit Kiemen",
+        "B": "mit der Schwimmblase",
+        "C": "mit der Lunge"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.107",
+      "bereich": "Biologie",
+      "frage": "Auf welche Weise kann der Fisch seine Sauerstoffaufnahme vergrößern?",
+      "antworten": {
+        "A": "durch Erhöhung der Frequenz der Kiemendeckelbewegungen",
+        "B": "durch Abspreizen der Kiemendeckel",
+        "C": "durch Spreizen der Flossen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.108",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat den größten Sauerstoffbedarf?",
+      "antworten": {
+        "A": "Aal",
+        "B": "Schleie",
+        "C": "Bachforelle"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.109",
+      "bereich": "Biologie",
+      "frage": "Über die Oberfläche der Kiemen wird",
+      "antworten": {
+        "A": "Sauerstoff aufgenommen und Kohlendioxid abgegeben",
+        "B": "Sauerstoff und Kohlendioxid aufgenommen",
+        "C": "Sauerstoff abgegeben und Kohlendioxid aufgenommen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.110",
+      "bereich": "Biologie",
+      "frage": "Wie viele Kiemenbögen hat eine Bachforelle?",
+      "antworten": {
+        "A": "ein Paar",
+        "B": "zwei Paar",
+        "C": "vier Paar"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.111",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart trägt der Kiemendeckel einen kräftigen, gekrümmten Dorn?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Mühlkoppe",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.112",
+      "bereich": "Biologie",
+      "frage": "Ein zweispitziger Dorn unter dem Auge ist charakteristisch für",
+      "antworten": {
+        "A": "Steinbeißer (Dorngrundel)",
+        "B": "Schmerle (Bartgrundel)",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.113",
+      "bereich": "Biologie",
+      "frage": "Die Körpertemperatur der heimischen Fische ist",
+      "antworten": {
+        "A": "etwa gleich der Wassertemperatur viel höher als die",
+        "B": "Wassertemperatur",
+        "C": "niedriger als die Wassertemperatur"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.114",
+      "bereich": "Biologie",
+      "frage": "Warum werden Fische als wechselwarme Tiere bezeichnet?",
+      "antworten": {
+        "A": "Abhängig vom jeweiligen Alter der Fische wechselt ihre Körpertemperatur.",
+        "B": "Ihre Körpertemperatur kann unabhängig von der Wassertemperatur wechseln.",
+        "C": "Ihre Körpertemperatur gleicht sich der jeweiligen Wassertemperatur an."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.115",
+      "bereich": "Biologie",
+      "frage": "In welcher Jahreszeit haben die heimischen Fische den größten Zuwachs?",
+      "antworten": {
+        "A": "in der warmen Jahreszeit",
+        "B": "der Zuwachs ist zu jeder Jahreszeit gleich groß",
+        "C": "in der kalten Jahreszeit"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.116",
+      "bereich": "Biologie",
+      "frage": "Warum wächst der Fisch in der warmen Jahreszeit schneller?",
+      "antworten": {
+        "A": "weil er abgelaicht hat",
+        "B": "weil er sich rascher bewegen kann weil sich sein Stoffwechsel",
+        "C": "beschleunigt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.117",
+      "bereich": "Biologie",
+      "frage": "Wovon hängt die Temperatur des Fischblutes hauptsächlich ab?",
+      "antworten": {
+        "A": "von der Wassertemperatur",
+        "B": "von der Menge der Nahrungsaufnahme",
+        "C": "von der Schnelligkeit der Fortbewegung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.118",
+      "bereich": "Biologie",
+      "frage": "Wo wird bei den Fischen das Blut mit Sauerstoff angereichert?",
+      "antworten": {
+        "A": "im Herzen",
+        "B": "in der Schwimmblase",
+        "C": "in den Kiemen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.119",
+      "bereich": "Biologie",
+      "frage": "Wann ist der Sauerstoffbedarf eines Fisches am größten?",
+      "antworten": {
+        "A": "unabhängig von der Wassertemperatur immer gleich groß",
+        "B": "bei hoher Wassertemperatur",
+        "C": "bei niedriger Wassertemperatur"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.120",
+      "bereich": "Biologie",
+      "frage": "Das Herz der Fische befindet sich",
+      "antworten": {
+        "A": "in unmittelbarer Nachbarschaft zur Schwimmblase",
+        "B": "kehlständig unterhalb des Kiemenraums",
+        "C": "im Bereich der Nieren"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.121",
+      "bereich": "Biologie",
+      "frage": "Man spricht von kehlständigen Bauchflossen wenn ihr Ansatz",
+      "antworten": {
+        "A": "hinter dem Ansatz der Brustflossen sitzt",
+        "B": "auf gleicher Höhe mit dem Ansatz der Brustflossen sitzt",
+        "C": "vor dem Ansatz der Brustflossen sitzt"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.122",
+      "bereich": "Biologie",
+      "frage": "Brustständige Bauchflossen findet man bei",
+      "antworten": {
+        "A": "der Rutte (Quappe, Trüsche)",
+        "B": "dem Flussbarsch",
+        "C": "dem Hecht"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.123",
+      "bereich": "Biologie",
+      "frage": "Man spricht von bauchständigen Bauchflossen wenn ihr Ansatz",
+      "antworten": {
+        "A": "vor dem Ansatz der Brustflossen sitzt",
+        "B": "hinter dem Ansatz der Brustflossen sitzt",
+        "C": "auf gleicher Höhe mit dem Ansatz der Brustflossen sitzt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.124",
+      "bereich": "Biologie",
+      "frage": "Welche Flossen werden nicht durch Flossenstrahlen gestützt?",
+      "antworten": {
+        "A": "Rückenflossen",
+        "B": "Fettflossen",
+        "C": "Schwanzflossen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.125",
+      "bereich": "Biologie",
+      "frage": "Welche Flosse hat keine Flossenstrahlen?",
+      "antworten": {
+        "A": "die Fettflosse vom Seesaibling",
+        "B": "die Afterflosse der Rutte (Quappe, Trüsche)",
+        "C": "die Schwanzflosse der Mühlkoppe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.126",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat kehlständige Bauchflossen?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Zander",
+        "C": "Nase"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.127",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat brustständige Bauchflossen?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Zander",
+        "C": "Güster"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.128",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung der Bauchflossen beim Flussbarsch?",
+      "antworten": {
+        "A": "kehlständig",
+        "B": "bauchständig",
+        "C": "brustständig"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.129",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung der Bauchflossen bei der Mühlkoppe ?",
+      "antworten": {
+        "A": "bauchständig",
+        "B": "kehlständig",
+        "C": "brustständig"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.130",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat bauchständige Bauchflossen?",
+      "antworten": {
+        "A": "Nerfling (Aland)",
+        "B": "Schrätzer",
+        "C": "Zander"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.131",
+      "bereich": "Biologie",
+      "frage": "Die männliche Schleie ist erkennbar",
+      "antworten": {
+        "A": "an den größeren Bauchflossen",
+        "B": "an der verlängerten Rückenflosse",
+        "C": "an den größeren Brustflossen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.132",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Stellung der Rückenflosse bei der Rotfeder?",
+      "antworten": {
+        "A": "Das Hinterende der Rückenflosse liegt mehr oder weniger senkrecht über dem Ansatz der Bauchflosse.",
+        "B": "Der Ansatz der Rückenflosse liegt hinter dem Ansatz der Bauchflosse.",
+        "C": "Der Ansatz der Rückenflosse liegt mehr oder weniger senkrecht über dem Ansatz der Bauchflosse."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.133",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Knochenplatten statt Schuppen?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Flussbarsch",
+        "C": "Dreistachliger Stichling"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.134",
+      "bereich": "Biologie",
+      "frage": "Bei welchen Fischarten ist die Bestimmung des Geschlechts anhand ihrer Flossen möglich?",
+      "antworten": {
+        "A": "Aal und Rutte (Quappe, Trüsche)",
+        "B": "Schleie und Äsche",
+        "C": "Rotauge und Rotfeder"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.135",
+      "bereich": "Biologie",
+      "frage": "Welches Merkmal ist für den Aal typisch?",
+      "antworten": {
+        "A": "Ein Flossensaum erstreckt sich nur längs der Körperunterseite.",
+        "B": "Ein Flossensaum erstreckt sich vom Rücken über die Schwanzregion bis zum After.",
+        "C": "Ausschließlich die Schwanzspitze besitzt einen Flossensaum."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.136",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat an der ersten Rückenflosse einen großen, dunklen Fleck?",
+      "antworten": {
+        "A": "Flussbarsch",
+        "B": "Zander",
+        "C": "Güster"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.137",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart hat die stachelstrahlige erste Rückenflosse regelmäßig angeordnete dunkle Flecken?",
+      "antworten": {
+        "A": "Flussbarsch",
+        "B": "Streber",
+        "C": "Schrätzer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.138",
+      "bereich": "Biologie",
+      "frage": "Bei welchem forellenartigen Fisch haben Brust-, Bauch- und Afterflosse einen weißen und schwarzen Vorderrand?",
+      "antworten": {
+        "A": "Regenbogenforelle",
+        "B": "Bachsaibling",
+        "C": "Seesaibling"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.139",
+      "bereich": "Biologie",
+      "frage": "Welche Tierarten haben keine paarigen Flossen?",
+      "antworten": {
+        "A": "Aale",
+        "B": "Neunaugen",
+        "C": "Waller (Welse)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.140",
+      "bereich": "Biologie",
+      "frage": "Die Fortbewegung der Fische erfolgt in erster Linie mit",
+      "antworten": {
+        "A": "den Bauchflossen",
+        "B": "den Brustflossen",
+        "C": "Schwanz und Schwanzflosse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.141",
+      "bereich": "Biologie",
+      "frage": "Welchen Zweck erfüllen in erster Linie After- und Rückenflossen?",
+      "antworten": {
+        "A": "Sie stabilisieren die Körperhaltung",
+        "B": "Sie dienen der Fortbewegung",
+        "C": "Sie dienen der Richtungsänderung"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.142",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Zwergwels und Blaufelchen haben eine Fettflosse",
+        "B": "Zwergwels und Mairenke (Seelaube) haben eine Fettflosse",
+        "C": "Zwergwels und Wels (Waller) haben eine Fettflosse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.143",
+      "bereich": "Biologie",
+      "frage": "Wo befindet sich die Fettflosse bei Forellenartigen (Salmoniden)?",
+      "antworten": {
+        "A": "bauchseitig, zwischen After- und Schwanzflosse",
+        "B": "am Rücken, im Schwanzbereich",
+        "C": "am Rücken, direkt hinter dem Kopf"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.144",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Fettflosse?",
+      "antworten": {
+        "A": "Mairenke (Seelaube)",
+        "B": "Äsche",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.145",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine Fettflosse?",
+      "antworten": {
+        "A": "Bachsaibling",
+        "B": "Waller (Wels)",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.146",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat am Rücken zwei Flossen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Mairenke (Seelaube)",
+        "C": "Renke (Felchen)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.147",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart beginnt die Rückenflosse hinter dem Ansatz der Bauchflossen?",
+      "antworten": {
+        "A": "Rotauge",
+        "B": "Bachforelle",
+        "C": "Rotfeder"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.148",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat am Rücken nur eine Flosse?",
+      "antworten": {
+        "A": "Huchen",
+        "B": "Zwergwels",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.149",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat zwei Rückenflossen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Schlammpeitzger",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.150",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat zwei Rückenflossen?",
+      "antworten": {
+        "A": "Flussbarsch",
+        "B": "Karpfen",
+        "C": "Brachse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.151",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet man Rotfeder und Rotauge?",
+      "antworten": {
+        "A": "Bei der Rotfeder beginnt der Ansatz der Rückenflosse deutlich hinter dem Ansatz der Bauchflossen.",
+        "B": "Beim Rotauge beginnt der Ansatz der Rückenflosse deutlich hinter dem Ansatz der Bauchflossen.",
+        "C": "Das Rotauge hat einen kielförmigen Bauch, die Rotfeder einen gleichmäßig gerundeten Bauch."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.152",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet man Güster und Brachse ?",
+      "antworten": {
+        "A": "Im Gegensatz zur Güster sind die Brustflossen bei der Brachse rötlich gefärbt.",
+        "B": "Im Gegensatz zur Güster reichen die Brustflossen bei der Brachse bis zum Ansatz der Bauchflossen.",
+        "C": "Im Gegensatz zur Güster sind die Brustflossen bei der Brachse schwarz gefärbt."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.153",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Bauchflossen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Aal",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.154",
+      "bereich": "Biologie",
+      "frage": "Den männlichen Fisch bezeichnet man als",
+      "antworten": {
+        "A": "Milchner",
+        "B": "Rogner",
+        "C": "Bock"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.155",
+      "bereich": "Biologie",
+      "frage": "Den weiblichen Fisch bezeichnet man als",
+      "antworten": {
+        "A": "Milchner",
+        "B": "Stute",
+        "C": "Rogner"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.156",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart kann man Milchner und Rogner an der Ausbildung der Bauchflossen unterscheiden?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Barbe",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.157",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist beim Milchner der Hauptstrahl der Bauchflosse stark verdickt?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Karpfen",
+        "C": "Brachse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.158",
+      "bereich": "Biologie",
+      "frage": "Der Hecht hat",
+      "antworten": {
+        "A": "eine weit nach hinten zurückgesetzte Rückenflosse",
+        "B": "zwei Rückenflossen",
+        "C": "ein unterständiges Maul"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.159",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Barschart sind die beiden Rückenflossen miteinander verbunden?",
+      "antworten": {
+        "A": "Schrätzer",
+        "B": "Zingel",
+        "C": "Streber"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.160",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Barschart sind erste und zweite Rückenflosse deutlich getrennt?",
+      "antworten": {
+        "A": "Schrätzer",
+        "B": "Flussbarsch",
+        "C": "Kaulbarsch"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.161",
+      "bereich": "Biologie",
+      "frage": "Welches Merkmal unterscheidet Flussbarsch und Kaulbarsch eindeutig voneinander?",
+      "antworten": {
+        "A": "die Ausbildung der Kiemendeckel",
+        "B": "die Ausbildung der Rückenflossen",
+        "C": "die Anordnung der Bauchflossen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.162",
+      "bereich": "Biologie",
+      "frage": "Welches Unterscheidungsmerkmal von Bach- und Regenbogenforelle ist zutreffend?",
+      "antworten": {
+        "A": "Die Bachforelle hat auf der Schwanzflosse schwarze Punkte.",
+        "B": "An der Schwanzflosse lassen sich Bach- und Regenbogenforelle nicht unterscheiden.",
+        "C": "Die Regenbogenforelle hat auf der Schwanzflosse schwarze Punkte."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.163",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart zeigt die lange Fahne der Rückenflosse das männliche Geschlecht an?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Blaufelchen",
+        "C": "Zander"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.164",
+      "bereich": "Biologie",
+      "frage": "Woran lassen sich Hasel und Aitel (Döbel) bereits in der Jugend zuverlässig unterscheiden?",
+      "antworten": {
+        "A": "Im Gegensatz zum Hasel hat der Aitel (Döbel) einen nach innen gebogenen (konkaven) Afterflossenrand.",
+        "B": "Im Gegensatz zum Aitel (Döbel) hat der Hasel einen nach außen gebogenen (konvexen) Afterflossenrand.",
+        "C": "Im Gegensatz zum Hasel hat der Aitel (Döbel) einen nach außen gebogenen (konvexen) Afterflossenrand."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.165",
+      "bereich": "Biologie",
+      "frage": "In welcher Flosse haben einheimische Barscharten Stachelstrahlen?",
+      "antworten": {
+        "A": "in der Fettflosse",
+        "B": "in der Schwanzflosse",
+        "C": "in der ersten Rückenflosse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.166",
+      "bereich": "Biologie",
+      "frage": "Stachelstrahlen in der ersten Rückenflosse hat",
+      "antworten": {
+        "A": "der Flussbarsch",
+        "B": "der Schied (Rapfen)",
+        "C": "der Hecht"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.167",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Weichstrahlen in der ersten Rückenflosse?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Flussbarsch",
+        "C": "Zander"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.168",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine lange Afterflosse?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Schlammpeitzger",
+        "C": "Schmerle (Bartgrundel)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.169",
+      "bereich": "Biologie",
+      "frage": "Welche karpfenartigen Fische haben eine besonders lange Afterflosse?",
+      "antworten": {
+        "A": "Nase und Barbe",
+        "B": "Aitel (Döbel) und Hasel",
+        "C": "Brachse und Güster"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.170",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die Afterflosse und der untere Lappen der Schwanzflosse sehr lang?",
+      "antworten": {
+        "A": "Zobel",
+        "B": "Rotauge",
+        "C": "Nase"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.171",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die Schwanzflosse auffallend unsymmetrisch?",
+      "antworten": {
+        "A": "Bachneunauge",
+        "B": "Aal",
+        "C": "Sterlet"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.172",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die Schwanzflosse gerundet?",
+      "antworten": {
+        "A": "Schleie",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Stör"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.173",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart sind Rücken-, Schwanz- und Afterflosse zusammengewachsen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Barbe",
+        "C": "Aal"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.174",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat im Verhältnis zu ihrer Körpergröße nur eine kurze Rückenflosse?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Aal",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.175",
+      "bereich": "Biologie",
+      "frage": "Ein wichtiges Erkennungsmerkmal der Äsche ist",
+      "antworten": {
+        "A": "die große und tief eingeschnittene Schwanzflosse",
+        "B": "die hohe und lange Rückenflosse",
+        "C": "die verhältnismäßig kleine Afterflosse"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.176",
+      "bereich": "Biologie",
+      "frage": "Welche Flossenstellung ist für das Rotauge kennzeichnend?",
+      "antworten": {
+        "A": "Die Rückenflosse beginnt senkrecht über dem Ansatz der Brustflossen.",
+        "B": "Die Rückenflosse beginnt senkrecht über dem Ansatz der Bauchflossen.",
+        "C": "Die Rückenflosse endet vor dem Ansatz der Bauchflossen."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.177",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart liegt der Ansatz der Rückenflosse senkrecht über dem Ansatz der Bauchflossen?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Rotauge",
+        "C": "Rotfeder"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.178",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Zobel und Zope haben eine auffallend lange Afterflosse",
+        "B": "bei Zobel und Zope ist der obere Lappen der Schwanzflosse deutlich länger als der untere",
+        "C": "Zobel und Zope haben eine auffallend verkürzte Afterflosse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.179",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat hinter der Rückenflosse noch eine Fettflosse?",
+      "antworten": {
+        "A": "Blaufelchen",
+        "B": "Waller (Wels)",
+        "C": "Mairenke (Seelaube)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.180",
+      "bereich": "Biologie",
+      "frage": "Wie wird der längste Strahl der Rückenflossen älterer Karpfen bezeichnet?",
+      "antworten": {
+        "A": "Weichstrahl",
+        "B": "Fiederstrahl",
+        "C": "Hartstrahl"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.181",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die vordere Rückenflosse mit Stachelstrahlen und Flossenhäuten versehen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Dreistachliger Stichling",
+        "C": "Mühlkoppe"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.182",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben Rückenstacheln ohne Flossenhäute?",
+      "antworten": {
+        "A": "Dreistachliger und Neunstachliger Stichling",
+        "B": "Mühlkoppe und Streber",
+        "C": "Zander und Flussbarsch"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.183",
+      "bereich": "Biologie",
+      "frage": "Welches Merkmal unterscheidet Moderlieschen und Laube (Ukelei)?",
+      "antworten": {
+        "A": "Das Moderlieschen hat im Gegensatz zur Laube (Ukelei) nur eine kurze (unvollständige) Seitenlinie.",
+        "B": "Beim Moderlieschen ist die Schwanzflosse gerundet, bei der Laube (Ukelei) gegabelt.",
+        "C": "Das Moderlieschen hat eine nach oben gerichtete Maulspalte, die Laube (Ukelei) nicht."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.184",
+      "bereich": "Biologie",
+      "frage": "Der Huchen hat",
+      "antworten": {
+        "A": "rote Punkte auf der Schwanzflosse schwarze Punkte auf der",
+        "B": "Schwanzflosse",
+        "C": "keine Punkte auf der Schwanzflosse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.185",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheidet man Huchen und Regenbogenforelle?",
+      "antworten": {
+        "A": "Der Huchen hat keine Tupfen am Körper, die Regenbogenforelle hat rötlich gefärbte Flanken.",
+        "B": "Der Huchen ist rot getupft, die Regenbogenforelle schwarz.",
+        "C": "Die Schwanzflosse der Regenbogenforelle hat schwarze Tupfen, die des Huchens keine."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.186",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat am Körper vier bis fünf dunkle, unregelmäßige Querbinden, die scharf abgegrenzt sind?",
+      "antworten": {
+        "A": "Zingel",
+        "B": "Streber",
+        "C": "Mühlkoppe"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.187",
+      "bereich": "Biologie",
+      "frage": "Wie ist die Zeichnung der erwachsenen Seeforelle?",
+      "antworten": {
+        "A": "Der Körper ist in der Regel mit großen unregelmäßigen schwarzen Tupfen bedeckt, die teils x-förmig ausgebildet sein können.",
+        "B": "Sie hat keine Tupfen.",
+        "C": "Der Körper ist mit kleinen schwarzen Flecken bedeckt, an den Körperflanken ausschließlich mit roten Tupfen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.188",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Der Huchen hat große x-förmige Tupfen am Körper.",
+        "B": "Die Bachforelle hat rote Tupfen am Körper.",
+        "C": "Der Huchen hat rote Tupfen am Körper."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.189",
+      "bereich": "Biologie",
+      "frage": "Wodurch können junge Huchen und Regenbogenforellen eindeutig unterschieden werden?",
+      "antworten": {
+        "A": "Im Gegensatz zur Regenbogenforelle hat der Huchen keine schwarzen Tupfen auf der Schwanzflosse.",
+        "B": "Im Gegensatz zur Regenbogenforelle hat der Huchen große x-förmige schwarze Tupfen am Körper.",
+        "C": "Im Gegensatz zum Huchen hat die Regenbogenforelle keine schwarzen Tupfen auf der Schwanzflosse."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.190",
+      "bereich": "Biologie",
+      "frage": "Wie sieht die Jugendform beim Huchen aus?",
+      "antworten": {
+        "A": "Der Körper hat keine roten Punkte, die Flossen keine schwarzen Punkte.",
+        "B": "Die Schwanzflosse hat immer schwarze Punkte.",
+        "C": "Der Körper hat rote Punkte, die Flossen schwarze Punkte."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.191",
+      "bereich": "Biologie",
+      "frage": "Welche Farbe tritt während der Laichzeit bei vielen Fischarten besonders deutlich in Erscheinung?",
+      "antworten": {
+        "A": "rot",
+        "B": "schwarz",
+        "C": "weiß"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.192",
+      "bereich": "Biologie",
+      "frage": "Wie unterscheiden sich Bach- und Seesaibling?",
+      "antworten": {
+        "A": "Die bauchseitigen roten Flossen haben beim Bachsaibling einen weißen und schwarzen Streifen als Vorderrand, beim Seesaibling nur einen weißen Streifen.",
+        "B": "Die bauchseitigen roten Flossen haben beim Bachsaibling nur einen weißen und beim Seesaibling einen weißen und schwarzen Vorderrand.",
+        "C": "Die Rückenflosse hat beim Bachsaibling einen schwarz- weißen Rand, beim Seesaibling nur einen weißen."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.193",
+      "bereich": "Biologie",
+      "frage": "An welchen Merkmalen lassen sich junge Zander und junge Flussbarsche unterscheiden?",
+      "antworten": {
+        "A": "Im Gegensatz zum jungen Flussbarsch hat der Jungzander auf der Rücken- und Schwanzflosse dunkle, in Reihen angeordnete Punkte.",
+        "B": "Im Gegensatz zum jungen Flussbarsch hat der Jungzander am Ende der ersten Rückenflosse einen dunklen Fleck.",
+        "C": "Im Gegensatz zum jungen Flussbarsch ist die Schwanzflosse beim Jungzander nicht gepunktet."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.194",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat am Rücken und an der Seite drei bis vier schmale, teils unterbrochene, schwarze Längsstreifen?",
+      "antworten": {
+        "A": "Zingel",
+        "B": "Streber",
+        "C": "Schrätzer"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.195",
+      "bereich": "Biologie",
+      "frage": "Haben karpfenartige Fische ein Gehörorgan?",
+      "antworten": {
+        "A": "Sie haben kein Gehörorgan.",
+        "B": "Sie haben ein äußerlich erkennbares Gehörorgan.",
+        "C": "Sie haben ein inneres Gehörorgan."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.196",
+      "bereich": "Biologie",
+      "frage": "Können Fische Töne wahrnehmen?",
+      "antworten": {
+        "A": "nein",
+        "B": "nur in Verbindung mit Lichtsinneseindrücken",
+        "C": "ja"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.197",
+      "bereich": "Biologie",
+      "frage": "Was kann man beim Karpfen mit Hilfe von Schuppen oder Gehörsteinchen feststellen?",
+      "antworten": {
+        "A": "das Geschlecht",
+        "B": "das Alter",
+        "C": "das Nahrungsspektrum"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.198",
+      "bereich": "Biologie",
+      "frage": "Welche Aufgabe hat die Schwimmblase unserer heimischen Fischarten?",
+      "antworten": {
+        "A": "sie ermöglicht das schwerelose Schwimmen",
+        "B": "sie dient der Atmung",
+        "C": "sie dient der Sammlung von Harn"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.199",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist die Schwimmblase fest mit dem Bauchfell verwachsen?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Bachforelle",
+        "C": "Aal"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.200",
+      "bereich": "Biologie",
+      "frage": "Bei welcher der folgenden Fischarten ist die Schwimmblase völlig zurückgebildet?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Aal",
+        "C": "Streber"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.201",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine Schwimmblase?",
+      "antworten": {
+        "A": "Rutte (Quappe, Trüsche)",
+        "B": "Mühlkoppe",
+        "C": "Streber"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.202",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine einkammerige Schwimmblase?",
+      "antworten": {
+        "A": "Rotauge",
+        "B": "Karpfen",
+        "C": "Bachforelle"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.203",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben eine einkammerige Schwimmblase?",
+      "antworten": {
+        "A": "Hasel und Aitel (Döbel)",
+        "B": "Bachforelle und Äsche",
+        "C": "Zobel und Zope"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.204",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Schwimmblase?",
+      "antworten": {
+        "A": "Mühlkoppe",
+        "B": "Aal",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.205",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben eine durch eine Einschnürung in zwei Kammern geteilte Schwimmblase?",
+      "antworten": {
+        "A": "Karpfenartige (Cypriniden)",
+        "B": "Barschartige (Perciden)",
+        "C": "Forellenartige (Salmoniden)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.206",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine zweikammerige Schwimmblase?",
+      "antworten": {
+        "A": "Aal",
+        "B": "Brachse",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.207",
+      "bereich": "Biologie",
+      "frage": "Die Schwimmblase des erwachsenen Flussbarschs ist",
+      "antworten": {
+        "A": "zweikammerig mit einem Schwimmblasengang",
+        "B": "einkammerig mit einem Schwimmblasengang",
+        "C": "einkammerig ohne Schwimmblasengang"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.208",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben im erwachsenen Stadium eine Schwimmblase ohne Schwimmblasengang?",
+      "antworten": {
+        "A": "Flussbarsch und Zander",
+        "B": "Karpfenartige (Cypriniden)",
+        "C": "Forellenartige (Salmoniden)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.209",
+      "bereich": "Biologie",
+      "frage": "Bei welchen Fischen ist im erwachsenen Stadium ein Schwimmblasengang vorhanden?",
+      "antworten": {
+        "A": "Barschartigen (Perciden)",
+        "B": "Stichlingen (Gasterosteiden)",
+        "C": "Forellenartigen (Salmoniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.210",
+      "bereich": "Biologie",
+      "frage": "Bei welchen Fischen ist im erwachsenen Stadium ein Schwimmblasengang vorhanden?",
+      "antworten": {
+        "A": "Barschartigen (Perciden)",
+        "B": "Koppen (Cottiden)",
+        "C": "Karpfenartigen (Cypriniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.211",
+      "bereich": "Biologie",
+      "frage": "Was bezeichnet man bei Fischen mit dem Ausdruck „Trommelsucht“?",
+      "antworten": {
+        "A": "bei Forellen das typische Trommeln mit den Brustflossen gegen den Gewässerboden bei Befall mit Außenparasiten",
+        "B": "eine Erkrankung des Innenohrs der Fische",
+        "C": "einen Teilaustritt der Schwimmblase aus dem Maul von Fischen, die in kurzer Zeit aus großer Tiefe an die Wasseroberfläche geholt wurden"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.212",
+      "bereich": "Biologie",
+      "frage": "Wo befindet sich der Geschmackssinn der Fische?",
+      "antworten": {
+        "A": "ausschließlich auf der Zunge",
+        "B": "an den verschiedensten Stellen des Körpers einschließlich Maul- und Kiemenraum",
+        "C": "ausschließlich auf den Kiemenreusendornen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.213",
+      "bereich": "Biologie",
+      "frage": "Können Knochenfische Gerüche wahrnehmen?",
+      "antworten": {
+        "A": "Nein, sie haben keine Nase",
+        "B": "Ja, sie besitzen paarige Riechgruben",
+        "C": "Nur Fische mit Barteln sind zur Geruchswahrnehmung befähigt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.214",
+      "bereich": "Biologie",
+      "frage": "Wo liegen die Geruchsorgane bei Fischen?",
+      "antworten": {
+        "A": "am Kiemendeckel",
+        "B": "an der Seitenlinie",
+        "C": "zwischen den Augen und der Maulspitze"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.215",
+      "bereich": "Biologie",
+      "frage": "Wie ist der Geruchssinn beim Aal entwickelt?",
+      "antworten": {
+        "A": "schlecht",
+        "B": "sehr gut",
+        "C": "gar nicht"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.216",
+      "bereich": "Biologie",
+      "frage": "Können Forellenartige (Salmoniden) und Karpfenartige (Cypriniden) außerhalb des Wassers befindliche Personen wahrnehmen?",
+      "antworten": {
+        "A": "nein, das zu geringe Auflösungsvermögen der Fischaugen macht dies unmöglich",
+        "B": "ja, insbesondere bei glatter Wasseroberfläche und Bewegung schlecht getarnter Personen",
+        "C": "nein, aufgrund der optischen Brechung können Fische außerhalb der Wasseroberfläche generell nichts wahrnehmen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.217",
+      "bereich": "Biologie",
+      "frage": "Welche Sinneswahrnehmung ist beim Hecht am besten ausgeprägt?",
+      "antworten": {
+        "A": "Geruchsinn",
+        "B": "Geschmacksinn",
+        "C": "Optische Sinn"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.218",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ist das Auge weniger bedeutend für den Beutefang?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Hecht",
+        "C": "Bachforelle"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.219",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat, bezogen auf die Körpergröße, besonders kleine Augen?",
+      "antworten": {
+        "A": "Zander",
+        "B": "Karpfen",
+        "C": "Waller (Wels)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.220",
+      "bereich": "Biologie",
+      "frage": "Welche Aufgabe hat das Seitenlinienorgan?",
+      "antworten": {
+        "A": "es nimmt Geruchsreize auf",
+        "B": "es nimmt Geschmacksreize auf",
+        "C": "es nimmt Strömungs- und Wasserdruckreize auf"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.221",
+      "bereich": "Biologie",
+      "frage": "Was ist an der Seitenlinie beim Schneider bemerkenswert?",
+      "antworten": {
+        "A": "sie hat einen geradlinigen Verlauf",
+        "B": "sie hat eine schwarze Einfassung",
+        "C": "sie ist nicht besonders auffällig"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.222",
+      "bereich": "Biologie",
+      "frage": "Welches Erkennungsmerkmale ist typisch für den Schneider?",
+      "antworten": {
+        "A": "eine schwarz eingefasste Seitenlinie mit einem deutlichen Knick",
+        "B": "ein blaugrün schimmerndes Farbband von der Körpermitte bis zur Schwanzwurzel",
+        "C": "eine orangegelbe Seitenlinie mit geradem Verlauf"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.223",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben unvollständige, bzw. verkürzte Seitenlinien?",
+      "antworten": {
+        "A": "Gründling und Schneider",
+        "B": "Elritze und Strömer",
+        "C": "Moderlieschen und Bitterling"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.224",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart kann bei extremem Sauerstoffmangel einen Teil des Sauerstoffbedarfs über Darmatmung decken?",
+      "antworten": {
+        "A": "Karpfen",
+        "B": "Schlammpeitzger",
+        "C": "Aal"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.225",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat im Vergleich zur Körperlänge den längsten Darm?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Karpfen",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.226",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat im Verhältnis zur Körperlänge einen kurzen Darm?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Rotauge",
+        "C": "Karpfen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.227",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben am Darm Pylorusanhänge (Blindsäcke)?",
+      "antworten": {
+        "A": "Karpfenartige (Cypriniden)",
+        "B": "Forellenartige (Salmoniden)",
+        "C": "Schmerlenartige (Cobitiden)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.228",
+      "bereich": "Biologie",
+      "frage": "Wie lang ist der Darm beim Karpfen?",
+      "antworten": {
+        "A": "gleich der Körperlänge",
+        "B": "mindestens doppelte Körperlänge",
+        "C": "etwa halbe Körperlänge"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.229",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben keinen Magen?",
+      "antworten": {
+        "A": "Schleie und Rotauge",
+        "B": "Blaufelchen und Äsche",
+        "C": "Waller (Wels) und Hecht"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.230",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten haben einen Magen?",
+      "antworten": {
+        "A": "Schleie und Rotauge",
+        "B": "Gründling und Laube (Ukelei)",
+        "C": "Blaufelchen und Äsche"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.231",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine besonders große, fettreiche Leber?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Aal",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.232",
+      "bereich": "Biologie",
+      "frage": "Mit welchem Organ ist die Gallenblase funktionell verbunden?",
+      "antworten": {
+        "A": "mit der Niere",
+        "B": "mit der Leber",
+        "C": "mit den Blindsäcken des Darmes"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.233",
+      "bereich": "Biologie",
+      "frage": "Wo befinden sich beim Fisch die Nieren?",
+      "antworten": {
+        "A": "unter der Wirbelsäule innerhalb der Leibeshöhle vom Kopfansatz bis in die Höhe des Afters",
+        "B": "beiderseits der Harnblase",
+        "C": "Der Fisch hat keine Nieren."
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.234",
+      "bereich": "Biologie",
+      "frage": "Wo verläuft bei den Fischen das Rückenmark (Hauptnervenstrang)?",
+      "antworten": {
+        "A": "innerhalb der Wirbelkörper",
+        "B": "unterhalb der Wirbelkörper",
+        "C": "durch die nach oben stehenden Dornfortsätze oberhalb der Wirbelkörper"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.235",
+      "bereich": "Biologie",
+      "frage": "Was bezeichnet man als Laich?",
+      "antworten": {
+        "A": "die Fischeier in den Eierstöcken",
+        "B": "männliche Samenzellen",
+        "C": "vom weiblichen Fisch abgesetzte Eier"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.236",
+      "bereich": "Biologie",
+      "frage": "Was ist Rogen?",
+      "antworten": {
+        "A": "Froscheier",
+        "B": "Fischeier in den Eierstöcken",
+        "C": "Insekteneier"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.237",
+      "bereich": "Biologie",
+      "frage": "Was ist ein Milchner?",
+      "antworten": {
+        "A": "ein männlicher Fisch",
+        "B": "eine Zuchtrasse des Karpfens",
+        "C": "ein Fisch, dem die Farbzellen in der Haut fehlen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.238",
+      "bereich": "Biologie",
+      "frage": "Was ist ein Rogner?",
+      "antworten": {
+        "A": "ein weiblicher Fisch",
+        "B": "ein Fisch, der sich nicht zur Fortpflanzung eignet",
+        "C": "ein männlicher Fisch"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.239",
+      "bereich": "Biologie",
+      "frage": "Was bezeichnet man in der Fischersprache als Milch?",
+      "antworten": {
+        "A": "Nährflüssigkeit für Fischeier",
+        "B": "Flüssigkeit mit männlichen Samenzellen",
+        "C": "Stoffwechselendprodukt der Nieren, welches die silbrige Farbe bei Fischen bewirkt"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.240",
+      "bereich": "Biologie",
+      "frage": "Werden männliche Fische in der Regel eher geschlechtsreif als weibliche?",
+      "antworten": {
+        "A": "ja",
+        "B": "gleichzeitig",
+        "C": "nein"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.241",
+      "bereich": "Biologie",
+      "frage": "Welche Tierarten haben unpaare Eierstöcke?",
+      "antworten": {
+        "A": "Aal und Mühlkoppe",
+        "B": "Flussbarsch und Bachneunauge",
+        "C": "Waller (Wels) und Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.242",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart klebt die Eier an Wurzeln und Steine?",
+      "antworten": {
+        "A": "Blaufelchen",
+        "B": "Bachforelle",
+        "C": "Zander"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.243",
+      "bereich": "Biologie",
+      "frage": "Welcher Fisch legt seine Eier in langen, netzartigen Gallertschnüren an Wasserpflanzen ab?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Flussbarsch",
+        "C": "Karpfen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.244",
+      "bereich": "Biologie",
+      "frage": "Zu welchem Fortpflanzungstyp gehört die Bachforelle?",
+      "antworten": {
+        "A": "Kieslaicher",
+        "B": "Krautlaicher",
+        "C": "Freiwasserlaicher"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.245",
+      "bereich": "Biologie",
+      "frage": "Zu welchem Fortpflanzungstyp gehört die Seeforelle?",
+      "antworten": {
+        "A": "Freiwasserlaicher",
+        "B": "Kieslaicher",
+        "C": "Krautlaicher"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.246",
+      "bereich": "Biologie",
+      "frage": "Bei welchem Fortpflanzungstyp dauert die Entwicklung der Fischeier am längsten?",
+      "antworten": {
+        "A": "bei Sommerlaichern",
+        "B": "bei Krautlaichern",
+        "C": "bei Winterlaichern"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.247",
+      "bereich": "Biologie",
+      "frage": "Zu welchem Fortpflanzungstyp gehört der Seesaibling?",
+      "antworten": {
+        "A": "Krautlaicher",
+        "B": "Freiwasserlaicher",
+        "C": "Kieslaicher"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.248",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart ist ein Kieslaicher?",
+      "antworten": {
+        "A": "Waller (Wels)",
+        "B": "Karausche",
+        "C": "Äsche"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.249",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart schlägt zur Eiablage eine Laichgrube in das Kiesbett?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Flussbarsch",
+        "C": "Huchen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.250",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten sind Krautlaicher?",
+      "antworten": {
+        "A": "Karpfen und Schleie",
+        "B": "Nase und Barbe",
+        "C": "Bachforelle und Äsche"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.251",
+      "bereich": "Biologie",
+      "frage": "Zu welchem Fortpflanzungstyp gehört die Schleie?",
+      "antworten": {
+        "A": "Kieslaicher",
+        "B": "Krautlaicher",
+        "C": "Freiwasserlaicher"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.252",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart laicht in der Freiwasserzone eines Sees?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Brachse",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.253",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart laicht bei hoher Wassertemperatur?",
+      "antworten": {
+        "A": "Blaufelchen",
+        "B": "Schleie",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.254",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart laicht bei niedriger Wassertemperatur?",
+      "antworten": {
+        "A": "Aitel (Döbel)",
+        "B": "Schied (Rapfen)",
+        "C": "Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.255",
+      "bereich": "Biologie",
+      "frage": "Wann laicht der Zander?",
+      "antworten": {
+        "A": "Juli – August",
+        "B": "März – Mai",
+        "C": "Januar – Februar"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.256",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart steigt zum Laichen vom Meer in das Süßwasser auf?",
+      "antworten": {
+        "A": "Huchen",
+        "B": "Aal",
+        "C": "Lachs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.257",
+      "bereich": "Biologie",
+      "frage": "Wo laicht der Lachs?",
+      "antworten": {
+        "A": "im Meer",
+        "B": "im Brackwasser",
+        "C": "im Süßwasser"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.258",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart führt eine Laichwanderung durch?",
+      "antworten": {
+        "A": "Lachs",
+        "B": "Blaufelchen",
+        "C": "Rotauge"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.259",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart baut ein Nest aus Pflanzenteilen und betreibt intensive Brutpflege?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Dreistachliger Stichling",
+        "C": "Schlammpeitzger"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.260",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart findet die Eiablage in einem vom Männchen selbst gebauten Nest statt?",
+      "antworten": {
+        "A": "Mühlkoppe",
+        "B": "Dreistachliger Stichling",
+        "C": "Elritze"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.261",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart betreibt das Männchen Brutpflege?",
+      "antworten": {
+        "A": "Dreistachliger Stichling",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Äsche"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.262",
+      "bereich": "Biologie",
+      "frage": "Was versteht man unter Brutpflege bei Fischen?",
+      "antworten": {
+        "A": "Schlagen von Laichgruben",
+        "B": "Beschützen des Laiches und der Brut",
+        "C": "Ablegen von Laich auf Wasserpflanzen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.263",
+      "bereich": "Biologie",
+      "frage": "Welche heimische Tierart betreibt Brutpflege?",
+      "antworten": {
+        "A": "Mühlkoppe",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Neunauge"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.264",
+      "bereich": "Biologie",
+      "frage": "Als Laichausschlag bezeichnet man eine durch das Ablaichen",
+      "antworten": {
+        "A": "verursachte Hautkrankheit",
+        "B": "eine normale Reaktion bei bestimmten, laichbereiten Fischen",
+        "C": "eine krankhafte Veränderung der Fischeier"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.265",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart tritt Laichausschlag auf?",
+      "antworten": {
+        "A": "Bachforelle",
+        "B": "Brachse",
+        "C": "Hecht"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.266",
+      "bereich": "Biologie",
+      "frage": "Was ist ein Laichhaken?",
+      "antworten": {
+        "A": "zur Laichzeit auftretender Haken an der Afterflosse bei Zandern",
+        "B": "hakenartiges Gerät zum Fangen von Laichfischen",
+        "C": "der hakenartig ausgebildete Unterkiefer bei alten, männlichen forellenartigen Fischen (Salmoniden)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.267",
+      "bereich": "Biologie",
+      "frage": "Woran kann man ältere männliche Bachforellen erkennen?",
+      "antworten": {
+        "A": "am Laichhaken",
+        "B": "an den größeren Bauchflossen",
+        "C": "an der stärkeren Rückenflosse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.268",
+      "bereich": "Biologie",
+      "frage": "Wo findet man bei einem männlichen Bachsaibling den Laichhaken?",
+      "antworten": {
+        "A": "am Unterkiefer",
+        "B": "am Oberkiefer",
+        "C": "an der Afterflosse"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.269",
+      "bereich": "Biologie",
+      "frage": "Woran erkennt man die männliche Äsche?",
+      "antworten": {
+        "A": "am Laichhaken",
+        "B": "an der größeren Afterflosse",
+        "C": "an der längeren Rückenflosse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.270",
+      "bereich": "Biologie",
+      "frage": "Woran erkennt man den männlichen Edelkrebs?",
+      "antworten": {
+        "A": "an den längeren Schreitbeinen",
+        "B": "an den Griffelbeinpaaren",
+        "C": "an den kleineren Scheren"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.271",
+      "bereich": "Biologie",
+      "frage": "Als Griffel (Griffelbeine) werden bezeichnet?",
+      "antworten": {
+        "A": "die Begattungsorgane bei den Milchnern der Bitterlinge",
+        "B": "das erste Brustbeinpaar beim männlichen Edel- und Steinkrebs",
+        "C": "das Begattungsorgan (Begattungshilfsorgan) beim männlichen Edel- und Steinkrebs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.272",
+      "bereich": "Biologie",
+      "frage": "Griffelbeinpaare hat",
+      "antworten": {
+        "A": "der männliche Krebs",
+        "B": "der weibliche Krebs",
+        "C": "der weibliche und der männliche Krebs"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.273",
+      "bereich": "Biologie",
+      "frage": "Wo entwickeln sich die Eier von Edel- und Steinkrebs?",
+      "antworten": {
+        "A": "an Wasserpflanzen angeheftet",
+        "B": "unter dem Hinterleib des weiblichen Tieres",
+        "C": "in Laichgruben im Kies"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.274",
+      "bereich": "Biologie",
+      "frage": "Was versteht man unter einem Butterkrebs?",
+      "antworten": {
+        "A": "einen an Krebspest erkrankten Krebs",
+        "B": "einen Edelkrebs im Jugendstadium",
+        "C": "einen frisch gehäuteten Krebs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.275",
+      "bereich": "Biologie",
+      "frage": "Warum häuten sich Krebse?",
+      "antworten": {
+        "A": "Der Krebspanzer ist nach der Paarung stark beschädigt und muss erneuert werden.",
+        "B": "Die Häutung dient als Schutzmechanismus gegen die Krebspest.",
+        "C": "Der Krebspanzer wächst nicht mit und muss in Abhängigkeit vom Wachstum des Krebses erneuert werden."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.276",
+      "bereich": "Biologie",
+      "frage": "Was ist für den Steinkrebs kennzeichnend?",
+      "antworten": {
+        "A": "er hat keine Scheren",
+        "B": "er wird länger als der Edelkrebs und hat schlanke Scheren",
+        "C": "er bleibt klein und hat einen schmutzig weißen Bauch, eine dunkle Oberseite und dunkle Scheren"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.277",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Krebsart ist die Unterseite der Scheren rot gefärbt?",
+      "antworten": {
+        "A": "Kamberkrebs",
+        "B": "Steinkrebs",
+        "C": "Edelkrebs"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.278",
+      "bereich": "Biologie",
+      "frage": "Was ist an den Schalen der Flussperlmuschel besonders auffallend?",
+      "antworten": {
+        "A": "die dünne Schale mit unversehrter Oberfläche",
+        "B": "die dünne Schale mit äußerer, wachsartiger Schutzschicht",
+        "C": "die dicke Schale mit zerklüfteter Oberfläche"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.279",
+      "bereich": "Biologie",
+      "frage": "Wie werden die Larven der Bachmuschel bezeichnet?",
+      "antworten": {
+        "A": "Glochidien",
+        "B": "Weidenblattlarven",
+        "C": "Querder"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.280",
+      "bereich": "Biologie",
+      "frage": "Wo halten sich Perlmuschellarven (Glochidien) nach ihrem Schlupf vorübergehend auf?",
+      "antworten": {
+        "A": "parasitisch auf den Kiemen von Bachforellen",
+        "B": "eingegraben im Kiesbett des Perlmuschelbaches",
+        "C": "angeheftet an Wasserpflanzen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.281",
+      "bereich": "Biologie",
+      "frage": "Die Larven welcher Muschelarten benötigen für ihre Entwicklung keine Wirtsfische?",
+      "antworten": {
+        "A": "Große Teichmuschel",
+        "B": "Flussperlmuschel",
+        "C": "Dreikantmuschel"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.282",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart legt ihre Eier mit Hilfe einer Legeröhre in Teichmuscheln ab?",
+      "antworten": {
+        "A": "Bitterling",
+        "B": "Elritze",
+        "C": "Dreistachliger Stichling"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.283",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage ist richtig?",
+      "antworten": {
+        "A": "Die Teichmuschel ist für ihre Fortpflanzung auf den Bitterling angewiesen.",
+        "B": "Der Bitterling ist ein Krautlaicher.",
+        "C": "Der Bitterling benötigt zur Fortpflanzung Muscheln (z.B. die Teichmuschel)."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.284",
+      "bereich": "Biologie",
+      "frage": "Als Querder bezeichnet man",
+      "antworten": {
+        "A": "das Larvenstadium der Neunaugen",
+        "B": "die Männchen der Neunaugen",
+        "C": "die Weibchen der Neunaugen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.285",
+      "bereich": "Biologie",
+      "frage": "Welche Tierart verbringt alle Entwicklungsstadien im Süßwasser?",
+      "antworten": {
+        "A": "Aal",
+        "B": "Flussneunauge",
+        "C": "Bachneunauge"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.286",
+      "bereich": "Biologie",
+      "frage": "Wie erfolgt die exakte Altersbestimmung beim Aal?",
+      "antworten": {
+        "A": "anhand der Gehörsteinchen (Otolithen)",
+        "B": "anhand des Körperumfangs beim Ansatz der Brustflossen im Verhältnis zur Gesamtlänge",
+        "C": "anhand der Anzahl der Kiemenbögen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.287",
+      "bereich": "Biologie",
+      "frage": "Was ist ein Gelbaal?",
+      "antworten": {
+        "A": "ein laichreifer Aal",
+        "B": "eine besondere Aalrasse",
+        "C": "ein noch im Fressstadium befindlicher Aal"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.288",
+      "bereich": "Biologie",
+      "frage": "Was ist ein Blankaal?",
+      "antworten": {
+        "A": "ein Raubaal",
+        "B": "ein Jungaal",
+        "C": "ein zum Laichen abwandernder Aal"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.289",
+      "bereich": "Biologie",
+      "frage": "Was versteht man unter einem Glasaal?",
+      "antworten": {
+        "A": "ein Aal im Jugendstadium mit glasartig durchsichtigem Körper",
+        "B": "laichbereite, gläsern aussehende Aale",
+        "C": "ein Stadium der Aalentwicklung, in dem die Jungtiere zerbrechlich wie Glas sind"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.290",
+      "bereich": "Biologie",
+      "frage": "Welche Aussage zur Körperlänge der männlichen und weiblichen Aale ist richtig?",
+      "antworten": {
+        "A": "der weibliche Aal wird bedeutend größer",
+        "B": "der männliche Aal wird bedeutend größer",
+        "C": "beide Geschlechter werden gleich groß"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.291",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hält Winterruhe?",
+      "antworten": {
+        "A": "Huchen",
+        "B": "Rutte (Quappe, Trüsche)",
+        "C": "Aal"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.292",
+      "bereich": "Biologie",
+      "frage": "Welchen Lebensraum bevorzugt der Strömer?",
+      "antworten": {
+        "A": "stehende Gewässer mit kiesigem Untergrund",
+        "B": "schnell fließende Gewässer mit kiesigem Untergrund",
+        "C": "langsam fließende Gewässer mit schlammigem Untergrund"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.293",
+      "bereich": "Biologie",
+      "frage": "Zu welcher ökologischen Gruppe gehört die Barbe?",
+      "antworten": {
+        "A": "Raubfische",
+        "B": "Bodenfische",
+        "C": "Oberflächenfische"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.294",
+      "bereich": "Biologie",
+      "frage": "Welche Fischarten sind hauptsächlich nachtaktiv?",
+      "antworten": {
+        "A": "Flussbarsch und Zander",
+        "B": "Aal und Waller (Wels)",
+        "C": "Aitel (Döbel) und Schied (Rapfen)"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.295",
+      "bereich": "Biologie",
+      "frage": "Was fressen Schwebrenken (Coregonen) hauptsächlich?",
+      "antworten": {
+        "A": "Fischbrut",
+        "B": "tierisches Plankton",
+        "C": "pflanzliches Plankton"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.296",
+      "bereich": "Biologie",
+      "frage": "Die größte Gewichtszunahme hat ein Fisch",
+      "antworten": {
+        "A": "im hohen Alter",
+        "B": "in allen Altersstufen",
+        "C": "im mittleren Alter"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.297",
+      "bereich": "Biologie",
+      "frage": "Welche Eigenschaft zeichnet das Wachstum der Fische aus?",
+      "antworten": {
+        "A": "Ihre Endgröße wird ausschließlich von der Größe ihres Lebensraumes bestimmt.",
+        "B": "Mit Einsetzen der Geschlechtsreife ist ihre Endgröße erreicht.",
+        "C": "Fische wachsen lebenslang, aber je nach Art im Alter mehr oder weniger verlangsamt."
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.298",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben besonders lange und feine Kiemenreusendornen?",
+      "antworten": {
+        "A": "Felchen-, Renkenartige (Coregoniden)",
+        "B": "Schmerlenartige (Cobitiden)",
+        "C": "Barschartige (Perciden)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.299",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart ernähren sich die geschlechtsreifen Exemplare vorwiegend von tierischem Plankton und Kleintieren?",
+      "antworten": {
+        "A": "Barbe",
+        "B": "Zander",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.300",
+      "bereich": "Biologie",
+      "frage": "Wo nehmen Fische mit unterständigem Maul hauptsächlich Nahrung auf?",
+      "antworten": {
+        "A": "in der Bodenzone",
+        "B": "an der Wasseroberfläche",
+        "C": "in der Freiwasserzone"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.301",
+      "bereich": "Biologie",
+      "frage": "Wovon ernährt sich die erwachsene Schleie vorwiegend?",
+      "antworten": {
+        "A": "von Plankton",
+        "B": "von Anflugnahrung",
+        "C": "von Bodennahrung"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.302",
+      "bereich": "Biologie",
+      "frage": "Wovon ernährt sich die Äsche vorwiegend?",
+      "antworten": {
+        "A": "von Insekten und deren Entwicklungsformen",
+        "B": "von pflanzlichem Plankton",
+        "C": "von Fischbrut"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.303",
+      "bereich": "Biologie",
+      "frage": "Welche drei Arten treten in den letzten Jahren vermehrt in Donau und Main auf?",
+      "antworten": {
+        "A": "Frauennerfling, Schrätzer, Flussneunauge",
+        "B": "Lachs, Meerforelle, Maifisch",
+        "C": "Schwarzmund-, Kessler- und Marmorierte Grundel"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.304",
+      "bereich": "Biologie",
+      "frage": "Welches Bestimmungsmerkmal ist richtig beschrieben?",
+      "antworten": {
+        "A": "Die Marmorierte Grundel hat keine zusammengewachsenen Bauchflossen",
+        "B": "Die Kesslergrundel hat röhrenartig verlängerte Nasenöffnungen.",
+        "C": "Die Schwarzmundgrundel hat einen schwarzen Fleck auf der ersten Rückenflosse"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.305",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat zur Laichzeit ungenießbaren Rogen?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Waller (Wels)",
+        "C": "Barbe"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.306",
+      "bereich": "Biologie",
+      "frage": "Welche Fische gehören nicht zu den ursprünglich in Bayern heimischen Arten?",
+      "antworten": {
+        "A": "Bachforelle, Seesaibling, Huchen",
+        "B": "Schwarzmund- und Kessler- Grundel, Marmorierte Grundel",
+        "C": "Streber, Zingel, Schrätzer"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.307",
+      "bereich": "Biologie",
+      "frage": "Welcher Fisch hat eine runde Pupille?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Karpfen",
+        "C": "Blaufelchen"
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.308",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat keine Schuppen?",
+      "antworten": {
+        "A": "Schwarzmundgrundel",
+        "B": "Aal",
+        "C": "Dreistachliger Stichling"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.309",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart laicht von Februar bis Mai?",
+      "antworten": {
+        "A": "Hecht",
+        "B": "Bachforelle",
+        "C": "Renke (Felchen)"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.310",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Fischart reichen die Brustflossen nicht bis zum Ansatz der Bauchflossen?",
+      "antworten": {
+        "A": "Brachse",
+        "B": "Zope",
+        "C": "Güster"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.311",
+      "bereich": "Biologie",
+      "frage": "Wo laicht der Schneider?",
+      "antworten": {
+        "A": "auf kiesigem Untergrund",
+        "B": "auf Pflanzen",
+        "C": "im Freiwasser"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.312",
+      "bereich": "Biologie",
+      "frage": "Welche Bedeutung hat der Dottersack für die geschlüpfte Fischbrut?",
+      "antworten": {
+        "A": "Er hat keine Bedeutung.",
+        "B": "Er dient anfangs ihrer Ernährung. Er verhindert, dass sie von der",
+        "C": "Strömung fortgeschwemmt wird."
+      },
+      "richtige_antwort": "B",
+      "bild": false
+    },
+    {
+      "id": "1.313",
+      "bereich": "Biologie",
+      "frage": "Bei welcher Tierart sind die Bauchflossen zu einer Haftscheibe verwachsen?",
+      "antworten": {
+        "A": "Marmorierte Grundel",
+        "B": "Bachneunauge",
+        "C": "Mühlkoppe"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.314",
+      "bereich": "Biologie",
+      "frage": "Was brauchen die heimischen Großmuscheln zur Vermehrung?",
+      "antworten": {
+        "A": "feinen Sand als Laichsubstrat",
+        "B": "Wasservögel als Zwischenwirt für ihre Glochidien (Muschellarven)",
+        "C": "Fische, an denen die Glochidien (Muschellarven) zeitweilig parasitisch leben"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.315",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat eine nach vorne zugespitzte Pupille?",
+      "antworten": {
+        "A": "Äsche",
+        "B": "Hasel",
+        "C": "Karpfen"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.316",
+      "bereich": "Biologie",
+      "frage": "Wie oft laicht der Aal?",
+      "antworten": {
+        "A": "einmal im Leben",
+        "B": "jedes Jahr einmal",
+        "C": "dreimal pro Jahr"
+      },
+      "richtige_antwort": "A",
+      "bild": false
+    },
+    {
+      "id": "1.317",
+      "bereich": "Biologie",
+      "frage": "Welche Fische haben Hechel- oder Bürstenzähne?",
+      "antworten": {
+        "A": "Aitel (Döbel) und Schied (Rapfen)",
+        "B": "Bachforelle und Regenbogenforelle",
+        "C": "Aal und Rutte (Quappe, Trüsche)"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.318",
+      "bereich": "Biologie",
+      "frage": "Welcher männliche Salmonide (Milchner) bildet in der Laichzeit keinen Laichhaken aus?",
+      "antworten": {
+        "A": "Bachsaibling",
+        "B": "Bachforelle",
+        "C": "Huchen"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    },
+    {
+      "id": "1.319",
+      "bereich": "Biologie",
+      "frage": "Welche Fischart hat Rückenstacheln ohne Flossenhäute?",
+      "antworten": {
+        "A": "Koppe",
+        "B": "Zander",
+        "C": "Stichling"
+      },
+      "richtige_antwort": "C",
+      "bild": false
+    }
+  ]
+}
