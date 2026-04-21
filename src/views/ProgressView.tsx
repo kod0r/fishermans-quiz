@@ -1,23 +1,17 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import {
-  Tooltip,
-  TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { CheckCircle, XCircle, HelpCircle, ChevronDown } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
   quiz: QuizContext;
-  onBackToQuiz: () => void;
-  onBackToStart: () => void;
 }
 
-export default function ProgressView({ quiz, onBackToQuiz, onBackToStart }: Props) {
+export default function ProgressView({ quiz }: Props) {
   const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta } = quiz;
   const [showWrong, setShowWrong] = useState(false);
   const [showUnanswered, setShowUnanswered] = useState(false);
@@ -170,35 +164,6 @@ export default function ProgressView({ quiz, onBackToQuiz, onBackToStart }: Prop
               )}
             </Card>
           )}
-
-          {/* Aktionen */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  onClick={onBackToStart}
-                  variant="outline"
-                  aria-label="Zurück zur Startseite"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-800 px-6 sm:px-8 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px] w-full sm:w-auto"
-                >
-                  Zurück zur Startseite
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent><p>Quiz läuft weiter</p></TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  onClick={onBackToQuiz}
-                  aria-label="Zurück zum Quiz"
-                  className="bg-teal-500 hover:bg-teal-600 text-white px-6 sm:px-8 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px] w-full sm:w-auto"
-                >
-                  Zurück zum Quiz
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent><p>Weiterlernen</p></TooltipContent>
-            </Tooltip>
-          </div>
         </div>
       </div>
     </TooltipProvider>
