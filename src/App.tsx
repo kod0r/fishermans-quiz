@@ -38,7 +38,7 @@ export default function App() {
       />
 
       {currentView === 'quiz' && isQuizActive && (
-        <QuizView quiz={quiz} onShowProgress={() => quiz.goToView('progress')} />
+        <QuizView quiz={quiz} />
       )}
 
       {currentView === 'progress' && isQuizActive && (
