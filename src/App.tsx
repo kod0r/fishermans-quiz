@@ -24,8 +24,8 @@ export default function App() {
 
   // Sidebar-Button-Sichtbarkeit
   const showResumeOnStart = currentView === 'start' && isQuizActive;
-  const showProgressOnQuiz = currentView === 'quiz' && isQuizActive;
   const showResumeOnProgress = currentView === 'progress' && isQuizActive;
+  const showProgressOnQuiz = currentView === 'quiz' && isQuizActive;
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function App() {
         quiz={quiz}
         onHome={() => quiz.goToView('start')}
         onResumeQuiz={() => quiz.goToView('quiz')}
-        showResume={showResumeOnStart}
+        showResume={showResumeOnStart || showResumeOnProgress}
         onShowProgress={() => quiz.goToView('progress')}
         showProgress={showProgressOnQuiz}
         showResumeOnProgress={showResumeOnProgress}
