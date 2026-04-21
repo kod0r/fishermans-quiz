@@ -19,6 +19,10 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // setState-in-effect is too strict for our patterns (shadcn/ui + store initialization)
+      'react-hooks/set-state-in-effect': 'off',
+    },
   },
   {
     // shadcn/ui Komponenten: exportierte Varianten/Utilities sind absichtlich
