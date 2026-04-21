@@ -24,13 +24,13 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
   } = quiz;
 
   const [showNav, setShowNav] = useState(false);
-  const [pendingWrongAnswer, setPendingWrongAnswer] = useState<string | null>(null);
+  const [firstWrongAttempt, setFirstWrongAttempt] = useState<string | null>(null);
 
   if (!aktuelleFrage) return null;
 
   const userAntwort = antworten[aktuelleFrage.id];
   const hasAnswered = userAntwort !== undefined;
-  const isPending = pendingWrongAnswer !== null;
+  const hasSecondChance = firstWrongAttempt !== null;
   const fortschritt = ((aktuellerIndex + 1) / aktiveFragen.length) * 100;
   const korrekt = aktiveFragen.filter(f => antworten[f.id] === f.richtige_antwort).length;
   const falsch = aktiveFragen.filter(f => antworten[f.id] && antworten[f.id] !== f.richtige_antwort).length;
@@ -38,31 +38,23 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
 
   // ── Arcade-Modus: Antwort-Logik ──
   const handleAnswerClick = (buchstabe: string) => {
-    if (hasAnswered || isPending) return;
+    if (hasAnswered) return;
 
     const isCorrect = buchstabe === aktuelleFrage.richtige_antwort;
 
     if (isCorrect) {
       // Richtig → sofort speichern
       beantworteFrage(aktuelleFrage.id, buchstabe);
-    } else if (gameMode === 'arcade') {
-      // Arcade + Falsch → Preview, "Sicher?" Dialog
-      setPendingWrongAnswer(buchstabe);
+      setFirstWrongAttempt(null);
+    } else if (gameMode === 'arcade' && !hasSecondChance) {
+      // Arcade + erster Falsch → 2. Chance gewähren
+      setFirstWrongAttempt(buchstabe);
     } else {
-      // Hardcore + Falsch → sofort speichern (später: Submit-Step)
+      // Hardcore + Falsch → sofort speichern
+      // Arcade + zweiter Falsch → sofort speichern
       beantworteFrage(aktuelleFrage.id, buchstabe);
+      setFirstWrongAttempt(null);
     }
-  };
-
-  const handleConfirmWrong = () => {
-    if (pendingWrongAnswer) {
-      beantworteFrage(aktuelleFrage.id, pendingWrongAnswer);
-    }
-    setPendingWrongAnswer(null);
-  };
-
-  const handleCancelWrong = () => {
-    setPendingWrongAnswer(null);
   };
 
   return (
@@ -139,8 +131,8 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
             />
           </div>
 
-          {/* Frage */}
-          <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
+          {/* Frage — min-height fixiert für stabile Navigation */}
+          <div className="min-h-[480px] sm:min-h-[520px] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 flex flex-col">
             <div className="mb-4">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">{aktuelleFrage.bereich}</span>
               {aktuelleFrage.bild && (
@@ -165,46 +157,46 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
 
             {/* Antworten */}
             <div
-              className="space-y-3"
+              className="space-y-3 flex-1"
               role="radiogroup"
               aria-label="Antwortmöglichkeiten"
             >
               {(['A', 'B', 'C'] as const).map(buchstabe => {
                 const isSelected = userAntwort === buchstabe;
                 const isCorrect = aktuelleFrage.richtige_antwort === buchstabe;
-                const isPendingSelection = pendingWrongAnswer === buchstabe;
+                const isFirstWrong = firstWrongAttempt === buchstabe;
 
                 let cls = 'border-slate-600/50 bg-slate-700/30 hover:bg-slate-700/50 hover:border-slate-500/50';
                 if (hasAnswered) {
                   if (isSelected && isCorrect) cls = 'border-emerald-500 bg-emerald-500/10';
                   else if (isSelected && !isCorrect) cls = 'border-red-500 bg-red-500/10';
                   else if (isCorrect) cls = 'border-emerald-500/50 bg-emerald-500/5';
-                } else if (isPendingSelection) {
-                  // Arcade: Pending wrong answer preview
-                  cls = 'border-red-500 bg-red-500/10';
+                } else if (isFirstWrong) {
+                  // Erster falscher Versuch: subtil ausgegraut, nicht rot
+                  cls = 'border-slate-500/30 bg-slate-700/20 opacity-50';
                 } else if (isSelected) {
                   cls = 'border-teal-400 bg-teal-400/10';
                 }
 
-                const isDisabled = hasAnswered || (isPending && !isPendingSelection);
+                const isDisabled = hasAnswered || isFirstWrong;
 
                 return (
                   <button
                     key={buchstabe}
                     onClick={() => handleAnswerClick(buchstabe)}
                     disabled={isDisabled}
-                    aria-pressed={isSelected || isPendingSelection}
+                    aria-pressed={isSelected || isFirstWrong}
                     aria-disabled={isDisabled}
                     aria-label={`Antwort ${buchstabe}: ${aktuelleFrage.antworten[buchstabe]}`}
                     className={`w-full text-left p-4 md:p-5 min-h-[44px] rounded-xl border transition-all flex items-start gap-3 sm:gap-4 ${cls} ${isDisabled ? 'cursor-default' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'}`}
                   >
                     <span
-                      className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isPendingSelection ? 'bg-red-500 text-white' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
+                      className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isFirstWrong ? 'bg-slate-600/30 text-slate-500' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
                       aria-hidden="true"
                     >
                       {buchstabe}
                     </span>
-                    <span className={`flex-1 pt-1.5 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : isPendingSelection ? 'text-red-300' : 'text-slate-200'}`}>
+                    <span className={`flex-1 pt-1.5 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : isFirstWrong ? 'text-slate-500' : 'text-slate-200'}`}>
                       {aktuelleFrage.antworten[buchstabe]}
                     </span>
                     {hasAnswered && isCorrect && (
@@ -217,43 +209,21 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     )}
-                    {isPendingSelection && (
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    )}
                   </button>
                 );
               })}
             </div>
 
-            {/* ── Arcade: Sicher? Dialog ── */}
-            {isPending && gameMode === 'arcade' && (
-              <Card className="mt-4 border-amber-500/30 bg-amber-500/10">
+            {/* ── Arcade: 2. Chance Hinweis ── */}
+            {hasSecondChance && gameMode === 'arcade' && !hasAnswered && (
+              <Card className="mt-4 border-amber-500/20 bg-amber-500/5">
                 <CardContent className="pt-4 pb-4">
-                  <div className="flex items-start gap-3 mb-3">
+                  <div className="flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
-                      <p className="text-amber-300 font-medium text-sm">Bist du sicher?</p>
-                      <p className="text-slate-400 text-xs mt-0.5">Diese Antwort ist falsch. Du kannst noch eine andere wählen.</p>
+                      <p className="text-amber-300 font-medium text-sm">Noch ein Versuch</p>
+                      <p className="text-slate-400 text-xs mt-0.5">Wähle eine andere Antwort aus.</p>
                     </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={handleCancelWrong}
-                      variant="outline"
-                      size="sm"
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                    >
-                      Nochmal wählen
-                    </Button>
-                    <Button
-                      onClick={handleConfirmWrong}
-                      size="sm"
-                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                    >
-                      Bestätigen
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -295,7 +265,7 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
               <TooltipTrigger asChild>
                 <Button
                   onClick={naechsteFrage}
-                  disabled={aktuellerIndex === aktiveFragen.length - 1 || isPending}
+                  disabled={aktuellerIndex === aktiveFragen.length - 1 || hasSecondChance}
                   variant="outline"
                   aria-label="Nächste Frage"
                   className="border-slate-600 text-slate-300 hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
