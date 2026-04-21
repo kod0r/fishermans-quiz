@@ -72,7 +72,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.23",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^10.2.1",
@@ -86,7 +86,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.59.0",
-    "vite": "^7.2.4",
+    "vite": "^8.0.9",
     "vitest": "^4.1.4"
   }
 }

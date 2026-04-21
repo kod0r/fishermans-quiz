@@ -11,6 +11,9 @@ export default defineConfig({
     port: 3000,
     host: 'localhost',
   },
+  build: {
+    cssMinify: 'esbuild',
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
