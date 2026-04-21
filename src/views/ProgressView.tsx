@@ -34,21 +34,21 @@ export default function ProgressView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-4xl pt-14 sm:pt-16">
+        <div className="container mx-auto px-2.5 sm:px-3.5 py-5 sm:py-7 max-w-4xl pt-12 sm:pt-14">
 
-          <div className="text-center mb-6 sm:mb-8">
+          <div className="text-center mb-5 sm:mb-7">
             <h1 className="text-2xl sm:text-3xl font-bold text-white">Quiz-Fortschritt</h1>
             <p className="text-slate-400 mt-2">Aktueller Durchlauf</p>
           </div>
 
           {/* Run-Ergebnis */}
           <Card className={`mb-4 sm:mb-6 ${passed ? 'bg-emerald-900/20 border-emerald-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
-            <CardContent className="pt-6 sm:pt-8 pb-6 sm:pb-8 text-center">
+            <CardContent className="pt-5 sm:pt-7 pb-5 sm:pb-7 text-center">
               <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-4 flex items-center justify-center ${passed ? 'bg-emerald-500/20' : 'bg-red-500/20'}`} aria-hidden="true">
                 {passed ? <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-400" /> : <XCircle className="w-10 h-10 sm:w-12 sm:h-12 text-red-400" />}
               </div>
               <h2 className={`text-xl sm:text-2xl font-bold mb-2 ${passed ? 'text-emerald-400' : 'text-red-400'}`}>{passed ? 'Bestanden!' : 'Nicht bestanden'}</h2>
-              <p className="text-slate-300 mb-6">{statistiken.korrekt} von {statistiken.gesamt} richtig</p>
+              <p className="text-slate-300 mb-5">{statistiken.korrekt} von {statistiken.gesamt} richtig</p>
               <div className="max-w-md mx-auto">
                 <Progress
                   value={pct}
@@ -62,7 +62,7 @@ export default function ProgressView({ quiz }: Props) {
               </div>
 
               {/* Bereichs-Stats */}
-              <div className="mt-6 text-left space-y-3 max-w-md mx-auto">
+              <div className="mt-5 text-left space-y-3 max-w-md mx-auto">
                 {Object.entries(bereichStats).map(([b, s]) => {
                   const p = s.gesamt > 0 ? (s.korrekt / s.gesamt) * 100 : 0;
                   return (
@@ -102,7 +102,7 @@ export default function ProgressView({ quiz }: Props) {
                     {falsche.map(frage => {
                       const meta = getFrageMeta(frage.id);
                       return (
-                        <div key={frage.id} className="p-3 sm:p-4 rounded-xl bg-red-500/5 border border-red-500/10">
+                        <div key={frage.id} className="p-2.5 sm:p-3.5 rounded-xl bg-red-500/5 border border-red-500/10">
                           <div className="flex items-start justify-between gap-4 mb-2">
                             <p className="text-white font-medium text-sm">{frage.frage}</p>
                             <button
@@ -153,7 +153,7 @@ export default function ProgressView({ quiz }: Props) {
                           key={frage.id}
                           onClick={() => springeZuFrage(idx)}
                           aria-label={`Zu unbeantworteter Frage ${idx + 1} springen`}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                          className="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
                         >
                           Frage {idx + 1}
                         </button>
