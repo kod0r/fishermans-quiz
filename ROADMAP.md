@@ -39,10 +39,7 @@ _Keine aktiven Tickets._
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
-| Fragen-Favoriten markieren | [#8](https://github.com/kod0r/fishermans-quiz/issues/8) | low |
 | Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | low |
-| Statistik-Export (CSV/JSON) | [#10](https://github.com/kod0r/fishermans-quiz/issues/10) | low |
-| Beenden des Themenbereichs | [#46](https://github.com/kod0r/fishermans-quiz/issues/46) | high |
 
 **→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -59,6 +56,9 @@ _Keine aktiven Tickets._
 | UI Elemente farblich abstimmen | [#47](https://github.com/kod0r/fishermans-quiz/issues/47) | 2026-04-21 |
 | Fragen-Box Größe fixieren | [#48](https://github.com/kod0r/fishermans-quiz/issues/48) | 2026-04-21 |
 | Quiz-Fortschritt Aktueller Durchlauf Redesign | [#49](https://github.com/kod0r/fishermans-quiz/issues/49) | 2026-04-21 |
+| Fragen-Favoriten markieren | [#8](https://github.com/kod0r/fishermans-quiz/issues/8) | 2026-04-21 |
+| Statistik-Export (CSV/JSON) | [#10](https://github.com/kod0r/fishermans-quiz/issues/10) | 2026-04-21 |
+| Beenden des Themenbereichs | [#46](https://github.com/kod0r/fishermans-quiz/issues/46) | 2026-04-21 |
 | Responsive Design | [#1](https://github.com/kod0r/fishermans-quiz/issues/1) | 2026-04-20 |
 | Accessibility (ARIA, Keyboard) | [#2](https://github.com/kod0r/fishermans-quiz/issues/2) | 2026-04-20 |
 | Unit-Tests für Store-Logik | [#4](https://github.com/kod0r/fishermans-quiz/issues/4) | 2026-04-20 |
