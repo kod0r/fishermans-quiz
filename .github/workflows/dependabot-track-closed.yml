@@ -11,6 +11,7 @@ permissions:
 jobs:
   track-closed-dependabot-pr:
     if: |
+      github.event_name == 'pull_request' &&
       github.event.pull_request.user.login == 'dependabot[bot]' &&
       github.event.pull_request.merged == false
     runs-on: ubuntu-latest
@@ -24,7 +25,6 @@ jobs:
             const fromVer = pr.title.match(/from\s+(\S+)/i)?.[1] || '?';
             const toVer = pr.title.match(/to\s+(\S+)/i)?.[1] || '?';
 
-            // Extract the closing reason from the PR state
             const reason = pr.state_reason || 'closed';
             let reasonText = '';
             if (reason === 'not_planned') {
@@ -46,13 +46,6 @@ jobs:
 - **From:** ${fromVer}
 - **To:** ${toVer}
 
-### Why was this closed?
-This Dependabot PR was closed without merging. Common reasons:
-- Peer dependency conflict (e.g., requires newer Node/Vite/ESLint)
-- Major version with breaking changes needing manual evaluation
-- Bundle size concerns
-- Waiting for upstream fixes
-
 ### Next Steps
 - [ ] Evaluate if this upgrade is needed
 - [ ] Check for peer dependency blockers
@@ -63,7 +56,6 @@ This Dependabot PR was closed without merging. Common reasons:
 *This issue was auto-created when Dependabot PR #${pr.number} was closed unmerged.*
 `;
 
-            // Check if an issue already exists for this dependency upgrade
             const existingIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
