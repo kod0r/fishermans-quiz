@@ -5,6 +5,7 @@ import { loadQuizMeta, buildQuizData, loadAllQuizData } from '@/utils/quizLoader
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
 import { useSettings } from '@/store/settings';
+import { useFavorites } from '@/store/favorites';
 
 export function useQuiz() {
   const [quizMeta, setQuizMeta] = useState<QuizMeta | null>(null);
@@ -15,6 +16,7 @@ export function useQuiz() {
   const { gameMode, setGameMode } = useSettings();
   const run = useQuizRun(quizData, gameMode);
   const meta = useMetaProgress(gameMode);
+  const fav = useFavorites();
 
   // Staged Loading:
   // 1. Meta sofort laden (~360 Bytes) → App wird sofort nutzbar
@@ -55,7 +57,7 @@ export function useQuiz() {
   }, [run, meta]);
 
   // Starten: Lazy Loading der Bereichs-Fragen
-  const starteQuiz = useCallback(async (bereiche: string[]) => {
+  const starteQuiz = useCallback(async (bereiche: string[], nurFavoriten = false) => {
     if (!quizMeta) return;
 
     let data = quizData;
@@ -71,11 +73,25 @@ export function useQuiz() {
       }
     }
 
+    // Optional: Nur Favoriten filtern
+    let filteredData = data;
+    if (nurFavoriten) {
+      const favIds = new Set(fav.favorites);
+      filteredData = {
+        ...data,
+        fragen: data.fragen.filter(f => favIds.has(f.id)),
+      };
+      if (filteredData.fragen.length === 0) {
+        console.warn('[useQuiz] Keine Favoriten in den gewählten Bereichen.');
+        return;
+      }
+    }
+
     const isNewRun = !run.isActive;
-    run.starteRun(bereiche, data);
+    run.starteRun(bereiche, filteredData);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
-  }, [run, meta, quizData, quizMeta]);
+  }, [run, meta, quizData, quizMeta, fav.favorites]);
 
   const goToView = useCallback((v: AppView) => setView(v), []);
 
@@ -108,10 +124,17 @@ export function useQuiz() {
     lernCount: meta.lernCount,
     getFrageMeta: meta.getFrageMeta,
     resetMetaProgression: meta.reset,
+    importMetaProgression: meta.importData,
 
     // Navigation
     goToView,
     kannBereichEntfernen,
+
+    // Favoriten
+    favorites: fav.favorites,
+    toggleFavorite: fav.toggleFavorite,
+    isFavorite: fav.isFavorite,
+    resetFavorites: fav.resetFavorites,
   };
 }
 

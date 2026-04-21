@@ -52,7 +52,7 @@ const fragenCache: Map<string, Frage[]> = new Map();
 export async function loadQuizMeta(): Promise<QuizMeta> {
   if (metaCache) return metaCache;
 
-  const res = await fetch('data/quiz_meta.json');
+  const res = await fetch(`${import.meta.env.BASE_URL}data/quiz_meta.json`);
   if (!res.ok) throw new Error(`Meta laden fehlgeschlagen: ${res.status}`);
 
   const raw = await res.json();
@@ -78,7 +78,7 @@ export async function loadBereichsFragen(bereiche: string[]): Promise<Frage[]> {
       const filename = BEREICH_FILENAME[bereich];
       if (!filename) throw new Error(`Unbekannter Bereich: ${bereich}`);
 
-      const res = await fetch(`data/bereiche/${filename}`);
+const res = await fetch(`${import.meta.env.BASE_URL}data/bereiche/${filename}`);
       if (!res.ok) throw new Error(`Bereich ${bereich} laden fehlgeschlagen: ${res.status}`);
 
       const raw = await res.json();

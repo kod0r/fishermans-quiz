@@ -1,3 +1,21 @@
+## [0.2.0](https://github.com/kod0r/fishermans-quiz/compare/v0.1.2...v0.2.0) (2026-04-21)
+
+### Features
+
+* **ui:** komplettes Layout-Redesign — Sidebar wird zu horizontaler Top-Menubar mit Moduswahl & Schnellnavigation
+* **quiz:** fixe Card-Höhe (720px Desktop, 600px Tablet, 520px Mobile), kompakte Antwort-Boxen
+* **quiz:** Favoriten-Stern rechtsbündig, 33% größer
+* **quiz:** Arcade-Modus — "Noch ein Versuch"-Warnung direkt in der Antwort-Box statt Dialog
+* **quiz:** Bereichs-Abschluss-Popup wenn letzte Frage eines Bereichs beantwortet ([#46](https://github.com/kod0r/fishermans-quiz/issues/46))
+* **quiz:** Fragen-Favoriten mit Filter "Nur Favoriten" ([#8](https://github.com/kod0r/fishermans-quiz/issues/8))
+* **meta:** Statistik-Export CSV/JSON + JSON-Import ([#10](https://github.com/kod0r/fishermans-quiz/issues/10))
+* **progress:** optisches Overhaul, minimalistischer, Actions in Menubar verschoben
+
+### Bug Fixes
+
+* **dev:** Vite Dev-Server auf `0.0.0.0` für VS Code Dev Container Port-Forwarding
+* **data:** `quizLoader.ts` fetch-Pfad mit `import.meta.env.BASE_URL` korrigiert
+
 ## [0.1.2](https://github.com/kod0r/fishermans-quiz/compare/v0.1.1...v0.1.2) (2026-04-20)
 
 
