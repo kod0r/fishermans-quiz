@@ -73,10 +73,10 @@ export default function StartView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-3xl">
+        <div className="container mx-auto px-2.5 sm:px-3.5 py-5 sm:py-7 max-w-3xl">
 
           {/* Header */}
-          <div className="text-center mb-8 sm:mb-10 pt-10 sm:pt-12">
+          <div className="text-center mb-7 sm:mb-9 pt-9 sm:pt-11">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Fish className="w-8 h-8 sm:w-10 sm:h-10 text-teal-400" aria-hidden="true" />
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">Fisherman's Quiz</h1>
@@ -86,7 +86,7 @@ export default function StartView({ quiz }: Props) {
           {/* Aktiver Run Info */}
           {isActive && (
             <Card className="mb-4 sm:mb-6 bg-teal-900/30 border-teal-500/30">
-              <CardContent className="pt-4 sm:pt-5">
+              <CardContent className="pt-3.5 sm:pt-5">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
                   <div>
                     <p className="text-teal-300 font-medium">Aktiver Quiz-Run</p>
@@ -107,7 +107,7 @@ export default function StartView({ quiz }: Props) {
 
           {/* ── COMPREHENSIVE META-PROGRESS ── Immer sichtbar, klappbar */}
           <Card className="mb-4 sm:mb-6 bg-slate-800/50 border-slate-700/50">
-            <CardContent className="pt-4 sm:pt-5 pb-4 sm:pb-5">
+            <CardContent className="pt-3.5 sm:pt-5 pb-3.5 sm:pb-5">
               <button
                 onClick={() => setShowMeta(!showMeta)}
                 aria-expanded={showMeta}
@@ -129,7 +129,7 @@ export default function StartView({ quiz }: Props) {
               </button>
 
               {showMeta && (
-                <div id="meta-progress-details" className="mt-4 pt-4 border-t border-slate-700/50">
+                <div id="meta-progress-details" className="mt-3.5 pt-3.5 border-t border-slate-700/50">
                   {/* Statistiken */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-4">
                     <StatBox icon={Trophy} iconColor="text-amber-400" value={meisterCount} label="Gemeistert" />
@@ -203,7 +203,7 @@ export default function StartView({ quiz }: Props) {
 
           {/* ── Game Mode Toggle ── */}
           <Card className={`mb-4 sm:mb-6 border backdrop-blur-sm ${quiz.gameMode === 'arcade' ? 'bg-amber-900/20 border-amber-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
-            <CardContent className="pt-4 sm:pt-5 pb-4 sm:pb-5">
+            <CardContent className="pt-3.5 sm:pt-5 pb-3.5 sm:pb-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   {quiz.gameMode === 'arcade' ? (
@@ -249,14 +249,14 @@ export default function StartView({ quiz }: Props) {
 
           {/* Bereichsauswahl */}
           <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-            <CardContent className="pt-4 sm:pt-6">
+            <CardContent className="pt-3.5 sm:pt-5">
               <h2 className="text-white font-semibold text-base sm:text-lg flex items-center gap-2 mb-4 sm:mb-5">
                 <BookOpen className="w-5 h-5 text-teal-400" aria-hidden="true" />
                 {isActive ? 'Bereiche hinzufügen' : 'Bereiche auswählen'}
               </h2>
 
               {warnung && (
-                <div className="mb-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30" role="alert" aria-live="polite">
+                <div className="mb-3.5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30" role="alert" aria-live="polite">
                   <p className="text-amber-300 text-sm mb-3">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
                   <div className="flex gap-3">
                     <Button
@@ -318,7 +318,7 @@ export default function StartView({ quiz }: Props) {
                 <Button
                   onClick={handleStart}
                   aria-label={isActive ? 'Ausgewählte Bereiche zum Quiz hinzufügen' : 'Quiz mit ausgewählten Bereichen starten'}
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px] w-full sm:w-auto"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-5 sm:px-7 py-4 sm:py-5 text-base sm:text-lg rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px] w-full sm:w-auto"
                 >
                   {isActive ? 'Hinzufügen' : 'Quiz starten'}
                 </Button>
@@ -326,7 +326,7 @@ export default function StartView({ quiz }: Props) {
             </CardContent>
           </Card>
 
-          <p className="text-center text-slate-500 text-xs sm:text-sm mt-6 sm:mt-8">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
+          <p className="text-center text-slate-500 text-xs sm:text-sm mt-5 sm:mt-7">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
         </div>
       </div>
     </TooltipProvider>
