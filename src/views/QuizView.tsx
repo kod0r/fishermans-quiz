@@ -31,9 +31,6 @@ export default function QuizView({ quiz }: Props) {
   const hasAnswered = userAntwort !== undefined;
   const hasSecondChance = firstWrongAttempt !== null;
   const fortschritt = ((aktuellerIndex + 1) / aktiveFragen.length) * 100;
-  const korrekt = aktiveFragen.filter(f => antworten[f.id] === f.richtige_antwort).length;
-  const falsch = aktiveFragen.filter(f => antworten[f.id] && antworten[f.id] !== f.richtige_antwort).length;
-  const offen = aktiveFragen.filter(f => !antworten[f.id]).length;
 
   // ── Arcade-Modus: Antwort-Logik ──
   const handleAnswerClick = (buchstabe: string) => {
@@ -55,49 +52,34 @@ export default function QuizView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
-        <div className="container mx-auto px-2.5 sm:px-3.5 py-3.5 sm:py-5 max-w-4xl pt-12 sm:pt-14">
+        <div className="container mx-auto px-2 sm:px-3 py-2 sm:py-3 max-w-4xl pt-10 sm:pt-12">
 
-          {/* Top Bar — Run-Stats */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3.5 sm:mb-5 gap-2">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500 text-xs uppercase tracking-wider">Quiz-Run</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${gameMode === 'arcade' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
-                {gameMode === 'arcade' ? 'Arcade' : 'Hardcore'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
-              <div
-                className="flex items-center gap-1 mr-2"
-                aria-label={`${korrekt} richtig, ${falsch} falsch, ${offen} offen`}
-              >
-                <span className="text-emerald-400 font-bold text-sm">{korrekt}</span>
-                <span className="text-slate-500 text-xs">/</span>
-                <span className="text-red-400 font-bold text-sm">{falsch}</span>
-                <span className="text-slate-500 text-xs">/</span>
-                <span className="text-slate-400 text-sm">{offen}</span>
-              </div>
+          {/* Top Bar */}
+          <div className="flex items-center justify-between mb-2 sm:mb-3 gap-2">
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${gameMode === 'arcade' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
+              {gameMode === 'arcade' ? 'Arcade' : 'Hardcore'}
+            </span>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    onClick={() => { if (confirm('Quiz beenden? Meta-Fortschritt bleibt erhalten.')) unterbrecheRun(); }}
-                    variant="outline"
-                    size="sm"
-                    aria-label="Quiz beenden"
-                    className="border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-red-300 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                  >
-                    <Square className="w-4 h-4 fill-current" aria-hidden="true" />
-                    <span className="hidden sm:inline">Beenden</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent><p>Quiz beenden</p></TooltipContent>
-              </Tooltip>
-            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => { if (confirm('Quiz beenden? Meta-Fortschritt bleibt erhalten.')) unterbrecheRun(); }}
+                  variant="outline"
+                  size="sm"
+                  aria-label="Quiz beenden"
+                  className="border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-red-300 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                >
+                  <Square className="w-4 h-4 fill-current" aria-hidden="true" />
+                  <span className="hidden sm:inline">Beenden</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent><p>Quiz beenden</p></TooltipContent>
+            </Tooltip>
           </div>
 
           {/* Progress Bar */}
-          <div className="mb-3.5 sm:mb-5">
-            <div className="flex justify-between text-sm text-slate-400 mb-2">
+          <div className="mb-2 sm:mb-3">
+            <div className="flex justify-between text-sm text-slate-400 mb-1.5">
               <span id="progress-label">Frage {aktuellerIndex + 1} von {aktiveFragen.length}</span>
               <span aria-hidden="true">{Math.round(fortschritt)}%</span>
             </div>
@@ -112,24 +94,24 @@ export default function QuizView({ quiz }: Props) {
           </div>
 
           {/* Frage — FESTE HÖHE, niemals variabel */}
-          <div className="h-[42rem] sm:h-[46rem] md:h-[50rem] lg:h-[54rem] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-3.5 sm:p-5 md:p-7 mb-3.5 sm:mb-5 flex flex-col">
-            <div className="mb-3.5">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">{aktuelleFrage.bereich}</span>
+          <div className="h-[36rem] sm:h-[40rem] md:h-[44rem] lg:h-[48rem] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-2 sm:p-3 md:p-4 mb-2 sm:mb-3 flex flex-col">
+            <div className="mb-2">
+              <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">{aktuelleFrage.bereich}</span>
               {aktuelleFrage.bild && (
-                <span className="inline-block ml-2 px-3 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <span className="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
                   Bilderkennung
                 </span>
               )}
             </div>
 
-            <h2 className="text-white text-base sm:text-lg md:text-xl font-semibold mb-3.5 sm:mb-5 leading-relaxed">{aktuelleFrage.frage}</h2>
+            <h2 className="text-white text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 leading-relaxed">{aktuelleFrage.frage}</h2>
 
             {aktuelleFrage.bild_url && (
-              <div className="mb-3.5 sm:mb-5 flex justify-center">
+              <div className="mb-2 sm:mb-3 flex justify-center">
                 <img
                   src={aktuelleFrage.bild_url}
                   alt={`Bild zur Frage ${aktuellerIndex + 1}: ${aktuelleFrage.frage}`}
-                  className="max-w-full max-h-48 sm:max-h-64 object-contain rounded-xl border border-slate-600/50 bg-slate-900/50"
+                  className="max-w-full max-h-40 sm:max-h-52 object-contain rounded-lg border border-slate-600/50 bg-slate-900/50"
                   loading="lazy"
                 />
               </div>
@@ -137,7 +119,7 @@ export default function QuizView({ quiz }: Props) {
 
             {/* Antworten */}
             <div
-              className="space-y-3"
+              className="space-y-2"
               role="radiogroup"
               aria-label="Antwortmöglichkeiten"
             >
@@ -167,24 +149,24 @@ export default function QuizView({ quiz }: Props) {
                     aria-pressed={isSelected || isFirstWrong}
                     aria-disabled={isDisabled}
                     aria-label={`Antwort ${buchstabe}: ${aktuelleFrage.antworten[buchstabe]}`}
-                    className={`w-full text-left p-3.5 md:p-5 min-h-[44px] rounded-xl border transition-all flex items-start gap-3 sm:gap-4 ${cls} ${isDisabled ? 'cursor-default' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'}`}
+                    className={`w-full text-left p-2.5 md:p-3.5 min-h-[44px] rounded-xl border transition-all flex items-start gap-2 sm:gap-3 ${cls} ${isDisabled ? 'cursor-default' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'}`}
                   >
                     <span
-                      className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isFirstWrong ? 'bg-slate-600/30 text-slate-500' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
+                      className={`flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect ? 'bg-red-500 text-white' : isFirstWrong ? 'bg-slate-600/30 text-slate-500' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-600/50 text-slate-300'}`}
                       aria-hidden="true"
                     >
                       {buchstabe}
                     </span>
-                    <span className={`flex-1 pt-1.5 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : isFirstWrong ? 'text-slate-500' : 'text-slate-200'}`}>
+                    <span className={`flex-1 pt-1 leading-relaxed text-sm sm:text-base ${hasAnswered && isCorrect ? 'text-emerald-300' : hasAnswered && isSelected && !isCorrect ? 'text-red-300' : isFirstWrong ? 'text-slate-500' : 'text-slate-200'}`}>
                       {aktuelleFrage.antworten[buchstabe]}
                     </span>
                     {hasAnswered && isCorrect && (
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     )}
                     {hasAnswered && isSelected && !isCorrect && (
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     )}
@@ -195,10 +177,10 @@ export default function QuizView({ quiz }: Props) {
 
             {/* ── Arcade: 2. Chance Hinweis ── */}
             {hasSecondChance && gameMode === 'arcade' && !hasAnswered && (
-              <Card className="mt-3.5 border-amber-500/20 bg-amber-500/5">
-                <CardContent className="pt-3.5 pb-3.5">
-                  <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <Card className="mt-2 border-amber-500/20 bg-amber-500/5">
+                <CardContent className="pt-2 pb-2">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <p className="text-amber-300 font-medium text-sm">Noch ein Versuch</p>
                       <p className="text-slate-400 text-xs mt-0.5">Wähle eine andere Antwort aus.</p>
@@ -215,7 +197,7 @@ export default function QuizView({ quiz }: Props) {
             </div>
 
             {userAntwort && userAntwort !== aktuelleFrage.richtige_antwort && (
-              <div className="mt-3.5 p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+              <div className="mt-2 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
                 <p className="text-emerald-400 text-sm font-medium">
                   Richtige Antwort: {aktuelleFrage.richtige_antwort} — {aktuelleFrage.antworten[aktuelleFrage.richtige_antwort as 'A' | 'B' | 'C']}
                 </p>
@@ -258,18 +240,18 @@ export default function QuizView({ quiz }: Props) {
           </div>
 
           {/* Schnellnavigation */}
-          <div className="mt-5 sm:mt-7 pt-3.5 sm:pt-5 border-t border-slate-700/50">
+          <div className="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-slate-700/50">
             <button
               onClick={() => setShowNav(!showNav)}
               aria-expanded={showNav}
               aria-controls="schnellnavigation"
-              className="flex items-center gap-2 px-2.5 py-1.5 min-h-[44px] rounded-lg bg-slate-800/80 border border-slate-600/50 text-slate-300 text-sm mb-3 hover:bg-slate-700/80 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="flex items-center gap-2 px-2 py-1 min-h-[44px] rounded-lg bg-slate-800/80 border border-slate-600/50 text-slate-300 text-sm mb-2 hover:bg-slate-700/80 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <span>Schnellnavigation</span>
               <ChevronDown className={`w-4 h-4 transition-transform ${showNav ? 'rotate-180' : ''}`} aria-hidden="true" />
             </button>
             {showNav && (
-              <div id="schnellnavigation" className="max-h-48 overflow-y-auto pr-1.5">
+              <div id="schnellnavigation" className="max-h-48 overflow-y-auto pr-1">
                 <div className="flex flex-wrap gap-1.5" role="list" aria-label="Fragen-Übersicht">
                   {aktiveFragen.map((frage, idx) => {
                     const beantwortet = antworten[frage.id] !== undefined;
