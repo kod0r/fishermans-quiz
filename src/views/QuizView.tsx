@@ -8,15 +8,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ChevronLeft, ChevronRight, BarChart3, Square, ChevronDown, AlertTriangle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Square, ChevronDown, AlertTriangle } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
   quiz: QuizContext;
-  onShowProgress: () => void;
 }
 
-export default function QuizView({ quiz, onShowProgress }: Props) {
+export default function QuizView({ quiz }: Props) {
   const {
     aktuelleFrage, aktuellerIndex, aktiveFragen, antworten,
     beantworteFrage, naechsteFrage, vorherigeFrage,
@@ -92,25 +91,10 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
                     className="border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-red-300 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
                   >
                     <Square className="w-4 h-4 fill-current" aria-hidden="true" />
+                    <span className="hidden sm:inline">Beenden</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent><p>Quiz beenden</p></TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    onClick={onShowProgress}
-                    variant="outline"
-                    size="sm"
-                    aria-label="Fortschritt anzeigen"
-                    className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                  >
-                    <BarChart3 className="w-4 h-4 mr-1" aria-hidden="true" />
-                    <span className="hidden sm:inline">Fortschritt</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent><p>Fortschritt anzeigen</p></TooltipContent>
               </Tooltip>
             </div>
           </div>
@@ -131,9 +115,9 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
             />
           </div>
 
-          {/* Frage — min-height fixiert für stabile Navigation */}
-          <div className="min-h-[480px] sm:min-h-[520px] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 flex flex-col">
-            <div className="mb-4">
+          {/* Frage — feste Höhe für stabile Navigation */}
+          <div className="h-[28rem] sm:h-[32rem] md:h-[36rem] lg:h-[40rem] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 flex flex-col overflow-hidden">
+            <div className="mb-4 flex-shrink-0">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">{aktuelleFrage.bereich}</span>
               {aktuelleFrage.bild && (
                 <span className="inline-block ml-2 px-3 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
@@ -142,25 +126,27 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
               )}
             </div>
 
-            <h2 className="text-white text-base sm:text-lg md:text-xl font-semibold mb-4 sm:mb-6 leading-relaxed">{aktuelleFrage.frage}</h2>
+            {/* Scrollbarer Inhalt: Frage + Bild + Antworten */}
+            <div className="flex-1 overflow-y-auto min-h-0 space-y-4">
+              <h2 className="text-white text-base sm:text-lg md:text-xl font-semibold leading-relaxed">{aktuelleFrage.frage}</h2>
 
-            {aktuelleFrage.bild_url && (
-              <div className="mb-4 sm:mb-6 flex justify-center">
-                <img
-                  src={aktuelleFrage.bild_url}
-                  alt={`Bild zur Frage ${aktuellerIndex + 1}: ${aktuelleFrage.frage}`}
-                  className="max-w-full max-h-48 sm:max-h-64 object-contain rounded-xl border border-slate-600/50 bg-slate-900/50"
-                  loading="lazy"
-                />
-              </div>
-            )}
+              {aktuelleFrage.bild_url && (
+                <div className="flex justify-center">
+                  <img
+                    src={aktuelleFrage.bild_url}
+                    alt={`Bild zur Frage ${aktuellerIndex + 1}: ${aktuelleFrage.frage}`}
+                    className="max-w-full max-h-40 sm:max-h-48 md:max-h-52 object-contain rounded-xl border border-slate-600/50 bg-slate-900/50"
+                    loading="lazy"
+                  />
+                </div>
+              )}
 
-            {/* Antworten */}
-            <div
-              className="space-y-3 flex-1"
-              role="radiogroup"
-              aria-label="Antwortmöglichkeiten"
-            >
+              {/* Antworten */}
+              <div
+                className="space-y-3"
+                role="radiogroup"
+                aria-label="Antwortmöglichkeiten"
+              >
               {(['A', 'B', 'C'] as const).map(buchstabe => {
                 const isSelected = userAntwort === buchstabe;
                 const isCorrect = aktuelleFrage.richtige_antwort === buchstabe;
@@ -242,6 +228,7 @@ export default function QuizView({ quiz, onShowProgress }: Props) {
                 </p>
               </div>
             )}
+          </div>
           </div>
 
           {/* Navigation */}
