@@ -261,6 +261,96 @@ npm run build    # tsc + vite build → dist/
 npm run preview  # dist/ preview
 ```
 
+## 🤖 Kimi Auto-Mode & Autonomie-Matrix
+
+> **Ziel:** Kimi soll so viel wie möglich selbstständig erledigen. Der User gibt nur noch Richtung vor — Umsetzung läuft autonom.
+
+### Autonomie-Levels
+
+| Level | Aktion | Kimi darf... | User-Input nötig |
+|-------|--------|--------------|-----------------|
+| **A1** | Lint/Format fixes | Sofort fixen & commiten | ❌ Nein |
+| **A1** | Test-Updates bei Refactor | Anpassen & commiten | ❌ Nein |
+| **A1** | ROADMAP.md Sync (/feierabend) | Automatisch abgleichen & commiten | ❌ Nein |
+| **A1** | Dependabot PRs (Patch/Minor) | Reviewen, mergen, ROADMAP updaten | ❌ Nein |
+| **A1** | Changelog-Generation | Vollautomatisch in CI | ❌ Nein |
+| **A2** | Dependency Upgrades (Major) | Plan erstellen, Issue kommentieren | ⚠️ Nur "Go" für Umsetzung |
+| **A2** | Feature-Branches | Erstellen, entwickeln, PR erstellen | ⚠️ Nur "Merge" oder "Ändern" |
+| **A2** | Bugfix-Hotfixes | Branch, Fix, PR — dann User pingen | ⚠️ Merge-Approval |
+| **A3** | Breaking Changes (API, Architektur) | Plan erstellen, NICHT umsetzen | ✅ User-Approval nötig |
+| **A3** | Security-Critical Changes | Plan erstellen, NICHT umsetzen | ✅ User-Approval nötig |
+| **A3** | Release (`npm run release`) | Vorbereiten, User pingen | ✅ User führt aus |
+
+### Standard-Workflow für Dependency-Upgrades
+
+```
+Dependabot PR erkannt
+        ↓
+┌─────────────────┐
+│ Patch oder Minor?│──Yes──→ Auto-review → CI grün → Auto-merge → ROADMAP sync
+└─────────────────┘
+        ↓ No (Major)
+┌─────────────────┐
+│ Peer-Dep Konflikt?│──Yes──→ Issue erstellen mit Plan → User wartet auf "Go"
+└─────────────────┘
+        ↓ No
+┌─────────────────┐
+│ Breaking Changes? │──Yes──→ Evaluations-Branch → Test-Daten sammeln → User entscheidet
+└─────────────────┘
+        ↓ No
+Auto-review → CI grün → Auto-merge
+```
+
+### Auto-Merge-Regeln für Dependabot
+
+Kimi darf SOFORT mergen wenn:
+- ✅ Patch-Version (z.B. 1.2.3 → 1.2.4)
+- ✅ Minor-Version (z.B. 1.2.3 → 1.3.0) OHNE Peer-Dep-Änderungen
+- ✅ CI ist grün (lint + test + build)
+- ✅ Nur package.json + package-lock.json geändert
+
+Kimi darf NICHT mergen wenn:
+- ❌ Major-Version (z.B. 1.x → 2.x)
+- ❌ Peer-Dependency-Conflict
+- ❌ Neue Sub-Dependencies mit >10KB Bundle-Impact
+- ❌ CI rot
+- ❌ Source-Code-Dateien außerhalb von package.json geändert
+
+### Feature-Entwicklung Auto-Workflow
+
+```
+User: "Implementiere X"
+        ↓
+Kimi: Issue prüfen / erstellen → Branch `feat/x` → Entwickeln
+        ↓
+Kimi: Testen (npm run test:run) → Lint (npm run lint) → Build (npm run build)
+        ↓
+Kimi: PR erstellen mit Beschreibung + Test-Ergebnissen
+        ↓
+User: "Merge" oder "Änder Y"
+        ↓
+Kimi: Merge (oder Ändern → Re-PR)
+        ↓
+Auto: GitHub Pages Deploy + ROADMAP sync
+```
+
+### Kimi-interne Checkliste vor jedem PR
+
+- [ ] `npm run lint` sauber
+- [ ] `npm run test:run` alle 59+ Tests grün
+- [ ] `npm run build` sauber (tsc + vite)
+- [ ] Keine unbeabsichtigten Dateien im Diff
+- [ ] Commit-Message folgt Conventional Commits
+- [ ] Issue referenziert in Commit und PR
+
+### Wann Kimi den User PINGEN muss
+
+- Vor jedem `npm run release` (Version-Bump ist final)
+- Bei Major Dependency-Upgrades (vor Umsetzung)
+- Wenn CI rot bleibt nach 2 Fix-Versuchen
+- Bei Architektur-Änderungen (State-Management, Routing, etc.)
+- Wenn ein Issue >3 Stunden Aufwand braucht
+
 ## Bekannte Einschränkungen
 - Kein Backend – alles client-seitig
 - Bilderkennungsfragen referenzieren lokale JPEGs in `public/images/`
