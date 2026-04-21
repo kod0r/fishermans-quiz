@@ -137,3 +137,12 @@ export const MetaStorage = {
   save: (mode: GameMode, meta: unknown) => saveJson(metaKey(mode), meta),
   clear: (mode: GameMode) => removeKey(metaKey(mode)),
 };
+
+// ── Favorites (global, nicht modus-spezifisch) ──
+const FAVORITES_KEY = 'fmq:favorites:v1';
+
+export const FavoritesStorage = {
+  load: (): string[] => loadJson(FAVORITES_KEY, []),
+  save: (favorites: string[]) => saveJson(FAVORITES_KEY, favorites),
+  clear: () => removeKey(FAVORITES_KEY),
+};

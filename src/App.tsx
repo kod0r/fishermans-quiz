@@ -1,5 +1,5 @@
 import { useQuiz } from '@/hooks/useQuiz';
-import { Sidebar } from '@/components/Sidebar';
+import { TopNavBar } from '@/components/TopNavBar';
 import { Spinner } from '@/components/ui/spinner';
 import StartView from '@/views/StartView';
 import QuizView from '@/views/QuizView';
@@ -25,27 +25,26 @@ export default function App() {
   // Sidebar-Button-Sichtbarkeit
   const showResumeOnStart = currentView === 'start' && isQuizActive;
   const showProgressOnQuiz = currentView === 'quiz' && isQuizActive;
+  const showResumeOnProgress = currentView === 'progress' && isQuizActive;
 
   return (
     <>
-      <Sidebar
+      <TopNavBar
+        quiz={quiz}
         onHome={() => quiz.goToView('start')}
         onResumeQuiz={() => quiz.goToView('quiz')}
         showResume={showResumeOnStart}
         onShowProgress={() => quiz.goToView('progress')}
         showProgress={showProgressOnQuiz}
+        showResumeOnProgress={showResumeOnProgress}
       />
 
       {currentView === 'quiz' && isQuizActive && (
-        <QuizView quiz={quiz} onShowProgress={() => quiz.goToView('progress')} />
+        <QuizView quiz={quiz} />
       )}
 
       {currentView === 'progress' && isQuizActive && (
-        <ProgressView
-          quiz={quiz}
-          onBackToQuiz={() => quiz.goToView('quiz')}
-          onBackToStart={() => quiz.goToView('start')}
-        />
+        <ProgressView quiz={quiz} />
       )}
 
       {(currentView === 'start' || !isQuizActive) && (

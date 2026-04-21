@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import {
   Tooltip,
@@ -9,16 +8,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Fish, BookOpen, Scale, Droplets, Leaf, Eye, HelpCircle, Trophy, Target, Flame, RotateCcw, ChevronDown, BarChart3, Trash2, CheckCircle, Zap, Shield } from 'lucide-react';
+import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, Trash2, CheckCircle, Star, Download, Upload, FileJson } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 const BEREICHE = [
   { id: 'Biologie', label: 'Biologie', anzahl: 319, icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
-  { id: 'Gewässerkunde', label: 'Gewässerkunde', anzahl: 129, icon: Droplets, color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20', selectedBg: 'bg-blue-500' },
-  { id: 'Gewässerpflege', label: 'Gewässerpflege', anzahl: 136, icon: Leaf, color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20', selectedBg: 'bg-blue-500' },
+  { id: 'Gewässerkunde', label: 'Gewässerkunde', anzahl: 129, icon: HelpCircle, color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20', selectedBg: 'bg-blue-500' },
+  { id: 'Gewässerpflege', label: 'Gewässerpflege', anzahl: 136, icon: HelpCircle, color: 'text-cyan-400', bg: 'bg-cyan-400/10', border: 'border-cyan-400/20', selectedBg: 'bg-cyan-500' },
   { id: 'Fanggeräte und -methoden', label: 'Fanggeräte & Methoden', anzahl: 192, icon: HelpCircle, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'border-amber-400/20', selectedBg: 'bg-amber-500' },
-  { id: 'Recht', label: 'Recht', anzahl: 222, icon: Scale, color: 'text-red-400', bg: 'bg-red-400/10', border: 'border-red-400/20', selectedBg: 'bg-red-500' },
-  { id: 'Bilderkennung', label: 'Bilderkennung', anzahl: 54, icon: Eye, color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20', selectedBg: 'bg-purple-500' },
+  { id: 'Recht', label: 'Recht', anzahl: 222, icon: HelpCircle, color: 'text-red-400', bg: 'bg-red-400/10', border: 'border-red-400/20', selectedBg: 'bg-red-500' },
+  { id: 'Bilderkennung', label: 'Bilderkennung', anzahl: 54, icon: HelpCircle, color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20', selectedBg: 'bg-purple-500' },
 ];
 
 interface Props {
@@ -29,7 +28,8 @@ export default function StartView({ quiz }: Props) {
   const [ausgewaehlt, setAusgewaehlt] = useState<string[]>([]);
   const [fehler, setFehler] = useState('');
   const [warnung, setWarnung] = useState<string | null>(null);
-  const [showMeta, setShowMeta] = useState(false);
+  const [nurFavoriten, setNurFavoriten] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { metaProgress, meisterCount, lernCount, isActive, geladeneBereiche, statistiken } = quiz;
   const totalFragen = quiz.quizMeta?.meta.anzahl_fragen || 1052;
@@ -61,10 +61,12 @@ export default function StartView({ quiz }: Props) {
       setFehler('Bitte wähle mindestens einen Bereich aus.');
       return;
     }
-    quiz.starteQuiz(effektivAusgewaehlt);
+    if (nurFavoriten && quiz.favorites.length === 0) {
+      setFehler('Noch keine Favoriten vorhanden.');
+      return;
+    }
+    quiz.starteQuiz(effektivAusgewaehlt, nurFavoriten);
   };
-
-  const handleFortsetzen = () => quiz.goToView('quiz');
 
   const gesamtFragen = BEREICHE
     .filter(b => effektivAusgewaehlt.includes(b.id))
@@ -73,196 +75,229 @@ export default function StartView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-3xl">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl">
 
           {/* Header */}
-          <div className="text-center mb-8 sm:mb-10 pt-10 sm:pt-12">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Fish className="w-8 h-8 sm:w-10 sm:h-10 text-teal-400" aria-hidden="true" />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">Fisherman's Quiz</h1>
+          <div className="text-center mb-5 sm:mb-6 pt-12 sm:pt-14">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Fish className="w-7 h-7 sm:w-8 sm:h-8 text-teal-400" aria-hidden="true" />
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Fisherman's Quiz</h1>
             </div>
           </div>
 
           {/* Aktiver Run Info */}
           {isActive && (
-            <Card className="mb-4 sm:mb-6 bg-teal-900/30 border-teal-500/30">
-              <CardContent className="pt-4 sm:pt-5">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                  <div>
-                    <p className="text-teal-300 font-medium">Aktiver Quiz-Run</p>
-                    <p className="text-slate-400 text-sm">{geladeneBereiche.join(', ')} — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet</p>
-                    <p className="text-slate-500 text-xs mt-1">Weitere Bereiche können hinzugefügt werden.</p>
-                  </div>
-                  <Button
-                    onClick={handleFortsetzen}
-                    aria-label="Aktives Quiz fortsetzen"
-                    className="bg-teal-500 hover:bg-teal-600 text-white whitespace-nowrap focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                  >
-                    Zum Quiz
-                  </Button>
+            <Card className="mb-2 bg-teal-900/30 border-teal-500/30">
+              <CardContent className="py-2 px-3">
+                <div className="text-center">
+                  <p className="text-teal-300 font-medium text-sm">Aktiver Quiz-Run</p>
+                  <p className="text-slate-400 text-xs">{geladeneBereiche.join(', ')} — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5">Weitere Bereiche können hinzugefügt werden.</p>
                 </div>
               </CardContent>
             </Card>
           )}
 
-          {/* ── COMPREHENSIVE META-PROGRESS ── Immer sichtbar, klappbar */}
-          <Card className="mb-4 sm:mb-6 bg-slate-800/50 border-slate-700/50">
-            <CardContent className="pt-4 sm:pt-5 pb-4 sm:pb-5">
-              <button
-                onClick={() => setShowMeta(!showMeta)}
-                aria-expanded={showMeta}
-                aria-controls="meta-progress-details"
-                className="w-full flex items-center justify-between min-h-[44px] focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-lg"
-              >
-                <div className="flex items-center gap-3">
-                  <BarChart3 className="w-5 h-5 text-teal-400 flex-shrink-0" aria-hidden="true" />
-                  <div className="text-left">
-                    <p className="text-white font-medium">Lernfortschritt</p>
-                    <p className="text-slate-400 text-sm">
-                      {metaProgress.stats.totalQuestionsAnswered > 0
-                        ? `${meisterCount} von ${totalFragen} gemeistert (${masterPct}%) • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
-                        : 'Noch keine Fragen beantwortet'}
-                    </p>
-                  </div>
-                </div>
-                <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform flex-shrink-0 ${showMeta ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
-
-              {showMeta && (
-                <div id="meta-progress-details" className="mt-4 pt-4 border-t border-slate-700/50">
-                  {/* Statistiken */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-4">
-                    <StatBox icon={Trophy} iconColor="text-amber-400" value={meisterCount} label="Gemeistert" />
-                    <StatBox icon={Target} iconColor="text-blue-400" value={lernCount} label="In Lernung" />
-                    <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
-                    <StatBox icon={RotateCcw} iconColor="text-emerald-400" value={metaProgress.stats.totalRuns} label="Durchläufe" />
-                    <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
-                    <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
-                  </div>
-
-                  {/* Korrektrate */}
-                  {metaProgress.stats.totalQuestionsAnswered > 0 && (
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-1">
-                        <span id="korrektrate-label" className="text-slate-300">Korrektrate</span>
-                        <span className="text-teal-400 font-medium">
-                          {Math.round((metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100)}%
-                        </span>
-                      </div>
-                      <Progress
-                        value={(metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100}
-                        className="h-2 bg-slate-700"
-                        aria-labelledby="korrektrate-label"
-                      />
-                    </div>
-                  )}
-
-                  {/* Bereichs-Fortschritte */}
-                  <div className="space-y-2 mb-4">
-                    {BEREICHE.map(b => {
-                      const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
-                        .filter(([, bereich]) => bereich === b.id)
-                        .map(([id]) => id);
-                      const gem = fragenIds.filter(id => metaProgress.fragen[id]?.correctStreak >= 3).length;
-                      const lern = fragenIds.filter(id => {
-                        const meta = metaProgress.fragen[id];
-                        return meta && meta.attempts > 0 && meta.correctStreak < 3;
-                      }).length;
-                      const pct = fragenIds.length ? Math.round((gem / fragenIds.length) * 100) : 0;
-                      return (
-                        <div key={b.id} className="flex items-center gap-2 sm:gap-3">
-                          <span className="text-slate-400 text-xs w-24 sm:w-32 truncate">{b.label}</span>
-                          <Progress value={pct} className="flex-1 h-1.5 bg-slate-700" aria-label={`${b.label}: ${pct}% gemeistert`} />
-                          <span className="text-slate-400 text-xs w-14 sm:w-16 text-right">{gem}/{fragenIds.length}</span>
-                          {lern > 0 && <span className="text-blue-400 text-[10px] w-10 text-right">{lern} Lern</span>}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="flex justify-end">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          onClick={() => { if (confirm('Alle Lerndaten löschen? Dies kann nicht rückgängig gemacht werden.')) quiz.resetMetaProgression(); }}
-                          variant="outline"
-                          size="sm"
-                          aria-label="Alle Lerndaten zurücksetzen"
-                          className="border-red-500/30 text-red-400 hover:bg-red-500/10 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
-                        >
-                          <Trash2 className="w-3 h-3 mr-1" aria-hidden="true" />Zurücksetzen
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent><p>Alle Lerndaten löschen</p></TooltipContent>
-                    </Tooltip>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* ── Game Mode Toggle ── */}
-          <Card className={`mb-4 sm:mb-6 border backdrop-blur-sm ${quiz.gameMode === 'arcade' ? 'bg-amber-900/20 border-amber-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
-            <CardContent className="pt-4 sm:pt-5 pb-4 sm:pb-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  {quiz.gameMode === 'arcade' ? (
-                    <Zap className="w-5 h-5 text-amber-400 flex-shrink-0" aria-hidden="true" />
-                  ) : (
-                    <Shield className="w-5 h-5 text-red-400 flex-shrink-0" aria-hidden="true" />
-                  )}
-                  <div>
-                    <p className="text-white font-medium text-sm">Spielmodus</p>
-                    <p className="text-slate-400 text-xs">
-                      {quiz.gameMode === 'arcade'
-                        ? 'Arcade — Sofort-Feedback, 2nd-Chance bei Falsch'
-                        : 'Hardcore — Antwort bestätigen, kein Zurück'}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 bg-slate-900/50 rounded-lg p-1">
-                  <button
-                    onClick={() => !isActive && quiz.setGameMode('arcade')}
-                    disabled={isActive}
-                    aria-pressed={quiz.gameMode === 'arcade'}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] ${quiz.gameMode === 'arcade' ? 'bg-amber-500 text-white' : 'text-slate-400 hover:text-white'} ${isActive ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                    title={isActive ? 'Moduswechsel während aktivem Run nicht möglich' : 'Arcade-Modus wählen'}
-                  >
-                    Arcade
-                  </button>
-                  <button
-                    onClick={() => !isActive && quiz.setGameMode('hardcore')}
-                    disabled={isActive}
-                    aria-pressed={quiz.gameMode === 'hardcore'}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] ${quiz.gameMode === 'hardcore' ? 'bg-red-500 text-white' : 'text-slate-400 hover:text-white'} ${isActive ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                    title={isActive ? 'Moduswechsel während aktivem Run nicht möglich' : 'Hardcore-Modus wählen'}
-                  >
-                    Hardcore
-                  </button>
+          {/* Meta-Progress — immer sichtbar, kompakt */}
+          <Card className="mb-2 bg-slate-800/50 border-slate-700/50">
+            <CardContent className="py-2 px-3">
+              <div className="flex items-center gap-2 mb-3">
+                <BarChart3 className="w-4 h-4 text-teal-400 flex-shrink-0" aria-hidden="true" />
+                <div>
+                  <p className="text-white font-medium text-sm">Lernfortschritt</p>
+                  <p className="text-slate-400 text-xs">
+                    {metaProgress.stats.totalQuestionsAnswered > 0
+                      ? `${meisterCount} von ${totalFragen} gemeistert (${masterPct}%) • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
+                      : 'Noch keine Fragen beantwortet'}
+                  </p>
                 </div>
               </div>
-              {isActive && (
-                <p className="text-slate-500 text-xs mt-2">Moduswechsel während eines aktiven Runs ist deaktiviert.</p>
+
+              {/* Statistiken */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-3">
+                <StatBox icon={Trophy} iconColor="text-amber-400" value={meisterCount} label="Gemeistert" />
+                <StatBox icon={Target} iconColor="text-blue-400" value={lernCount} label="In Lernung" />
+                <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
+                <StatBox icon={RotateCcw} iconColor="text-emerald-400" value={metaProgress.stats.totalRuns} label="Durchläufe" />
+                <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
+                <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
+              </div>
+
+              {/* Korrektrate */}
+              {metaProgress.stats.totalQuestionsAnswered > 0 && (
+                <div className="mb-3">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span id="korrektrate-label" className="text-slate-300">Korrektrate</span>
+                    <span className="text-teal-400 font-medium">
+                      {Math.round((metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100)}%
+                    </span>
+                  </div>
+                  <Progress
+                    value={(metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100}
+                    className="h-1.5 bg-slate-700"
+                    aria-labelledby="korrektrate-label"
+                  />
+                </div>
               )}
+
+              {/* Bereichs-Fortschritte */}
+              <div className="space-y-1.5 mb-3">
+                {BEREICHE.map(b => {
+                  const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
+                    .filter(([, bereich]) => bereich === b.id)
+                    .map(([id]) => id);
+                  const gem = fragenIds.filter(id => metaProgress.fragen[id]?.correctStreak >= 3).length;
+                  const lern = fragenIds.filter(id => {
+                    const meta = metaProgress.fragen[id];
+                    return meta && meta.attempts > 0 && meta.correctStreak < 3;
+                  }).length;
+                  const pct = fragenIds.length ? Math.round((gem / fragenIds.length) * 100) : 0;
+                  return (
+                    <div key={b.id} className="flex items-center gap-2 sm:gap-3">
+                      <span className="text-slate-400 text-[10px] w-20 sm:w-28 truncate">{b.label}</span>
+                      <Progress value={pct} className="flex-1 h-1 bg-slate-700" aria-label={`${b.label}: ${pct}% gemeistert`} />
+                      <span className="text-slate-400 text-[10px] w-12 sm:w-14 text-right">{gem}/{fragenIds.length}</span>
+                      {lern > 0 && <span className="text-blue-400 text-[9px] w-8 text-right">{lern}</span>}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Export / Import / Reset */}
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                      try {
+                        const data = JSON.parse(ev.target?.result as string);
+                        if (data.fragen && data.stats) {
+                          if (confirm('Lerndaten aus Datei importieren? Dies überschreibt den aktuellen Fortschritt.')) {
+                            quiz.importMetaProgression?.(data);
+                          }
+                        } else {
+                          alert('Ungültiges Dateiformat.');
+                        }
+                      } catch {
+                        alert('Fehler beim Lesen der Datei.');
+                      }
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    };
+                    reader.readAsText(file);
+                  }}
+                />
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={() => {
+                        const data = quiz.metaProgress;
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `fishermans-quiz-meta-${new Date().toISOString().split('T')[0]}.json`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      variant="outline"
+                      size="sm"
+                      aria-label="Als JSON exportieren"
+                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                    >
+                      <FileJson className="w-3 h-3 mr-1" aria-hidden="true" />JSON
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Meta-Daten als JSON exportieren</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={() => {
+                        const rows = [
+                          ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
+                          ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
+                            id,
+                            quiz.quizMeta?.fragenIndex?.[id] ?? '',
+                            String(m.attempts),
+                            String(m.correctStreak),
+                            m.lastResult ?? '',
+                            m.firstSeen,
+                            m.lastAttempt,
+                          ]),
+                        ];
+                        const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+                        const blob = new Blob([csv], { type: 'text/csv' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `fishermans-quiz-stats-${new Date().toISOString().split('T')[0]}.csv`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      variant="outline"
+                      size="sm"
+                      aria-label="Als CSV exportieren"
+                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                    >
+                      <Download className="w-3 h-3 mr-1" aria-hidden="true" />CSV
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Statistik als CSV exportieren</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      variant="outline"
+                      size="sm"
+                      aria-label="JSON importieren"
+                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                    >
+                      <Upload className="w-3 h-3 mr-1" aria-hidden="true" />Import
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Meta-Daten aus JSON importieren</p></TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={() => { if (confirm('Alle Lerndaten löschen? Dies kann nicht rückgängig gemacht werden.')) quiz.resetMetaProgression(); }}
+                      variant="outline"
+                      size="sm"
+                      aria-label="Alle Lerndaten zurücksetzen"
+                      className="border-red-500/30 text-red-400 hover:bg-red-500/10 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                    >
+                      <Trash2 className="w-3 h-3 mr-1" aria-hidden="true" />Zurücksetzen
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Alle Lerndaten löschen</p></TooltipContent>
+                </Tooltip>
+              </div>
             </CardContent>
           </Card>
 
           {/* Bereichsauswahl */}
           <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-            <CardContent className="pt-4 sm:pt-6">
-              <h2 className="text-white font-semibold text-base sm:text-lg flex items-center gap-2 mb-4 sm:mb-5">
-                <BookOpen className="w-5 h-5 text-teal-400" aria-hidden="true" />
+            <CardContent className="py-2 px-3">
+              <h2 className="text-white font-semibold text-sm sm:text-base flex items-center gap-2 mb-3 sm:mb-4">
+                <BookOpen className="w-4 h-4 text-teal-400" aria-hidden="true" />
                 {isActive ? 'Bereiche hinzufügen' : 'Bereiche auswählen'}
               </h2>
 
               {warnung && (
-                <div className="mb-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30" role="alert" aria-live="polite">
-                  <p className="text-amber-300 text-sm mb-3">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
-                  <div className="flex gap-3">
+                <div className="mb-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30" role="alert" aria-live="polite">
+                  <p className="text-amber-300 text-xs mb-2">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
+                  <div className="flex gap-2">
                     <Button
                       onClick={() => { quiz.unterbrecheRun(); setAusgewaehlt(p => p.filter(x => x !== warnung)); setWarnung(null); }}
                       size="sm"
-                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
                     >
                       Abwählen
                     </Button>
@@ -270,7 +305,7 @@ export default function StartView({ quiz }: Props) {
                       onClick={() => setWarnung(null)}
                       size="sm"
                       variant="outline"
-                      className="border-slate-600 text-slate-300 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px]"
+                      className="border-slate-600 text-slate-300 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
                     >
                       Beibehalten
                     </Button>
@@ -278,7 +313,7 @@ export default function StartView({ quiz }: Props) {
                 </div>
               )}
 
-              <div className="space-y-2 sm:space-y-3" role="group" aria-label="Bereichsauswahl">
+              <div className="space-y-1.5 sm:space-y-2" role="group" aria-label="Bereichsauswahl">
                 {BEREICHE.map(b => {
                   const Icon = b.icon;
                   const inRun = isActive && geladeneBereiche.includes(b.id);
@@ -291,34 +326,52 @@ export default function StartView({ quiz }: Props) {
                       role="checkbox"
                       aria-checked={checked}
                       tabIndex={0}
-                      className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl cursor-pointer border transition-all min-h-[44px] focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-lg` : 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'} ${inRun ? 'ring-1 ring-teal-400/30' : ''}`}
+                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'} ${inRun ? 'ring-1 ring-teal-400/30' : ''}`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : 'border-slate-500 bg-transparent'}`} aria-hidden="true">
-                        {checked && <div className="w-2 h-2 rounded-full bg-white" />}
+                      <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : 'border-slate-500 bg-transparent'}`} aria-hidden="true">
+                        {checked && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                       </div>
-                      <div className={`p-2 rounded-lg ${b.bg}`} aria-hidden="true"><Icon className={`w-5 h-5 ${b.color}`} /></div>
+                      <div className={`p-1.5 rounded-md ${b.bg}`} aria-hidden="true"><Icon className={`w-4 h-4 ${b.color}`} /></div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="text-white font-medium text-sm sm:text-base truncate">{b.label}</p>
-                          {inRun && <span className="px-1.5 py-0.5 rounded text-[10px] bg-teal-500/20 text-teal-400 border border-teal-500/30 flex-shrink-0">AKTIV</span>}
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-white font-medium text-sm truncate">{b.label}</p>
+                          {inRun && <span className="px-1 py-0 rounded text-[9px] bg-teal-500/20 text-teal-400 border border-teal-500/30 flex-shrink-0">AKTIV</span>}
                         </div>
-                        <p className="text-slate-400 text-sm">{b.anzahl} Fragen</p>
+                        <p className="text-slate-400 text-xs">{b.anzahl} Fragen</p>
                       </div>
                     </div>
                   );
                 })}
               </div>
 
-              {fehler && <p className="text-red-400 text-sm mt-4 text-center" role="alert">{fehler}</p>}
+              {fehler && <p className="text-red-400 text-xs mt-3 text-center" role="alert">{fehler}</p>}
 
-              <Separator className="my-4 sm:my-6 bg-slate-700" />
+              {/* Nur Favoriten Toggle */}
+              <div className="flex items-center gap-2 mb-3 mt-1">
+                <button
+                  onClick={() => setNurFavoriten(p => !p)}
+                  aria-pressed={nurFavoriten}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${nurFavoriten ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-slate-300 border border-transparent'}`}
+                >
+                  <Star className={`w-3.5 h-3.5 ${nurFavoriten ? 'fill-current' : ''}`} />
+                  Nur Favoriten ({quiz.favorites.length})
+                </button>
+              </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-slate-400 text-sm">{effektivAusgewaehlt.length > 0 ? <span><span className="text-teal-400 font-bold">{gesamtFragen}</span> Fragen</span> : 'Keine Bereiche ausgewählt'}</p>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-700/50">
+                <p className="text-slate-400 text-xs">
+                  {effektivAusgewaehlt.length > 0
+                    ? <span><span className="text-teal-400 font-bold">
+                      {nurFavoriten
+                        ? quiz.favorites.filter(id => effektivAusgewaehlt.some(b => quiz.quizMeta?.fragenIndex[id] === b)).length
+                        : gesamtFragen}
+                    </span> Fragen</span>
+                    : 'Keine Bereiche ausgewählt'}
+                </p>
                 <Button
                   onClick={handleStart}
                   aria-label={isActive ? 'Ausgewählte Bereiche zum Quiz hinzufügen' : 'Quiz mit ausgewählten Bereichen starten'}
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 min-h-[44px] w-full sm:w-auto"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-5 sm:px-6 py-4 sm:py-5 text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 w-full sm:w-auto"
                 >
                   {isActive ? 'Hinzufügen' : 'Quiz starten'}
                 </Button>
@@ -326,7 +379,7 @@ export default function StartView({ quiz }: Props) {
             </CardContent>
           </Card>
 
-          <p className="text-center text-slate-500 text-xs sm:text-sm mt-6 sm:mt-8">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
+          <p className="text-center text-slate-500 text-xs mt-4 sm:mt-5">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
         </div>
       </div>
     </TooltipProvider>
@@ -337,10 +390,10 @@ export default function StartView({ quiz }: Props) {
 
 function StatBox({ icon: Icon, iconColor, value, label }: { icon: typeof Trophy; iconColor: string; value: number; label: string }) {
   return (
-    <div className="text-center p-2 sm:p-3 rounded-xl bg-slate-700/30" aria-label={`${label}: ${value}`}>
-      <Icon className={`w-5 h-5 ${iconColor} mx-auto mb-1`} aria-hidden="true" />
-      <p className="text-lg sm:text-xl font-bold text-white">{value}</p>
-      <p className="text-xs text-slate-400">{label}</p>
+    <div className="text-center p-1.5 sm:p-2 rounded-lg bg-slate-700/30" aria-label={`${label}: ${value}`}>
+      <Icon className={`w-4 h-4 ${iconColor} mx-auto mb-0.5`} aria-hidden="true" />
+      <p className="text-base sm:text-lg font-bold text-white leading-tight">{value}</p>
+      <p className="text-[10px] text-slate-400">{label}</p>
     </div>
   );
 }

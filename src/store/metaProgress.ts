@@ -72,6 +72,11 @@ export function useMetaProgress(gameMode: GameMode) {
     persist(EMPTY);
   }, [persist]);
 
+  // Importieren
+  const importData = useCallback((data: MetaProgression) => {
+    persist(data);
+  }, [persist]);
+
   // Abgeleitete Werte
   const meisterCount = Object.values(meta.fragen).filter(m => m.correctStreak >= 3).length;
   const lernCount = Object.values(meta.fragen).filter(m => m.attempts > 0 && m.correctStreak < 3).length;
@@ -88,5 +93,6 @@ export function useMetaProgress(gameMode: GameMode) {
     recordRunStart,
     reset,
     getFrageMeta,
+    importData,
   };
 }
