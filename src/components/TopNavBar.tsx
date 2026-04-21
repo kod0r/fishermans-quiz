@@ -8,7 +8,6 @@ interface Props {
   onHome: () => void;
   onResumeQuiz?: () => void;
   showResume?: boolean;
-  showResumeOnProgress?: boolean;
   onShowProgress?: () => void;
   showProgress?: boolean;
 }
@@ -18,7 +17,6 @@ export function TopNavBar({
   onHome,
   onResumeQuiz,
   showResume,
-  showResumeOnProgress,
   onShowProgress,
   showProgress,
 }: Props) {
@@ -117,26 +115,13 @@ export function TopNavBar({
             <Home className="w-4 h-4" aria-hidden="true" />
           </Button>
 
-          {/* Resume — StartView */}
+          {/* Resume Quiz */}
           {showResume && onResumeQuiz && (
             <Button
               onClick={handleResume}
               variant="ghost"
               size="icon"
-              aria-label="Quiz fortsetzen"
-              className="w-8 h-8 rounded-full bg-teal-900/80 text-teal-400 hover:bg-teal-800 hover:text-white animate-pulse focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-            >
-              <Play className="w-4 h-4" aria-hidden="true" />
-            </Button>
-          )}
-
-          {/* Resume — ProgressView */}
-          {showResumeOnProgress && onResumeQuiz && (
-            <Button
-              onClick={handleResume}
-              variant="ghost"
-              size="icon"
-              aria-label="Zurück zum Quiz"
+              aria-label={view === 'progress' ? 'Zurück zum Quiz' : 'Quiz fortsetzen'}
               className="w-8 h-8 rounded-full bg-teal-900/80 text-teal-400 hover:bg-teal-800 hover:text-white focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <Play className="w-4 h-4" aria-hidden="true" />

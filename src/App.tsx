@@ -36,7 +36,6 @@ export default function App() {
         showResume={showResumeOnStart || showResumeOnProgress}
         onShowProgress={() => quiz.goToView('progress')}
         showProgress={showProgressOnQuiz}
-        showResumeOnProgress={showResumeOnProgress}
       />
 
       {currentView === 'quiz' && isQuizActive && (

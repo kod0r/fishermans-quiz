@@ -76,17 +76,23 @@ export default function QuizView({ quiz }: Props) {
 
   // ── Arcade-Modus: Antwort-Logik ──
   const handleAnswerClick = (buchstabe: string) => {
-    if (hasAnswered || isPending) return;
+    if (hasAnswered) return;
+    // Bereits als falsch markierte Antwort ignorieren
+    if (pendingWrongAnswer === buchstabe) return;
 
     const isCorrect = buchstabe === aktuelleFrage.richtige_antwort;
 
     if (isCorrect) {
       beantworteFrage(aktuelleFrage.id, buchstabe);
+      setPendingWrongAnswer(null);
       checkBereichComplete(aktuelleFrage.id);
-    } else if (gameMode === "arcade") {
+    } else if (gameMode === "arcade" && !isPending) {
+      // Erster Fehlversuch im Arcade → "Noch ein Versuch"
       setPendingWrongAnswer(buchstabe);
     } else {
+      // Hardcore-Modus ODER zweiter Fehlversuch im Arcade
       beantworteFrage(aktuelleFrage.id, buchstabe);
+      setPendingWrongAnswer(null);
       checkBereichComplete(aktuelleFrage.id);
     }
   };
@@ -200,8 +206,7 @@ export default function QuizView({ quiz }: Props) {
                   cls = "border-teal-400 bg-teal-400/10";
                 }
 
-                const isDisabled =
-                  hasAnswered || (isPending && !isPendingSelection);
+                const isDisabled = hasAnswered || isPendingSelection;
 
                 return (
                   <button
