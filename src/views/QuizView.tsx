@@ -111,8 +111,8 @@ export default function QuizView({ quiz }: Props) {
             />
           </div>
 
-          {/* Frage — min-h groß genug für alle Fragen + Bilder */}
-          <div className="min-h-[504px] sm:min-h-[544px] md:min-h-[584px] lg:min-h-[624px] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-3.5 sm:p-5 md:p-7 mb-3.5 sm:mb-5 flex flex-col">
+          {/* Frage — FESTE HÖHE, niemals variabel */}
+          <div className="h-[42rem] sm:h-[46rem] md:h-[50rem] lg:h-[54rem] bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-3.5 sm:p-5 md:p-7 mb-3.5 sm:mb-5 flex flex-col">
             <div className="mb-3.5">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">{aktuelleFrage.bereich}</span>
               {aktuelleFrage.bild && (
