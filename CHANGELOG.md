@@ -1,4 +1,4 @@
-v0.2.1 Hotfix Latest
+v0.2.1 Hotfix
 
 Bug Fixes
 build: remove kimi-plugin-inspect-react to fix CI (548c8c5), closes #37
