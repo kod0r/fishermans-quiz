@@ -1,3 +1,19 @@
+v0.2.1 Hotfix Latest
+
+Bug Fixes
+build: remove kimi-plugin-inspect-react to fix CI (548c8c5), closes #37
+lint: disable react-hooks/set-state-in-effect (8b05a9b), closes #38
+nur padding zurückgesetzt, UI-Änderungen behalten (c8c136e), closes #54
+QuizView Box feste Höhe (7dc1725)
+QuizView Box min-h + Padding-Reduktion (d7bb9cc)
+release: generate release notes directly in CI (#36) (dd2afb0)
+storage,quizRun: resolve high-priority issues #14, #16, #17 (#25) (7fee224), closes hi#priority
+v0.2.1 hotfix — arcade retry input block + duplicate resume button (71f2abd)
+workflow: resolve all critical audit findings (13d5e98)
+Features
+implement issues #45 #47 #48 #49 (f57c8fb)
+QuizView UI cleanup (8fb4031)
+
 ## [0.2.0](https://github.com/kod0r/fishermans-quiz/compare/v0.1.2...v0.2.0) (2026-04-21)
 
 ### Features
