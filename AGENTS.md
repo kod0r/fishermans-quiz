@@ -1,136 +1,71 @@
-# Fisherman's Quiz – Projekt-Kontext
+# Fisherman's Quiz – Agent Handbook
 
-## Projektübersicht
-Interaktive Web-App zum Lernen für die **staatliche Fischerprüfung** (Bayerischer Fragenkatalog, Stand 11.03.2026). 1052 Fragen in 6 Bereichen mit Bilderkennung, Progress-Tracking und Meta-Lernsystem.
+> **Tech context, architecture, and build info:** See `.agents/MASTER.md`
+> **Coding conventions:** See `.agents/rules/`
+> **Agent personas:** See `.agents/agents/`
+> **RTK rules:** See `RTK.md`
 
-## Tech-Stack
-- **Framework:** Vite 7 + React 19 + TypeScript 5.9
-- **Styling:** Tailwind CSS 3.4 + shadcn/ui (Radix-UI Primitives)
-- **Routing:** Kein Router – View-State über `useState` (`start` | `quiz` | `progress`)
-- **State:** React-Hooks (kein Redux/Zustand)
-  - `useQuizRun` – Session-basiert (localStorage)
-  - `useMetaProgress` – Persistentes Lern-Tracking (localStorage)
-- **Icons:** lucide-react
-- **Dev-Port:** 3000 (`vite.config.ts`)
+This file contains the project-specific workflow, autonomy matrix, and Git conventions.
 
-## Projektstruktur
-```
-src/
-├── views/           StartView, QuizView, ProgressView
-├── components/      Sidebar + shadcn/ui Komponenten
-├── hooks/           useQuiz (Orchestrierung), use-mobile
-├── store/           quizRun.ts, metaProgress.ts
-├── types/           quiz.ts (Interfaces für Frage, QuizRun, MetaProgression)
-├── utils/           storage.ts (localStorage-Wrapper), quizLoader.ts (Lazy Loading)
-└── lib/             utils.ts (cn-Helfer)
-public/
-├── images/          54 Bilder für Bilderkennungsfragen (page{NNN}_img{M}.jpeg)
-└── data/
-    ├── quiz_meta.json           Meta-Daten + Fragen-Index
-    ├── bereiche/*.json          6 Bereichs-Chunks (lazy geladen)
-    └── quiz_data.json           Original (Fallback)
-```
+## Project Identity
 
-## Kernkonzepte
-
-### Frage-Struktur (`types/quiz.ts`)
-```ts
-interface Frage {
-  id: string;
-  bereich: string;          // z.B. "Biologie"
-  frage: string;
-  antworten: { A: string; B: string; C: string };
-  richtige_antwort: string; // "A" | "B" | "C"
-  bild?: boolean;
-  bild_url?: string;
-}
-```
-
-### Bereiche (6 Stück)
-| ID | Label | Fragen |
-|---|---|---|
-| Biologie | Biologie | 319 |
-| Gewässerkunde | Gewässerkunde | 129 |
-| Gewässerpflege | Gewässerpflege | 136 |
-| Fanggeräte und -methoden | Fanggeräte & Methoden | 192 |
-| Recht | Recht | 222 |
-| Bilderkennung | Bilderkennung | 54 |
-
-### Meta-Progression-System
-- **attempts:** Wie oft wurde die Frage beantwortet?
-- **correctStreak:** Wie viele richtige Antworten in Folge?
-- **Meister:** `correctStreak >= 3` → Frage als gemeistert markiert
-- **Lern-Status:** `attempts > 0 && correctStreak < 3`
-- **Stats:** totalRuns, totalQuestionsAnswered, totalCorrect, bestStreak, currentStreak
-
-### Quiz-Run (Session)
-- Bereichsauswahl → Fragen gemischt (Fisher-Yates)
-- Läuft im lokalen State + localStorage
-- Bereiche können während eines Runs hinzugefügt werden
-- Navigation zwischen Fragen (vor/zurück, Sprung)
-
-## Coding-Conventions
-- **Sprache:** Deutsch für Domain-Begriffe (`starteQuiz`, `beantworteFrage`, `meisterCount`)
-- **Imports:** `@/` Alias für `./src`
-- **Komponenten:** Default exports für Views, Named exports für UI/Hooks
-- **Tailwind:** Dunkles Theme (slate/blue/teal Farbpalette)
-- **shadcn/ui:** Standard-Patterns für Card, Button, Progress, Tooltip etc.
+Interactive web app for learning the **Bavarian state fishing exam** (Staatliche Fischerprüfung). 1,052 questions across 6 areas with image recognition, progress tracking, and meta-learning.
 
 ## Git & GitHub Workflow
 
-### 🔑 Das wichtigste Prinzip
+### 🔑 The Most Important Principle
 
-> **GitHub Issues sind die einzige Quelle der Wahrheit.**
+> **GitHub Issues are the single source of truth.**
 >
-> - ROADMAP.md hat **KEINE eigenen Nummern** — nur Links zu GitHub Issues
-> - Commits referenzieren **nur GitHub Issue-Nummern** (`#1`, `#2`, …)
-> - Nie zwei Nummerierungssysteme parallel führen
+> - ROADMAP.md has **NO own numbers** — only links to GitHub Issues
+> - Commits reference **only GitHub Issue numbers** (`#1`, `#2`, …)
+> - Never run two numbering systems in parallel
 
-### Gesamtprozess (GitHub Flow)
+### Overall Process (GitHub Flow)
 
 ```
-Idee ──→ GitHub Issue ──→ Feature Branch ──→ PR ──→ CI grün ──→ Merge ──→ Deploy
+Idea ──→ GitHub Issue ──→ Feature Branch ──→ PR ──→ CI green ──→ Merge ──→ Deploy
             ↑                                                      ↓
-            └────────────── Issue schließen ←────────────────────────┘
+            └────────────── Close issue ←──────────────────────────┘
 ```
 
-1. **Idee hat?** → Direkt [GitHub Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)
-2. **Feature Branch erstellen** → `git checkout -b feat/kurzbeschreibung`
-3. **Entwickeln** → Code schreiben, testen, bauen
-4. **Commit** → Message mit Issue-Referenz: `feat(ui): description (#42)`
-5. **Push Branch** → `git push -u origin feat/kurzbeschreibung`
-6. **Pull Request erstellen** → Auf GitHub: PR mit Issue-Link
-7. **CI muss grün sein** → Lint + Test + Build passen
-8. **Merge** → squash oder rebase merge auf `main`
-9. **Issue schließen** → In ROADMAP nach "Erledigt" verschieben
-10. **Auto-Deploy** → GitHub Pages deployt nach Merge auf `main`
+1. **Have an idea?** → Create a [GitHub Issue](https://github.com/kod0r/fishermans-quiz/issues/new) directly
+2. **Create feature branch** → `git checkout -b feat/kurzbeschreibung`
+3. **Develop** → Write code, test, build
+4. **Commit** → Message with issue reference: `feat(ui): description (#42)`
+5. **Push branch** → `git push -u origin feat/kurzbeschreibung`
+6. **Create Pull Request** → On GitHub: PR with issue link
+7. **CI must be green** → Lint + Test + Build must pass
+8. **Merge** → squash or rebase merge to `main`
+9. **Close issue** → Move to "Done" in ROADMAP
+10. **Auto-Deploy** → GitHub Pages deploys after merge to `main`
 
-### ⚠️ Wichtig: Push-Regeln
+### ⚠️ Important: Push Rules
 
-> **Nie direkt auf `main` pushen.** Jede Änderung läuft über einen Feature-Branch + PR.
+> **Never push directly to `main`.** Every change goes through a feature branch + PR.
 
-| Situation | Vorgehen |
-|-----------|----------|
-| **Normales Feature / Refactor / Docs** | Feature-Branch → Commit → Push Branch → PR → Merge |
-| **Hotfix / kritischer Bug** | Feature-Branch `hotfix/...` → PR → schnell mergen |
-| **ROADMAP / CHANGELOG nur** | Direkt auf main OK (kein Code-Änderung) |
+| Situation | Procedure |
+|-----------|-----------|
+| **Normal feature / refactor / docs** | Feature branch → Commit → Push branch → PR → Merge |
+| **Hotfix / critical bug** | Feature branch `hotfix/...` → PR → merge quickly |
+| **ROADMAP / CHANGELOG only** | Direct push to main OK (no code change) |
 
-**Warum keine direkten main-Pushes?**
-- `main` ist immer deploy-fähig (GitHub Pages)
-- CI muss grün sein bevor Code live geht
-- PR-History dokumentiert jede Entscheidung
-- Jederzeit rollback-fähig via Revert
+**Why no direct main pushes?**
+- `main` is always deployable (GitHub Pages)
+- CI must be green before code goes live
+- PR history documents every decision
+- Rollback possible at any time via Revert
 
-**Ablauf:**
-1. Kimi entwickelt auf Feature-Branch
-2. Kimi pusht Branch: `git push -u origin feat/...`
-3. Kimi erstellt PR auf GitHub (oder zeigt URL)
-4. User merged PR auf GitHub (oder sagt Kimi: "merge PR")
-5. GitHub Actions deployt automatisch nach Merge
+**Procedure:**
+1. Kimi develops on feature branch
+2. Kimi pushes branch: `git push -u origin feat/...`
+3. Kimi creates PR on GitHub (or shows URL)
+4. User merges PR on GitHub (or tells Kimi: "merge PR")
+5. GitHub Actions deploys automatically after merge
 
-### Commit-Messages: Conventional Commits
+### Commit Messages: Conventional Commits
 
-Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.org/)-Standard:
+All commits follow the [Conventional Commits](https://www.conventionalcommits.org/) standard:
 
 ```
 <type>(<scope>): <description> (#<issue-nummer>)
@@ -138,121 +73,121 @@ Alle Commits folgen dem [Conventional Commits](https://www.conventionalcommits.o
 [optional body]
 ```
 
-**Typen:**
-| Type | Wann verwenden |
-|------|----------------|
-| `feat` | Neue Features |
-| `fix` | Bugfixes |
-| `docs` | Dokumentation |
-| `style` | Formatierung, Semikolons |
-| `refactor` | Code-Refactoring |
-| `test` | Tests hinzufügen/ändern |
-| `chore` | Build, Dependencies |
+**Types:**
+| Type | When to use |
+|------|-------------|
+| `feat` | New features |
+| `fix` | Bug fixes |
+| `docs` | Documentation |
+| `style` | Formatting, semicolons |
+| `refactor` | Code refactoring |
+| `test` | Add/change tests |
+| `chore` | Build, dependencies |
 
-**Scope:** Modul/Komponente (`ui`, `quiz`, `hooks`, `data`, `store`)
+**Scope:** Module/component (`ui`, `quiz`, `hooks`, `data`, `store`)
 
-**Beispiele:**
+**Examples:**
 ```bash
 git commit -m "feat(quiz): add arcade mode with 2nd-chance dialog (#3)"
 git commit -m "fix(hooks): prevent navigation without loaded data (#1)"
 git commit -m "test(store): add settings hook tests (#4)"
 ```
 
-### Changelog — Automatisch
+### Changelog — Automatic
 
-> **Der Changelog wird vollautomatisch aus Conventional Commits generiert.**
-> Kein manuelles Pflegen nötig. Sprache/Format sind egal.
+> **The changelog is generated fully automatically from Conventional Commits.**
+> No manual maintenance needed. Language/format doesn't matter.
 
-**Wie es funktioniert:**
-- `conventional-changelog-cli` liest alle Commits seit dem letzten Tag
-- Gruppiert nach `feat` → Features, `fix` → Bug Fixes, `BREAKING` → Breaking Changes
-- Schreibt das Ergebnis in `CHANGELOG.md`
+**How it works:**
+- `conventional-changelog-cli` reads all commits since the last tag
+- Groups by `feat` → Features, `fix` → Bug Fixes, `BREAKING` → Breaking Changes
+- Writes the result to `CHANGELOG.md`
 
-**Release-Prozess (validiert & automatisiert):**
+**Release process (validated & automated):**
 
-Statt manuellem `git tag` verwenden wir `npm version` mit automatischer Validierung:
+Instead of manual `git tag`, we use `npm version` with automatic validation:
 
 ```
 npm run release -- <patch|minor|major>
 ```
 
-1. `npm run lint` → muss sauber sein
-2. `npm run test:run` → muss passen
-3. `npm run build` → muss sauber bauen
-4. `npm run changelog` → generiert Changelog
-5. `npm version` → bumped package.json + erstellt Commit + Tag
-6. `git push --follow-tags` → pusht Commit + Tag
-7. GitHub Action triggert auf Tag:
-   - Baut `dist/` → ZIP
-   - Erstellt Release mit Changelog + Asset
+1. `npm run lint` → must be clean
+2. `npm run test:run` → must pass
+3. `npm run build` → must build cleanly
+4. `npm run changelog` → generates changelog
+5. `npm version` → bumps package.json + creates commit + tag
+6. `git push --follow-tags` → pushes commit + tag
+7. GitHub Action triggers on tag:
+   - Builds `dist/` → ZIP
+   - Creates release with changelog + asset
 
-**Wichtig:** Nie mehr manuell `git tag` erstellen — immer `npm run release` verwenden.
+**Important:** Never create `git tag` manually — always use `npm run release`.
 
-**SemVer-Entscheidung:**
-| Was passiert | Befehl |
-|-------------|--------|
+**SemVer decision:**
+| What happens | Command |
+|-------------|---------|
 | Bugfix / Patch | `npm run release -- patch` (0.1.1 → 0.1.2) |
-| Neues Feature | `npm run release -- minor` (0.1.1 → 0.2.0) |
-| Breaking Change | `npm run release -- major` (0.1.1 → 1.0.0) |
+| New feature | `npm run release -- minor` (0.1.1 → 0.2.0) |
+| Breaking change | `npm run release -- major` (0.1.1 → 1.0.0) |
 
-### ROADMAP.md — Regeln
+### ROADMAP.md — Rules
 
-- **Keine eigenen IDs** — nur GitHub Issue-Links (`[#3](...)`)
-- **Drei Sektionen:** "In Arbeit", "Geplant", "Erledigt"
-- **Keine Details** — die gehören ins GitHub Issue
-- **Wöchentlich reviewen:** Erledigtes nach 2–4 Wochen archivieren
+- **No own IDs** — only GitHub issue links (`[#3](...)`)
+- **Three sections:** "In Progress", "Planned", "Done"
+- **No details** — those belong in the GitHub issue
+- **Review weekly:** Archive done items after 2–4 weeks
 
-### GitHub Issues — Regeln
+### GitHub Issues — Rules
 
-- **Erstellen:** [github.com/kod0r/fishermans-quiz/issues/new](https://github.com/kod0r/fishermans-quiz/issues/new)
+- **Create:** [github.com/kod0r/fishermans-quiz/issues/new](https://github.com/kod0r/fishermans-quiz/issues/new)
 - **Labels:** `enhancement`, `bug`, `docs`
-- **Titel-Format:** `<type>(<scope>): Kurzbeschreibung`
-- **NIE wiederverwenden** — wenn ein Issue obsolet wird, schließen und neues anlegen
+- **Title format:** `<type>(<scope>): short description`
+- **NEVER reuse** — when an issue becomes obsolete, close it and create a new one
 
 ### Branching — Standard Workflow
 
-**Jede Änderung läuft über einen Feature-Branch:**
+**Every change goes through a feature branch:**
 
 ```bash
-# 1. Branch erstellen (ausgehend von aktuellem main)
+# 1. Create branch (from current main)
 git checkout -b feat/responsive-design
 
-# 2. Entwickeln & commiten
+# 2. Develop & commit
 git commit -m "feat(ui): add responsive breakpoints (#1)"
 
-# 3. Branch pushen
+# 3. Push branch
 git push -u origin feat/responsive-design
 
-# 4. Auf GitHub: Pull Request erstellen
-# 5. CI muss grün sein
-# 6. Merge auf GitHub (oder via gh CLI)
+# 4. On GitHub: Create Pull Request
+# 5. CI must be green
+# 6. Merge on GitHub (or via gh CLI)
 ```
 
-**Branch-Namen:**
-| Präfix | Verwendung |
-|--------|-----------|
-| `feat/` | Neues Feature |
+**Branch names:**
+| Prefix | Usage |
+|--------|-------|
+| `feat/` | New feature |
 | `fix/` | Bugfix |
-| `hotfix/` | Kritischer Bug (schneller Merge) |
-| `docs/` | Dokumentation |
-| `refactor/` | Code-Refactoring |
+| `hotfix/` | Critical bug (quick merge) |
+| `docs/` | Documentation |
+| `refactor/` | Code refactoring |
 | `test/` | Tests |
-| `chore/` | Dependencies, Build, CI |
+| `chore/` | Dependencies, build, CI |
 
-**Beispiele:**
+**Examples:**
 ```bash
 git checkout -b feat/arcade-mode
 git checkout -b fix/quiz-loader-validation
 git checkout -b hotfix/vite-security-patch
 ```
 
-## Wichtige Dateien
-- `src/hooks/useQuiz.ts` – Haupt-Hook, orchestriert Run + Meta + Datenladung
-- `src/store/quizRun.ts` – Session-Logik (Start, Antworten, Navigation)
-- `src/store/metaProgress.ts` – Lern-Tracking über Sessions hinweg
-- `src/utils/quizLoader.ts` – Lazy Loading der Quiz-Daten
-- `ROADMAP.md` – Aktuelle Planung (wird in GitHub Issues überführt)
-- `CHANGELOG.md` – Versionshistorie
+## Important Files
+- `src/hooks/useQuiz.ts` – Main hook, orchestrates run + meta + data loading
+- `src/store/quizRun.ts` – Session logic (start, answers, navigation)
+- `src/store/metaProgress.ts` – Learning tracking across sessions
+- `src/utils/quizLoader.ts` – Lazy loading of quiz data
+- `ROADMAP.md` – Current planning (being migrated to GitHub Issues)
+- `CHANGELOG.md` – Version history
 
 ## Scripts
 ```bash
@@ -261,97 +196,97 @@ npm run build    # tsc + vite build → dist/
 npm run preview  # dist/ preview
 ```
 
-## 🤖 Kimi Auto-Mode & Autonomie-Matrix
+## 🤖 Kimi Auto-Mode & Autonomy Matrix
 
-> **Ziel:** Kimi soll so viel wie möglich selbstständig erledigen. Der User gibt nur noch Richtung vor — Umsetzung läuft autonom.
+> **Goal:** Kimi should handle as much as possible independently. The user only gives direction — implementation runs autonomously.
 
-### Autonomie-Levels
+### Autonomy Levels
 
-| Level | Aktion | Kimi darf... | User-Input nötig |
-|-------|--------|--------------|-----------------|
-| **A1** | Lint/Format fixes | Sofort fixen & commiten | ❌ Nein |
-| **A1** | Test-Updates bei Refactor | Anpassen & commiten | ❌ Nein |
-| **A1** | ROADMAP.md Sync (/feierabend) | Automatisch abgleichen & commiten | ❌ Nein |
-| **A1** | Dependabot PRs (Patch/Minor) | Reviewen, mergen, ROADMAP updaten | ❌ Nein |
-| **A1** | Changelog-Generation | Vollautomatisch in CI | ❌ Nein |
-| **A2** | Dependency Upgrades (Major) | Plan erstellen, Issue kommentieren | ⚠️ Nur "Go" für Umsetzung |
-| **A2** | Feature-Branches | Erstellen, entwickeln, PR erstellen | ⚠️ Nur "Merge" oder "Ändern" |
-| **A2** | Bugfix-Hotfixes | Branch, Fix, PR — dann User pingen | ⚠️ Merge-Approval |
-| **A3** | Breaking Changes (API, Architektur) | Plan erstellen, NICHT umsetzen | ✅ User-Approval nötig |
-| **A3** | Security-Critical Changes | Plan erstellen, NICHT umsetzen | ✅ User-Approval nötig |
-| **A3** | Release (`npm run release`) | Vorbereiten, User pingen | ✅ User führt aus |
+| Level | Action | Kimi may... | User input needed |
+|-------|--------|-------------|-------------------|
+| **A1** | Lint/format fixes | Fix immediately & commit | ❌ No |
+| **A1** | Test updates during refactor | Adjust & commit | ❌ No |
+| **A1** | ROADMAP.md sync (/feierabend) | Sync automatically & commit | ❌ No |
+| **A1** | Dependabot PRs (patch/minor) | Review, merge, update ROADMAP | ❌ No |
+| **A1** | Changelog generation | Fully automatic in CI | ❌ No |
+| **A2** | Dependency upgrades (major) | Create plan, comment on issue | ⚠️ Only "Go" for implementation |
+| **A2** | Feature branches | Create, develop, create PR | ⚠️ Only "Merge" or "Change" |
+| **A2** | Bugfix hotfixes | Branch, fix, PR — then ping user | ⚠️ Merge approval |
+| **A3** | Breaking changes (API, architecture) | Create plan, DO NOT implement | ✅ User approval needed |
+| **A3** | Security-critical changes | Create plan, DO NOT implement | ✅ User approval needed |
+| **A3** | Release (`npm run release`) | Prepare, ping user | ✅ User executes |
 
-### Standard-Workflow für Dependency-Upgrades
+### Standard Workflow for Dependency Upgrades
 
 ```
-Dependabot PR erkannt
+Dependabot PR detected
         ↓
 ┌─────────────────┐
-│ Patch oder Minor?│──Yes──→ Auto-review → CI grün → Auto-merge → ROADMAP sync
+│ Patch or Minor? │──Yes──→ Auto-review → CI green → Auto-merge → ROADMAP sync
 └─────────────────┘
         ↓ No (Major)
 ┌─────────────────┐
-│ Peer-Dep Konflikt?│──Yes──→ Issue erstellen mit Plan → User wartet auf "Go"
+│ Peer-dep conflict? │──Yes──→ Create issue with plan → User waits for "Go"
 └─────────────────┘
         ↓ No
 ┌─────────────────┐
-│ Breaking Changes? │──Yes──→ Evaluations-Branch → Test-Daten sammeln → User entscheidet
+│ Breaking changes? │──Yes──→ Evaluation branch → Collect test data → User decides
 └─────────────────┘
         ↓ No
-Auto-review → CI grün → Auto-merge
+Auto-review → CI green → Auto-merge
 ```
 
-### Auto-Merge-Regeln für Dependabot
+### Auto-Merge Rules for Dependabot
 
-Kimi darf SOFORT mergen wenn:
-- ✅ Patch-Version (z.B. 1.2.3 → 1.2.4)
-- ✅ Minor-Version (z.B. 1.2.3 → 1.3.0) OHNE Peer-Dep-Änderungen
-- ✅ CI ist grün (lint + test + build)
-- ✅ Nur package.json + package-lock.json geändert
+Kimi may merge IMMEDIATELY when:
+- ✅ Patch version (e.g. 1.2.3 → 1.2.4)
+- ✅ Minor version (e.g. 1.2.3 → 1.3.0) WITHOUT peer-dep changes
+- ✅ CI is green (lint + test + build)
+- ✅ Only package.json + package-lock.json changed
 
-Kimi darf NICHT mergen wenn:
-- ❌ Major-Version (z.B. 1.x → 2.x)
-- ❌ Peer-Dependency-Conflict
-- ❌ Neue Sub-Dependencies mit >10KB Bundle-Impact
-- ❌ CI rot
-- ❌ Source-Code-Dateien außerhalb von package.json geändert
+Kimi may NOT merge when:
+- ❌ Major version (e.g. 1.x → 2.x)
+- ❌ Peer-dependency conflict
+- ❌ New sub-dependencies with >10KB bundle impact
+- ❌ CI red
+- ❌ Source code files outside package.json changed
 
-### Feature-Entwicklung Auto-Workflow
+### Feature Development Auto-Workflow
 
 ```
-User: "Implementiere X"
+User: "Implement X"
         ↓
-Kimi: Issue prüfen / erstellen → Branch `feat/x` → Entwickeln
+Kimi: Check / create issue → Branch `feat/x` → Develop
         ↓
-Kimi: Testen (npm run test:run) → Lint (npm run lint) → Build (npm run build)
+Kimi: Test (npm run test:run) → Lint (npm run lint) → Build (npm run build)
         ↓
-Kimi: PR erstellen mit Beschreibung + Test-Ergebnissen
+Kimi: Create PR with description + test results
         ↓
-User: "Merge" oder "Änder Y"
+User: "Merge" or "Change Y"
         ↓
-Kimi: Merge (oder Ändern → Re-PR)
+Kimi: Merge (or change → re-PR)
         ↓
-Auto: GitHub Pages Deploy + ROADMAP sync
+Auto: GitHub Pages deploy + ROADMAP sync
 ```
 
-### Kimi-interne Checkliste vor jedem PR
+### Kimi Internal Checklist Before Every PR
 
-- [ ] `npm run lint` sauber
-- [ ] `npm run test:run` alle 59+ Tests grün
-- [ ] `npm run build` sauber (tsc + vite)
-- [ ] Keine unbeabsichtigten Dateien im Diff
-- [ ] Commit-Message folgt Conventional Commits
-- [ ] Issue referenziert in Commit und PR
+- [ ] `npm run lint` clean
+- [ ] `npm run test:run` all 59+ tests green
+- [ ] `npm run build` clean (tsc + vite)
+- [ ] No unintended files in diff
+- [ ] Commit message follows Conventional Commits
+- [ ] Issue referenced in commit and PR
 
-### Wann Kimi den User PINGEN muss
+### When Kimi Must Ping the User
 
-- Vor jedem `npm run release` (Version-Bump ist final)
-- Bei Major Dependency-Upgrades (vor Umsetzung)
-- Wenn CI rot bleibt nach 2 Fix-Versuchen
-- Bei Architektur-Änderungen (State-Management, Routing, etc.)
-- Wenn ein Issue >3 Stunden Aufwand braucht
+- Before every `npm run release` (version bump is final)
+- For major dependency upgrades (before implementation)
+- When CI stays red after 2 fix attempts
+- For architecture changes (state management, routing, etc.)
+- When an issue requires >3 hours of effort
 
-## Bekannte Einschränkungen
-- Kein Backend – alles client-seitig
-- Bilderkennungsfragen referenzieren lokale JPEGs in `public/images/`
-- Kein echter Router – View-Switching über State
+## Known Limitations
+- No backend – everything client-side
+- Image recognition questions reference local JPEGs in `public/images/`
+- No real router – view switching via state

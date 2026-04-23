@@ -1,0 +1,37 @@
+{
+  "defaultMode": "default",
+  "permissions": {
+    "allow": [
+      "Bash(rtk npm run *)",
+      "Bash(rtk git *)",
+      "Bash(rtk ls *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk read *)",
+      "Bash(rtk summary *)",
+      "Bash(rtk err *)",
+      "Bash(rtk test *)",
+      "Bash(rtk npx *)",
+      "Bash(rtk pnpm *)",
+      "Bash(rtk find *)",
+      "Bash(rtk wc *)",
+      "Bash(rtk diff *)",
+      "Bash(rtk json *)"
+    ],
+    "deny": []
+  },
+  "env": {},
+  "autoMemoryEnabled": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/workspaces/kod0r/00_coding/webdev/02_projects/feeesh/.agents/hooks/protect-public-data.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

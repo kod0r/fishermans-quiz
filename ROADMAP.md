@@ -1,9 +1,9 @@
 # ROADMAP
 
-> **Lebendes Dokument:** Übersicht über geplante, laufende und erledigte Arbeit.
+> **Living Document:** Overview of planned, ongoing, and completed work.
 >
-> **WICHTIG:** GitHub Issues sind die einzige Quelle der Wahrheit für Tracking.
-> Diese ROADMAP ist eine lesbare Übersicht — keine separate Nummerierung.
+> **IMPORTANT:** GitHub Issues are the single source of truth for tracking.
+> This ROADMAP is a readable overview — no separate numbering.
 
 ---
 
@@ -11,30 +11,30 @@
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Idee      │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
-│  (ROADMAP)  │     │ (Tracking)   │     │ (Umsetzung) │     │ (Release)   │
+│   Idea      │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
+│  (ROADMAP)  │     │ (Tracking)   │     │ (Implementation) │     │ (Release)   │
 └─────────────┘     └──────────────┘     └─────────────┘     └─────────────┘
 ```
 
-### Regeln
+### Rules
 
-1. **Jedes Feature beginnt als GitHub Issue** — nicht als ROADMAP-Eintrag mit eigener Nummer
-2. **ROADMAP hat KEINE eigenen IDs** — nur Links zu GitHub Issues (`#1`, `#2`, …)
-3. **Commits referenzieren GitHub Issues** — `feat(ui): beschreibung (#42)`
-4. **Wenn ein Issue erledigt ist:** In ROADMAP nach "Erledigt" verschieben + Datum
-5. **Wenn ein Issue obsolet wird:** Auf GitHub schließen + aus ROADMAP entfernen
-
----
-
-## 🚧 In Arbeit
-
-_Keine aktiven Tickets._
+1. **Every feature starts as a GitHub Issue** — not as a ROADMAP entry with its own number
+2. **ROADMAP has NO own IDs** — only links to GitHub Issues (`#1`, `#2`, …)
+3. **Commits reference GitHub Issues** — `feat(ui): description (#42)`
+4. **When an issue is completed:** Move to "Done" in ROADMAP + date
+5. **When an issue becomes obsolete:** Close on GitHub + remove from ROADMAP
 
 ---
 
-## 📋 Geplant (Backlog)
+## 🚧 In Progress
 
-| Thema | GitHub Issue | Priorität |
+_No active tickets._
+
+---
+
+## 📋 Planned (Backlog)
+
+| Topic | GitHub Issue | Priority |
 |-------|-------------|-----------|
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
@@ -42,13 +42,13 @@ _Keine aktiven Tickets._
 | Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | low |
 | Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | medium |
 
-**→ [Neues Issue anlegen](https://github.com/kod0r/fishermans-quiz/issues/new)**
+**→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
 ---
 
-## ✅ Erledigt
+## ✅ Done
 
-| Thema | GitHub Issue | Datum |
+| Topic | GitHub Issue | Date |
 |-------|-------------|-------|
 | Upgrade zu Vite 8 + @vitejs/plugin-react 6 | [#37](https://github.com/kod0r/fishermans-quiz/issues/37) | 2026-04-21 |
 | Upgrade zu ESLint 10 + @eslint/js 10 | [#38](https://github.com/kod0r/fishermans-quiz/issues/38) | 2026-04-21 |
@@ -78,11 +78,11 @@ _Keine aktiven Tickets._
 | Kimi-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
 | ROADMAP.md Regeln konsolidiert | [#20](https://github.com/kod0r/fishermans-quiz/issues/20) | 2026-04-20 |
 
-### Erledigt (vor GitHub-Issue-System)
+### Done (before GitHub Issue system)
 
-> Diese Arbeiten wurden erledigt bevor das Projekt auf GitHub-Issues als "single source of truth" umgestellt wurde. Sie sind hier zur Vollständigkeit dokumentiert.
+> These tasks were completed before the project switched to GitHub Issues as the "single source of truth". They are documented here for completeness.
 
-| Thema | Datum |
+| Topic | Date |
 |-------|-------|
 | Projekt-Initialisierung | 2026-04-20 |
 | AGENTS.md & Conventions | 2026-04-20 |
@@ -94,9 +94,9 @@ _Keine aktiven Tickets._
 
 ---
 
-## Regeln für dieses Dokument
+## Rules for this document
 
-- **NIE eigene Nummern vergeben** — immer GitHub Issue-Nummern verwenden
-- **Wöchentlich reviewen:** Was wurde geschafft? Was ist neu?
-- **Nicht duplizieren:** Details gehören ins GitHub Issue, nicht in die ROADMAP
-- **Sprint-Grenzen:** Erledigte Tickets nach 2–4 Wochen in "Archiv" verschieben
+- **NEVER assign own numbers** — always use GitHub Issue numbers
+- **Review weekly:** What was accomplished? What is new?
+- **Do not duplicate:** Details belong in the GitHub Issue, not in the ROADMAP
+- **Sprint boundaries:** Move completed tickets to "Archive" after 2–4 weeks

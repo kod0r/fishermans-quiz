@@ -2,12 +2,12 @@
 
 ## 1. Project Overview
 
-Fisherman's Quiz ist eine browserbasierte Web-App zur Vorbereitung auf die staatliche Fischerprüfung (Bayerischer Fragenkatalog, Stand: 11.03.2026). Die App zeigt Multiple-Choice-Fragen aus sechs Themenbereichen an, verfolgt den Lernfortschritt über Sessions hinweg und bietet zwei Spielmodi (Arcade / Hardcore). Es gibt kein Backend — die App ist ein reiner Static-Site-Client mit JSON-Daten und localStorage-Persistenz.
+Fisherman's Quiz is a browser-based web app for preparing for the state fishing exam (Bavarian question catalog, as of: 11.03.2026). The app displays multiple-choice questions from six subject areas, tracks learning progress across sessions, and offers two game modes (Arcade / Hardcore). There is no backend — the app is a pure static-site client with JSON data and localStorage persistence.
 
 ## 2. Tech Stack & Versions
 
-| Layer | Technologie | Version (repo-copy) | Version (working copy) |
-|-------|-------------|---------------------|------------------------|
+| Layer | Technology | Version (repo-copy) | Version (working copy) |
+|-------|------------|---------------------|------------------------|
 | Framework | React | ^19.2.0 | ^19.2.0 |
 | Bundler | Vite | ^7.2.4 | ^8.0.9 |
 | React-Plugin | @vitejs/plugin-react | ^5.1.1 | ^6.0.1 |
@@ -27,45 +27,45 @@ Fisherman's Quiz ist eine browserbasierte Web-App zur Vorbereitung auf die staat
 | Toasts | sonner | (latest) | (latest) |
 | Drawer | vaul | (latest) | (latest) |
 
-**Wichtiger Hinweis:** `kimi-plugin-inspect-react@1.0.3` hat `peer vite@"^7.2.0"` — das blockiert ein Upgrade auf Vite 8. In der Working-Copy (alle PRs ab #43) wurde das Plugin entfernt, ESLint auf v10 und Vite auf v8 gehoben.
+**Important Note:** `kimi-plugin-inspect-react@1.0.3` has `peer vite@"^7.2.0"` — this blocks an upgrade to Vite 8. In the working copy (all PRs from #43 onward) the plugin was removed, ESLint bumped to v10 and Vite bumped to v8.
 
 ## 3. Architecture & Design Patterns
 
-- **Single-Page-App (SPA)** mit `BrowserRouter` — der Router wird aktuell nur als Wrapper genutzt, interne Navigation läuft über einen eigenen View-State (`AppView = 'start' | 'quiz' | 'progress'`).
-- **Custom-Hook-Architektur** statt externer State-Libraries (kein Redux, kein Zustand). State lebt in drei Store-Hooks (`useQuizRun`, `useMetaProgress`, `useSettings`), die jeweils `localStorage` syncen.
-- **Orchestrator-Pattern:** `useQuiz` in `src/hooks/useQuiz.ts` agiert als zentraler Controller. Er lädt Metadaten, koordiniert Lazy-Loading der Fragen, synchronisiert Run + Meta bei Antworten und exponiert ein einheitliches `QuizContext`.
-- **Staged Loading:** Beim App-Start wird zuerst nur `quiz_meta.json` (~360 Bytes) geladen → App wird sofort nutzbar. Alle Fragen (~420 KB) werden danach im Hintergrund nachgeladen. Falls der User schneller ist, wird on-demand geladen.
-- **Runtime-Validierung** aller geladenen JSON-Daten via Zod-Schemas (`FrageSchema`, `QuizMetaSchema`, `BereichDataSchema`).
-- **Dunkles Theme als Default:** `:root` und `.dark` verwenden identische dunkle HSL-Werte. Das ist beabsichtigt — es gibt keinen Light-Mode.
+- **Single-Page-App (SPA)** with `BrowserRouter` — the router is currently only used as a wrapper, internal navigation runs via a custom view state (`AppView = 'start' | 'quiz' | 'progress'`).
+- **Custom-Hook architecture** instead of external state libraries (no Redux, no Zustand). State lives in three store hooks (`useQuizRun`, `useMetaProgress`, `useSettings`), each syncing to `localStorage`.
+- **Orchestrator-Pattern:** `useQuiz` in `src/hooks/useQuiz.ts` acts as a central controller. It loads metadata, coordinates lazy-loading of questions, synchronizes Run + Meta on answers, and exposes a unified `QuizContext`.
+- **Staged Loading:** At app startup, only `quiz_meta.json` (~360 bytes) is loaded first → the app becomes usable immediately. All questions (~420 KB) are then loaded in the background. If the user is faster, on-demand loading occurs.
+- **Runtime validation** of all loaded JSON data via Zod schemas (`FrageSchema`, `QuizMetaSchema`, `BereichDataSchema`).
+- **Dark theme as default:** `:root` and `.dark` use identical dark HSL values. This is intentional — there is no light mode.
 
 ## 4. Key Features & Logic
 
-### Spielmodi
-| Modus | Kennzeichen | Verhalten bei falscher Antwort |
-|-------|-------------|-------------------------------|
-| **Arcade** | Amber-Badge | Sofort-Feedback, "Sicher?"-Dialog (2nd-Chance). Erst bei Bestätigung wird die Antwort als falsch gespeichert. |
-| **Hardcore** | Red-Badge | Antwort wird sofort gespeichert (kein Zurück, keine 2nd-Chance). |
+### Game Modes
+| Mode | Badge | Behavior on wrong answer |
+|------|-------|--------------------------|
+| **Arcade** | Amber-Badge | Instant feedback, "Sure?"-dialog (2nd chance). Only upon confirmation is the answer saved as wrong. |
+| **Hardcore** | Red-Badge | Answer is saved immediately (no going back, no 2nd chance). |
 
 ### Quiz-Run (Session)
-- Fragen werden beim Start per **Fisher-Yates-Shuffle** gemischt.
-- Aktive Runs können um neue Bereiche erweitert werden (ohne bestehende Fragen zu verlieren).
-- Navigation: Vorwärts, Rückwärts, Schnellnavigation (Fragen-Grid).
-- Unterbrechung möglich — der Run bleibt in `localStorage` erhalten und kann fortgesetzt werden.
-- Daten-Inkonsistenz-Check (Issue #17): Wenn Fragen aus dem Katalog entfernt werden, werden sie automatisch aus dem Run bereinigt.
+- Questions are shuffled at startup using **Fisher-Yates shuffle**.
+- Active runs can be extended with new areas (without losing existing questions).
+- Navigation: Forward, Backward, Quick Navigation (question grid).
+- Interruption possible — the run persists in `localStorage` and can be resumed.
+- Data inconsistency check (Issue #17): When questions are removed from the catalog, they are automatically cleaned from the run.
 
 ### Meta-Progression (Persistent)
-- Pro Frage: `attempts`, `correctStreak`, `lastResult`, `firstSeen`, `lastAttempt`
-- **"Gemeistert"** = `correctStreak >= 3`
-- **"In Lernung"** = `attempts > 0 && correctStreak < 3`
-- Globale Stats: `totalRuns`, `totalQuestionsAnswered`, `totalCorrect`, `totalIncorrect`, `bestStreak`, `currentStreak`
-- Storage ist **modus-separiert** (arcade/hardcore haben getrennte Keys).
+- Per question: `attempts`, `correctStreak`, `lastResult`, `firstSeen`, `lastAttempt`
+- **"Mastered"** = `correctStreak >= 3`
+- **"Learning"** = `attempts > 0 && correctStreak < 3`
+- Global stats: `totalRuns`, `totalQuestionsAnswered`, `totalCorrect`, `totalIncorrect`, `bestStreak`, `currentStreak`
+- Storage is **mode-separated** (arcade/hardcore have separate keys).
 
 ### Legacy-Migration
-- Beim ersten App-Start werden alte `fmq:run:v2` / `fmq:meta:v2` Keys in Arcade-Mode-Keys migriert.
+- On first app start, old `fmq:run:v2` / `fmq:meta:v2` keys are migrated to arcade-mode keys.
 
 ## 5. State Management
 
-### Store-Hooks (direkt in `localStorage`)
+### Store-Hooks (directly in `localStorage`)
 
 ```
 useQuizRun(quizData, gameMode)
@@ -87,21 +87,21 @@ useSettings()
 ```
 
 ### Orchestrator: `useQuiz`
-- Bündelt alle drei Stores + View-State + Lazy-Loading-Logik.
-- Exponiert `QuizContext` als ReturnType — alle Views bekommen ein einziges Objekt.
-- `beantworteFrage` schreibt **synchron** in Run und Meta.
+- Bundles all three stores + view state + lazy-loading logic.
+- Exposes `QuizContext` as ReturnType — all views receive a single object.
+- `beantworteFrage` writes **synchronously** to Run and Meta.
 
 ## 6. Routing & Navigation
 
-| Interner View | Bedingung | Komponente |
-|---------------|-----------|------------|
-| `start` | Default / kein aktiver Run | `StartView` |
+| Internal View | Condition | Component |
+|---------------|-----------|-----------|
+| `start` | Default / no active run | `StartView` |
 | `quiz` | `isActive && currentView === 'quiz'` | `QuizView` |
 | `progress` | `isActive && currentView === 'progress'` | `ProgressView` |
 
-- **Kein URL-Routing** für Views — die `BrowserRouter`-Wrappung ist historisch/forward-compatibel, wird aber aktuell nicht für View-Routing genutzt.
-- Navigation erfolgt via `goToView('start' | 'quiz' | 'progress')`.
-- Sidebar (fixed links oben) zeigt bedingte Buttons: Home (immer), Resume (nur auf Start wenn aktiv), Progress (nur auf Quiz wenn aktiv).
+- **No URL routing** for views — the `BrowserRouter` wrapping is historical/forward-compatible, but is currently not used for view routing.
+- Navigation happens via `goToView('start' | 'quiz' | 'progress')`.
+- Sidebar (fixed links at top) shows conditional buttons: Home (always), Resume (only on start when active), Progress (only on quiz when active).
 
 ## 7. Component Hierarchy
 
@@ -139,13 +139,13 @@ BrowserRouter
 
 ## 8. Data Flow & API/Storage
 
-### Datenquellen
-| Quelle | Format | Größe | Ladestrategie |
-|--------|--------|-------|---------------|
-| `data/quiz_meta.json` | QuizMeta | ~360 B | Sofort (App-Start) |
-| `data/bereiche/*.json` | BereichData[] | ~420 KB gesamt | Lazy / Background |
+### Data Sources
+| Source | Format | Size | Loading Strategy |
+|--------|--------|------|------------------|
+| `data/quiz_meta.json` | QuizMeta | ~360 B | Immediately (app startup) |
+| `data/bereiche/*.json` | BereichData[] | ~420 KB total | Lazy / Background |
 
-### Bereichs-Dateien
+### Area Files
 ```
 data/bereiche/
 ├── biologie.json
@@ -165,9 +165,9 @@ fmq:meta:arcade:v2       → MetaProgression (Arcade)
 fmq:meta:hardcore:v2     → MetaProgression (Hardcore)
 ```
 
-### Datenfluss beim Beantworten
+### Data Flow When Answering
 ```
-User klickt Antwort
+User clicks answer
     → QuizView.handleAnswerClick
     → useQuiz.beantworteFrage
         → useQuizRun.beantworteFrage (setState + localStorage)
@@ -177,23 +177,23 @@ User klickt Antwort
 
 ## 9. Testing Strategy
 
-| Testdatei | Was wird getestet |
-|-----------|-------------------|
-| `src/test/useQuiz.test.ts` | Orchestrator-Hook: Laden, Starten, Beantworten, View-Wechsel |
-| `src/test/quizRun.test.ts` | useQuizRun: Starten, Erweitern, Navigieren, Unterbrechen, Inkonsistenzbereinigung |
-| `src/test/metaProgress.test.ts` | useMetaProgress: recordAnswer, Streak-Logik, Reset, meisterCount/lernCount |
-| `src/test/settings.test.ts` | useSettings: Laden, Modus-Wechsel, Legacy-Migration |
-| `src/test/storage.test.ts` | Storage-Utils: loadJson, saveJson, Fehlerbehandlung, QuotaExceeded |
-| `src/test/quizLoader.test.ts` | quizLoader: Meta-Laden, Bereichs-Laden, Cache-Verhalten, Zod-Validierung |
+| Test File | What is tested |
+|-----------|----------------|
+| `src/test/useQuiz.test.ts` | Orchestrator-Hook: loading, starting, answering, view switching |
+| `src/test/quizRun.test.ts` | useQuizRun: starting, extending, navigating, interrupting, inconsistency cleanup |
+| `src/test/metaProgress.test.ts` | useMetaProgress: recordAnswer, streak logic, reset, meisterCount/lernCount |
+| `src/test/settings.test.ts` | useSettings: loading, mode switching, legacy migration |
+| `src/test/storage.test.ts` | Storage-Utils: loadJson, saveJson, error handling, QuotaExceeded |
+| `src/test/quizLoader.test.ts` | quizLoader: meta loading, area loading, cache behavior, Zod validation |
 
-### Test-Setup (`src/test/setup.ts`)
+### Test Setup (`src/test/setup.ts`)
 - `@testing-library/jest-dom` matchers
 - `localStorage` Mock (In-Memory-Store)
 - `fetch` Mock (URL → Response-Mapping via `fetchMock`)
 - `afterEach`: cleanup + localStorage.clear + fetchMock.clear
 
-### Vitest-Konfiguration
-- Via `vite.config.ts` (keine separate `vitest.config.ts`)
+### Vitest Configuration
+- Via `vite.config.ts` (no separate `vitest.config.ts`)
 - `test.environment = 'jsdom'`
 - `test.globals = true`
 - `test.setupFiles = ['./src/test/setup.ts']`
@@ -213,17 +213,17 @@ User klickt Antwort
 ```
 
 ### CI/CD (GitHub Actions)
-- **Trigger:** Push auf `main`, PRs
+- **Trigger:** Push to `main`, PRs
 - **Jobs:** lint → test → build → deploy (GitHub Pages)
-- **Base-URL:** `base: './'` in `vite.config.ts` (notwendig für GitHub Pages)
+- **Base-URL:** `base: './'` in `vite.config.ts` (required for GitHub Pages)
 
-### Bekannte Build-Probleme & Fixes
-| Problem | Ursache | Fix |
-|---------|---------|-----|
-| Vite 8 Peer-Dep-Fehler | `kimi-plugin-inspect-react` erfordert Vite 7 | Plugin entfernen (PR #43) |
-| CSS-Minify-Fehler | lightningcss (Vite 8 Default) kann Tailwind-Nested-Vars nicht parsen | `build.cssMinify: 'esbuild'` in Vite 8 Config |
-| ESLint `set-state-in-effect` | Neue Regel in eslint-plugin-react-hooks 7.1.1 | `'react-hooks/set-state-in-effect': 'off'` |
+### Known Build Issues & Fixes
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| Vite 8 Peer-Dep Error | `kimi-plugin-inspect-react` requires Vite 7 | Remove plugin (PR #43) |
+| CSS Minify Error | lightningcss (Vite 8 default) cannot parse Tailwind nested vars | `build.cssMinify: 'esbuild'` in Vite 8 Config |
+| ESLint `set-state-in-effect` | New rule in eslint-plugin-react-hooks 7.1.1 | `'react-hooks/set-state-in-effect': 'off'` |
 
 ---
 
-*Letzte Aktualisierung: 2026-04-20*
+*Last Updated: 2026-04-20*
