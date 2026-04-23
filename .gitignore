@@ -39,3 +39,9 @@ coverage/
 # Misc
 *.log
 *.zip
+
+# Internal workflow docs — do not commit to public repo
+.agents/
+AGENTS.md
+BRAIN.md
+RESEARCH.md
