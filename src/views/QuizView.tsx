@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -60,19 +60,24 @@ export default function QuizView({ quiz }: Props) {
     }
   }, [aktiveFragen, antworten]);
 
-  if (!aktuelleFrage) return null;
-
-  const userAntwort = antworten[aktuelleFrage.id];
+  const userAntwort = antworten[aktuelleFrage?.id || ''];
   const hasAnswered = userAntwort !== undefined;
   const isPending = pendingWrongAnswer !== null;
   const fortschritt = ((aktuellerIndex + 1) / aktiveFragen.length) * 100;
-  const korrekt = aktiveFragen.filter(
-    (f) => antworten[f.id] === f.richtige_antwort,
-  ).length;
-  const falsch = aktiveFragen.filter(
-    (f) => antworten[f.id] && antworten[f.id] !== f.richtige_antwort,
-  ).length;
-  const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
+  const korrekt = useMemo(() =>
+    aktiveFragen.filter((f) => antworten[f.id] === f.richtige_antwort).length,
+    [aktiveFragen, antworten]
+  );
+  const falsch = useMemo(() =>
+    aktiveFragen.filter((f) => antworten[f.id] && antworten[f.id] !== f.richtige_antwort).length,
+    [aktiveFragen, antworten]
+  );
+  const offen = useMemo(() =>
+    aktiveFragen.filter((f) => !antworten[f.id]).length,
+    [aktiveFragen, antworten]
+  );
+
+  if (!aktuelleFrage) return null;
 
   // ── Arcade-Modus: Antwort-Logik ──
   const handleAnswerClick = (buchstabe: string) => {
@@ -99,7 +104,7 @@ export default function QuizView({ quiz }: Props) {
 
   return (
     <TooltipProvider delayDuration={800}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-4xl pt-14 sm:pt-16">
           {/* Top Bar — Run-Stats */}
           <div className="flex items-center justify-between mb-2 sm:mb-3 gap-2">
@@ -111,6 +116,7 @@ export default function QuizView({ quiz }: Props) {
               </span>
             </div>
             <div
+              role="status"
               className="flex items-center gap-1.5"
               aria-label={`${korrekt} richtig, ${falsch} falsch, ${offen} offen`}
             >
@@ -126,7 +132,7 @@ export default function QuizView({ quiz }: Props) {
 
           {/* Progress Bar */}
           <div className="mb-3 sm:mb-4">
-            <div className="flex justify-between text-xs text-slate-400 mb-1">
+            <div className="flex justify-between text-xs text-slate-500 mb-1 dark:text-slate-400">
               <span id="progress-label">
                 Frage {aktuellerIndex + 1} / {aktiveFragen.length}
               </span>
@@ -134,7 +140,7 @@ export default function QuizView({ quiz }: Props) {
             </div>
             <Progress
               value={fortschritt}
-              className="h-1.5 bg-slate-700"
+              className="h-1.5 bg-slate-200 dark:bg-slate-700"
               aria-labelledby="progress-label"
               aria-valuenow={Math.round(fortschritt)}
               aria-valuemin={0}
@@ -143,28 +149,28 @@ export default function QuizView({ quiz }: Props) {
           </div>
 
           {/* Frage — FIXE HÖHE */}
-          <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[520px] sm:h-[600px] md:h-[720px] flex flex-col overflow-hidden">
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[520px] sm:h-[600px] md:h-[720px] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
             {/* Themenbereich + Favorit */}
             <div className="mb-2 flex items-center justify-between">
               {aktuelleFrage.bild ? (
-                <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-purple-100 text-purple-600 border border-purple-300/50 dark:bg-purple-500/10 dark:text-purple-400 dark:border-purple-500/20">
                   Bilderkennung
                 </span>
               ) : (
-                <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-teal-100 text-teal-600 border border-teal-300/50 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/20">
                   {aktuelleFrage.bereich}
                 </span>
               )}
-              <button
-                onClick={() => toggleFavorite(aktuelleFrage.id)}
-                aria-label={isFavorite(aktuelleFrage.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}
-                className={`p-1 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${isFavorite(aktuelleFrage.id) ? 'text-amber-400 hover:text-amber-300' : 'text-slate-500 hover:text-amber-400'}`}
-              >
+               <button
+                 onClick={() => toggleFavorite(aktuelleFrage.id)}
+                 aria-label={isFavorite(aktuelleFrage.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}
+                 className={`p-2.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${isFavorite(aktuelleFrage.id) ? 'text-amber-400 hover:text-amber-300' : 'text-slate-400 hover:text-amber-400 dark:text-slate-500'} min-w-[44px] min-h-[44px]`}
+               >
                 <Star className={`w-5 h-5 sm:w-6 sm:h-6 ${isFavorite(aktuelleFrage.id) ? 'fill-current' : ''}`} />
               </button>
             </div>
 
-            <h2 className="text-white text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 leading-snug line-clamp-3">
+            <h2 className="text-slate-900 text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 leading-snug line-clamp-3 dark:text-white">
               {aktuelleFrage.frage}
             </h2>
 
@@ -173,7 +179,7 @@ export default function QuizView({ quiz }: Props) {
                 <img
                   src={aktuelleFrage.bild_url}
                   alt={`Bild zur Frage ${aktuellerIndex + 1}: ${aktuelleFrage.frage}`}
-                  className="max-w-full h-28 sm:h-36 md:h-44 object-contain rounded-lg border border-slate-600/50 bg-slate-900/50"
+                  className="max-w-full h-28 sm:h-36 md:h-44 object-contain rounded-lg border border-slate-300/50 bg-slate-100/50 dark:border-slate-600/50 dark:bg-slate-900/50"
                   loading="lazy"
                 />
               </div>
@@ -191,7 +197,7 @@ export default function QuizView({ quiz }: Props) {
                 const isPendingSelection = pendingWrongAnswer === buchstabe;
 
                 let cls =
-                  "border-slate-600/50 bg-slate-700/30 hover:bg-slate-700/50 hover:border-slate-500/50";
+                  "border-slate-300/50 bg-slate-100/80 hover:bg-slate-200/50 hover:border-slate-400/50 dark:border-slate-600/50 dark:bg-slate-700/30 dark:hover:bg-slate-700/50 dark:hover:border-slate-500/50";
                 if (hasAnswered) {
                   if (isSelected && isCorrect)
                     cls = "border-emerald-500 bg-emerald-500/10";
@@ -213,19 +219,20 @@ export default function QuizView({ quiz }: Props) {
                     key={buchstabe}
                     onClick={() => handleAnswerClick(buchstabe)}
                     disabled={isDisabled}
-                    aria-pressed={isSelected || isPendingSelection}
+                    role="radio"
+                    aria-checked={isSelected || isPendingSelection}
                     aria-disabled={isDisabled}
                     aria-label={`Antwort ${buchstabe}: ${aktuelleFrage.antworten[buchstabe]}`}
-                    className={`w-full text-left h-12 sm:h-14 rounded-lg border transition-all flex items-center gap-3 px-3 ${cls} ${isDisabled ? "cursor-default opacity-50" : "cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"}`}
+                    className={`w-full text-left h-12 sm:h-14 rounded-lg border transition-all flex items-center gap-3 px-3 ${cls} ${isDisabled ? "cursor-default opacity-50" : "cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"}`}
                   >
                     <span
-                      className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? "bg-emerald-500 text-white" : hasAnswered && isSelected && !isCorrect ? "bg-red-500 text-white" : isPendingSelection ? "bg-red-500 text-white" : isSelected ? "bg-teal-400 text-slate-900" : "bg-slate-600/50 text-slate-300"}`}
+                      className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect ? "bg-emerald-500 text-white" : hasAnswered && isSelected && !isCorrect ? "bg-red-500 text-white" : isPendingSelection ? "bg-red-500 text-white" : isSelected ? "bg-teal-400 text-slate-900" : "bg-slate-300/50 text-slate-600 dark:bg-slate-600/50 dark:text-slate-300"}`}
                       aria-hidden="true"
                     >
                       {buchstabe}
                     </span>
                     <span
-                      className={`flex-1 leading-snug text-sm truncate ${hasAnswered && isCorrect ? "text-emerald-300" : hasAnswered && isSelected && !isCorrect ? "text-red-300" : isPendingSelection ? "text-red-300" : "text-slate-200"}`}
+                      className={`flex-1 leading-snug text-sm truncate ${hasAnswered && isCorrect ? "text-emerald-600 dark:text-emerald-300" : hasAnswered && isSelected && !isCorrect ? "text-red-600 dark:text-red-300" : isPendingSelection ? "text-red-600 dark:text-red-300" : "text-slate-700 dark:text-slate-200"}`}
                     >
                       {aktuelleFrage.antworten[buchstabe]}
                     </span>
@@ -291,67 +298,67 @@ export default function QuizView({ quiz }: Props) {
             </div>
           </div>
 
-          {/* Navigation: Zurück + Weiter, näher zur Mitte */}
-          <div className="flex items-center justify-center gap-3">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  onClick={vorherigeFrage}
-                  disabled={aktuellerIndex === 0}
-                  variant="outline"
-                  aria-label="Vorherige Frage"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs sm:text-sm py-2 px-4"
-                >
-                  <ChevronLeft className="w-4 h-4 mr-0.5" aria-hidden="true" />
-                  <span className="hidden sm:inline">Zurück</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Vorherige Frage</p>
-              </TooltipContent>
-            </Tooltip>
+           {/* Navigation: Zurück + Weiter, näher zur Mitte */}
+           <div className="flex items-center justify-center gap-3">
+             <Tooltip>
+               <TooltipTrigger asChild>
+                  <Button
+                    onClick={vorherigeFrage}
+                    disabled={aktuellerIndex === 0}
+                    variant="outline"
+                    aria-label="Vorherige Frage"
+                    className="border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 text-xs sm:text-sm min-w-[44px] min-h-[44px] py-2 px-4"
+                  >
+                   <ChevronLeft className="w-4 h-4 mr-0.5" aria-hidden="true" />
+                   <span className="hidden sm:inline">Zurück</span>
+                 </Button>
+               </TooltipTrigger>
+               <TooltipContent>
+                 <p>Vorherige Frage</p>
+               </TooltipContent>
+             </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  onClick={naechsteFrage}
-                  disabled={
-                    aktuellerIndex === aktiveFragen.length - 1 || isPending
-                  }
-                  variant="outline"
-                  aria-label="Nächste Frage"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs sm:text-sm py-2 px-4"
-                >
-                  <span className="hidden sm:inline">Weiter</span>
-                  <ChevronRight className="w-4 h-4 ml-0.5" aria-hidden="true" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Nächste Frage</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
+             <Tooltip>
+               <TooltipTrigger asChild>
+                  <Button
+                    onClick={naechsteFrage}
+                    disabled={
+                      aktuellerIndex === aktiveFragen.length - 1 || isPending
+                    }
+                    variant="outline"
+                    aria-label="Nächste Frage"
+                    className="border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 text-xs sm:text-sm min-w-[44px] min-h-[44px] py-2 px-4"
+                  >
+                   <span className="hidden sm:inline">Weiter</span>
+                   <ChevronRight className="w-4 h-4 ml-0.5" aria-hidden="true" />
+                 </Button>
+               </TooltipTrigger>
+               <TooltipContent>
+                 <p>Nächste Frage</p>
+               </TooltipContent>
+             </Tooltip>
+           </div>
 
           {/* Bereichs-Abschluss Dialog (Issue #46) */}
           <Dialog open={bereichComplete !== null} onOpenChange={(open) => !open && setBereichComplete(null)}>
-            <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-sm">
+            <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-sm dark:bg-slate-900 dark:border-slate-700 dark:text-white">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2 text-base">
                   <CheckCircle className="w-5 h-5 text-emerald-400" />
                   Bereich abgeschlossen!
                 </DialogTitle>
-                <DialogDescription className="text-slate-400 text-sm">
+                <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
                   Du hast alle Fragen im Bereich <span className="text-teal-400 font-medium">{bereichComplete}</span> beantwortet.
                 </DialogDescription>
               </DialogHeader>
-              <p className="text-slate-300 text-sm">
+              <p className="text-slate-600 text-sm dark:text-slate-300">
                 Du kannst über die Startansicht einen weiteren Bereich hinzufügen.
               </p>
               <div className="flex gap-2 mt-2">
                 <Button
                   onClick={() => setBereichComplete(null)}
                   variant="outline"
-                  className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-800 text-xs"
+                  className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 text-xs dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   Weiterlernen
                 </Button>
