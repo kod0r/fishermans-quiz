@@ -12,8 +12,8 @@ export default function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
         <div className="text-center">
-          <Spinner className="w-12 h-12 text-teal-400 mx-auto mb-4" />
-          <p className="text-slate-300 text-lg">Lade Fragenkatalog...</p>
+           <Spinner className="w-12 h-12 text-teal-400 mx-auto mb-4" />
+           <p className="text-slate-600 dark:text-slate-300 text-lg">Lade Fragenkatalog...</p>
         </div>
       </div>
     );
