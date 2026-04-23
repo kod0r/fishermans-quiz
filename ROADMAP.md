@@ -75,7 +75,7 @@ _No active tickets._
 | Dead Dependencies bereinigt | [#21](https://github.com/kod0r/fishermans-quiz/issues/21) | 2026-04-20 |
 | Dependabot konfiguriert | [#22](https://github.com/kod0r/fishermans-quiz/issues/22) | 2026-04-20 |
 | Release-Validation Scripts | [#23](https://github.com/kod0r/fishermans-quiz/issues/23) | 2026-04-20 |
-| Kimi-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
+| Kim-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
 | ROADMAP.md Regeln konsolidiert | [#20](https://github.com/kod0r/fishermans-quiz/issues/20) | 2026-04-20 |
 
 ### Done (before GitHub Issue system)
