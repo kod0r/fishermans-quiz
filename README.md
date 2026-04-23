@@ -1,68 +1,68 @@
 # 🐟 Fisherman's Quiz
 
-> Interaktive Web-App zum Lernen für die **staatliche Fischerprüfung** – aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026).
+> Interactive web app for learning the **Bavarian state fishing exam** — based on the official question catalog (as of: 2026-03-11).
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/kod0r/fishermans-quiz)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite)](https://vitejs.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vitejs.dev)
 
 ---
 
 ## ✨ Features
 
-- **1.052 Fragen** in 6 Bereichen (Biologie, Gewässerkunde, Gewässerpflege, Fanggeräte & Methoden, Recht, Bilderkennung)
-- **Meta-Lernsystem:** Fragen werden erst als "gemeistert" markiert, wenn sie **3× hintereinander richtig** beantwortet wurden
-- **Session-Runs:** Bereiche können kombiniert und während eines Laufs erweitert werden
-- **Fortschritts-Tracking:** Korrektrate, Beste Serie, Bereichs-Statistiken
-- **Lazy Loading:** Quiz-Daten werden in Bereichs-Chunks geladen (~27KB Meta initial statt 420KB)
-- **Responsive UI:** Dunkles Theme mit Tailwind CSS + shadcn/ui
+- **1,052 questions** across 6 areas (Biology, Water Science, Water Conservation, Fishing Gear & Methods, Law, Image Recognition)
+- **Meta-learning system:** Questions are only marked "mastered" after **3 consecutive correct answers**
+- **Session runs:** Areas can be combined and expanded during a run
+- **Progress tracking:** Correct rate, best streak, per-area statistics
+- **Lazy loading:** Quiz data loads in area chunks (~27KB meta initially instead of 420KB)
+- **Responsive UI:** Dark theme with Tailwind CSS + shadcn/ui
 
 ---
 
-## 🚀 Schnellstart
+## 🚀 Quick Start
 
 ```bash
-# Repository klonen
+# Clone repository
 git clone https://github.com/kod0r/fishermans-quiz.git
 cd fishermans-quiz
 
-# Dependencies installieren
+# Install dependencies
 npm install
 
-# Dev-Server starten (Port 3000)
-npm run dev
+# Start dev server (port 3000)
+rtk npm run dev
 ```
 
-**Build für Production:**
+**Production build:**
 
 ```bash
-npm run build
+rtk npm run build
 ```
 
 ---
 
-## 🛠️ Tech-Stack
+## 🛠️ Tech Stack
 
-| Bereich   | Technologie                                                                      |
+| Area      | Technology                                                                       |
 | --------- | -------------------------------------------------------------------------------- |
-| Framework | [Vite](https://vitejs.dev) 7 + [React](https://react.dev) 19                     |
-| Sprache   | [TypeScript](https://www.typescriptlang.org) 5.9                                 |
+| Framework | [Vite](https://vitejs.dev) 8 + [React](https://react.dev) 19                     |
+| Language  | [TypeScript](https://www.typescriptlang.org) 5.9                                 |
 | Styling   | [Tailwind CSS](https://tailwindcss.com) 3.4 + [shadcn/ui](https://ui.shadcn.com) |
 | State     | React Hooks (Custom Stores)                                                      |
 | Icons     | [Lucide React](https://lucide.dev)                                               |
 
 ---
 
-## 📁 Projektstruktur
+## 📁 Project Structure
 
 ```
 src/
 ├── views/           # StartView, QuizView, ProgressView
-├── components/      # Sidebar + shadcn/ui Komponenten
-├── hooks/           # useQuiz (Orchestrierung)
+├── components/      # Sidebar + shadcn/ui components
+├── hooks/           # useQuiz (orchestration)
 ├── store/           # quizRun.ts, metaProgress.ts
-├── types/           # TypeScript-Interfaces
+├── types/           # TypeScript interfaces
 ├── utils/           # storage.ts, quizLoader.ts
 └── lib/             # Utilities
 ```
@@ -71,15 +71,15 @@ src/
 
 ## 📋 Roadmap & Tickets
 
-- **Aktuelle Planung:** Siehe [ROADMAP.md](./ROADMAP.md)
-- **Offene Tickets:** [GitHub Issues](https://github.com/kod0r/fishermans-quiz/issues)
+- **Current planning:** See [ROADMAP.md](./ROADMAP.md)
+- **Open tickets:** [GitHub Issues](https://github.com/kod0r/fishermans-quiz/issues)
 - **Changelog:** [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 
-## 🤝 Mitwirken
+## 🤝 Contributing
 
-Dieses Projekt folgt dem **Conventional Commits** Standard. Jeder Commit sollte dem Format folgen:
+This project follows the **Conventional Commits** standard. Every commit should follow the format:
 
 ```
 feat(ui): add new progress indicator
@@ -87,12 +87,16 @@ fix(hooks): prevent empty quiz navigation
 perf(data): optimize chunk loading
 ```
 
-Siehe [AGENTS.md](./AGENTS.md) für detaillierte Conventions und Projekt-Kontext.
+See [AGENTS.md](./AGENTS.md) for detailed conventions and project context.
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for coding guidelines.
 
 ---
 
-## 📜 Lizenz
+## 📜 License
 
-Privates Lernprojekt – noch nicht für öffentliche Verbreitung vorgesehen.
+Private learning project — not yet intended for public distribution.
 
 ---
+
+*All documentation is in English. The app UI is in German.*
