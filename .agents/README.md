@@ -10,14 +10,11 @@ Then customize `MASTER.md` for the project.
 ├── README.md              # This file
 ├── MASTER.md              # Project overview (CUSTOMIZE per project)
 ├── MASTER.local.md        # Your personal settings (NEVER commit)
-├── MULTI_AI.md            # Team roles: Kimi / k.2.6 / llama.cpp
+├── MULTI_AI.md            # Team roles: Kimi / k.2.6 / local LLM
 ├── settings.json          # Tool permissions
 ├── settings.local.json    # Local overrides (NEVER commit)
 ├── jimmy-prompt.md        # Junior dev intern system prompt
 ├── dump_project.sh        # Export project context for AI sharing
-├── llama-setup.sh         # Install llama.cpp in WSL2
-├── wsl-vpn-dns.sh         # WSL2 DNS + VPN config
-├── test-llama.sh          # Test llama.cpp connection
 ├── agents/                # Agent personas
 ├── commands/              # Slash commands
 ├── rules/                 # Coding conventions
@@ -28,7 +25,7 @@ Then customize `MASTER.md` for the project.
 
 ```bash
 # 1. Copy this template into your new project
-cp -r /path/to/feeesh/.agents ./.agents
+cp -r /path/to/template/.agents ./.agents
 
 # 2. Edit MASTER.md for your project
 # 3. Adjust hooks/ if needed
