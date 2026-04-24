@@ -74,38 +74,38 @@ export default function StartView({ quiz }: Props) {
 
   return (
     <TooltipProvider delayDuration={800}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
         <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl">
 
           {/* Header */}
           <div className="text-center mb-5 sm:mb-6 pt-12 sm:pt-14">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Fish className="w-7 h-7 sm:w-8 sm:h-8 text-teal-400" aria-hidden="true" />
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Fisherman's Quiz</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Fisherman's Quiz</h1>
             </div>
           </div>
 
           {/* Aktiver Run Info */}
           {isActive && (
-            <Card className="mb-2 bg-teal-900/30 border-teal-500/30">
+            <Card className="mb-2 bg-teal-50 border-teal-300/50 dark:bg-teal-900/30 dark:border-teal-500/30">
               <CardContent className="py-2 px-3">
                 <div className="text-center">
-                  <p className="text-teal-300 font-medium text-sm">Aktiver Quiz-Run</p>
-                  <p className="text-slate-400 text-xs">{geladeneBereiche.join(', ')} — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet</p>
-                  <p className="text-slate-500 text-[10px] mt-0.5">Weitere Bereiche können hinzugefügt werden.</p>
+                  <p className="text-teal-700 font-medium text-sm dark:text-teal-300">Aktiver Quiz-Run</p>
+                  <p className="text-slate-500 text-xs dark:text-slate-400">{geladeneBereiche.join(', ')} — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet</p>
+                  <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">Weitere Bereiche können hinzugefügt werden.</p>
                 </div>
               </CardContent>
             </Card>
           )}
 
           {/* Meta-Progress — immer sichtbar, kompakt */}
-          <Card className="mb-2 bg-slate-800/50 border-slate-700/50">
+          <Card className="mb-2 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
             <CardContent className="py-2 px-3">
               <div className="flex items-center gap-2 mb-3">
                 <BarChart3 className="w-4 h-4 text-teal-400 flex-shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-white font-medium text-sm">Lernfortschritt</p>
-                  <p className="text-slate-400 text-xs">
+                  <p className="text-slate-900 font-medium text-sm dark:text-white">Lernfortschritt</p>
+                  <p className="text-slate-500 text-xs dark:text-slate-400">
                     {metaProgress.stats.totalQuestionsAnswered > 0
                       ? `${meisterCount} von ${totalFragen} gemeistert (${masterPct}%) • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
                       : 'Noch keine Fragen beantwortet'}
@@ -127,14 +127,14 @@ export default function StartView({ quiz }: Props) {
               {metaProgress.stats.totalQuestionsAnswered > 0 && (
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1">
-                    <span id="korrektrate-label" className="text-slate-300">Korrektrate</span>
-                    <span className="text-teal-400 font-medium">
+                    <span id="korrektrate-label" className="text-slate-600 dark:text-slate-300">Korrektrate</span>
+                    <span className="text-teal-600 font-medium dark:text-teal-400">
                       {Math.round((metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100)}%
                     </span>
                   </div>
                   <Progress
                     value={(metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100}
-                    className="h-1.5 bg-slate-700"
+                    className="h-1.5 bg-slate-200 dark:bg-slate-700"
                     aria-labelledby="korrektrate-label"
                   />
                 </div>
@@ -154,10 +154,10 @@ export default function StartView({ quiz }: Props) {
                   const pct = fragenIds.length ? Math.round((gem / fragenIds.length) * 100) : 0;
                   return (
                     <div key={b.id} className="flex items-center gap-2 sm:gap-3">
-                      <span className="text-slate-400 text-[10px] w-20 sm:w-28 truncate">{b.label}</span>
-                      <Progress value={pct} className="flex-1 h-1 bg-slate-700" aria-label={`${b.label}: ${pct}% gemeistert`} />
-                      <span className="text-slate-400 text-[10px] w-12 sm:w-14 text-right">{gem}/{fragenIds.length}</span>
-                      {lern > 0 && <span className="text-blue-400 text-[9px] w-8 text-right">{lern}</span>}
+                      <span className="text-slate-500 text-[10px] w-20 sm:w-28 truncate dark:text-slate-400">{b.label}</span>
+                      <Progress value={pct} className="flex-1 h-1 bg-slate-200 dark:bg-slate-700" aria-label={`${b.label}: ${pct}% gemeistert`} />
+                      <span className="text-slate-500 text-[10px] w-12 sm:w-14 text-right dark:text-slate-400">{gem}/{fragenIds.length}</span>
+                      {lern > 0 && <span className="text-blue-600 text-[9px] w-8 text-right dark:text-blue-400">{lern}</span>}
                     </div>
                   );
                 })}
@@ -208,7 +208,7 @@ export default function StartView({ quiz }: Props) {
                       variant="outline"
                       size="sm"
                       aria-label="Als JSON exportieren"
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       <FileJson className="w-3 h-3 mr-1" aria-hidden="true" />JSON
                     </Button>
@@ -243,7 +243,7 @@ export default function StartView({ quiz }: Props) {
                       variant="outline"
                       size="sm"
                       aria-label="Als CSV exportieren"
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       <Download className="w-3 h-3 mr-1" aria-hidden="true" />CSV
                     </Button>
@@ -257,7 +257,7 @@ export default function StartView({ quiz }: Props) {
                       variant="outline"
                       size="sm"
                       aria-label="JSON importieren"
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       <Upload className="w-3 h-3 mr-1" aria-hidden="true" />Import
                     </Button>
@@ -271,7 +271,7 @@ export default function StartView({ quiz }: Props) {
                       variant="outline"
                       size="sm"
                       aria-label="Alle Lerndaten zurücksetzen"
-                      className="border-red-500/30 text-red-400 hover:bg-red-500/10 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="border-red-300/50 text-red-600 hover:bg-red-50 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       <Trash2 className="w-3 h-3 mr-1" aria-hidden="true" />Zurücksetzen
                     </Button>
@@ -283,21 +283,21 @@ export default function StartView({ quiz }: Props) {
           </Card>
 
           {/* Bereichsauswahl */}
-          <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
+          <Card className="bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
             <CardContent className="py-2 px-3">
-              <h2 className="text-white font-semibold text-sm sm:text-base flex items-center gap-2 mb-3 sm:mb-4">
+              <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-3 sm:mb-4 dark:text-white">
                 <BookOpen className="w-4 h-4 text-teal-400" aria-hidden="true" />
                 {isActive ? 'Bereiche hinzufügen' : 'Bereiche auswählen'}
               </h2>
 
               {warnung && (
-                <div className="mb-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30" role="alert" aria-live="polite">
-                  <p className="text-amber-300 text-xs mb-2">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
+                <div className="mb-3 p-3 rounded-lg bg-amber-50 border border-amber-300/50 dark:bg-amber-500/10 dark:border-amber-500/30" role="alert" aria-live="polite">
+                  <p className="text-amber-700 text-xs mb-2 dark:text-amber-300">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
                   <div className="flex gap-2">
                     <Button
                       onClick={() => { quiz.unterbrecheRun(); setAusgewaehlt(p => p.filter(x => x !== warnung)); setWarnung(null); }}
                       size="sm"
-                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       Abwählen
                     </Button>
@@ -305,7 +305,7 @@ export default function StartView({ quiz }: Props) {
                       onClick={() => setWarnung(null)}
                       size="sm"
                       variant="outline"
-                      className="border-slate-600 text-slate-300 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-xs"
+                      className="border-slate-300 text-slate-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
                       Beibehalten
                     </Button>
@@ -326,7 +326,7 @@ export default function StartView({ quiz }: Props) {
                       role="checkbox"
                       aria-checked={checked}
                       tabIndex={0}
-                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'} ${inRun ? 'ring-1 ring-teal-400/30' : ''}`}
+                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-200/50 border-slate-300/30 hover:bg-slate-300/50 dark:bg-slate-700/30 dark:border-slate-600/30 dark:hover:bg-slate-700/50'} ${inRun ? 'ring-1 ring-teal-400/30' : ''}`}
                     >
                       <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : 'border-slate-500 bg-transparent'}`} aria-hidden="true">
                         {checked && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -334,10 +334,10 @@ export default function StartView({ quiz }: Props) {
                       <div className={`p-1.5 rounded-md ${b.bg}`} aria-hidden="true"><Icon className={`w-4 h-4 ${b.color}`} /></div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <p className="text-white font-medium text-sm truncate">{b.label}</p>
-                          {inRun && <span className="px-1 py-0 rounded text-[9px] bg-teal-500/20 text-teal-400 border border-teal-500/30 flex-shrink-0">AKTIV</span>}
+                          <p className="text-slate-900 font-medium text-sm truncate dark:text-white">{b.label}</p>
+                          {inRun && <span className="px-1 py-0 rounded text-[9px] bg-teal-500/20 text-teal-600 border border-teal-500/30 flex-shrink-0 dark:text-teal-400">AKTIV</span>}
                         </div>
-                        <p className="text-slate-400 text-xs">{b.anzahl} Fragen</p>
+                        <p className="text-slate-500 text-xs dark:text-slate-400">{b.anzahl} Fragen</p>
                       </div>
                     </div>
                   );
@@ -351,15 +351,15 @@ export default function StartView({ quiz }: Props) {
                 <button
                   onClick={() => setNurFavoriten(p => !p)}
                   aria-pressed={nurFavoriten}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${nurFavoriten ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-slate-300 border border-transparent'}`}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${nurFavoriten ? 'bg-amber-50 text-amber-600 border border-amber-300/50 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30' : 'text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300'}`}
                 >
                   <Star className={`w-3.5 h-3.5 ${nurFavoriten ? 'fill-current' : ''}`} />
                   Nur Favoriten ({quiz.favorites.length})
                 </button>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-700/50">
-                <p className="text-slate-400 text-xs">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50">
+                <p className="text-slate-500 text-xs dark:text-slate-400">
                   {effektivAusgewaehlt.length > 0
                     ? <span><span className="text-teal-400 font-bold">
                       {nurFavoriten
@@ -371,7 +371,7 @@ export default function StartView({ quiz }: Props) {
                 <Button
                   onClick={handleStart}
                   aria-label={isActive ? 'Ausgewählte Bereiche zum Quiz hinzufügen' : 'Quiz mit ausgewählten Bereichen starten'}
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-5 sm:px-6 py-4 sm:py-5 text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 w-full sm:w-auto"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-5 sm:px-6 py-4 sm:py-5 text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
                 >
                   {isActive ? 'Hinzufügen' : 'Quiz starten'}
                 </Button>
@@ -379,7 +379,7 @@ export default function StartView({ quiz }: Props) {
             </CardContent>
           </Card>
 
-          <p className="text-center text-slate-500 text-xs mt-4 sm:mt-5">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
+          <p className="text-center text-slate-400 text-xs mt-4 sm:mt-5 dark:text-slate-500">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischen Fragenkatalog (Stand: 11.03.2026)</p>
         </div>
       </div>
     </TooltipProvider>
@@ -390,10 +390,10 @@ export default function StartView({ quiz }: Props) {
 
 function StatBox({ icon: Icon, iconColor, value, label }: { icon: typeof Trophy; iconColor: string; value: number; label: string }) {
   return (
-    <div className="text-center p-1.5 sm:p-2 rounded-lg bg-slate-700/30" aria-label={`${label}: ${value}`}>
+    <div className="text-center p-1.5 sm:p-2 rounded-lg bg-slate-200/50 dark:bg-slate-700/30" aria-label={`${label}: ${value}`}>
       <Icon className={`w-4 h-4 ${iconColor} mx-auto mb-0.5`} aria-hidden="true" />
-      <p className="text-base sm:text-lg font-bold text-white leading-tight">{value}</p>
-      <p className="text-[10px] text-slate-400">{label}</p>
+      <p className="text-base sm:text-lg font-bold text-slate-900 leading-tight dark:text-white">{value}</p>
+      <p className="text-[10px] text-slate-500 dark:text-slate-400">{label}</p>
     </div>
   );
 }
