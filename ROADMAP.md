@@ -28,7 +28,7 @@
 
 ## 🚧 In Progress
 
-#7
+—
 
 ---
 
@@ -39,7 +39,6 @@
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
-| Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | low |
 | Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | medium |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
@@ -77,6 +76,14 @@
 | Release-Validation Scripts | [#23](https://github.com/kod0r/fishermans-quiz/issues/23) | 2026-04-20 |
 | Kim-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
 | ROADMAP.md Regeln konsolidiert | [#20](https://github.com/kod0r/fishermans-quiz/issues/20) | 2026-04-20 |
+| Exam Simulation Mode | [#78](https://github.com/kod0r/fishermans-quiz/issues/78) | 2026-04-24 |
+| Weakness Trainer | [#79](https://github.com/kod0r/fishermans-quiz/issues/79) | 2026-04-24 |
+| Flashcard Mode | [#80](https://github.com/kod0r/fishermans-quiz/issues/80) | 2026-04-24 |
+| SRS Data Model & Storage | [#112](https://github.com/kod0r/fishermans-quiz/issues/112) | 2026-04-24 |
+| SRS Engine Integration | [#113](https://github.com/kod0r/fishermans-quiz/issues/113) | 2026-04-24 |
+| SRS UI — Due for Review | [#114](https://github.com/kod0r/fishermans-quiz/issues/114) | 2026-04-24 |
+| Exam Mode Shuffle Fix | [#115](https://github.com/kod0r/fishermans-quiz/issues/115) | 2026-04-24 |
+| Spaced Repetition Engine | [#77](https://github.com/kod0r/fishermans-quiz/issues/77) | 2026-04-24 |
 
 ### Done (before GitHub Issue system)
 
