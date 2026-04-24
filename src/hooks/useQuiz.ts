@@ -12,6 +12,7 @@ export function useQuiz() {
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [view, setView] = useState<AppView>('start');
   const [istGeladen, setIstGeladen] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const { gameMode, setGameMode } = useSettings();
   const run = useQuizRun(quizData, gameMode);
@@ -41,6 +42,7 @@ export function useQuiz() {
       .catch((err) => {
         if (cancelled) return;
         console.error('Fehler beim Laden der Quiz-Meta:', err);
+        setLoadError(err instanceof Error ? err.message : 'Laden fehlgeschlagen');
         setIstGeladen(true);
       });
 
@@ -107,6 +109,7 @@ export function useQuiz() {
     // Daten (lazy geladen)
     quizData,
     istGeladen,
+    loadError,
     view,
 
     // Settings
