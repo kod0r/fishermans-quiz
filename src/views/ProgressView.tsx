@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle, XCircle, HelpCircle, ChevronDown } from 'lucide-react';
@@ -12,44 +12,58 @@ export default function ProgressView({ quiz }: Props) {
   const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta } = quiz;
   const [showWrong, setShowWrong] = useState(false);
   const [showUnanswered, setShowUnanswered] = useState(false);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
 
   const pct = statistiken.gesamt > 0 ? (statistiken.korrekt / statistiken.gesamt) * 100 : 0;
   const passed = pct >= 60;
 
-  const bereichStats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = {};
-  aktiveFragen.forEach(f => {
-    const b = f.bereich;
-    if (!bereichStats[b]) bereichStats[b] = { korrekt: 0, falsch: 0, gesamt: 0 };
-    bereichStats[b].gesamt++;
-    if (antworten[f.id] === f.richtige_antwort) bereichStats[b].korrekt++;
-    else if (antworten[f.id]) bereichStats[b].falsch++;
-  });
+   const bereichStats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = useMemo(() => {
+     const stats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = {};
+     aktiveFragen.forEach(f => {
+       const b = f.bereich;
+       if (!stats[b]) stats[b] = { korrekt: 0, falsch: 0, gesamt: 0 };
+       stats[b].gesamt++;
+       if (antworten[f.id] === f.richtige_antwort) stats[b].korrekt++;
+       else if (antworten[f.id]) stats[b].falsch++;
+     });
+     return stats;
+   }, [aktiveFragen, antworten]);
 
-  const falsche = aktiveFragen.filter(f => antworten[f.id] && antworten[f.id] !== f.richtige_antwort);
-  const offen = aktiveFragen.filter(f => !antworten[f.id]);
+   const falsche = useMemo(() =>
+     aktiveFragen.filter(f => antworten[f.id] && antworten[f.id] !== f.richtige_antwort),
+     [aktiveFragen, antworten]
+   );
+   const offen = useMemo(() =>
+     aktiveFragen.filter(f => !antworten[f.id]),
+     [aktiveFragen, antworten]
+   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-teal-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
       <div className="container mx-auto px-3 sm:px-4 py-3 max-w-3xl pt-14 sm:pt-16">
 
         {/* Run-Ergebnis */}
-        <Card className={`mb-2 ${passed ? 'bg-emerald-900/20 border-emerald-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
+        <Card className={`mb-2 ${passed ? 'bg-emerald-50 border-emerald-300/50 dark:bg-emerald-900/20 dark:border-emerald-500/30' : 'bg-red-50 border-red-300/50 dark:bg-red-900/20 dark:border-red-500/30'}`}>
           <CardContent className="py-3 px-3 text-center">
             <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto mb-3 flex items-center justify-center ${passed ? 'bg-emerald-500/20' : 'bg-red-500/20'}`} aria-hidden="true">
-              {passed ? <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-400" /> : <XCircle className="w-7 h-7 sm:w-8 sm:h-8 text-red-400" />}
+               {passed ? <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600 dark:text-emerald-400" /> : <XCircle className="w-7 h-7 sm:w-8 sm:h-8 text-red-600 dark:text-red-400" />}
             </div>
-            <h2 className={`text-lg sm:text-xl font-bold mb-1 ${passed ? 'text-emerald-400' : 'text-red-400'}`}>{passed ? 'Bestanden!' : 'Nicht bestanden'}</h2>
-            <p className="text-slate-300 text-sm mb-4">{statistiken.korrekt} von {statistiken.gesamt} richtig</p>
+            <h2 ref={headingRef} tabIndex={-1} className={`text-lg sm:text-xl font-bold mb-1 outline-none ${passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{passed ? 'Bestanden!' : 'Nicht bestanden'}</h2>
+            <p className="text-slate-600 text-sm mb-4 dark:text-slate-300">{statistiken.korrekt} von {statistiken.gesamt} richtig</p>
             <div className="max-w-sm mx-auto">
               <Progress
                 value={pct}
-                className="h-2 bg-slate-700"
+                className="h-2 bg-slate-200 dark:bg-slate-700"
                 aria-label={`Gesamtergebnis: ${Math.round(pct)}%`}
                 aria-valuenow={Math.round(pct)}
                 aria-valuemin={0}
                 aria-valuemax={100}
               />
-              <p className="text-slate-400 text-xs mt-1.5">{Math.round(pct)}% — 60% zum Bestehen</p>
+              <p className="text-slate-500 text-xs mt-1.5 dark:text-slate-400">{Math.round(pct)}% — 60% zum Bestehen</p>
             </div>
 
             {/* Bereichs-Stats */}
@@ -58,11 +72,11 @@ export default function ProgressView({ quiz }: Props) {
                 const p = s.gesamt > 0 ? (s.korrekt / s.gesamt) * 100 : 0;
                 return (
                   <div key={b}>
-                    <div className="flex justify-between text-xs mb-0.5">
-                      <span className="text-slate-300">{b}</span>
-                      <span className={`font-medium ${p >= 60 ? 'text-emerald-400' : 'text-red-400'}`}>{s.korrekt}/{s.gesamt} ({Math.round(p)}%)</span>
-                    </div>
-                    <Progress value={p} className="h-1.5 bg-slate-700" aria-label={`${b}: ${Math.round(p)}% richtig`} />
+                     <div className="flex justify-between text-xs mb-0.5">
+                       <span className="text-slate-600 dark:text-slate-300">{b}</span>
+                       <span className={`font-medium ${p >= 60 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{s.korrekt}/{s.gesamt} ({Math.round(p)}%)</span>
+                     </div>
+                    <Progress value={p} className="h-1.5 bg-slate-200 dark:bg-slate-700" aria-label={`${b}: ${Math.round(p)}% richtig`} />
                   </div>
                 );
               })}
@@ -71,67 +85,68 @@ export default function ProgressView({ quiz }: Props) {
         </Card>
 
         {/* Falsche Antworten — klappbar */}
-        {falsche.length > 0 && (
-          <Card className="mb-2 bg-slate-800/50 border-slate-700/50">
-            <CardContent className="py-2 px-3">
-              <button
-                onClick={() => setShowWrong(!showWrong)}
-                aria-expanded={showWrong}
-                aria-controls="wrong-answers-list"
-                className="w-full flex items-center justify-between focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-lg"
-              >
-                <span className="text-white font-medium text-sm flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" aria-hidden="true" />
-                  Falsche Antworten ({falsche.length})
-                </span>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${showWrong ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
-              {showWrong && (
+        <Card className="mb-2 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
+          <CardContent className="py-2 px-3">
+             <button
+               onClick={() => setShowWrong(!showWrong)}
+               aria-expanded={showWrong}
+               aria-controls="wrong-answers-list"
+               className="w-full flex items-center justify-between focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 rounded-lg"
+             >
+              <span className="text-slate-900 font-medium text-sm flex items-center gap-2 dark:text-white">
+                <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" aria-hidden="true" />
+                Falsche Antworten ({falsche.length})
+              </span>
+              <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform dark:text-slate-400 ${showWrong ? 'rotate-180' : ''}`} aria-hidden="true" />
+            </button>
+            {falsche.length === 0 ? (
+              <p className="text-emerald-600 text-sm mt-2 dark:text-emerald-400">Keine falschen Antworten — super!</p>
+            ) : showWrong && (
                 <div id="wrong-answers-list" className="mt-3 space-y-3">
                   {falsche.map(frage => {
                     const meta = getFrageMeta(frage.id);
                     return (
-                      <div key={frage.id} className="p-2.5 sm:p-3 rounded-lg bg-red-500/5 border border-red-500/10">
+                      <div key={frage.id} className="p-2.5 sm:p-3 rounded-lg bg-red-50 border border-red-200/50 dark:bg-red-500/5 dark:border-red-500/10">
                         <div className="flex items-start justify-between gap-3 mb-1.5">
-                          <p className="text-white font-medium text-sm leading-snug">{frage.frage}</p>
+                          <p className="text-slate-900 font-medium text-sm leading-snug dark:text-white">{frage.frage}</p>
                           <button
                             onClick={() => { const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) springeZuFrage(idx); }}
-                            className="text-teal-400 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded"
+                            className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded"
                           >
                             Zur Frage
                           </button>
                         </div>
                         <div className="space-y-0.5 text-xs sm:text-sm">
-                          <p className="text-red-400">Deine Antwort: {antworten[frage.id]} — {frage.antworten[antworten[frage.id] as 'A' | 'B' | 'C']}</p>
-                          <p className="text-emerald-400">Richtig: {frage.richtige_antwort} — {frage.antworten[frage.richtige_antwort as 'A' | 'B' | 'C']}</p>
+                           <p className="text-red-600 dark:text-red-400">Deine Antwort: {antworten[frage.id]} — {frage.antworten[antworten[frage.id] as 'A' | 'B' | 'C']}</p>
+                           <p className="text-emerald-600 dark:text-emerald-400">Richtig: {frage.richtige_antwort} — {frage.antworten[frage.richtige_antwort as 'A' | 'B' | 'C']}</p>
                           {meta && <p className="text-slate-500 text-[10px] mt-1">Bisher {meta.attempts}×, Serie: {meta.correctStreak}</p>}
                         </div>
                       </div>
                     );
                   })}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+                 </div>
+               )}
+             </CardContent>
+           </Card>
 
         {/* Unbeantwortete — klappbar */}
-        {offen.length > 0 && (
-          <Card className="mb-2 bg-slate-800/50 border-slate-700/50">
-            <CardContent className="py-2 px-3">
-              <button
-                onClick={() => setShowUnanswered(!showUnanswered)}
-                aria-expanded={showUnanswered}
-                aria-controls="unanswered-list"
-                className="w-full flex items-center justify-between focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-lg"
-              >
-                <span className="text-white font-medium text-sm flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-amber-400" aria-hidden="true" />
-                  Unbeantwortete Fragen ({offen.length})
-                </span>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${showUnanswered ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
-              {showUnanswered && (
+        <Card className="mb-2 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
+          <CardContent className="py-2 px-3">
+             <button
+               onClick={() => setShowUnanswered(!showUnanswered)}
+               aria-expanded={showUnanswered}
+               aria-controls="unanswered-list"
+               className="w-full flex items-center justify-between focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 rounded-lg"
+             >
+              <span className="text-slate-900 font-medium text-sm flex items-center gap-2 dark:text-white">
+                <HelpCircle className="w-4 h-4 text-amber-400" aria-hidden="true" />
+                Unbeantwortete Fragen ({offen.length})
+              </span>
+              <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform dark:text-slate-400 ${showUnanswered ? 'rotate-180' : ''}`} aria-hidden="true" />
+            </button>
+            {offen.length === 0 ? (
+              <p className="text-emerald-600 text-sm mt-2 dark:text-emerald-400">Alle Fragen beantwortet!</p>
+            ) : showUnanswered && (
                 <div id="unanswered-list" className="mt-3 flex flex-wrap gap-1.5">
                   {offen.map(frage => {
                     const idx = aktiveFragen.findIndex(f => f.id === frage.id);
@@ -140,18 +155,17 @@ export default function ProgressView({ quiz }: Props) {
                         key={frage.id}
                         onClick={() => springeZuFrage(idx)}
                         aria-label={`Zu unbeantworteter Frage ${idx + 1} springen`}
-                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-600 border border-amber-300/50 hover:bg-amber-100 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20 dark:hover:bg-amber-500/20 dark:focus-visible:ring-offset-slate-900"
                       >
                         Frage {idx + 1}
                       </button>
                     );
                   })}
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
-  );
+               )}
+             </CardContent>
+           </Card>
+       </div>
+     </div>
+   );
 }
