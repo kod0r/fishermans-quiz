@@ -1,6 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { Home, Play, BarChart3, Menu, X, Zap, Shield, ChevronDown, Sun, Moon, Monitor } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Home, Play, BarChart3, Menu, X, Zap, Shield, ChevronDown, Sun, Moon, Monitor, History, Square, Timer } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import type { QuizContext } from '@/hooks/useQuiz';
 
@@ -23,6 +33,7 @@ export function TopNavBar({
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showNavInMenu, setShowNavInMenu] = useState(false);
+  const [showStopDialog, setShowStopDialog] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number | null>(null);
 
@@ -37,6 +48,7 @@ export function TopNavBar({
      view,
      unterbrecheRun,
      goToView,
+     historyEntries,
    } = quiz;
    const { theme, setTheme } = useTheme();
 
@@ -97,10 +109,13 @@ export function TopNavBar({
   };
 
   const handleStopQuiz = () => {
-    if (confirm('Quiz beenden? Meta-Fortschritt bleibt erhalten.')) {
-      setMenuOpen(false);
-      unterbrecheRun();
-    }
+    setShowStopDialog(true);
+  };
+
+  const confirmStopQuiz = () => {
+    setShowStopDialog(false);
+    setMenuOpen(false);
+    unterbrecheRun();
   };
 
   // Focus management: focus first focusable element when menu opens, return focus to toggle on close
@@ -177,7 +192,7 @@ export function TopNavBar({
               aria-label="Quiz beenden"
               className="w-8 h-8 rounded-full bg-slate-100/80 text-red-500 hover:bg-red-100 hover:text-red-600 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-800/80 dark:text-red-400 dark:hover:bg-red-900/50 dark:hover:text-red-300 dark:focus-visible:ring-offset-slate-900"
             >
-              <X className="w-4 h-4" aria-hidden="true" />
+              <Square className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
             </Button>
           )}
 
@@ -243,6 +258,17 @@ export function TopNavBar({
                     >
                       <Shield className="w-3 h-3" />
                       Hardcore
+                    </button>
+                    <button
+                      onClick={() => canChangeMode && setGameMode('exam')}
+                      disabled={!canChangeMode}
+                      role="radio"
+                      aria-checked={gameMode === 'exam'}
+                      className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-xs font-medium transition-colors min-h-[32px] ${gameMode === 'exam' ? 'bg-blue-500 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'} ${!canChangeMode ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                      title={canChangeMode ? 'Prüfungsmodus' : 'Moduswechsel während aktivem Run nicht möglich'}
+                    >
+                      <Timer className="w-3 h-3" />
+                      Exam
                     </button>
                   </div>
                  {!canChangeMode && (
@@ -321,6 +347,22 @@ export function TopNavBar({
                 </div>
               )}
 
+              {/* History */}
+              <div className="pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+                <button
+                  onClick={() => { setMenuOpen(false); goToView('history'); }}
+                  className="w-full flex items-center gap-2 text-slate-600 text-xs hover:text-teal-600 transition-colors dark:text-slate-300 dark:hover:text-teal-400"
+                >
+                  <History className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Session-Verlauf</span>
+                  {historyEntries.length > 0 && (
+                    <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-400">
+                      {historyEntries.length}
+                    </span>
+                  )}
+                </button>
+              </div>
+
               {/* Aktiver Run Info */}
               {isActive && (
                 <div className="pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
@@ -335,6 +377,22 @@ export function TopNavBar({
           </div>
         )}
       </nav>
+
+      {/* Stop Quiz Confirmation */}
+      <AlertDialog open={showStopDialog} onOpenChange={setShowStopDialog}>
+        <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-slate-900 dark:text-white">Quiz beenden?</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+              Meta-Fortschritt bleibt erhalten.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowStopDialog(false)} className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Abbrechen</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmStopQuiz} className="bg-red-600 hover:bg-red-700 text-white">Beenden</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

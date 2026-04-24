@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom';
+import { cleanup } from '@testing-library/react';
+import { vi } from 'vitest';
+import { clearQuizCache } from '@/utils/quizLoader';
 
 // localStorage Mock
 const localStorageMock = (() => {
@@ -23,6 +26,10 @@ class FetchMock {
     this.responses.set(url, data);
   }
 
+  getResponse(url: string): unknown | undefined {
+    return this.responses.get(url);
+  }
+
   clear() {
     this.responses.clear();
   }
@@ -31,7 +38,7 @@ class FetchMock {
 export const fetchMock = new FetchMock();
 
 global.fetch = vi.fn((url: string) => {
-  const data = fetchMock['responses'].get(url);
+  const data = fetchMock.getResponse(url);
   if (data) {
     return Promise.resolve({
       ok: true,
@@ -46,11 +53,9 @@ global.fetch = vi.fn((url: string) => {
 });
 
 // Cleanup after each test
-import { cleanup } from '@testing-library/react';
-import { vi } from 'vitest';
-
 afterEach(() => {
   cleanup();
   localStorage.clear();
   fetchMock.clear();
+  clearQuizCache();
 });

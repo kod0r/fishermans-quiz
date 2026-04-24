@@ -2,16 +2,26 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, Trash2, CheckCircle, Star, Download, Upload, FileJson } from 'lucide-react';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, Trash2, CheckCircle, Star, Download, FileUp, HardDrive, Bell, FileJson, Table, Database, Crosshair, Layers, Repeat } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 import { MetaProgressionSchema } from '@/utils/quizLoader';
 import { buildCsv } from '@/utils/csvExport';
+import { isMastered } from '@/utils/srs';
 
 const BEREICHE = [
   { id: 'Biologie', label: 'Biologie', anzahl: 319, icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
@@ -29,13 +39,54 @@ interface Props {
 export default function StartView({ quiz }: Props) {
   const [ausgewaehlt, setAusgewaehlt] = useState<string[]>([]);
   const [fehler, setFehler] = useState('');
-  const [warnung, setWarnung] = useState<string | null>(null);
   const [nurFavoriten, setNurFavoriten] = useState(false);
+  const [flashcardMode, setFlashcardMode] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const backupInputRef = useRef<HTMLInputElement>(null);
+  const [expJson, setExpJson] = useState(false);
+  const [expCsv, setExpCsv] = useState(false);
+  const [expBackup, setExpBackup] = useState(false);
 
-  const { metaProgress, meisterCount, lernCount, isActive, geladeneBereiche, statistiken } = quiz;
-  const totalFragen = quiz.quizMeta?.meta.anzahl_fragen || 1052;
-  const masterPct = totalFragen > 0 ? Math.round((meisterCount / totalFragen) * 100) : 0;
+  type DialogState =
+    | { type: 'remove-arcade'; bereichId: string; fragenCount: number }
+    | { type: 'end-hardcore'; bereichId: string }
+    | null;
+  const [dialog, setDialog] = useState<DialogState>(null);
+
+  const { metaProgress, lernCount, isActive, geladeneBereiche, statistiken, gameMode } = quiz;
+  const totalBereiche = BEREICHE.length;
+
+  function getBereichStatus(bereichId: string) {
+    // Arcade: check per-question mastery first
+    if (gameMode === 'arcade') {
+      const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
+        .filter(([, b]) => b === bereichId).map(([id]) => id);
+      const allMastered = fragenIds.length > 0 && fragenIds.every(id => isMastered(metaProgress.fragen[id], quiz.srsMap[id]));
+      if (allMastered) {
+        return { icon: '✅', label: 'Bestanden', cls: 'text-emerald-600 bg-emerald-500/20 border-emerald-500/30 dark:text-emerald-400' };
+      }
+    }
+    // Hardcore: check bereich-level results
+    if (gameMode === 'hardcore') {
+      const bMeta = metaProgress.bereiche[bereichId];
+      if (bMeta) {
+        if (bMeta.mastered) {
+          return { icon: '🏆', label: 'Gemeistert', cls: 'text-amber-600 bg-amber-500/20 border-amber-500/30 dark:text-amber-400' };
+        }
+        if (bMeta.passed) {
+          return { icon: '✅', label: 'Bestanden', cls: 'text-emerald-600 bg-emerald-500/20 border-emerald-500/30 dark:text-emerald-400' };
+        }
+        if (bMeta.lastAttempt) {
+          return { icon: '❌', label: 'Nicht bestanden', cls: 'text-red-600 bg-red-500/20 border-red-500/30 dark:text-red-400' };
+        }
+      }
+    }
+    // Only show AKTIV if no completion status exists
+    if (isActive && geladeneBereiche.includes(bereichId)) {
+      return { icon: '🔒', label: 'AKTIV', cls: 'text-teal-600 bg-teal-500/20 border-teal-500/30 dark:text-teal-400' };
+    }
+    return null;
+  }
 
   const effektivAusgewaehlt = isActive
     ? [...new Set([...geladeneBereiche, ...ausgewaehlt])]
@@ -43,9 +94,18 @@ export default function StartView({ quiz }: Props) {
 
   const toggle = (id: string) => {
     setFehler('');
-    setWarnung(null);
     if (isActive && geladeneBereiche.includes(id)) {
-      setWarnung(id);
+      if (quiz.gameMode === 'hardcore') {
+        setDialog({ type: 'end-hardcore', bereichId: id });
+        return;
+      }
+      const count = quiz.aktiveFragen.filter(f => f.bereich === id).length;
+      if (count === 0) {
+        quiz.entferneBereichAusRun(id);
+        setAusgewaehlt(p => p.filter(x => x !== id));
+        return;
+      }
+      setDialog({ type: 'remove-arcade', bereichId: id, fragenCount: count });
       return;
     }
     setAusgewaehlt(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
@@ -67,7 +127,17 @@ export default function StartView({ quiz }: Props) {
       setFehler('Noch keine Favoriten vorhanden.');
       return;
     }
-    quiz.starteQuiz(effektivAusgewaehlt, nurFavoriten);
+    quiz.starteQuiz(effektivAusgewaehlt, { nurFavoriten, sessionType: flashcardMode ? 'flashcard' : 'quiz' });
+  };
+
+  const handleWeaknessTrainer = () => {
+    const allBereiche = BEREICHE.map(b => b.id);
+    quiz.starteQuiz(allBereiche, { filter: 'weak', sessionType: flashcardMode ? 'flashcard' : 'quiz' });
+  };
+
+  const handleSRSReview = () => {
+    const allBereiche = BEREICHE.map(b => b.id);
+    quiz.starteQuiz(allBereiche, { filter: 'srs-due', sessionType: flashcardMode ? 'flashcard' : 'quiz' });
   };
 
   const gesamtFragen = effektivAusgewaehlt.reduce((sum, bereichId) => {
@@ -108,21 +178,55 @@ export default function StartView({ quiz }: Props) {
                 <div>
                   <p className="text-slate-900 font-medium text-sm dark:text-white">Lernfortschritt</p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">
-                    {metaProgress.stats.totalQuestionsAnswered > 0
-                      ? `${meisterCount} von ${totalFragen} gemeistert (${masterPct}%) • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
-                      : 'Noch keine Fragen beantwortet'}
+                    {gameMode === 'arcade'
+                      ? (quiz.bestandeneBereicheArcade > 0
+                        ? `${quiz.bestandeneBereicheArcade} von ${totalBereiche} Bereichen bestanden • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
+                        : 'Noch keine Fragen beantwortet')
+                      : gameMode === 'exam'
+                        ? (metaProgress.stats.totalQuestionsAnswered > 0
+                          ? `${metaProgress.stats.totalQuestionsAnswered} beantwortet • ${Math.round((metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100)}% Korrektrate`
+                          : 'Noch keine Prüfung absolviert')
+                        : (quiz.gemeisterteBereicheHardcore > 0 || quiz.bestandeneBereicheHardcore > 0
+                          ? `${quiz.gemeisterteBereicheHardcore} von ${totalBereiche} gemeistert • ${quiz.bestandeneBereicheHardcore} bestanden`
+                          : 'Noch keine Bereiche absolviert')
+                    }
                   </p>
                 </div>
               </div>
 
               {/* Statistiken */}
               <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-3">
-                <StatBox icon={Trophy} iconColor="text-amber-400" value={meisterCount} label="Gemeistert" />
-                <StatBox icon={Target} iconColor="text-blue-400" value={lernCount} label="In Lernung" />
-                <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
-                <StatBox icon={RotateCcw} iconColor="text-emerald-400" value={metaProgress.stats.totalRuns} label="Durchläufe" />
-                <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
-                <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
+                {gameMode === 'arcade' ? (
+                  <>
+                    <StatBox icon={CheckCircle} iconColor="text-emerald-400" value={quiz.bestandeneBereicheArcade} label="Bestandene Bereiche" />
+                    <StatBox icon={Target} iconColor="text-blue-400" value={lernCount} label="In Lernung" />
+                    <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
+                    <StatBox icon={RotateCcw} iconColor="text-emerald-400" value={metaProgress.stats.totalRuns} label="Durchläufe" />
+                    <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
+                    <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
+                    {quiz.srsDueCount > 0 && (
+                      <StatBox icon={Repeat} iconColor="text-indigo-400" value={quiz.srsDueCount} label="Wiederholung fällig" />
+                    )}
+                  </>
+                ) : gameMode === 'exam' ? (
+                  <>
+                    <StatBox icon={RotateCcw} iconColor="text-blue-400" value={metaProgress.stats.totalRuns} label="Prüfungen" />
+                    <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
+                    <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
+                    <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
+                    <StatBox icon={Target} iconColor="text-red-400" value={metaProgress.stats.totalIncorrect} label="Falsch" />
+                    <StatBox icon={Trophy} iconColor="text-amber-400" value={Math.round((metaProgress.stats.totalCorrect / Math.max(1, metaProgress.stats.totalQuestionsAnswered)) * 100)} label="Korrektrate %" />
+                  </>
+                ) : (
+                  <>
+                    <StatBox icon={Trophy} iconColor="text-amber-400" value={quiz.gemeisterteBereicheHardcore} label="Gemeisterte Bereiche" />
+                    <StatBox icon={CheckCircle} iconColor="text-emerald-400" value={quiz.bestandeneBereicheHardcore} label="Bestandene Bereiche" />
+                    <StatBox icon={Target} iconColor="text-blue-400" value={lernCount} label="In Lernung" />
+                    <StatBox icon={Flame} iconColor="text-orange-400" value={metaProgress.stats.bestStreak} label="Beste Serie" />
+                    <StatBox icon={BarChart3} iconColor="text-purple-400" value={metaProgress.stats.totalQuestionsAnswered} label="Beantwortet" />
+                    <StatBox icon={CheckCircle} iconColor="text-teal-400" value={metaProgress.stats.totalCorrect} label="Korrekt" />
+                  </>
+                )}
               </div>
 
               {/* Korrektrate */}
@@ -148,10 +252,10 @@ export default function StartView({ quiz }: Props) {
                   const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
                     .filter(([, bereich]) => bereich === b.id)
                     .map(([id]) => id);
-                  const gem = fragenIds.filter(id => metaProgress.fragen[id]?.correctStreak >= 3).length;
+                  const gem = fragenIds.filter(id => isMastered(metaProgress.fragen[id], quiz.srsMap[id])).length;
                   const lern = fragenIds.filter(id => {
                     const meta = metaProgress.fragen[id];
-                    return meta && meta.attempts > 0 && meta.correctStreak < 3;
+                    return meta && meta.attempts > 0 && !isMastered(meta, quiz.srsMap[id]);
                   }).length;
                   const pct = fragenIds.length ? Math.round((gem / fragenIds.length) * 100) : 0;
                   return (
@@ -181,107 +285,161 @@ export default function StartView({ quiz }: Props) {
                         const data = JSON.parse(ev.target?.result as string);
                         const parsed = MetaProgressionSchema.safeParse(data);
                         if (parsed.success) {
-                          if (confirm('Lerndaten aus Datei importieren? Dies überschreibt den aktuellen Fortschritt.')) {
+                          if (confirm('Import progress data? This will overwrite current progress.')) {
                             quiz.importMetaProgression?.(parsed.data);
                           }
                         } else {
-                          console.error('[Import] Validierung fehlgeschlagen:', parsed.error.format());
-                          alert('Ungültiges Dateiformat. Die Datei enthält keine gültigen Lerndaten.');
+                          console.error('[Import] Validation failed:', parsed.error.format());
+                          alert('Invalid file format. The file does not contain valid progress data.');
                         }
                       } catch {
-                        alert('Fehler beim Lesen der Datei.');
+                        alert('Error reading file.');
                       }
                       if (fileInputRef.current) fileInputRef.current.value = '';
                     };
                     reader.readAsText(file);
                   }}
                 />
-                <Tooltip>
-                  <TooltipTrigger asChild>
+                <input
+                  ref={backupInputRef}
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                      try {
+                        const data = JSON.parse(ev.target?.result as string);
+                        if (confirm('Restore full backup? This will overwrite ALL data and reload the page.')) {
+                          const ok = quiz.importFullBackup?.(data);
+                          if (ok === false) {
+                            alert('Invalid backup format.');
+                          }
+                        }
+                      } catch {
+                        alert('Error reading file.');
+                      }
+                      if (backupInputRef.current) backupInputRef.current.value = '';
+                    };
+                    reader.readAsText(file);
+                  }}
+                />
+                <Popover>
+                  <PopoverTrigger asChild>
                     <Button
-                      onClick={() => {
-                        const data = quiz.metaProgress;
-                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `fishermans-quiz-meta-${new Date().toISOString().split('T')[0]}.json`;
-                        a.click();
-                        URL.revokeObjectURL(url);
-                      }}
                       variant="outline"
                       size="sm"
-                      aria-label="Als JSON exportieren"
-                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
+                      aria-label="Daten sichern und wiederherstellen"
+                      className="border-teal-300/50 text-teal-600 hover:bg-teal-50 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-teal-500/30 dark:text-teal-400 dark:hover:bg-teal-500/10 dark:focus-visible:ring-offset-slate-900 text-xs"
                     >
-                      <FileJson className="w-3 h-3 mr-1" aria-hidden="true" />JSON
+                      <HardDrive className="w-3 h-3 mr-1" aria-hidden="true" />Backup
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent><p>Meta-Daten als JSON exportieren</p></TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="w-64 p-3 space-y-3">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">Backup &amp; Restore</p>
+
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Export</p>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="exp-json" checked={expJson} onCheckedChange={(v) => setExpJson(v === true)} />
+                          <Label htmlFor="exp-json" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><FileJson className="w-3 h-3 text-slate-400" />Progress (JSON)</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="exp-csv" checked={expCsv} onCheckedChange={(v) => setExpCsv(v === true)} />
+                          <Label htmlFor="exp-csv" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><Table className="w-3 h-3 text-slate-400" />Stats (CSV)</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox id="exp-backup" checked={expBackup} onCheckedChange={(v) => setExpBackup(v === true)} />
+                          <Label htmlFor="exp-backup" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><Database className="w-3 h-3 text-slate-400" />Full Backup</Label>
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="w-full text-xs h-8 bg-teal-600 hover:bg-teal-700 text-white"
+                        disabled={!expJson && !expCsv && !expBackup}
+                        onClick={() => {
+                          if (expJson) {
+                            const data = quiz.metaProgress;
+                            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `fishermans-quiz-meta-${new Date().toISOString().split('T')[0]}.json`;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                          }
+                          if (expCsv) {
+                            const rows = [
+                              ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
+                              ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
+                                id,
+                                quiz.quizMeta?.fragenIndex?.[id] ?? '',
+                                String(m.attempts),
+                                String(m.correctStreak),
+                                m.lastResult ?? '',
+                                m.firstSeen,
+                                m.lastAttempt,
+                              ]),
+                            ];
+                            const csv = buildCsv(rows);
+                            const blob = new Blob([csv], { type: 'text/csv' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `fishermans-quiz-stats-${new Date().toISOString().split('T')[0]}.csv`;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                          }
+                          if (expBackup) {
+                            quiz.exportFullBackup?.();
+                          }
+                        }}
+                      >
+                        <Download className="w-3 h-3 mr-1" />Export
+                      </Button>
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Import</p>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" className="flex-1 text-xs h-8" onClick={() => fileInputRef.current?.click()}>
+                          <FileUp className="w-3 h-3 mr-1" />Progress
+                        </Button>
+                        <Button variant="outline" size="sm" className="flex-1 text-xs h-8" onClick={() => backupInputRef.current?.click()}>
+                          <RotateCcw className="w-3 h-3 mr-1" />Full Restore
+                        </Button>
+                      </div>
+                    </div>
+
+                    <Separator />
+
                     <Button
-                      onClick={() => {
-                        const rows = [
-                          ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
-                          ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
-                            id,
-                            quiz.quizMeta?.fragenIndex?.[id] ?? '',
-                            String(m.attempts),
-                            String(m.correctStreak),
-                            m.lastResult ?? '',
-                            m.firstSeen,
-                            m.lastAttempt,
-                          ]),
-                        ];
-                        const csv = buildCsv(rows);
-                        const blob = new Blob([csv], { type: 'text/csv' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `fishermans-quiz-stats-${new Date().toISOString().split('T')[0]}.csv`;
-                        a.click();
-                        URL.revokeObjectURL(url);
-                      }}
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      aria-label="Als CSV exportieren"
-                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
+                      className="w-full text-xs h-8 text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+                      onClick={() => { if (confirm('Delete all data? This cannot be undone.')) { quiz.resetMetaProgression(); quiz.resetSRS?.(); } }}
                     >
-                      <Download className="w-3 h-3 mr-1" aria-hidden="true" />CSV
+                      <Trash2 className="w-3 h-3 mr-1" />Delete All Data
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent><p>Statistik als CSV exportieren</p></TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={() => fileInputRef.current?.click()}
-                      variant="outline"
-                      size="sm"
-                      aria-label="JSON importieren"
-                      className="border-slate-300 text-slate-600 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900 text-xs"
-                    >
-                      <Upload className="w-3 h-3 mr-1" aria-hidden="true" />Import
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent><p>Meta-Daten aus JSON importieren</p></TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={() => { if (confirm('Alle Lerndaten löschen? Dies kann nicht rückgängig gemacht werden.')) quiz.resetMetaProgression(); }}
-                      variant="outline"
-                      size="sm"
-                      aria-label="Alle Lerndaten zurücksetzen"
-                      className="border-red-300/50 text-red-600 hover:bg-red-50 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10 dark:focus-visible:ring-offset-slate-900 text-xs"
-                    >
-                      <Trash2 className="w-3 h-3 mr-1" aria-hidden="true" />Zurücksetzen
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent><p>Alle Lerndaten löschen</p></TooltipContent>
-                </Tooltip>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Backup-Erinnerung */}
+              <div className="mt-3 flex items-center gap-2">
+                <button
+                  onClick={() => quiz.setBackupReminderEnabled?.(!quiz.backupReminderEnabled)}
+                  aria-pressed={quiz.backupReminderEnabled}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${quiz.backupReminderEnabled ? 'bg-teal-50 text-teal-600 border border-teal-300/50 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30' : 'text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300'}`}
+                >
+                  <Bell className={`w-3.5 h-3.5 ${quiz.backupReminderEnabled ? 'fill-current' : ''}`} />
+                  Backup reminder {quiz.backupReminderEnabled ? 'on' : 'off'}
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -294,34 +452,66 @@ export default function StartView({ quiz }: Props) {
                 {isActive ? 'Bereiche hinzufügen' : 'Bereiche auswählen'}
               </h2>
 
-              {warnung && (
-                <div className="mb-3 p-3 rounded-lg bg-amber-50 border border-amber-300/50 dark:bg-amber-500/10 dark:border-amber-500/30" role="alert" aria-live="polite">
-                  <p className="text-amber-700 text-xs mb-2 dark:text-amber-300">"{BEREICHE.find(b => b.id === warnung)?.label}" ist aktiv. Abwählen unterbricht den Run.</p>
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={() => { quiz.unterbrecheRun(); setAusgewaehlt(p => p.filter(x => x !== warnung)); setWarnung(null); }}
-                      size="sm"
-                      className="bg-amber-500 hover:bg-amber-600 text-white focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 text-xs"
+              {/* Dialog: Arcade — Bereich aus Run entfernen */}
+              <AlertDialog open={dialog?.type === 'remove-arcade'} onOpenChange={() => setDialog(null)}>
+                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-slate-900 dark:text-white">Bereich entfernen</AlertDialogTitle>
+                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                      Dies entfernt {dialog?.type === 'remove-arcade' ? dialog.fragenCount : 0} Fragen aus dem aktiven Quiz. Der Rest des Runs läuft normal weiter.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel onClick={() => setDialog(null)} className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Abbrechen</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        if (dialog?.type === 'remove-arcade') {
+                          quiz.entferneBereichAusRun(dialog.bereichId);
+                          setAusgewaehlt(p => p.filter(x => x !== dialog.bereichId));
+                        }
+                        setDialog(null);
+                      }}
+                      className="bg-amber-500 hover:bg-amber-600 text-white"
                     >
-                      Abwählen
-                    </Button>
-                    <Button
-                      onClick={() => setWarnung(null)}
-                      size="sm"
-                      variant="outline"
-                      className="border-slate-300 text-slate-600 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600 dark:text-slate-300 dark:focus-visible:ring-offset-slate-900 text-xs"
+                      Entfernen
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              {/* Dialog: Hardcore — Run beenden */}
+              <AlertDialog open={dialog?.type === 'end-hardcore'} onOpenChange={() => setDialog(null)}>
+                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-slate-900 dark:text-white">Hardcore-Run beenden</AlertDialogTitle>
+                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                      Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn du einen Bereich abwählst. Alle Fortschritte dieses Runs gehen verloren.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel onClick={() => setDialog(null)} className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Abbrechen</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        if (dialog?.type === 'end-hardcore') {
+                          quiz.unterbrecheRun();
+                          setAusgewaehlt(p => p.filter(x => x !== dialog.bereichId));
+                        }
+                        setDialog(null);
+                      }}
+                      className="bg-red-500 hover:bg-red-600 text-white"
                     >
-                      Beibehalten
-                    </Button>
-                  </div>
-                </div>
-              )}
+                      Run beenden
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
 
               <div className="space-y-1.5 sm:space-y-2" role="group" aria-label="Bereichsauswahl">
                 {BEREICHE.map(b => {
                   const Icon = b.icon;
                   const inRun = isActive && geladeneBereiche.includes(b.id);
                   const checked = effektivAusgewaehlt.includes(b.id);
+                  const status = getBereichStatus(b.id);
                   return (
                     <div
                       key={b.id}
@@ -339,7 +529,7 @@ export default function StartView({ quiz }: Props) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
                           <p className="text-slate-900 font-medium text-sm truncate dark:text-white">{b.label}</p>
-                          {inRun && <span className="px-1 py-0 rounded text-[9px] bg-teal-500/20 text-teal-600 border border-teal-500/30 flex-shrink-0 dark:text-teal-400">AKTIV</span>}
+                          {status && <span className={`px-1 py-0 rounded text-[9px] flex-shrink-0 border ${status.cls}`}>{status.icon} {status.label}</span>}
                         </div>
                         <p className="text-slate-500 text-xs dark:text-slate-400">{(quiz.quizMeta?.meta.bereiche[b.id] ?? 0)} Fragen</p>
                       </div>
@@ -350,8 +540,8 @@ export default function StartView({ quiz }: Props) {
 
               {fehler && <p className="text-red-400 text-xs mt-3 text-center" role="alert">{fehler}</p>}
 
-              {/* Nur Favoriten Toggle */}
-              <div className="flex items-center gap-2 mb-3 mt-1">
+              {/* Study Mode Toggles */}
+              <div className="flex items-center gap-2 mb-3 mt-1 flex-wrap">
                 <button
                   onClick={() => setNurFavoriten(p => !p)}
                   aria-pressed={nurFavoriten}
@@ -359,6 +549,32 @@ export default function StartView({ quiz }: Props) {
                 >
                   <Star className={`w-3.5 h-3.5 ${nurFavoriten ? 'fill-current' : ''}`} />
                   Nur Favoriten ({quiz.favorites.length})
+                </button>
+                <button
+                  onClick={handleWeaknessTrainer}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors text-slate-500 hover:text-red-600 border border-transparent dark:text-slate-400 dark:hover:text-red-400"
+                  title="Nur Fragen mit <50% Korrektrate"
+                >
+                  <Crosshair className="w-3.5 h-3.5" />
+                  Schwächentrainer
+                </button>
+                <button
+                  onClick={() => setFlashcardMode(p => !p)}
+                  aria-pressed={flashcardMode}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${flashcardMode ? 'bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30' : 'text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300'}`}
+                  title="Karteikarten-Modus: Antwort erst aufdecken, dann selbst bewerten"
+                >
+                  <Layers className={`w-3.5 h-3.5 ${flashcardMode ? 'fill-current' : ''}`} />
+                  Karteikarten
+                </button>
+                <button
+                  onClick={handleSRSReview}
+                  disabled={quiz.srsDueCount === 0}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${quiz.srsDueCount > 0 ? 'bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30' : 'text-slate-400 border border-transparent cursor-not-allowed dark:text-slate-600'}`}
+                  title="Nur fällige SRS-Wiederholungen"
+                >
+                  <Repeat className="w-3.5 h-3.5" />
+                  Wiederholung {quiz.srsDueCount > 0 ? `(${quiz.srsDueCount})` : ''}
                 </button>
               </div>
 

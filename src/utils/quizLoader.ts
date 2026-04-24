@@ -50,13 +50,51 @@ const MetaStatsSchema = z.object({
   currentStreak: z.number().int().nonnegative(),
 });
 
+const BereichMetaSchema = z.object({
+  passed: z.boolean(),
+  consecutivePasses: z.number().int().nonnegative(),
+  mastered: z.boolean(),
+  lastAttempt: z.string().nullable(),
+});
+
+const SRSMetaSchema = z.object({
+  interval: z.number().nonnegative(),
+  repetitions: z.number().int().nonnegative(),
+  efactor: z.number().min(1.3),
+  nextReview: z.string(),
+});
+
 export const MetaProgressionSchema = z.object({
   fragen: z.record(z.string(), FrageMetaSchema),
   stats: MetaStatsSchema,
+  bereiche: z.record(z.string(), BereichMetaSchema).default({}),
 });
 
 export const AppSettingsSchema = z.object({
-  gameMode: z.enum(['arcade', 'hardcore']),
+  gameMode: z.enum(['arcade', 'hardcore', 'exam']),
+  backupReminderEnabled: z.boolean().optional(),
+  lastBackupPrompt: z.string().optional(),
+});
+
+export const AppBackupSchema = z.object({
+  version: z.literal('1'),
+  exportedAt: z.string(),
+  settings: AppSettingsSchema,
+  metaArcade: MetaProgressionSchema,
+  metaHardcore: MetaProgressionSchema,
+  metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 }, bereiche: {} }),
+  favorites: z.array(z.string()),
+  notes: z.record(z.string(), z.string()),
+  history: z.array(z.object({
+    id: z.string(),
+    timestamp: z.string(),
+    bereiche: z.array(z.string()),
+    score: z.number(),
+    total: z.number(),
+    duration: z.number(),
+    mode: z.enum(['arcade', 'hardcore', 'exam']),
+  })),
+  srs: z.record(z.string(), SRSMetaSchema).optional().default({}),
 });
 
 const BEREICH_FILENAME: Record<string, string> = {

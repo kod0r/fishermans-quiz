@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import type { Frage, QuizRun, QuizData, GameMode } from '@/types/quiz';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
 import { RunStorage } from '@/utils/storage';
 
 export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
@@ -16,11 +16,14 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, []);
 
   // Starte neuen Run oder erweitere bestehenden
-  const starteRun = useCallback((bereiche: string[], overrideData?: QuizData, limit?: number) => {
+  const starteRun = useCallback((bereiche: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
     if (run?.isActive) {
+      // Zeitbegrenzte Runs können nicht erweitert werden
+      if (run.durationSeconds) return;
+
       // Erweitere bestehenden Run
       const combinedBereiche = [...new Set([...run.bereiche, ...bereiche])];
       const existingIds = new Set(run.frageIds);
@@ -59,6 +62,9 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         bereiche,
         aktuellerIndex: 0,
         isActive: true,
+        startedAt: new Date().toISOString(),
+        durationSeconds,
+        sessionType: sessionType ?? 'quiz',
       });
     }
   }, [quizData, run, persistRun]);
@@ -68,6 +74,17 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     setRun(prev => {
       if (!prev || prev.antworten[frageId]) return prev;
       return { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
+    });
+  }, []);
+
+  // Selbstbewertung speichern (Flashcard Mode)
+  const bewerteSelbst = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
+    setRun(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        selfAssessments: { ...(prev.selfAssessments ?? {}), [frageId]: grade },
+      };
     });
   }, []);
 
@@ -91,6 +108,48 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       return { ...prev, aktuellerIndex: index };
     });
   }, []);
+
+  const entferneBereich = useCallback((bereichId: string) => {
+    if (!run || !quizData) return;
+
+    const idsToRemove = new Set(
+      quizData.fragen.filter(f => f.bereich === bereichId).map(f => f.id)
+    );
+
+    const neueFrageIds = run.frageIds.filter(id => !idsToRemove.has(id));
+    const neueBereiche = run.bereiche.filter(b => b !== bereichId);
+
+    if (neueFrageIds.length === run.frageIds.length && neueBereiche.length === run.bereiche.length) {
+      return;
+    }
+
+    if (neueFrageIds.length === 0) {
+      persistRun(null);
+      return;
+    }
+
+    const neueAntworten: Record<string, string> = {};
+    for (const id of neueFrageIds) {
+      if (run.antworten[id] !== undefined) {
+        neueAntworten[id] = run.antworten[id];
+      }
+    }
+
+    const removedBeforeIndex = run.frageIds
+      .slice(0, run.aktuellerIndex + 1)
+      .filter(id => idsToRemove.has(id)).length;
+
+    const neuerIndex = Math.max(0, run.aktuellerIndex - removedBeforeIndex);
+    const finalIndex = Math.min(neuerIndex, neueFrageIds.length - 1);
+
+    persistRun({
+      ...run,
+      frageIds: neueFrageIds,
+      antworten: neueAntworten,
+      bereiche: neueBereiche,
+      aktuellerIndex: finalIndex,
+    });
+  }, [run, quizData, persistRun]);
 
   const unterbrecheRun = useCallback(() => {
     persistRun(null);
@@ -144,21 +203,25 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, [run, quizData, persistRun]);
 
   // Abgeleitete Daten
-  const aktiveFragen: Frage[] = run && quizData
-    ? run.frageIds.map(id => quizData.fragen.find(f => f.id === id)).filter((f): f is Frage => f !== undefined)
-    : [];
+  const aktiveFragen = useMemo<Frage[]>(() => {
+    if (!run || !quizData) return [];
+    return run.frageIds
+      .map(id => quizData.fragen.find(f => f.id === id))
+      .filter((f): f is Frage => f !== undefined);
+  }, [run, quizData]);
 
   const aktuelleFrage = aktiveFragen[run?.aktuellerIndex ?? 0] || null;
 
-  const statistiken = {
+  const statistiken = useMemo(() => ({
     beantwortet: run ? Object.keys(run.antworten).length : 0,
     korrekt: aktiveFragen.filter(f => run && run.antworten[f.id] === f.richtige_antwort).length,
     falsch: aktiveFragen.filter(f => run && f.id in run.antworten && run.antworten[f.id] !== f.richtige_antwort).length,
     gesamt: aktiveFragen.length,
-  };
+  }), [aktiveFragen, run]);
 
   return {
     run,
+    rawRun: run,
     aktiveFragen,
     aktuelleFrage,
     aktuellerIndex: run?.aktuellerIndex ?? 0,
@@ -168,9 +231,11 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     statistiken,
     starteRun,
     beantworteFrage,
+    bewerteSelbst,
     naechsteFrage,
     vorherigeFrage,
     springeZuFrage,
+    entferneBereich,
     unterbrecheRun,
   };
 }

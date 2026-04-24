@@ -14,6 +14,18 @@ export function useSettings() {
     setSettings(prev => ({ ...prev, gameMode: mode }));
   }, []);
 
+  const setBackupReminderEnabled = useCallback((enabled: boolean) => {
+    setSettings(prev => ({ ...prev, backupReminderEnabled: enabled }));
+  }, []);
+
+  const setLastBackupPrompt = useCallback((date: string) => {
+    setSettings(prev => ({ ...prev, lastBackupPrompt: date }));
+  }, []);
+
+  const importSettings = useCallback((data: AppSettings) => {
+    setSettings(data);
+  }, []);
+
   // Persistiere Settings bei Änderungen
   useEffect(() => {
     try {
@@ -27,5 +39,10 @@ export function useSettings() {
     settings,
     gameMode: settings.gameMode,
     setGameMode,
+    backupReminderEnabled: settings.backupReminderEnabled ?? false,
+    lastBackupPrompt: settings.lastBackupPrompt,
+    setBackupReminderEnabled,
+    setLastBackupPrompt,
+    importSettings,
   };
 }

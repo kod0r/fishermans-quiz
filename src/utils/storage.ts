@@ -1,4 +1,4 @@
-import type { GameMode } from '@/types/quiz';
+import type { GameMode, HistoryEntry } from '@/types/quiz';
 import { AppSettingsSchema } from '@/utils/quizLoader';
 
 // ── Legacy Keys (v2, pre-mode-split) ──
@@ -139,6 +139,7 @@ const EMPTY_META = {
     bestStreak: 0,
     currentStreak: 0,
   },
+  bereiche: {},
 };
 
 export const MetaStorage = {
@@ -154,4 +155,31 @@ export const FavoritesStorage = {
   load: (): string[] => loadJson(FAVORITES_KEY, []),
   save: (favorites: string[]) => saveJson(FAVORITES_KEY, favorites),
   clear: () => removeKey(FAVORITES_KEY),
+};
+
+// ── Notes (global, nicht modus-spezifisch) ──
+const NOTES_KEY = 'fmq:notes:v1';
+
+export const NotesStorage = {
+  load: (): Record<string, string> => loadJson(NOTES_KEY, {}),
+  save: (notes: Record<string, string>) => saveJson(NOTES_KEY, notes),
+  clear: () => removeKey(NOTES_KEY),
+};
+
+// ── History (global, nicht modus-spezifisch) ──
+const HISTORY_KEY = 'fmq:history:v1';
+
+export const HistoryStorage = {
+  load: (): HistoryEntry[] => loadJson(HISTORY_KEY, []),
+  save: (entries: HistoryEntry[]) => saveJson(HISTORY_KEY, entries),
+  clear: () => removeKey(HISTORY_KEY),
+};
+
+// ── SRS (global, nicht modus-spezifisch) ──
+const SRS_KEY = 'fmq:meta:srs:v1';
+
+export const SRSStorage = {
+  load: (): Record<string, unknown> => loadJson(SRS_KEY, {}),
+  save: (data: Record<string, unknown>) => saveJson(SRS_KEY, data),
+  clear: () => removeKey(SRS_KEY),
 };

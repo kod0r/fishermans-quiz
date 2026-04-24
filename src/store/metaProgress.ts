@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import type { FrageMeta, MetaProgression, GameMode } from '@/types/quiz';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+import type { FrageMeta, BereichMeta, MetaProgression, GameMode } from '@/types/quiz';
 import { MetaStorage } from '@/utils/storage';
 
 const EMPTY: MetaProgression = Object.freeze({
@@ -12,14 +12,19 @@ const EMPTY: MetaProgression = Object.freeze({
     bestStreak: 0,
     currentStreak: 0,
   }),
+  bereiche: {},
 });
 
 export function useMetaProgress(gameMode: GameMode) {
-  const [meta, setMeta] = useState<MetaProgression>(() => MetaStorage.load(gameMode));
+  const [meta, setMeta] = useState<MetaProgression>(() => {
+    const loaded = MetaStorage.load(gameMode);
+    return { ...loaded, bereiche: loaded.bereiche ?? {} };
+  });
 
   // Wenn sich der Modus ändert → neu laden
   useEffect(() => {
-    setMeta(MetaStorage.load(gameMode));
+    const loaded = MetaStorage.load(gameMode);
+    setMeta({ ...loaded, bereiche: loaded.bereiche ?? {} });
   }, [gameMode]);
 
   const persist = useCallback((next: MetaProgression) => {
@@ -51,7 +56,7 @@ export function useMetaProgress(gameMode: GameMode) {
         stats.currentStreak = 0;
       }
 
-      return { fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
+      return { ...prev, fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
     });
   }, []);
 
@@ -59,6 +64,24 @@ export function useMetaProgress(gameMode: GameMode) {
   const recordRunStart = useCallback(() => {
     setMeta(prev => {
       return { ...prev, stats: { ...prev.stats, totalRuns: prev.stats.totalRuns + 1 } };
+    });
+  }, []);
+
+  // Bereich-Result speichern (Hardcore)
+  const recordBereichResult = useCallback((bereichId: string, passed: boolean) => {
+    setMeta(prev => {
+      const existing = prev.bereiche[bereichId];
+      const consecutivePasses = passed ? (existing?.consecutivePasses || 0) + 1 : 0;
+      const bereichMeta: BereichMeta = {
+        passed,
+        consecutivePasses,
+        mastered: consecutivePasses >= 3,
+        lastAttempt: new Date().toISOString(),
+      };
+      return {
+        ...prev,
+        bereiche: { ...prev.bereiche, [bereichId]: bereichMeta },
+      };
     });
   }, []);
 
@@ -82,8 +105,23 @@ export function useMetaProgress(gameMode: GameMode) {
   }, [meta, gameMode]);
 
   // Abgeleitete Werte
-  const meisterCount = Object.values(meta.fragen).filter(m => m.correctStreak >= 3).length;
-  const lernCount = Object.values(meta.fragen).filter(m => m.attempts > 0 && m.correctStreak < 3).length;
+  const meisterCount = useMemo(() =>
+    Object.values(meta.fragen).filter(m => m.correctStreak >= 3).length,
+    [meta.fragen]
+  );
+  const lernCount = useMemo(() =>
+    Object.values(meta.fragen).filter(m => m.attempts > 0 && m.correctStreak < 3).length,
+    [meta.fragen]
+  );
+
+  const bestandeneBereicheHardcore = useMemo(() =>
+    Object.values(meta.bereiche ?? {}).filter(b => b.passed).length,
+    [meta.bereiche]
+  );
+  const gemeisterteBereicheHardcore = useMemo(() =>
+    Object.values(meta.bereiche ?? {}).filter(b => b.mastered).length,
+    [meta.bereiche]
+  );
 
   const getFrageMeta = useCallback((frageId: string): FrageMeta | undefined => {
     return meta.fragen[frageId];
@@ -93,8 +131,11 @@ export function useMetaProgress(gameMode: GameMode) {
     meta,
     meisterCount,
     lernCount,
+    bestandeneBereicheHardcore,
+    gemeisterteBereicheHardcore,
     recordAnswer,
     recordRunStart,
+    recordBereichResult,
     reset,
     getFrageMeta,
     importData,

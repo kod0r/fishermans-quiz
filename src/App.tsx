@@ -4,7 +4,9 @@ import { TopNavBar } from '@/components/TopNavBar';
 import { Spinner } from '@/components/ui/spinner';
 import StartView from '@/views/StartView';
 import QuizView from '@/views/QuizView';
+import FlashcardView from '@/views/FlashcardView';
 import ProgressView from '@/views/ProgressView';
+import HistoryView from '@/views/HistoryView';
 
 export default function App() {
   const quiz = useQuiz();
@@ -66,14 +68,20 @@ export default function App() {
       />
 
       {currentView === 'quiz' && isQuizActive && (
-        <QuizView quiz={quiz} />
+        quiz.rawRun?.sessionType === 'flashcard'
+          ? <FlashcardView quiz={quiz} />
+          : <QuizView quiz={quiz} />
       )}
 
       {currentView === 'progress' && isQuizActive && (
         <ProgressView quiz={quiz} />
       )}
 
-      {(currentView === 'start' || !isQuizActive) && (
+      {currentView === 'history' && (
+        <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />
+      )}
+
+      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && (
         <StartView quiz={quiz} />
       )}
     </>

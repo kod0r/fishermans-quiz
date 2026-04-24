@@ -29,10 +29,15 @@ export function useFavorites() {
     setFavorites([]);
   }, []);
 
+  const importFavorites = useCallback((data: string[]) => {
+    setFavorites(data);
+  }, []);
+
   return {
     favorites,
     toggleFavorite,
     isFavorite,
     resetFavorites,
+    importFavorites,
   };
 }
