@@ -2,17 +2,17 @@ import { useState, useCallback, useEffect } from 'react';
 import type { FrageMeta, MetaProgression, GameMode } from '@/types/quiz';
 import { MetaStorage } from '@/utils/storage';
 
-const EMPTY: MetaProgression = {
+const EMPTY: MetaProgression = Object.freeze({
   fragen: {},
-  stats: {
+  stats: Object.freeze({
     totalRuns: 0,
     totalQuestionsAnswered: 0,
     totalCorrect: 0,
     totalIncorrect: 0,
     bestStreak: 0,
     currentStreak: 0,
-  },
-};
+  }),
+});
 
 export function useMetaProgress(gameMode: GameMode) {
   const [meta, setMeta] = useState<MetaProgression>(() => MetaStorage.load(gameMode));

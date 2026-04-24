@@ -150,7 +150,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   const statistiken = {
     beantwortet: run ? Object.keys(run.antworten).length : 0,
     korrekt: aktiveFragen.filter(f => run && run.antworten[f.id] === f.richtige_antwort).length,
-    falsch: aktiveFragen.filter(f => run && run.antworten[f.id] && run.antworten[f.id] !== f.richtige_antwort).length,
+    falsch: aktiveFragen.filter(f => run && f.id in run.antworten && run.antworten[f.id] !== f.richtige_antwort).length,
     gesamt: aktiveFragen.length,
   };
 
