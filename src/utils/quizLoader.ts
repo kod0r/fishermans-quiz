@@ -33,6 +33,32 @@ const BereichDataSchema = z.object({
 
 export type QuizMeta = z.infer<typeof QuizMetaSchema>;
 
+const FrageMetaSchema = z.object({
+  attempts: z.number().int().nonnegative(),
+  correctStreak: z.number().int().nonnegative(),
+  lastResult: z.enum(['correct', 'incorrect']).nullable(),
+  firstSeen: z.string(),
+  lastAttempt: z.string(),
+});
+
+const MetaStatsSchema = z.object({
+  totalRuns: z.number().int().nonnegative(),
+  totalQuestionsAnswered: z.number().int().nonnegative(),
+  totalCorrect: z.number().int().nonnegative(),
+  totalIncorrect: z.number().int().nonnegative(),
+  bestStreak: z.number().int().nonnegative(),
+  currentStreak: z.number().int().nonnegative(),
+});
+
+export const MetaProgressionSchema = z.object({
+  fragen: z.record(z.string(), FrageMetaSchema),
+  stats: MetaStatsSchema,
+});
+
+export const AppSettingsSchema = z.object({
+  gameMode: z.enum(['arcade', 'hardcore']),
+});
+
 const BEREICH_FILENAME: Record<string, string> = {
   'Biologie': 'biologie.json',
   'Gewässerkunde': 'gewaesserkunde.json',

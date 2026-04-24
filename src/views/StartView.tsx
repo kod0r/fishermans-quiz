@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, Trash2, CheckCircle, Star, Download, Upload, FileJson } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
+import { MetaProgressionSchema } from '@/utils/quizLoader';
+import { buildCsv } from '@/utils/csvExport';
 
 const BEREICHE = [
   { id: 'Biologie', label: 'Biologie', anzahl: 319, icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
@@ -68,9 +70,9 @@ export default function StartView({ quiz }: Props) {
     quiz.starteQuiz(effektivAusgewaehlt, nurFavoriten);
   };
 
-  const gesamtFragen = BEREICHE
-    .filter(b => effektivAusgewaehlt.includes(b.id))
-    .reduce((s, b) => s + b.anzahl, 0);
+  const gesamtFragen = effektivAusgewaehlt.reduce((sum, bereichId) => {
+    return sum + (quiz.quizMeta?.meta.bereiche[bereichId] ?? 0);
+  }, 0);
 
   return (
     <TooltipProvider delayDuration={800}>
@@ -177,12 +179,14 @@ export default function StartView({ quiz }: Props) {
                     reader.onload = (ev) => {
                       try {
                         const data = JSON.parse(ev.target?.result as string);
-                        if (data.fragen && data.stats) {
+                        const parsed = MetaProgressionSchema.safeParse(data);
+                        if (parsed.success) {
                           if (confirm('Lerndaten aus Datei importieren? Dies überschreibt den aktuellen Fortschritt.')) {
-                            quiz.importMetaProgression?.(data);
+                            quiz.importMetaProgression?.(parsed.data);
                           }
                         } else {
-                          alert('Ungültiges Dateiformat.');
+                          console.error('[Import] Validierung fehlgeschlagen:', parsed.error.format());
+                          alert('Ungültiges Dateiformat. Die Datei enthält keine gültigen Lerndaten.');
                         }
                       } catch {
                         alert('Fehler beim Lesen der Datei.');
@@ -231,7 +235,7 @@ export default function StartView({ quiz }: Props) {
                             m.lastAttempt,
                           ]),
                         ];
-                        const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+                        const csv = buildCsv(rows);
                         const blob = new Blob([csv], { type: 'text/csv' });
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
@@ -337,7 +341,7 @@ export default function StartView({ quiz }: Props) {
                           <p className="text-slate-900 font-medium text-sm truncate dark:text-white">{b.label}</p>
                           {inRun && <span className="px-1 py-0 rounded text-[9px] bg-teal-500/20 text-teal-600 border border-teal-500/30 flex-shrink-0 dark:text-teal-400">AKTIV</span>}
                         </div>
-                        <p className="text-slate-500 text-xs dark:text-slate-400">{b.anzahl} Fragen</p>
+                        <p className="text-slate-500 text-xs dark:text-slate-400">{(quiz.quizMeta?.meta.bereiche[b.id] ?? 0)} Fragen</p>
                       </div>
                     </div>
                   );

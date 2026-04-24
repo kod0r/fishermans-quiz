@@ -7,7 +7,7 @@ export interface Frage {
     B: string;
     C: string;
   };
-  richtige_antwort: string;
+  richtige_antwort: 'A' | 'B' | 'C';
   bild?: boolean;
   bild_url?: string;
 }

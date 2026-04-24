@@ -41,4 +41,12 @@ describe('useSettings', () => {
 
     expect(result.current.gameMode).toBe('hardcore');
   });
+
+  it('sollte bei korruptem localStorage auf Defaults zurückfallen', () => {
+    localStorage.setItem('fmq:settings:v1', JSON.stringify({ gameMode: 'invalid_mode' }));
+
+    const { result } = renderHook(() => useSettings());
+
+    expect(result.current.gameMode).toBe('arcade');
+  });
 });

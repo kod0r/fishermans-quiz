@@ -118,7 +118,7 @@ export default function ProgressView({ quiz }: Props) {
                         </div>
                         <div className="space-y-0.5 text-xs sm:text-sm">
                            <p className="text-red-600 dark:text-red-400">Deine Antwort: {antworten[frage.id]} — {frage.antworten[antworten[frage.id] as 'A' | 'B' | 'C']}</p>
-                           <p className="text-emerald-600 dark:text-emerald-400">Richtig: {frage.richtige_antwort} — {frage.antworten[frage.richtige_antwort as 'A' | 'B' | 'C']}</p>
+                           <p className="text-emerald-600 dark:text-emerald-400">Richtig: {frage.richtige_antwort} — {frage.antworten[frage.richtige_antwort]}</p>
                           {meta && <p className="text-slate-500 text-[10px] mt-1">Bisher {meta.attempts}×, Serie: {meta.correctStreak}</p>}
                         </div>
                       </div>

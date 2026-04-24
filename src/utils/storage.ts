@@ -1,4 +1,5 @@
 import type { GameMode } from '@/types/quiz';
+import { AppSettingsSchema } from '@/utils/quizLoader';
 
 // ── Legacy Keys (v2, pre-mode-split) ──
 const LEGACY_KEY_RUN = 'fmq:run:v2';
@@ -107,7 +108,15 @@ const DEFAULT_SETTINGS = {
 };
 
 export const SettingsStorage = {
-  load: () => loadJson(STORAGE_KEY_SETTINGS, DEFAULT_SETTINGS),
+  load: () => {
+    const raw = loadJson<unknown>(STORAGE_KEY_SETTINGS, DEFAULT_SETTINGS);
+    const parsed = AppSettingsSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.warn('[Storage] Ungültige Settings im localStorage, verwende Defaults:', parsed.error.format());
+      return DEFAULT_SETTINGS;
+    }
+    return parsed.data;
+  },
   save: (settings: unknown) => saveJson(STORAGE_KEY_SETTINGS, settings),
   clear: () => removeKey(STORAGE_KEY_SETTINGS),
 };
