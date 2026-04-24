@@ -59,7 +59,7 @@ export function useQuiz() {
   }, [run, meta]);
 
   // Starten: Lazy Loading der Bereichs-Fragen
-  const starteQuiz = useCallback(async (bereiche: string[], nurFavoriten = false) => {
+  const starteQuiz = useCallback(async (bereiche: string[], nurFavoriten = false, limit?: number) => {
     if (!quizMeta) return;
 
     let data = quizData;
@@ -90,7 +90,7 @@ export function useQuiz() {
     }
 
     const isNewRun = !run.isActive;
-    run.starteRun(bereiche, filteredData);
+    run.starteRun(bereiche, filteredData, limit);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
   }, [run, meta, quizData, quizMeta, fav.favorites]);

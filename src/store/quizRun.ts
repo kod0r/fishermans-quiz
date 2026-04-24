@@ -16,7 +16,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, []);
 
   // Starte neuen Run oder erweitere bestehenden
-  const starteRun = useCallback((bereiche: string[], overrideData?: QuizData) => {
+  const starteRun = useCallback((bereiche: string[], overrideData?: QuizData, limit?: number) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
@@ -50,8 +50,11 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
       }
 
+      // Limit erst nach dem Shuffle anwenden, damit die Subset-Auswahl zufällig ist
+      const finalPool = limit && limit > 0 ? gemischt.slice(0, limit) : gemischt;
+
       persistRun({
-        frageIds: gemischt.map(f => f.id),
+        frageIds: finalPool.map(f => f.id),
         antworten: {},
         bereiche,
         aktuellerIndex: 0,

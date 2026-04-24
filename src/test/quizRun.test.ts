@@ -295,4 +295,53 @@ describe('useQuizRun', () => {
     expect(result2.current.aktuellerIndex).toBe(0);
     expect(result2.current.aktiveFragen.length).toBe(1);
   });
+
+  it('sollte Limit nach dem Shuffle anwenden (Issue #115)', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    // Mock Math.random so it always returns 0 -> predictable shuffle
+    const originalRandom = Math.random;
+    Math.random = () => 0;
+
+    act(() => {
+      result.current.starteRun(['Biologie', 'Recht'], undefined, 2);
+    });
+
+    Math.random = originalRandom;
+
+    // With always-0 random, Fisher-Yates on [1,2,3,4,5,6] produces [2,3,4,5,6,1]
+    // slice(0, 2) should give [2, 3], not [1, 2]
+    expect(result.current.aktiveFragen.length).toBe(2);
+    const ids = result.current.aktiveFragen.map(f => f.id);
+    expect(ids).toEqual(['2', '3']);
+  });
+
+  it('sollte bei Erweiterung kein Limit anwenden (Issue #115)', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie'], undefined, 2);
+    });
+
+    expect(result.current.aktiveFragen.length).toBe(2);
+
+    act(() => {
+      result.current.starteRun(['Recht'], undefined, 2);
+    });
+
+    // Extension should add all 3 Recht questions, not limit to 2
+    expect(result.current.aktiveFragen.length).toBe(5);
+    expect(result.current.geladeneBereiche).toContain('Biologie');
+    expect(result.current.geladeneBereiche).toContain('Recht');
+  });
+
+  it('sollte ohne Limit alle Fragen verwenden (Issue #115)', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie', 'Recht']);
+    });
+
+    expect(result.current.aktiveFragen.length).toBe(6);
+  });
 });
