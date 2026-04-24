@@ -11,12 +11,17 @@ export function useSettings() {
   const [settings, setSettings] = useState<AppSettings>(() => SettingsStorage.load());
 
   const setGameMode = useCallback((mode: GameMode) => {
-    setSettings(prev => {
-      const next = { ...prev, gameMode: mode };
-      SettingsStorage.save(next);
-      return next;
-    });
+    setSettings(prev => ({ ...prev, gameMode: mode }));
   }, []);
+
+  // Persistiere Settings bei Änderungen
+  useEffect(() => {
+    try {
+      SettingsStorage.save(settings);
+    } catch {
+      // Silently ignore storage errors to avoid blocking UI updates
+    }
+  }, [settings]);
 
   return {
     settings,

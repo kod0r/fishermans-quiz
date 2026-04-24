@@ -24,8 +24,7 @@ export function useMetaProgress(gameMode: GameMode) {
 
   const persist = useCallback((next: MetaProgression) => {
     setMeta(next);
-    MetaStorage.save(gameMode, next);
-  }, [gameMode]);
+  }, []);
 
   // Einzelne Antwort verarbeiten
   const recordAnswer = useCallback((frageId: string, isCorrect: boolean) => {
@@ -52,20 +51,16 @@ export function useMetaProgress(gameMode: GameMode) {
         stats.currentStreak = 0;
       }
 
-      const next = { fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
-      MetaStorage.save(gameMode, next);
-      return next;
+      return { fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
     });
-  }, [gameMode]);
+  }, []);
 
   // Neuer Durchlauf gestartet
   const recordRunStart = useCallback(() => {
     setMeta(prev => {
-      const next = { ...prev, stats: { ...prev.stats, totalRuns: prev.stats.totalRuns + 1 } };
-      MetaStorage.save(gameMode, next);
-      return next;
+      return { ...prev, stats: { ...prev.stats, totalRuns: prev.stats.totalRuns + 1 } };
     });
-  }, [gameMode]);
+  }, []);
 
   // Komplett zurücksetzen
   const reset = useCallback(() => {
@@ -76,6 +71,15 @@ export function useMetaProgress(gameMode: GameMode) {
   const importData = useCallback((data: MetaProgression) => {
     persist(data);
   }, [persist]);
+
+  // Persistiere Meta bei Änderungen
+  useEffect(() => {
+    try {
+      MetaStorage.save(gameMode, meta);
+    } catch {
+      // Silently ignore storage errors to avoid blocking UI updates
+    }
+  }, [meta, gameMode]);
 
   // Abgeleitete Werte
   const meisterCount = Object.values(meta.fragen).filter(m => m.correctStreak >= 3).length;

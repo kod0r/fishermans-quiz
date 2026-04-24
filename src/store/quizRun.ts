@@ -13,9 +13,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   // Persistiere Run bei Änderungen
   const persistRun = useCallback((next: QuizRun | null) => {
     setRun(next);
-    if (next) RunStorage.save(gameMode, next);
-    else RunStorage.clear(gameMode);
-  }, [gameMode]);
+  }, []);
 
   // Starte neuen Run oder erweitere bestehenden
   const starteRun = useCallback((bereiche: string[], overrideData?: QuizData) => {
@@ -66,42 +64,51 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   const beantworteFrage = useCallback((frageId: string, antwort: string) => {
     setRun(prev => {
       if (!prev || prev.antworten[frageId]) return prev;
-      const next = { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
-      RunStorage.save(gameMode, next);
-      return next;
+      return { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
     });
-  }, [gameMode]);
+  }, []);
 
   const naechsteFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex >= prev.frageIds.length - 1) return prev;
-      const next = { ...prev, aktuellerIndex: prev.aktuellerIndex + 1 };
-      RunStorage.save(gameMode, next);
-      return next;
+      return { ...prev, aktuellerIndex: prev.aktuellerIndex + 1 };
     });
-  }, [gameMode]);
+  }, []);
 
   const vorherigeFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex <= 0) return prev;
-      const next = { ...prev, aktuellerIndex: prev.aktuellerIndex - 1 };
-      RunStorage.save(gameMode, next);
-      return next;
+      return { ...prev, aktuellerIndex: prev.aktuellerIndex - 1 };
     });
-  }, [gameMode]);
+  }, []);
 
   const springeZuFrage = useCallback((index: number) => {
     setRun(prev => {
       if (!prev || index < 0 || index >= prev.frageIds.length) return prev;
-      const next = { ...prev, aktuellerIndex: index };
-      RunStorage.save(gameMode, next);
-      return next;
+      return { ...prev, aktuellerIndex: index };
     });
-  }, [gameMode]);
+  }, []);
 
   const unterbrecheRun = useCallback(() => {
     persistRun(null);
   }, [persistRun]);
+
+  // Persistiere Run bei Änderungen
+  useEffect(() => {
+    if (run) {
+      try {
+        RunStorage.save(gameMode, run);
+      } catch {
+        // Silently ignore storage errors to avoid blocking UI updates
+      }
+    } else {
+      try {
+        RunStorage.clear(gameMode);
+      } catch {
+        // Silently ignore storage errors
+      }
+    }
+  }, [run, gameMode]);
 
   // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
   useEffect(() => {
@@ -113,6 +120,10 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     if (fehlendeIds.length > 0) {
       console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
       const bereinigteIds = run.frageIds.filter(id => vorhandeneIds.has(id));
+      if (bereinigteIds.length === 0) {
+        persistRun(null);
+        return;
+      }
       const bereinigteAntworten: Record<string, string> = {};
       for (const id of bereinigteIds) {
         if (run.antworten[id] !== undefined) {
