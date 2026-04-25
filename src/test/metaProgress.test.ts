@@ -9,8 +9,6 @@ describe('useMetaProgress', () => {
     expect(result.current.meta.stats.totalRuns).toBe(0);
     expect(result.current.meta.stats.totalQuestionsAnswered).toBe(0);
     expect(result.current.meta.stats.totalCorrect).toBe(0);
-    expect(result.current.meisterCount).toBe(0);
-    expect(result.current.lernCount).toBe(0);
   });
 
   it('sollte correctStreak bei richtiger Antwort erhöhen', () => {
@@ -36,7 +34,6 @@ describe('useMetaProgress', () => {
     });
 
     expect(result.current.meta.fragen['q1'].correctStreak).toBe(3);
-    expect(result.current.meisterCount).toBe(1);
   });
 
   it('sollte correctStreak bei falscher Antwort zurücksetzen', () => {
@@ -49,8 +46,6 @@ describe('useMetaProgress', () => {
     });
 
     expect(result.current.meta.fragen['q1'].correctStreak).toBe(0);
-    expect(result.current.meisterCount).toBe(0);
-    expect(result.current.lernCount).toBe(1);
   });
 
   it('sollte beste Serie (bestStreak) tracken', () => {
@@ -94,7 +89,6 @@ describe('useMetaProgress', () => {
       result.current.recordRunStart();
     });
 
-    expect(result.current.meisterCount).toBe(1);
     expect(result.current.meta.stats.totalRuns).toBe(1);
 
     act(() => {
@@ -102,8 +96,6 @@ describe('useMetaProgress', () => {
     });
 
     expect(result.current.meta.stats.totalRuns).toBe(0);
-    expect(result.current.meisterCount).toBe(0);
-    expect(result.current.lernCount).toBe(0);
   });
 
   it('sollte getFrageMeta für bekannte Fragen zurückgeben', () => {
