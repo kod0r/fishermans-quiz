@@ -17,7 +17,8 @@
     "release:check": "npm run lint && npm run test:run && npm run build",
     "prerelease": "npm run release:check",
     "release": "npm run prerelease && npm version",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "push:this": "bash .devcontainer/push-this.sh"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
