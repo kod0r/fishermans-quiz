@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
+import type { MenuPageId } from '@/components/game-menu/menuConfig';
 
-export type MenuPageId = 'root' | 'settings' | 'navigation' | 'run-actions';
+export type { MenuPageId } from '@/components/game-menu/menuConfig';
 
 interface GameMenuState {
   isOpen: boolean;

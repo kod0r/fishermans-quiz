@@ -19,6 +19,7 @@ const pageTitles: Record<MenuPageId, string> = {
   settings: 'Einstellungen',
   navigation: 'Navigation',
   'run-actions': 'Run-Aktionen',
+  data: 'Backup & Daten',
 };
 
 export function GameMenuOverlay({
