@@ -11,6 +11,7 @@ describe('quizLoader', () => {
     const mockMeta = {
       meta: { titel: 'Test', anzahl_fragen: 10, bereiche: { Biologie: 10 } },
       bereiche: ['Biologie'],
+      bereichFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
 
@@ -28,6 +29,12 @@ describe('quizLoader', () => {
   });
 
   it('sollte Bereichs-Fragen laden', async () => {
+    const mockMeta = {
+      meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
+      bereiche: ['Biologie'],
+      bereichFiles: { 'Biologie': 'biologie.json' },
+      fragenIndex: { '1': 'Biologie' },
+    };
     const mockFragen = {
       bereich: 'Biologie',
       fragen: [
@@ -36,6 +43,9 @@ describe('quizLoader', () => {
     };
 
     vi.stubGlobal('fetch', vi.fn((url: string) => {
+      if (url.includes('quiz_meta.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
+      }
       if (url.includes('biologie.json')) {
         return Promise.resolve({
           ok: true,
@@ -52,6 +62,12 @@ describe('quizLoader', () => {
   });
 
   it('sollte geladene Bereiche cachen', async () => {
+    const mockMeta = {
+      meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
+      bereiche: ['Biologie'],
+      bereichFiles: { 'Biologie': 'biologie.json' },
+      fragenIndex: { '1': 'Biologie' },
+    };
     const mockFragen = {
       bereich: 'Biologie',
       fragen: [
@@ -60,6 +76,9 @@ describe('quizLoader', () => {
     };
 
     const fetchMock = vi.fn((url: string) => {
+      if (url.includes('quiz_meta.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
+      }
       if (url.includes('biologie.json')) {
         return Promise.resolve({
           ok: true,
@@ -76,14 +95,15 @@ describe('quizLoader', () => {
     // Zweiter Aufruf (sollte aus Cache kommen)
     await loadBereichsFragen(['Biologie']);
 
-    // Fetch sollte nur einmal aufgerufen worden sein
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    // Fetch sollte 2x aufgerufen (1x meta, 1x biologie.json)
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('sollte QuizData aus Bereichen bauen', async () => {
     const mockMeta = {
       meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
       bereiche: ['Biologie'],
+      bereichFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
 
@@ -111,7 +131,19 @@ describe('quizLoader', () => {
   });
 
   it('sollte Fehler bei unbekanntem Bereich werfen', async () => {
-    vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ ok: false, status: 404 } as Response)));
+    const mockMeta = {
+      meta: { titel: 'Test', anzahl_fragen: 0, bereiche: {} },
+      bereiche: [],
+      bereichFiles: {},
+      fragenIndex: {},
+    };
+
+    vi.stubGlobal('fetch', vi.fn((url: string) => {
+      if (url.includes('quiz_meta.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
+      }
+      return Promise.resolve({ ok: false, status: 404 } as Response);
+    }));
 
     await expect(loadBereichsFragen(['Unbekannt'])).rejects.toThrow('Unbekannter Bereich');
   });

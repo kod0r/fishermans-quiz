@@ -19,6 +19,7 @@ const mockQuizData: QuizData = {
 const mockMeta = {
   meta: { titel: 'Test', anzahl_fragen: 3, bereiche: { Biologie: 3 } },
   bereiche: ['Biologie'],
+  bereichFiles: { 'Biologie': 'biologie.json' },
   fragenIndex: { '1': 'Biologie', '2': 'Biologie', '3': 'Biologie' },
 };
 
