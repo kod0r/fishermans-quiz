@@ -51,6 +51,7 @@ describe('AppBackupSchema', () => {
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
         bereiche: {},
       },
+      bereichFiles: { 'Biologie': 'biologie.json' },
       favorites: ['f1', 'f2'],
       notes: { f1: 'Notiz' },
       history: [
@@ -70,6 +71,7 @@ describe('AppBackupSchema', () => {
       metaHardcore: {},
       favorites: [],
       notes: {},
+      srs: {},
       history: [],
     };
     const parsed = AppBackupSchema.safeParse(backup);
@@ -91,8 +93,10 @@ describe('AppBackupSchema', () => {
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
         bereiche: {},
       },
+      bereichFiles: {},
       favorites: [],
       notes: {},
+      srs: {},
       history: [],
     };
     const parsed = AppBackupSchema.safeParse(backup);

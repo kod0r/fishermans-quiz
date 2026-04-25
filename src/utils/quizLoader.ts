@@ -23,6 +23,7 @@ const QuizMetaSchema = z.object({
     bereiche: z.record(z.string(), z.number().int().nonnegative()),
   }),
   bereiche: z.array(z.string()),
+  bereichFiles: z.record(z.string(), z.string()),  // Bereich name → filename
   fragenIndex: z.record(z.string(), z.string()),
 });
 
@@ -83,6 +84,7 @@ export const AppBackupSchema = z.object({
   metaArcade: MetaProgressionSchema,
   metaHardcore: MetaProgressionSchema,
   metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 }, bereiche: {} }),
+  bereichFiles: z.record(z.string(), z.string()),  // Bereich name → filename
   favorites: z.array(z.string()),
   notes: z.record(z.string(), z.string()),
   history: z.array(z.object({
@@ -96,15 +98,6 @@ export const AppBackupSchema = z.object({
   })),
   srs: z.record(z.string(), SRSMetaSchema).optional().default({}),
 });
-
-const BEREICH_FILENAME: Record<string, string> = {
-  'Biologie': 'biologie.json',
-  'Gewässerkunde': 'gewaesserkunde.json',
-  'Gewässerpflege': 'gewaesserpflege.json',
-  'Fanggeräte und -methoden': 'fanggeraete_und__methoden.json',
-  'Recht': 'recht.json',
-  'Bilderkennung': 'bilderkennung.json',
-};
 
 let metaCache: QuizMeta | null = null;
 const fragenCache: Map<string, Frage[]> = new Map();
@@ -138,11 +131,12 @@ export async function loadBereichsFragen(bereiche: string[]): Promise<Frage[]> {
   const zuLaden = bereiche.filter(b => !fragenCache.has(b));
 
   if (zuLaden.length > 0) {
+    const meta = await loadQuizMeta();
     const promises = zuLaden.map(async (bereich) => {
-      const filename = BEREICH_FILENAME[bereich];
-      if (!filename) throw new Error(`Unbekannter Bereich: ${bereich}`);
+      const filename = meta.bereichFiles[bereich];
+      if (!filename) throw new Error(`Unbekannter Bereich: ${bereich}. Kein Dateiname in den Metadaten gefunden.`);
 
-const res = await fetch(`${import.meta.env.BASE_URL}data/bereiche/${filename}`);
+      const res = await fetch(`${import.meta.env.BASE_URL}data/bereiche/${filename}`);
       if (!res.ok) throw new Error(`Bereich ${bereich} laden fehlgeschlagen: ${res.status}`);
 
       const raw = await res.json();
