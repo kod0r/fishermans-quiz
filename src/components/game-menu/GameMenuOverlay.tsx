@@ -79,7 +79,7 @@ export function GameMenuOverlay({
 
       if (config?.customComponent) {
         const Component = config.customComponent;
-        return <Component />;
+        return <Component quiz={quiz} onClose={onClose} onPop={onPop} onPush={onPush} />;
       }
 
       if (config?.sections) {
