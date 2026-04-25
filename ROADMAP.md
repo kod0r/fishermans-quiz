@@ -1,54 +1,48 @@
-# ROADMAP
+<!-- CUSTOM-ANNOTATIONS: Start -->
 
-> **Living Document:** Overview of planned, ongoing, and completed work.
->
-> **IMPORTANT:** GitHub Issues are the single source of truth for tracking.
-> This ROADMAP is a readable overview — no separate numbering.
-
----
-
-## 🔄 Workflow
-
-```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Idea      │────→│ GitHub Issue │────→│   Commit    │────→│  CHANGELOG  │
-│  (ROADMAP)  │     │ (Tracking)   │     │ (Implementation) │     │ (Release)   │
-└─────────────┘     └──────────────┘     └─────────────┘     └─────────────┘
-```
-
-### Rules
-
-1. **Every feature starts as a GitHub Issue** — not as a ROADMAP entry with its own number
-2. **ROADMAP has NO own IDs** — only links to GitHub Issues (`#1`, `#2`, …)
-3. **Commits reference GitHub Issues** — `feat(ui): description (#42)`
-4. **When an issue is completed:** Move to "Done" in ROADMAP + date
-5. **When an issue becomes obsolete:** Close on GitHub + remove from ROADMAP
-
----
+<!-- CUSTOM-ANNOTATIONS: End -->
 
 ## 🚧 In Progress
-
 —
 
----
-
 ## 📋 Planned (Backlog)
-
 | Topic | GitHub Issue | Priority |
-|-------|-------------|-----------|
+|-------|-------------|----------|
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
-| Dunkel-/Hell-Modus Umschaltung | [#7](https://github.com/kod0r/fishermans-quiz/issues/7) | low |
 | Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | medium |
+| Global Keyboard Shortcuts | [#81](https://github.com/kod0r/fishermans-quiz/issues/81) | low |
+| Custom Study Decks | [#83](https://github.com/kod0r/fishermans-quiz/issues/83) | medium |
+| Image Zoom & Pan | [#84](https://github.com/kod0r/fishermans-quiz/issues/84) | low |
+| Daily Challenge Streak | [#88](https://github.com/kod0r/fishermans-quiz/issues/88) | low |
+| Bereich Mastery Badges | [#102](https://github.com/kod0r/fishermans-quiz/issues/102) | low |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
----
-
 ## ✅ Done
-
 | Topic | GitHub Issue | Date |
-|-------|-------------|-------|
+|-------|-------------|------|
+| Question Search & Filter | [#82](https://github.com/kod0r/fishermans-quiz/issues/82) | 2026-04-24 |
+| Exam Mode Shuffle Fix | [#115](https://github.com/kod0r/fishermans-quiz/issues/115) | 2026-04-24 |
+| SRS UI — Due for Review | [#114](https://github.com/kod0r/fishermans-quiz/issues/114) | 2026-04-24 |
+| SRS Engine Integration | [#113](https://github.com/kod0r/fishermans-quiz/issues/113) | 2026-04-24 |
+| SRS Data Model & Storage | [#112](https://github.com/kod0r/fishermans-quiz/issues/112) | 2026-04-24 |
+| Test warnings fix | [#111](https://github.com/kod0r/fishermans-quiz/issues/111) | 2026-04-24 |
+| Memoize derived stats / QuizView split | [#110](https://github.com/kod0r/fishermans-quiz/issues/110) | 2026-04-24 |
+| Zod validation for imports | [#109](https://github.com/kod0r/fishermans-quiz/issues/109) | 2026-04-24 |
+| Service Worker (Offline-First) | [#104](https://github.com/kod0r/fishermans-quiz/issues/104) | 2026-04-24 |
+| Data: Auto-Backup / Sync | [#87](https://github.com/kod0r/fishermans-quiz/issues/87) | 2026-04-24 |
+| Data: Per-Question Notes | [#86](https://github.com/kod0r/fishermans-quiz/issues/86) | 2026-04-24 |
+| Data: Session History Log | [#85](https://github.com/kod0r/fishermans-quiz/issues/85) | 2026-04-24 |
+| Flashcard Mode | [#80](https://github.com/kod0r/fishermans-quiz/issues/80) | 2026-04-24 |
+| Weakness Trainer | [#79](https://github.com/kod0r/fishermans-quiz/issues/79) | 2026-04-24 |
+| Exam Simulation Mode | [#78](https://github.com/kod0r/fishermans-quiz/issues/78) | 2026-04-24 |
+| Spaced Repetition Engine | [#77](https://github.com/kod0r/fishermans-quiz/issues/77) | 2026-04-24 |
+| QuizView touch targets and ARIA | [#76](https://github.com/kod0r/fishermans-quiz/issues/76) | 2026-04-24 |
+| ProgressView contrast in light mode | [#75](https://github.com/kod0r/fishermans-quiz/issues/75) | 2026-04-24 |
+| TopNavBar touch targets and ARIA | [#74](https://github.com/kod0r/fishermans-quiz/issues/74) | 2026-04-24 |
+| Loading text contrast in light mode | [#73](https://github.com/kod0r/fishermans-quiz/issues/73) | 2026-04-24 |
+| Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | 2026-04-24 |
 | Upgrade zu Vite 8 + @vitejs/plugin-react 6 | [#37](https://github.com/kod0r/fishermans-quiz/issues/37) | 2026-04-21 |
 | Upgrade zu ESLint 10 + @eslint/js 10 | [#38](https://github.com/kod0r/fishermans-quiz/issues/38) | 2026-04-21 |
 | Evaluierung recharts 3.x Migration | [#39](https://github.com/kod0r/fishermans-quiz/issues/39) | 2026-04-21 |
@@ -76,21 +70,10 @@
 | Release-Validation Scripts | [#23](https://github.com/kod0r/fishermans-quiz/issues/23) | 2026-04-20 |
 | Kim-Hook durch verbale Approval-Workflow ersetzt | [#15](https://github.com/kod0r/fishermans-quiz/issues/15) | 2026-04-20 |
 | ROADMAP.md Regeln konsolidiert | [#20](https://github.com/kod0r/fishermans-quiz/issues/20) | 2026-04-20 |
-| Exam Simulation Mode | [#78](https://github.com/kod0r/fishermans-quiz/issues/78) | 2026-04-24 |
-| Weakness Trainer | [#79](https://github.com/kod0r/fishermans-quiz/issues/79) | 2026-04-24 |
-| Flashcard Mode | [#80](https://github.com/kod0r/fishermans-quiz/issues/80) | 2026-04-24 |
-| SRS Data Model & Storage | [#112](https://github.com/kod0r/fishermans-quiz/issues/112) | 2026-04-24 |
-| SRS Engine Integration | [#113](https://github.com/kod0r/fishermans-quiz/issues/113) | 2026-04-24 |
-| SRS UI — Due for Review | [#114](https://github.com/kod0r/fishermans-quiz/issues/114) | 2026-04-24 |
-| Exam Mode Shuffle Fix | [#115](https://github.com/kod0r/fishermans-quiz/issues/115) | 2026-04-24 |
-| Spaced Repetition Engine | [#77](https://github.com/kod0r/fishermans-quiz/issues/77) | 2026-04-24 |
 
 ### Done (before GitHub Issue system)
-
-> These tasks were completed before the project switched to GitHub Issues as the "single source of truth". They are documented here for completeness.
-
 | Topic | Date |
-|-------|-------|
+|-------|------|
 | Projekt-Initialisierung | 2026-04-20 |
 | AGENTS.md & Conventions | 2026-04-20 |
 | Sidebar topleft verankern | 2026-04-20 |
@@ -103,7 +86,8 @@
 
 ## Rules for this document
 
-- **NEVER assign own numbers** — always use GitHub Issue numbers
-- **Review weekly:** What was accomplished? What is new?
-- **Do not duplicate:** Details belong in the GitHub Issue, not in the ROADMAP
-- **Sprint boundaries:** Move completed tickets to "Archive" after 2–4 weeks
+1. **GitHub Issues are the source of truth.** This file is a generated view, not the master record.
+2. This file is **regenerated from GitHub API** at `/feierabend`. Manual edits in dynamic sections will be overwritten.
+3. To add annotations that survive regeneration, use the `<!-- CUSTOM-ANNOTATIONS -->` block at the top.
+4. For new features, create a GitHub Issue first, then run `/feierabend`.
+5. To change priority, edit the GitHub Issue label (`priority:low`, `priority:medium`, `priority:high`).

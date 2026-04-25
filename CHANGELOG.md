@@ -1,3 +1,25 @@
+# [0.3.0](https://github.com/kod0r/fishermans-quiz/compare/v0.2.1...v0.3.0) (2026-04-25)
+
+
+### Bug Fixes
+
+* **a11y:** improve QuizView touch targets and ARIA compliance ([#76](https://github.com/kod0r/fishermans-quiz/issues/76)) ([8894d1b](https://github.com/kod0r/fishermans-quiz/commit/8894d1bf50a37b2427225f2bbc90bcc32f409f96))
+* **a11y:** improve TopNavBar menu toggle touch targets and ARIA ([#74](https://github.com/kod0r/fishermans-quiz/issues/74)) ([65ed1ca](https://github.com/kod0r/fishermans-quiz/commit/65ed1cad553ffd2cb94baf2a19bdab3ecbcfa8b5))
+* **docs:** cleanup duplicate CONTRIBUTING, translate README to English, remove obsolete refs ([46c644d](https://github.com/kod0r/fishermans-quiz/commit/46c644dd9cf65f4c12bb4ce3d892f8dc6ed458dc))
+* **quizRun:** apply question limit after shuffle (closes [#115](https://github.com/kod0r/fishermans-quiz/issues/115)) ([2444cf2](https://github.com/kod0r/fishermans-quiz/commit/2444cf2118f29ab7b3f395d7373acf25f4fc4789))
+* **store:** move storage persistence out of React state updaters ([#65](https://github.com/kod0r/fishermans-quiz/issues/65)) ([e2c91af](https://github.com/kod0r/fishermans-quiz/commit/e2c91af29dd91fedb5de457a5a5e0393e27c5bfd)), closes [#71](https://github.com/kod0r/fishermans-quiz/issues/71)
+* **theme:** add proper light/dark mode support to StartView ([eb8f826](https://github.com/kod0r/fishermans-quiz/commit/eb8f8263a2fb3e8b92e6a18d34a8da5dd02f4ccf))
+* **theme:** resolve dark/light mode switching ([93b4d1b](https://github.com/kod0r/fishermans-quiz/commit/93b4d1ba405484b2a1717d08747e2d9305af7aaa))
+* **types:** add loadError to useQuiz hook for PR [#108](https://github.com/kod0r/fishermans-quiz/issues/108) compatibility ([9e9dbf2](https://github.com/kod0r/fishermans-quiz/commit/9e9dbf2af2fdd7e9a499b8fd26b2ccff40fb9218))
+* **ui:** improve loading text contrast in light mode ([#73](https://github.com/kod0r/fishermans-quiz/issues/73)) ([7f9dbe2](https://github.com/kod0r/fishermans-quiz/commit/7f9dbe2cd0be0df49e13c2488fd75678c9d6d99b))
+* **ui:** improve loading text contrast in light mode ([#73](https://github.com/kod0r/fishermans-quiz/issues/73)) ([e8739f9](https://github.com/kod0r/fishermans-quiz/commit/e8739f9c26cf37334cbb4f7f745438e47751e768))
+* **ui:** improve ProgressView contrast and focus rings in light mode ([#75](https://github.com/kod0r/fishermans-quiz/issues/75)) ([f89862f](https://github.com/kod0r/fishermans-quiz/commit/f89862f383fe576e00e87f118d0fbe6c2938d377))
+
+
+### Features
+
+* **study-modes:** restore lost features from backup ([4c37ca1](https://github.com/kod0r/fishermans-quiz/commit/4c37ca1220acc50a196db39a2f8d175cbc57cf13)), closes [#78](https://github.com/kod0r/fishermans-quiz/issues/78) [#79](https://github.com/kod0r/fishermans-quiz/issues/79) [#80](https://github.com/kod0r/fishermans-quiz/issues/80) [#77](https://github.com/kod0r/fishermans-quiz/issues/77) [#114](https://github.com/kod0r/fishermans-quiz/issues/114) [#77](https://github.com/kod0r/fishermans-quiz/issues/77) [#78](https://github.com/kod0r/fishermans-quiz/issues/78) [#79](https://github.com/kod0r/fishermans-quiz/issues/79) [#80](https://github.com/kod0r/fishermans-quiz/issues/80) [#112](https://github.com/kod0r/fishermans-quiz/issues/112) [#113](https://github.com/kod0r/fishermans-quiz/issues/113) [#114](https://github.com/kod0r/fishermans-quiz/issues/114) [#115](https://github.com/kod0r/fishermans-quiz/issues/115)
+
 v0.2.1 Hotfix
 
 Bug Fixes
