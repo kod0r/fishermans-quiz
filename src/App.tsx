@@ -1,4 +1,13 @@
 import { useCallback } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useGameMenu } from '@/hooks/useGameMenu';
 
@@ -90,9 +99,36 @@ export default function App() {
         <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />
       )}
 
-      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
-        <StartView quiz={quiz} />
-      )}
-    </>
+       {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
+         <StartView quiz={quiz} />
+       )}
+
+       {/* Backup reminder dialog */}
+       <Dialog open={quiz.showBackupPrompt} onOpenChange={quiz.setShowBackupPrompt}>
+         <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-sm dark:bg-slate-900 dark:border-slate-700 dark:text-white">
+           <DialogHeader>
+             <DialogTitle className="text-base">Backup deiner Lerndaten</DialogTitle>
+             <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
+               Es ist Zeit für ein Backup deiner Lerndaten. Jetzt exportieren?
+             </DialogDescription>
+           </DialogHeader>
+           <DialogFooter className="gap-2">
+             <Button
+               variant="outline"
+               onClick={quiz.handleBackupCancel}
+               className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+             >
+               Später
+             </Button>
+             <Button
+               onClick={quiz.handleBackupConfirm}
+               className="flex-1 bg-teal-500 hover:bg-teal-600 text-white"
+             >
+               Jetzt exportieren
+             </Button>
+           </DialogFooter>
+         </DialogContent>
+       </Dialog>
+     </>
   );
 }
