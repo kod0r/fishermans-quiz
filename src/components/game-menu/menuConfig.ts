@@ -18,8 +18,12 @@ import {
   FileSpreadsheet,
   Database,
   RotateCcw,
+  LayoutGrid,
 } from 'lucide-react';
 import type { GameMode, AppView } from '@/types/quiz';
+import type { QuizContext } from '@/hooks/useQuiz';
+import { MenuPageNavigation } from './MenuPageNavigation';
+import { MenuPageRunActions } from './MenuPageRunActions';
 
 // ── Page IDs ──
 export type MenuPageId = 'root' | 'settings' | 'navigation' | 'run-actions' | 'data';
@@ -56,12 +60,20 @@ export interface MenuSectionConfig {
   items: MenuItemConfig[];
 }
 
+// ── Custom Component Props ──
+export interface MenuPageComponentProps {
+  quiz: QuizContext;
+  onClose: () => void;
+  onPop: () => void;
+  onPush: (page: MenuPageId) => void;
+}
+
 // ── Menu Page ──
 export interface MenuPageConfig {
   id: MenuPageId;
   title: string;
   sections?: MenuSectionConfig[];
-  customComponent?: React.ComponentType;
+  customComponent?: React.ComponentType<MenuPageComponentProps>;
 }
 
 // ── Helper to build detail strings ──
@@ -133,6 +145,14 @@ export const MENU_PAGES: MenuPageConfig[] = [
             action: 'view',
             target: 'history',
             detail: (ctx) => (ctx.historyCount > 0 ? `${ctx.historyCount}` : ''),
+          },
+          {
+            id: 'navigation',
+            label: 'Schnellnavigation',
+            icon: LayoutGrid,
+            action: 'navigate',
+            target: 'navigation',
+            condition: (ctx) => ctx.isQuizActive && ctx.currentView === 'quiz',
           },
           {
             id: 'stats',
@@ -234,6 +254,16 @@ export const MENU_PAGES: MenuPageConfig[] = [
         ],
       },
     ],
+  },
+  {
+    id: 'run-actions',
+    title: 'Pause',
+    customComponent: MenuPageRunActions,
+  },
+  {
+    id: 'navigation',
+    title: 'Schnellnavigation',
+    customComponent: MenuPageNavigation,
   },
   {
     id: 'data',

@@ -15,14 +15,15 @@ import { QuizFooter } from '@/components/QuizFooter';
 import { QuizCardShell } from '@/components/QuizCardShell';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { CheatSheetModal } from '@/components/CheatSheetModal';
-import { PauseMenuDialog } from '@/components/PauseMenuDialog';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
   quiz: QuizContext;
+  onOpenRunActions: () => void;
+  gameMenuOpen: boolean;
 }
 
-export default function QuizView({ quiz }: Props) {
+export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props) {
   const {
     aktuelleFrage,
     aktuellerIndex,
@@ -48,7 +49,6 @@ export default function QuizView({ quiz }: Props) {
   const [remainingSeconds, setRemainingSeconds] = useState<number | undefined>();
   const [examAbgelaufen, setExamAbgelaufen] = useState(false);
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
-  const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
 
   // Clear pending wrong answer when navigating to a different question
   useEffect(() => {
@@ -174,10 +174,10 @@ export default function QuizView({ quiz }: Props) {
       if (cheatSheetOpen) {
         setCheatSheetOpen(false);
       } else {
-        setPauseMenuOpen(true);
+        onOpenRunActions();
       }
     },
-    enabled: quiz.isActive && !cheatSheetOpen && !pauseMenuOpen,
+    enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
   if (!aktuelleFrage) return null;
@@ -297,7 +297,6 @@ export default function QuizView({ quiz }: Props) {
 
            {/* Keyboard shortcuts modals */}
            <CheatSheetModal open={cheatSheetOpen} onOpenChange={setCheatSheetOpen} />
-           <PauseMenuDialog open={pauseMenuOpen} onOpenChange={setPauseMenuOpen} quiz={quiz} />
          </div>
       </div>
     </TooltipProvider>

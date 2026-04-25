@@ -56,19 +56,9 @@ export default function App() {
   const isQuizActive = quiz.isActive;
   const currentView = quiz.view;
 
-  const showProgressOnQuiz = currentView === 'quiz' && isQuizActive;
-
   return (
     <>
-      <HUD
-        isActive={isQuizActive}
-        onHome={() => quiz.goToView('start')}
-        onMenuOpen={gameMenu.open}
-        onShowProgress={() => quiz.goToView('progress')}
-        showProgress={showProgressOnQuiz}
-        onStopQuiz={() => quiz.unterbrecheRun()}
-        runStatus={isQuizActive ? `${quiz.statistiken?.beantwortet ?? 0}/${quiz.statistiken?.gesamt ?? 0}` : undefined}
-      />
+      <HUD quiz={quiz} gameMenu={gameMenu} />
 
       <GameMenuOverlay
         isOpen={gameMenu.isOpen}
@@ -83,8 +73,8 @@ export default function App() {
 
       {currentView === 'quiz' && isQuizActive && (
         quiz.rawRun?.sessionType === 'flashcard'
-          ? <FlashcardView quiz={quiz} />
-          : <QuizView quiz={quiz} />
+          ? <FlashcardView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
+          : <QuizView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
       )}
 
       {currentView === 'progress' && isQuizActive && (

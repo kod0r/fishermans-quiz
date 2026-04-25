@@ -7,12 +7,13 @@ import { QuizCardShell } from '@/components/QuizCardShell';
 import { Eye, RotateCcw, ThumbsDown, ThumbsUp, Zap } from 'lucide-react';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { CheatSheetModal } from '@/components/CheatSheetModal';
-import { PauseMenuDialog } from '@/components/PauseMenuDialog';
 import type { QuizContext } from '@/hooks/useQuiz';
 import type { SelfAssessmentGrade } from '@/types/quiz';
 
 interface Props {
   quiz: QuizContext;
+  onOpenRunActions: () => void;
+  gameMenuOpen: boolean;
 }
 
 const GRADE_BUTTONS: { grade: SelfAssessmentGrade; label: string; icon: React.ReactNode; color: string }[] = [
@@ -22,7 +23,7 @@ const GRADE_BUTTONS: { grade: SelfAssessmentGrade; label: string; icon: React.Re
   { grade: 'easy', label: 'Easy', icon: <Zap className="w-4 h-4" />, color: 'bg-emerald-500 hover:bg-emerald-600 text-white' },
 ];
 
-export default function FlashcardView({ quiz }: Props) {
+export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: Props) {
   const {
     aktuelleFrage,
     aktuellerIndex,
@@ -40,7 +41,6 @@ export default function FlashcardView({ quiz }: Props) {
 
   const [revealed, setRevealed] = useState(false);
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
-  const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
 
   const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -104,10 +104,10 @@ export default function FlashcardView({ quiz }: Props) {
       if (cheatSheetOpen) {
         setCheatSheetOpen(false);
       } else {
-        setPauseMenuOpen(true);
+        onOpenRunActions();
       }
     },
-    enabled: quiz.isActive && !cheatSheetOpen && !pauseMenuOpen,
+    enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
   if (!aktuelleFrage) return null;
@@ -214,7 +214,6 @@ export default function FlashcardView({ quiz }: Props) {
           />
 
           <CheatSheetModal open={cheatSheetOpen} onOpenChange={setCheatSheetOpen} />
-          <PauseMenuDialog open={pauseMenuOpen} onOpenChange={setPauseMenuOpen} quiz={quiz} />
         </div>
       </div>
     </TooltipProvider>
