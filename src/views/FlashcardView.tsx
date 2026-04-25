@@ -42,14 +42,14 @@ export default function FlashcardView({ quiz }: Props) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
   const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
 
+  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const userAntwort = antworten[aktuelleFrage?.id || ''];
   const hasAnswered = userAntwort !== undefined;
 
   const handleReveal = useCallback(() => {
     setRevealed(true);
   }, []);
-
-  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -62,13 +62,11 @@ export default function FlashcardView({ quiz }: Props) {
   const handleGrade = useCallback(
     (grade: SelfAssessmentGrade) => {
       if (!aktuelleFrage) return;
-      // Cancel any pending auto-advance before starting a new one
       if (autoAdvanceRef.current) {
         clearTimeout(autoAdvanceRef.current);
       }
       beantworteFlashcard(aktuelleFrage.id, grade);
       setRevealed(false);
-      // Auto-advance after short delay
       autoAdvanceRef.current = setTimeout(() => naechsteFrage(), 300);
     },
     [aktuelleFrage, beantworteFlashcard, naechsteFrage]
@@ -90,9 +88,8 @@ export default function FlashcardView({ quiz }: Props) {
   const falsch = aktiveFragen.filter(
     (f) => antworten[f.id] && antworten[f.id] !== f.richtige_antwort
   ).length;
-   const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
+  const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
 
-  // Keyboard shortcuts
   useKeyboardShortcuts({
     onPrev: handleNavigatePrev,
     onNext: handleNavigateNext,
@@ -149,7 +146,6 @@ export default function FlashcardView({ quiz }: Props) {
               </div>
             ) : (
               <div className="flex-1 flex flex-col justify-center gap-3">
-                {/* Correct answer display */}
                 <div className="space-y-2 mb-2">
                   {(['A', 'B', 'C'] as const).map((buchstabe) => {
                     const isCorrect = aktuelleFrage.richtige_antwort === buchstabe;
@@ -185,7 +181,6 @@ export default function FlashcardView({ quiz }: Props) {
                   })}
                 </div>
 
-                {/* Self-assessment buttons */}
                 {!hasAnswered && (
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
                     {GRADE_BUTTONS.map(({ grade, label, icon, color }) => (
@@ -218,7 +213,6 @@ export default function FlashcardView({ quiz }: Props) {
             onNext={handleNavigateNext}
           />
 
-          {/* Keyboard shortcuts modals */}
           <CheatSheetModal open={cheatSheetOpen} onOpenChange={setCheatSheetOpen} />
           <PauseMenuDialog open={pauseMenuOpen} onOpenChange={setPauseMenuOpen} quiz={quiz} />
         </div>
