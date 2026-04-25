@@ -9,6 +9,7 @@ interface MenuItemProps {
   destructive?: boolean;
   disabled?: boolean;
   isFocused?: boolean;
+  'aria-label'?: string;
 }
 
 export function MenuItem({
@@ -19,15 +20,18 @@ export function MenuItem({
   destructive,
   disabled,
   isFocused,
+  'aria-label': ariaLabel,
 }: MenuItemProps) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
+      tabIndex={isFocused === true ? 0 : isFocused === false ? -1 : undefined}
+      aria-label={ariaLabel}
       className={`
         w-full flex items-center gap-3 px-4 py-3 text-left
         transition-colors duration-150
-        focus:outline-none focus-visible:bg-accent
+        focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none
         active:scale-[0.98]
         ${isFocused ? 'bg-accent' : 'bg-transparent hover:bg-accent/50'}
         ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}

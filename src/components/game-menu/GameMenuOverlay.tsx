@@ -89,16 +89,16 @@ export function GameMenuOverlay({
       // Legacy fallback for pages not yet fully migrated to config
       switch (page) {
         case 'root':
-          return <MenuPageRoot onPush={onPush} />;
+          return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
         case 'settings':
-          return <MenuPageSettings onPush={onPush} />;
+          return <MenuPageSettings onPush={onPush} quiz={quiz} />;
         case 'data':
           return <MenuPageData quiz={quiz} />;
         default:
-          return <MenuPageRoot onPush={onPush} />;
+          return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
       }
     },
-    [onPush, quiz]
+    [onPush, onClose, quiz]
   );
 
   const header = (
