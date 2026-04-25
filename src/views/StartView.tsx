@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -13,14 +13,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, Trash2, CheckCircle, Star, Download, FileUp, HardDrive, Bell, FileJson, Table, Database, Crosshair, Layers, Repeat } from 'lucide-react';
+import { Fish, BookOpen, HelpCircle, Trophy, Target, Flame, RotateCcw, BarChart3, CheckCircle, Star, Crosshair, Layers, Repeat } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
-import { MetaProgressionSchema } from '@/utils/quizLoader';
-import { buildCsv } from '@/utils/csvExport';
 import { isMastered } from '@/utils/srs';
 
 const BEREICHE = [
@@ -41,11 +35,6 @@ export default function StartView({ quiz }: Props) {
   const [fehler, setFehler] = useState('');
   const [nurFavoriten, setNurFavoriten] = useState(false);
   const [flashcardMode, setFlashcardMode] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const backupInputRef = useRef<HTMLInputElement>(null);
-  const [expJson, setExpJson] = useState(false);
-  const [expCsv, setExpCsv] = useState(false);
-  const [expBackup, setExpBackup] = useState(false);
 
   type DialogState =
     | { type: 'remove-arcade'; bereichId: string; fragenCount: number }
@@ -267,181 +256,8 @@ export default function StartView({ quiz }: Props) {
                     </div>
                   );
                 })}
-              </div>
-
-              {/* Export / Import / Reset */}
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".json"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                      try {
-                        const data = JSON.parse(ev.target?.result as string);
-                        const parsed = MetaProgressionSchema.safeParse(data);
-                        if (parsed.success) {
-                          if (confirm('Import progress data? This will overwrite current progress.')) {
-                            quiz.importMetaProgression?.(parsed.data);
-                          }
-                        } else {
-                          console.error('[Import] Validation failed:', parsed.error.format());
-                          alert('Invalid file format. The file does not contain valid progress data.');
-                        }
-                      } catch {
-                        alert('Error reading file.');
-                      }
-                      if (fileInputRef.current) fileInputRef.current.value = '';
-                    };
-                    reader.readAsText(file);
-                  }}
-                />
-                <input
-                  ref={backupInputRef}
-                  type="file"
-                  accept=".json"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                      try {
-                        const data = JSON.parse(ev.target?.result as string);
-                        if (confirm('Restore full backup? This will overwrite ALL data and reload the page.')) {
-                          const ok = quiz.importFullBackup?.(data);
-                          if (ok === false) {
-                            alert('Invalid backup format.');
-                          }
-                        }
-                      } catch {
-                        alert('Error reading file.');
-                      }
-                      if (backupInputRef.current) backupInputRef.current.value = '';
-                    };
-                    reader.readAsText(file);
-                  }}
-                />
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      aria-label="Daten sichern und wiederherstellen"
-                      className="border-teal-300/50 text-teal-600 hover:bg-teal-50 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-teal-500/30 dark:text-teal-400 dark:hover:bg-teal-500/10 dark:focus-visible:ring-offset-slate-900 text-xs"
-                    >
-                      <HardDrive className="w-3 h-3 mr-1" aria-hidden="true" />Backup
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="end" className="w-64 p-3 space-y-3">
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">Backup &amp; Restore</p>
-
-                    <div className="space-y-2">
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Export</p>
-                      <div className="space-y-1.5">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox id="exp-json" checked={expJson} onCheckedChange={(v) => setExpJson(v === true)} />
-                          <Label htmlFor="exp-json" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><FileJson className="w-3 h-3 text-slate-400" />Progress (JSON)</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox id="exp-csv" checked={expCsv} onCheckedChange={(v) => setExpCsv(v === true)} />
-                          <Label htmlFor="exp-csv" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><Table className="w-3 h-3 text-slate-400" />Stats (CSV)</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox id="exp-backup" checked={expBackup} onCheckedChange={(v) => setExpBackup(v === true)} />
-                          <Label htmlFor="exp-backup" className="text-xs font-normal cursor-pointer flex items-center gap-1.5"><Database className="w-3 h-3 text-slate-400" />Full Backup</Label>
-                        </div>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="w-full text-xs h-8 bg-teal-600 hover:bg-teal-700 text-white"
-                        disabled={!expJson && !expCsv && !expBackup}
-                        onClick={() => {
-                          if (expJson) {
-                            const data = quiz.metaProgress;
-                            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = `fishermans-quiz-meta-${new Date().toISOString().split('T')[0]}.json`;
-                            a.click();
-                            URL.revokeObjectURL(url);
-                          }
-                          if (expCsv) {
-                            const rows = [
-                              ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
-                              ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
-                                id,
-                                quiz.quizMeta?.fragenIndex?.[id] ?? '',
-                                String(m.attempts),
-                                String(m.correctStreak),
-                                m.lastResult ?? '',
-                                m.firstSeen,
-                                m.lastAttempt,
-                              ]),
-                            ];
-                            const csv = buildCsv(rows);
-                            const blob = new Blob([csv], { type: 'text/csv' });
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = `fishermans-quiz-stats-${new Date().toISOString().split('T')[0]}.csv`;
-                            a.click();
-                            URL.revokeObjectURL(url);
-                          }
-                          if (expBackup) {
-                            quiz.exportFullBackup?.();
-                          }
-                        }}
-                      >
-                        <Download className="w-3 h-3 mr-1" />Export
-                      </Button>
-                    </div>
-
-                    <Separator />
-
-                    <div className="space-y-2">
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Import</p>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="flex-1 text-xs h-8" onClick={() => fileInputRef.current?.click()}>
-                          <FileUp className="w-3 h-3 mr-1" />Progress
-                        </Button>
-                        <Button variant="outline" size="sm" className="flex-1 text-xs h-8" onClick={() => backupInputRef.current?.click()}>
-                          <RotateCcw className="w-3 h-3 mr-1" />Full Restore
-                        </Button>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full text-xs h-8 text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
-                      onClick={() => { if (confirm('Delete all data? This cannot be undone.')) { quiz.resetMetaProgression(); quiz.resetSRS?.(); } }}
-                    >
-                      <Trash2 className="w-3 h-3 mr-1" />Delete All Data
-                    </Button>
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              {/* Backup-Erinnerung */}
-              <div className="mt-3 flex items-center gap-2">
-                <button
-                  onClick={() => quiz.setBackupReminderEnabled?.(!quiz.backupReminderEnabled)}
-                  aria-pressed={quiz.backupReminderEnabled}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${quiz.backupReminderEnabled ? 'bg-teal-50 text-teal-600 border border-teal-300/50 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30' : 'text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300'}`}
-                >
-                  <Bell className={`w-3.5 h-3.5 ${quiz.backupReminderEnabled ? 'fill-current' : ''}`} />
-                  Backup reminder {quiz.backupReminderEnabled ? 'on' : 'off'}
-                </button>
-              </div>
-            </CardContent>
+               </div>
+             </CardContent>
           </Card>
 
           {/* Bereichsauswahl */}
