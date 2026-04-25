@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
+import { FocusScope } from '@radix-ui/react-focus-scope';
 import type { MenuPageId } from '@/hooks/useGameMenu';
 import type { QuizContext } from '@/hooks/useQuiz';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -193,33 +194,35 @@ export function GameMenuOverlay({
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
-        onClick={onClose}
-      />
+    <FocusScope trapped loop>
+      <div className="fixed inset-0 z-[60] flex items-center justify-center">
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={onClose}
+        />
 
-      {/* Menu Panel */}
-      <div
-        ref={panelRef}
-        className="
-          relative w-full max-w-md max-h-[80vh]
-          bg-white dark:bg-slate-900
-          rounded-3xl
-          shadow-2xl shadow-black/20
-          overflow-hidden
-          animate-in fade-in zoom-in-95
-          duration-300 ease-out
-          flex flex-col
-        "
-        aria-modal="true"
-        role="dialog"
-        aria-label={title}
-      >
-        {header}
-        {pageContent}
+        {/* Menu Panel */}
+        <div
+          ref={panelRef}
+          className="
+            relative w-full max-w-md max-h-[80vh]
+            bg-white dark:bg-slate-900
+            rounded-3xl
+            shadow-2xl shadow-black/20
+            overflow-hidden
+            animate-in fade-in zoom-in-95
+            duration-300 ease-out
+            flex flex-col
+          "
+          aria-modal="true"
+          role="dialog"
+          aria-label={title}
+        >
+          {header}
+          {pageContent}
+        </div>
       </div>
-    </div>
+    </FocusScope>
   );
 }
