@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+### Features
+
+* **game-menu:** overhaul menubar/settings into a video game menu system ([#138](https://github.com/kod0r/fishermans-quiz/issues/138))
+  * Config schema, types, and static `MENU_PAGES` configuration ([#139](https://github.com/kod0r/fishermans-quiz/issues/139))
+  * `useGameMenu` hook with stack-based navigation, keyboard arrows/Home/End/Enter/Esc, and focus management ([#140](https://github.com/kod0r/fishermans-quiz/issues/140))
+  * `GameMenuOverlay` production shell — vaul drawer on mobile, centered panel on desktop, focus trap, scroll lock, aria-modal ([#141](https://github.com/kod0r/fishermans-quiz/issues/141))
+  * `MenuPageRoot` and `MenuPageSettings` production implementations with config-driven rendering ([#142](https://github.com/kod0r/fishermans-quiz/issues/142))
+  * `MenuPageNavigation` quick-jump question grid during active quiz ([#143](https://github.com/kod0r/fishermans-quiz/issues/143))
+  * `MenuPageRunActions` pause menu with Continue / Restart / Exit / Progress actions ([#144](https://github.com/kod0r/fishermans-quiz/issues/144))
+  * Migrate backup/restore UI from `StartView` into `MenuPageData` ([#145](https://github.com/kod0r/fishermans-quiz/issues/145))
+  * `HUD` production polish — accepts `quiz` + `gameMenu` props, context-wired buttons, deletes obsolete `TopNavBar.tsx` ([#146](https://github.com/kod0r/fishermans-quiz/issues/146))
+  * Keyboard shortcut gating (`!gameMenuOpen`) and Esc-wiring to pause menu in `QuizView` / `FlashcardView` ([#147](https://github.com/kod0r/fishermans-quiz/issues/147))
+  * Tests: `useGameMenu` hook (15 tests) + HUD/MenuItem/GameMenuOverlay components (16 tests) ([#148](https://github.com/kod0r/fishermans-quiz/issues/148))
+
 ### Bug Fixes
 
 * **flashcard:** cancel pending auto-advance timeout on unmount and before new grade ([#130](https://github.com/kod0r/fishermans-quiz/issues/130))
