@@ -18,12 +18,12 @@ import type { QuizContext } from '@/hooks/useQuiz';
 import { isMastered } from '@/utils/srs';
 
 const BEREICHE = [
-  { id: 'Biologie', label: 'Biologie', anzahl: 319, icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
-  { id: 'Gewässerkunde', label: 'Gewässerkunde', anzahl: 129, icon: HelpCircle, color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20', selectedBg: 'bg-blue-500' },
-  { id: 'Gewässerpflege', label: 'Gewässerpflege', anzahl: 136, icon: HelpCircle, color: 'text-cyan-400', bg: 'bg-cyan-400/10', border: 'border-cyan-400/20', selectedBg: 'bg-cyan-500' },
-  { id: 'Fanggeräte und -methoden', label: 'Fanggeräte & Methoden', anzahl: 192, icon: HelpCircle, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'border-amber-400/20', selectedBg: 'bg-amber-500' },
-  { id: 'Recht', label: 'Recht', anzahl: 222, icon: HelpCircle, color: 'text-red-400', bg: 'bg-red-400/10', border: 'border-red-400/20', selectedBg: 'bg-red-500' },
-  { id: 'Bilderkennung', label: 'Bilderkennung', anzahl: 54, icon: HelpCircle, color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20', selectedBg: 'bg-purple-500' },
+  { id: 'Biologie', label: 'Biologie', icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
+  { id: 'Gewässerkunde', label: 'Gewässerkunde', icon: HelpCircle, color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20', selectedBg: 'bg-blue-500' },
+  { id: 'Gewässerpflege', label: 'Gewässerpflege', icon: HelpCircle, color: 'text-cyan-400', bg: 'bg-cyan-400/10', border: 'border-cyan-400/20', selectedBg: 'bg-cyan-500' },
+  { id: 'Fanggeräte und -methoden', label: 'Fanggeräte & Methoden', icon: HelpCircle, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'border-amber-400/20', selectedBg: 'bg-amber-500' },
+  { id: 'Recht', label: 'Recht', icon: HelpCircle, color: 'text-red-400', bg: 'bg-red-400/10', border: 'border-red-400/20', selectedBg: 'bg-red-500' },
+  { id: 'Bilderkennung', label: 'Bilderkennung', icon: HelpCircle, color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20', selectedBg: 'bg-purple-500' },
 ];
 
 interface Props {
