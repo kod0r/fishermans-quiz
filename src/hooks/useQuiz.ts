@@ -11,6 +11,7 @@ import { useNotes } from '@/store/notes';
 import { useHistory } from '@/store/history';
 import { useSRS } from '@/store/srs';
 import { isMastered } from '@/utils/srs';
+import { filterQuizDataByFavorites, filterQuizDataByWeakness, filterQuizDataBySRSDue } from '@/utils/filter';
 
 const EXAM_DURATION_SECONDS = 60 * 60;
 
@@ -206,54 +207,32 @@ export function useQuiz() {
 
     // Optional: Nur Favoriten filtern
     if (nurFavoriten) {
-      const favIds = new Set(fav.favorites);
-      filteredData = {
-        ...filteredData,
-        fragen: filteredData.fragen.filter(f => favIds.has(f.id)),
-      };
-      if (filteredData.fragen.length === 0) {
+      const result = filterQuizDataByFavorites(filteredData, fav.favorites);
+      if (!result) {
         console.warn('[useQuiz] Keine Favoriten in den gewählten Bereichen.');
         return;
       }
+      filteredData = result;
     }
 
     // Optional: Schwächentrainer-Filter
     if (filter === 'weak') {
-      const weakFragen = filteredData.fragen
-        .filter(f => {
-          const fm = meta.meta.fragen[f.id];
-          if (!fm || fm.attempts === 0) return false;
-          return fm.correctStreak < fm.attempts * 0.5;
-        })
-        .sort((a, b) => {
-          const ma = meta.meta.fragen[a.id];
-          const mb = meta.meta.fragen[b.id];
-          const scoreA = (ma?.attempts ?? 0) - (ma?.correctStreak ?? 0);
-          const scoreB = (mb?.attempts ?? 0) - (mb?.correctStreak ?? 0);
-          return scoreB - scoreA;
-        });
-      if (weakFragen.length === 0) {
+      const result = filterQuizDataByWeakness(filteredData, meta.meta.fragen);
+      if (!result) {
         console.warn('[useQuiz] Keine Schwächen in den gewählten Bereichen.');
         return;
       }
-      filteredData = {
-        ...filteredData,
-        fragen: weakFragen,
-      };
+      filteredData = result;
     }
 
     // Optional: SRS Due-Filter
     if (filter === 'srs-due') {
-      const dueIds = new Set(srs.dueFrageIds);
-      const dueFragen = filteredData.fragen.filter(f => dueIds.has(f.id));
-      if (dueFragen.length === 0) {
+      const result = filterQuizDataBySRSDue(filteredData, srs.dueFrageIds);
+      if (!result) {
         console.warn('[useQuiz] Keine SRS-Wiederholungen fällig.');
         return;
       }
-      filteredData = {
-        ...filteredData,
-        fragen: dueFragen,
-      };
+      filteredData = result;
     }
 
     const isNewRun = !run.isActive;
