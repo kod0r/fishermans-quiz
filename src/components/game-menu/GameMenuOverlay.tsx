@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import type { MenuPageId } from '@/hooks/useGameMenu';
+import type { QuizContext } from '@/hooks/useQuiz';
 import { MenuPageRoot } from './MenuPageRoot';
 import { MenuPageSettings } from './MenuPageSettings';
+import { MenuPageData } from './MenuPageData';
 import { X, ChevronLeft } from 'lucide-react';
 
 interface GameMenuOverlayProps {
@@ -12,6 +14,7 @@ interface GameMenuOverlayProps {
   onClose: () => void;
   onPop: () => void;
   onPush: (page: MenuPageId) => void;
+  quiz: QuizContext;
 }
 
 const pageTitles: Record<MenuPageId, string> = {
@@ -30,6 +33,7 @@ export function GameMenuOverlay({
   onClose,
   onPop,
   onPush,
+  quiz,
 }: GameMenuOverlayProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const isRoot = stack.length === 1;
@@ -49,7 +53,9 @@ export function GameMenuOverlay({
       case 'root':
         return <MenuPageRoot onPush={onPush} />;
       case 'settings':
-        return <MenuPageSettings />;
+        return <MenuPageSettings onPush={onPush} />;
+      case 'data':
+        return <MenuPageData quiz={quiz} />;
       default:
         return <MenuPageRoot onPush={onPush} />;
     }

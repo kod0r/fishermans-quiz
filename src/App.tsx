@@ -78,6 +78,7 @@ export default function App() {
         onClose={gameMenu.close}
         onPop={gameMenu.pop}
         onPush={gameMenu.push}
+        quiz={quiz}
       />
 
       {currentView === 'quiz' && isQuizActive && (
