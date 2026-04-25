@@ -253,7 +253,7 @@ export function useQuiz() {
     const sessionType = options.sessionType ?? 'quiz';
     run.starteRun(bereiche, filteredData, limit, durationSeconds, sessionType);
     if (isNewRun) meta.recordRunStart();
-    setView(sessionType === 'flashcard' ? 'quiz' : 'quiz');
+    setView('quiz');
   }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds]);
 
   const goToView = useCallback((v: AppView) => setView(v), []);

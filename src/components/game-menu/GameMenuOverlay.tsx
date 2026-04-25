@@ -45,7 +45,10 @@ export function GameMenuOverlay({
   // Store previously focused element when opening, restore on close
   useEffect(() => {
     if (isOpen) {
-      lastFocusedRef.current = document.activeElement as HTMLElement;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement) {
+        lastFocusedRef.current = active;
+      }
     } else if (lastFocusedRef.current) {
       lastFocusedRef.current.focus();
       lastFocusedRef.current = null;
@@ -98,7 +101,7 @@ export function GameMenuOverlay({
           return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
       }
     },
-    [onPush, onClose, quiz]
+    [onPush, onClose, onPop, quiz]
   );
 
   const header = (
