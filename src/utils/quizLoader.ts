@@ -57,7 +57,7 @@ const BereichMetaSchema = z.object({
   lastAttempt: z.string().nullable(),
 });
 
-const SRSMetaSchema = z.object({
+export const SRSMetaSchema = z.object({
   interval: z.number().nonnegative(),
   repetitions: z.number().int().nonnegative(),
   efactor: z.number().min(1.3),
