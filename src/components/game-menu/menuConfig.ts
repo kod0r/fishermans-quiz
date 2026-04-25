@@ -23,6 +23,7 @@ import {
 import type { GameMode, AppView } from '@/types/quiz';
 import type { QuizContext } from '@/hooks/useQuiz';
 import { MenuPageNavigation } from './MenuPageNavigation';
+import { MenuPageRunActions } from './MenuPageRunActions';
 
 // ── Page IDs ──
 export type MenuPageId = 'root' | 'settings' | 'navigation' | 'run-actions' | 'data';
@@ -253,6 +254,11 @@ export const MENU_PAGES: MenuPageConfig[] = [
         ],
       },
     ],
+  },
+  {
+    id: 'run-actions',
+    title: 'Pause',
+    customComponent: MenuPageRunActions,
   },
   {
     id: 'navigation',

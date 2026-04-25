@@ -66,7 +66,7 @@ export default function App() {
         onMenuOpen={gameMenu.open}
         onShowProgress={() => quiz.goToView('progress')}
         showProgress={showProgressOnQuiz}
-        onStopQuiz={() => quiz.unterbrecheRun()}
+        onStopQuiz={() => gameMenu.openTo('run-actions')}
         runStatus={isQuizActive ? `${quiz.statistiken?.beantwortet ?? 0}/${quiz.statistiken?.gesamt ?? 0}` : undefined}
       />
 
@@ -83,8 +83,8 @@ export default function App() {
 
       {currentView === 'quiz' && isQuizActive && (
         quiz.rawRun?.sessionType === 'flashcard'
-          ? <FlashcardView quiz={quiz} />
-          : <QuizView quiz={quiz} />
+          ? <FlashcardView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} />
+          : <QuizView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} />
       )}
 
       {currentView === 'progress' && isQuizActive && (
