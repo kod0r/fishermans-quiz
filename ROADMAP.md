@@ -11,11 +11,6 @@
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | medium |
-| Global Keyboard Shortcuts | [#81](https://github.com/kod0r/fishermans-quiz/issues/81) | low |
-| Custom Study Decks | [#83](https://github.com/kod0r/fishermans-quiz/issues/83) | medium |
-| Image Zoom & Pan | [#84](https://github.com/kod0r/fishermans-quiz/issues/84) | low |
-| Daily Challenge Streak | [#88](https://github.com/kod0r/fishermans-quiz/issues/88) | low |
-| Bereich Mastery Badges | [#102](https://github.com/kod0r/fishermans-quiz/issues/102) | low |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
