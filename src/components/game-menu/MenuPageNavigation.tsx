@@ -52,6 +52,7 @@ export function MenuPageNavigation({ quiz, onClose }: MenuPageNavigationProps) {
 
             return (
               <button
+                data-menu-item
                 key={frage.id}
                 onClick={() => handleJump(idx)}
                 aria-label={`Frage ${idx + 1}${stateLabel}`}

@@ -226,9 +226,11 @@ describe('GameMenuOverlay', () => {
         stack={['root']}
         currentPage="root"
         direction="forward"
+        focusedIndex={0}
         onClose={vi.fn()}
         onPop={vi.fn()}
         onPush={vi.fn()}
+        registerOnActivate={vi.fn()}
         quiz={mockQuiz}
       />,
     );
@@ -243,9 +245,11 @@ describe('GameMenuOverlay', () => {
         stack={['root']}
         currentPage="root"
         direction="forward"
+        focusedIndex={0}
         onClose={vi.fn()}
         onPop={vi.fn()}
         onPush={vi.fn()}
+        registerOnActivate={vi.fn()}
         quiz={mockQuiz}
       />,
     );
@@ -261,9 +265,11 @@ describe('GameMenuOverlay', () => {
         stack={['root']}
         currentPage="root"
         direction="forward"
+        focusedIndex={0}
         onClose={onClose}
         onPop={vi.fn()}
         onPush={vi.fn()}
+        registerOnActivate={vi.fn()}
         quiz={mockQuiz}
       />,
     );

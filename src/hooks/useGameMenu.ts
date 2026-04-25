@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { MenuPageId } from '@/components/game-menu/menuConfig';
 
 export type { MenuPageId } from '@/components/game-menu/menuConfig';
@@ -91,6 +91,17 @@ export function useGameMenu() {
 
   const currentPage = state.stack[state.stack.length - 1];
 
+  // Refs to avoid stale closures in the global keydown listener
+  const focusedIndexRef = useRef(state.focusedIndex);
+  useEffect(() => {
+    focusedIndexRef.current = state.focusedIndex;
+  }, [state.focusedIndex]);
+
+  const onActivateRef = useRef<((index: number) => void) | null>(null);
+  const registerOnActivate = useCallback((cb: ((index: number) => void) | null) => {
+    onActivateRef.current = cb;
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     if (!state.isOpen) return;
@@ -125,7 +136,7 @@ export function useGameMenu() {
         case 'Enter':
         case ' ':
           e.preventDefault();
-          // Caller is responsible for wiring the actual action
+          onActivateRef.current?.(focusedIndexRef.current);
           return;
         case 'Escape':
           e.preventDefault();
@@ -149,5 +160,6 @@ export function useGameMenu() {
     resetFocus,
     setFocusedIndex,
     registerItemCount,
+    registerOnActivate,
   };
 }

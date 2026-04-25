@@ -61,6 +61,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
           </div>
           <div className="px-4 pb-3">
             <Button
+              data-menu-item
               size="sm"
               className="w-full"
               disabled={!expJson && !expCsv && !expBackup}
@@ -171,11 +172,11 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
             }}
           />
           <div className="px-4 py-3 grid grid-cols-2 gap-3">
-            <Button variant="outline" size="sm" className="h-8" onClick={() => fileInputRef.current?.click()}>
+            <Button data-menu-item variant="outline" size="sm" className="h-8" onClick={() => fileInputRef.current?.click()}>
               <Upload className="w-4 h-4 mr-2" />
               Progress
             </Button>
-            <Button variant="outline" size="sm" className="h-8" onClick={() => backupInputRef.current?.click()}>
+            <Button data-menu-item variant="outline" size="sm" className="h-8" onClick={() => backupInputRef.current?.click()}>
               <RotateCcw className="w-4 h-4 mr-2" />
               Full Restore
             </Button>
@@ -190,6 +191,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
         </h3>
         <div className="bg-slate-100/80 dark:bg-slate-800/50 rounded-xl overflow-hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
           <Button
+            data-menu-item
             variant="ghost"
             size="sm"
             className="w-full justify-start px-4 py-3 h-auto text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
@@ -212,6 +214,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
       {/* Backup Reminder */}
       <section className="px-4">
         <button
+          data-menu-item
           onClick={() => quiz.setBackupReminderEnabled?.(!quiz.backupReminderEnabled)}
           aria-pressed={quiz.backupReminderEnabled}
           className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${

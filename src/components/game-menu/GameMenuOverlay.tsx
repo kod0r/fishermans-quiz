@@ -18,6 +18,7 @@ interface GameMenuOverlayProps {
   onClose: () => void;
   onPop: () => void;
   onPush: (page: MenuPageId) => void;
+  registerOnActivate: (cb: ((index: number) => void) | null) => void;
   quiz: QuizContext;
 }
 
@@ -32,6 +33,7 @@ export function GameMenuOverlay({
   onClose,
   onPop,
   onPush,
+  registerOnActivate,
   quiz,
 }: GameMenuOverlayProps) {
   const isMobile = useIsMobile();
@@ -66,6 +68,19 @@ export function GameMenuOverlay({
     }, 50);
     return () => clearTimeout(timer);
   }, [isOpen, currentPage]);
+
+  // Wire Enter/Space activation to the focused menu item
+  useEffect(() => {
+    registerOnActivate((index) => {
+      const panel = panelRef.current;
+      if (!panel) return;
+      const items = panel.querySelectorAll<HTMLElement>('[data-menu-item]');
+      if (index >= 0 && index < items.length) {
+        items[index].click();
+      }
+    });
+    return () => registerOnActivate(null);
+  }, [registerOnActivate]);
 
   // Body scroll lock on desktop (vaul handles mobile)
   useEffect(() => {

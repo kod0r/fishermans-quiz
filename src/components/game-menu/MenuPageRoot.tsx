@@ -97,6 +97,7 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
           return (
             <div key={sectionIndex} className="px-4 pb-3">
               <button
+                data-menu-item
                 onClick={() => handleItemClick(item)}
                 disabled={!quiz.isActive}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-teal-500 text-white font-semibold text-[15px] hover:bg-teal-600 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
