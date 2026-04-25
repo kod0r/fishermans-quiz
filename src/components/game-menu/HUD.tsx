@@ -1,29 +1,27 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Home, Menu, BarChart3, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import type { QuizContext } from '@/hooks/useQuiz';
+import type { MenuPageId } from '@/hooks/useGameMenu';
 
-interface HUDProps {
-  isActive: boolean;
-  onHome: () => void;
-  onMenuOpen: () => void;
-  onShowProgress?: () => void;
-  showProgress?: boolean;
-  onStopQuiz?: () => void;
-  runStatus?: string;
+interface GameMenuApi {
+  open: () => void;
+  openTo: (page: MenuPageId) => void;
+  isOpen: boolean;
 }
 
-export function HUD({
-  isActive,
-  onHome,
-  onMenuOpen,
-  onShowProgress,
-  showProgress,
-  onStopQuiz,
-  runStatus,
-}: HUDProps) {
+interface HUDProps {
+  quiz: QuizContext;
+  gameMenu: GameMenuApi;
+}
+
+export function HUD({ quiz, gameMenu }: HUDProps) {
   const [hidden, setHidden] = useState(false);
   const touchStartY = useRef<number | null>(null);
   const hudRef = useRef<HTMLDivElement>(null);
+
+  const isQuizActive = quiz.isActive;
+  const currentView = quiz.view;
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
@@ -79,7 +77,7 @@ export function HUD({
       >
         <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
           <Button
-            onClick={onHome}
+            onClick={() => quiz.goToView('start')}
             variant="ghost"
             size="icon"
             aria-label="Zur Startseite"
@@ -89,7 +87,7 @@ export function HUD({
           </Button>
 
           <Button
-            onClick={onMenuOpen}
+            onClick={gameMenu.open}
             variant="ghost"
             size="icon"
             aria-label="Menü öffnen"
@@ -98,9 +96,9 @@ export function HUD({
             <Menu className="w-4 h-4" />
           </Button>
 
-          {showProgress && onShowProgress && (
+          {currentView === 'quiz' && isQuizActive && (
             <Button
-              onClick={onShowProgress}
+              onClick={() => quiz.goToView('progress')}
               variant="ghost"
               size="icon"
               aria-label="Fortschritt"
@@ -110,9 +108,9 @@ export function HUD({
             </Button>
           )}
 
-          {isActive && onStopQuiz && (
+          {isQuizActive && (
             <Button
-              onClick={onStopQuiz}
+              onClick={() => gameMenu.openTo('run-actions')}
               variant="ghost"
               size="icon"
               aria-label="Quiz beenden"
@@ -122,9 +120,9 @@ export function HUD({
             </Button>
           )}
 
-          {runStatus && (
+          {isQuizActive && (
             <div className="px-2 py-0.5 rounded-lg bg-teal-100/80 text-teal-700 text-[11px] font-semibold dark:bg-teal-900/50 dark:text-teal-400">
-              {runStatus}
+              {quiz.statistiken?.beantwortet ?? 0}/{quiz.statistiken?.gesamt ?? 0}
             </div>
           )}
         </div>

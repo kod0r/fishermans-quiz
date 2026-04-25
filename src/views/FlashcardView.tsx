@@ -13,6 +13,7 @@ import type { SelfAssessmentGrade } from '@/types/quiz';
 interface Props {
   quiz: QuizContext;
   onOpenRunActions: () => void;
+  gameMenuOpen: boolean;
 }
 
 const GRADE_BUTTONS: { grade: SelfAssessmentGrade; label: string; icon: React.ReactNode; color: string }[] = [
@@ -22,7 +23,7 @@ const GRADE_BUTTONS: { grade: SelfAssessmentGrade; label: string; icon: React.Re
   { grade: 'easy', label: 'Easy', icon: <Zap className="w-4 h-4" />, color: 'bg-emerald-500 hover:bg-emerald-600 text-white' },
 ];
 
-export default function FlashcardView({ quiz, onOpenRunActions }: Props) {
+export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: Props) {
   const {
     aktuelleFrage,
     aktuellerIndex,
@@ -106,7 +107,7 @@ export default function FlashcardView({ quiz, onOpenRunActions }: Props) {
         onOpenRunActions();
       }
     },
-    enabled: quiz.isActive && !cheatSheetOpen,
+    enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
   if (!aktuelleFrage) return null;

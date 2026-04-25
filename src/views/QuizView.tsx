@@ -20,9 +20,10 @@ import type { QuizContext } from '@/hooks/useQuiz';
 interface Props {
   quiz: QuizContext;
   onOpenRunActions: () => void;
+  gameMenuOpen: boolean;
 }
 
-export default function QuizView({ quiz, onOpenRunActions }: Props) {
+export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props) {
   const {
     aktuelleFrage,
     aktuellerIndex,
@@ -176,7 +177,7 @@ export default function QuizView({ quiz, onOpenRunActions }: Props) {
         onOpenRunActions();
       }
     },
-    enabled: quiz.isActive && !cheatSheetOpen,
+    enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
   if (!aktuelleFrage) return null;
