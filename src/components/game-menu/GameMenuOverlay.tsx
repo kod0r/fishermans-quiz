@@ -174,7 +174,6 @@ export function GameMenuOverlay({
         onOpenChange={(open) => {
           if (!open) onClose();
         }}
-        snapPoints={[0.5, 0.85]}
         dismissible
       >
         <DrawerPrimitive.Portal>

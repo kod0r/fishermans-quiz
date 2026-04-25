@@ -59,7 +59,7 @@ export default function HistoryView({ quiz, onBack }: Props) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl pt-14 sm:pt-16">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl pb-16">
         {/* Header */}
         <div className="flex items-center gap-2 mb-4">
           <Button

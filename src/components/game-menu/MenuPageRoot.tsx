@@ -42,6 +42,7 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
 
   const handleContinueQuiz = () => {
     if (quiz.isActive) {
+      quiz.goToView('quiz');
       onClose();
     }
   };

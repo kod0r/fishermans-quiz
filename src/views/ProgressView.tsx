@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
-import { CheckCircle, XCircle, HelpCircle, ChevronDown, ArrowLeft, Play } from 'lucide-react';
+import { CheckCircle, XCircle, HelpCircle, ChevronDown } from 'lucide-react';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import type { QuizContext } from '@/hooks/useQuiz';
 
@@ -57,7 +56,7 @@ export default function ProgressView({ quiz }: Props) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-      <div className="container mx-auto px-3 sm:px-4 py-3 max-w-3xl pt-14 sm:pt-16">
+      <div className="container mx-auto px-3 sm:px-4 py-3 max-w-3xl pb-16">
 
         {/* Run-Ergebnis */}
         <Card className={`mb-2 ${passed ? 'bg-emerald-50 border-emerald-300/50 dark:bg-emerald-900/20 dark:border-emerald-500/30' : 'bg-red-50 border-red-300/50 dark:bg-red-900/20 dark:border-red-500/30'}`}>
@@ -178,33 +177,6 @@ export default function ProgressView({ quiz }: Props) {
                )}
              </CardContent>
            </Card>
-
-        {/* Continue Quiz Button */}
-        {isActive && (
-          <div className="sticky bottom-4 flex justify-center">
-            <Button
-              onClick={() => goToView('quiz')}
-              className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-6 py-5 text-sm rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Quiz fortsetzen
-            </Button>
-          </div>
-        )}
-
-        {/* Back to Start */}
-        {!isActive && (
-          <div className="flex justify-center mt-4">
-            <Button
-              variant="outline"
-              onClick={() => goToView('start')}
-              className="rounded-xl border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Zurück zur Startseite
-            </Button>
-          </div>
-        )}
        </div>
      </div>
    );

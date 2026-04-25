@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { Home, Menu, BarChart3, Square } from 'lucide-react';
+import { Home, Menu, BarChart3, Square, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { QuizContext } from '@/hooks/useQuiz';
 import type { MenuPageId } from '@/hooks/useGameMenu';
@@ -30,10 +30,11 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (touchStartY.current === null) return;
     const diff = e.touches[0].clientY - touchStartY.current;
-    if (diff < -40 && !hidden) {
+    // Bottom HUD: swipe down to hide, swipe up to show
+    if (diff > 40 && !hidden) {
       setHidden(true);
       touchStartY.current = null;
-    } else if (diff > 40 && hidden) {
+    } else if (diff < -40 && hidden) {
       setHidden(false);
       touchStartY.current = null;
     }
@@ -55,7 +56,7 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       {/* Hidden indicator — tap or swipe up to show */}
       {hidden && (
         <div
-          className="fixed top-0 left-0 right-0 z-40 flex justify-center pt-1"
+          className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-1"
           onClick={() => setHidden(false)}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -68,9 +69,9 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       <div
         ref={hudRef}
         className={`
-          fixed top-3 left-1/2 -translate-x-1/2 z-50
+          fixed bottom-3 left-1/2 -translate-x-1/2 z-50
           transition-transform duration-300 ease-out
-          ${hidden ? '-translate-y-[calc(100%+24px)]' : 'translate-y-0'}
+          ${hidden ? 'translate-y-[calc(100%+24px)]' : 'translate-y-0'}
         `}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -105,6 +106,18 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
               className="w-8 h-8 rounded-xl bg-slate-100/80 text-slate-600 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700"
             >
               <BarChart3 className="w-4 h-4" />
+            </Button>
+          )}
+
+          {currentView !== 'quiz' && isQuizActive && (
+            <Button
+              onClick={() => quiz.goToView('quiz')}
+              variant="ghost"
+              size="icon"
+              aria-label="Quiz fortsetzen"
+              className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-600 hover:bg-teal-100 hover:text-teal-700 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-teal-900/50"
+            >
+              <Play className="w-4 h-4 fill-current" />
             </Button>
           )}
 
