@@ -10,12 +10,13 @@
 |-------|-------------|----------|
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 | Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
-| Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | medium |
-| Global Keyboard Shortcuts | [#81](https://github.com/kod0r/fishermans-quiz/issues/81) | low |
 | Custom Study Decks | [#83](https://github.com/kod0r/fishermans-quiz/issues/83) | medium |
-| Image Zoom & Pan | [#84](https://github.com/kod0r/fishermans-quiz/issues/84) | low |
+| Multi-Language Support | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | low |
+| Android- und iOS-Version | [#6](https://github.com/kod0r/fishermans-quiz/issues/6) | low |
 | Daily Challenge Streak | [#88](https://github.com/kod0r/fishermans-quiz/issues/88) | low |
+| Global Keyboard Shortcuts | [#81](https://github.com/kod0r/fishermans-quiz/issues/81) | low |
 | Bereich Mastery Badges | [#102](https://github.com/kod0r/fishermans-quiz/issues/102) | low |
+| Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5) | low |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
 
@@ -42,7 +43,7 @@
 | ProgressView contrast in light mode | [#75](https://github.com/kod0r/fishermans-quiz/issues/75) | 2026-04-24 |
 | TopNavBar touch targets and ARIA | [#74](https://github.com/kod0r/fishermans-quiz/issues/74) | 2026-04-24 |
 | Loading text contrast in light mode | [#73](https://github.com/kod0r/fishermans-quiz/issues/73) | 2026-04-24 |
-| Zeitgesteuerte Prüfungssimulation | [#9](https://github.com/kod0r/fishermans-quiz/issues/9) | 2026-04-24 |
+
 | Upgrade zu Vite 8 + @vitejs/plugin-react 6 | [#37](https://github.com/kod0r/fishermans-quiz/issues/37) | 2026-04-21 |
 | Upgrade zu ESLint 10 + @eslint/js 10 | [#38](https://github.com/kod0r/fishermans-quiz/issues/38) | 2026-04-21 |
 | Evaluierung recharts 3.x Migration | [#39](https://github.com/kod0r/fishermans-quiz/issues/39) | 2026-04-21 |

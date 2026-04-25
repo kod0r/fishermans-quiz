@@ -1,3 +1,16 @@
+## [Unreleased]
+
+### Features
+
+* **keyboard:** global shortcuts — `1/2/3` answer selection, `←/→` navigation, `Space` reveal, `F` favorite toggle, `Esc` menu, `?` cheat-sheet modal ([#81](https://github.com/kod0r/fishermans-quiz/issues/81))
+* **decks:** custom study decks — create named decks, add/remove questions, start quiz filtered by deck ([#83](https://github.com/kod0r/fishermans-quiz/issues/83))
+
+### Code Quality
+
+* **test:** deck hook tests (`src/test/decks.test.ts`) — 10 tests covering CRUD, membership, and localStorage persistence
+
+---
+
 # [0.3.0](https://github.com/kod0r/fishermans-quiz/compare/v0.2.1...v0.3.0) (2026-04-25)
 
 
