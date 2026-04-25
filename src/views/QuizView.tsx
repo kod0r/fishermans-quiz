@@ -13,6 +13,9 @@ import { QuizHeader } from '@/components/QuizHeader';
 import { AnswerGrid } from '@/components/AnswerGrid';
 import { QuizFooter } from '@/components/QuizFooter';
 import { QuizCardShell } from '@/components/QuizCardShell';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { CheatSheetModal } from '@/components/CheatSheetModal';
+import { PauseMenuDialog } from '@/components/PauseMenuDialog';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
@@ -44,6 +47,13 @@ export default function QuizView({ quiz }: Props) {
   const [bereichComplete, setBereichComplete] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState<number | undefined>();
   const [examAbgelaufen, setExamAbgelaufen] = useState(false);
+  const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
+  const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
+
+  // Clear pending wrong answer when navigating to a different question
+  useEffect(() => {
+    setPendingWrongAnswer(null);
+  }, [aktuellerIndex]);
 
   // Exam timer
   useEffect(() => {
@@ -141,7 +151,30 @@ export default function QuizView({ quiz }: Props) {
       checkBereichComplete,
       examAbgelaufen,
     ],
-  );
+   );
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onAnswer: handleAnswerClick,
+    onPrev: isPending ? undefined : vorherigeFrage,
+    onNext: isPending ? undefined : naechsteFrage,
+    onToggleFavorite: () => {
+      if (aktuelleFrage) {
+        toggleFavorite(aktuelleFrage.id);
+      }
+    },
+    // Space is a no-op in quiz mode (answer selection via number keys only)
+    onSpace: undefined,
+    onOpenCheatSheet: () => setCheatSheetOpen(true),
+    onEscape: () => {
+      if (cheatSheetOpen) {
+        setCheatSheetOpen(false);
+      } else {
+        setPauseMenuOpen(true);
+      }
+    },
+    enabled: quiz.isActive && !cheatSheetOpen && !pauseMenuOpen,
+  });
 
   if (!aktuelleFrage) return null;
 
@@ -256,8 +289,12 @@ export default function QuizView({ quiz }: Props) {
                 </Button>
               </div>
             </DialogContent>
-          </Dialog>
-        </div>
+           </Dialog>
+
+           {/* Keyboard shortcuts modals */}
+           <CheatSheetModal open={cheatSheetOpen} onOpenChange={setCheatSheetOpen} />
+           <PauseMenuDialog open={pauseMenuOpen} onOpenChange={setPauseMenuOpen} quiz={quiz} />
+         </div>
       </div>
     </TooltipProvider>
   );
