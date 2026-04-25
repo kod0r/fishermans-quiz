@@ -12,6 +12,24 @@ export default defineConfig({
   },
   build: {
     cssMinify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/@radix-ui')) {
+            return 'vendor-radix'
+          }
+          if (id.includes('node_modules/recharts')) {
+            return 'vendor-charts'
+          }
+          if (id.includes('node_modules/zod') || id.includes('node_modules/sonner') || id.includes('node_modules/vaul')) {
+            return 'vendor-utils'
+          }
+        },
+      },
+    },
   },
   resolve: {
     alias: {
