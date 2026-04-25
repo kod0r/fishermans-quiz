@@ -104,16 +104,6 @@ export function useMetaProgress(gameMode: GameMode) {
     }
   }, [meta, gameMode]);
 
-  // Abgeleitete Werte
-  const meisterCount = useMemo(() =>
-    Object.values(meta.fragen).filter(m => m.correctStreak >= 3).length,
-    [meta.fragen]
-  );
-  const lernCount = useMemo(() =>
-    Object.values(meta.fragen).filter(m => m.attempts > 0 && m.correctStreak < 3).length,
-    [meta.fragen]
-  );
-
   const bestandeneBereicheHardcore = useMemo(() =>
     Object.values(meta.bereiche ?? {}).filter(b => b.passed).length,
     [meta.bereiche]
@@ -129,8 +119,6 @@ export function useMetaProgress(gameMode: GameMode) {
 
   return {
     meta,
-    meisterCount,
-    lernCount,
     bestandeneBereicheHardcore,
     gemeisterteBereicheHardcore,
     recordAnswer,
