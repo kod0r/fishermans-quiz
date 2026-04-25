@@ -1,13 +1,6 @@
 import { useCallback, useEffect } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import type { AppView } from '@/types/quiz';
+import type { QuizContext } from '@/hooks/useQuiz';
 import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import { useQuiz } from '@/hooks/useQuiz';
@@ -105,55 +98,53 @@ export default function App() {
       />
 
       <ErrorBoundary>
-      {currentView === 'quiz' && isQuizActive && (
-        quiz.rawRun?.sessionType === 'flashcard'
-          ? <FlashcardView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
-          : <QuizView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
-      )}
-
-      {currentView === 'progress' && isQuizActive && (
-        <ProgressView quiz={quiz} />
-      )}
-
-      {currentView === 'history' && (
-        <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />
-      )}
-
-      {currentView === 'browse' && (
-        <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />
-      )}
-      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
-         <StartView quiz={quiz} />
-       )}
+        <ViewRenderer
+          currentView={currentView}
+          isQuizActive={isQuizActive}
+          quiz={quiz}
+          gameMenu={gameMenu}
+        />
       </ErrorBoundary>
-
-       {/* Backup reminder dialog */}
-       <Dialog open={quiz.showBackupPrompt} onOpenChange={quiz.setShowBackupPrompt}>
-         <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-sm dark:bg-slate-900 dark:border-slate-700 dark:text-white">
-           <DialogHeader>
-             <DialogTitle className="text-base">Backup deiner Lerndaten</DialogTitle>
-             <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
-               Es ist Zeit für ein Backup deiner Lerndaten. Jetzt exportieren?
-             </DialogDescription>
-           </DialogHeader>
-           <DialogFooter className="gap-2">
-             <Button
-               variant="outline"
-               onClick={quiz.handleBackupCancel}
-               className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-             >
-               Später
-             </Button>
-             <Button
-               onClick={quiz.handleBackupConfirm}
-               className="flex-1 bg-teal-500 hover:bg-teal-600 text-white"
-             >
-               Jetzt exportieren
-             </Button>
-           </DialogFooter>
-         </DialogContent>
-       </Dialog>
        <Toaster position="top-center" richColors />
      </>
    );
  }
+
+interface ViewRendererProps {
+  currentView: AppView;
+  isQuizActive: boolean;
+  quiz: QuizContext;
+  gameMenu: ReturnType<typeof useGameMenu>;
+}
+
+function ViewRenderer({
+  currentView,
+  isQuizActive,
+  quiz,
+  gameMenu,
+}: ViewRendererProps) {
+  if (currentView === 'quiz') {
+    if (!isQuizActive) return null;
+    return quiz.rawRun?.sessionType === 'flashcard' ? (
+      <FlashcardView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
+    ) : (
+      <QuizView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
+    );
+  }
+  if (currentView === 'progress') {
+    if (!isQuizActive) return null;
+    return <ProgressView quiz={quiz} />;
+  }
+  if (currentView === 'history') {
+    return <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+  }
+  if (currentView === 'browse') {
+    return <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+  }
+  if (currentView === 'start') {
+    return <StartView quiz={quiz} />;
+  }
+  const _exhaustiveCheck: never = currentView;
+  return _exhaustiveCheck;
+}
+
