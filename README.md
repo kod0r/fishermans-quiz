@@ -9,6 +9,19 @@
 
 ---
 
+## Dataset - A verification suite has been built and run
+
+Deliverables:
+
+verify.py — single idempotent script (~5 min runtime)
+audit_report.json — structured findings
+human_review.csv — 531-item stratified review batch
+schema_errors.json — schema failures (empty in this case)
+
+Executive Summary:
+
+The dataset of 1,052 questions is GO with TARGETED FIXES. The severe defect rate is 1.24% (13 questions), which is below the 2% re-extraction threshold. There are zero schema errors and zero missing image assets. The 13 severe defects consist of 8 exact duplicates (4 clusters) and 5 questions with truncated options caused by extraction splits. The remaining ~25% of flags are mild signals: text-length IQR outliers, alphabetically sorted options, and completion-style questions lacking explicit interrogative markers — all common and legitimate in this German exam format.
+
 ## ✨ Features
 
 - **1,052 questions** across 6 areas (Biology, Water Science, Water Conservation, Fishing Gear & Methods, Law, Image Recognition)
@@ -99,4 +112,4 @@ Private learning project — not yet intended for public distribution.
 
 ---
 
-*All documentation is in English. The app UI is in German.*
+_All documentation is in English. The app UI is in German._
