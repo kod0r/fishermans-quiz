@@ -86,4 +86,3 @@ look @issues
 1. **GitHub Issues are the source of truth.** This file is a generated view, not the master record.
 
 2. To add annotations that survive regeneration, use the `<!-- CUSTOM-ANNOTATIONS -->` block at the top.
-um`, `priority:high`).
