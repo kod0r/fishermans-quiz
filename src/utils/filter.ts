@@ -1,4 +1,4 @@
-import type { Frage, FrageMeta, SRSMeta } from '@/types/quiz';
+import type { Frage, FrageMeta, SRSMeta, QuizData } from '@/types/quiz';
 import { isMastered } from '@/utils/srs';
 
 export interface FilterOptions {
@@ -35,4 +35,46 @@ export function filterFragen(
     }
     return true;
   });
+}
+
+
+export function filterQuizDataByFavorites(
+  data: QuizData,
+  favorites: string[]
+): QuizData | null {
+  const favIds = new Set(favorites);
+  const fragen = data.fragen.filter(f => favIds.has(f.id));
+  if (fragen.length === 0) return null;
+  return { ...data, fragen };
+}
+
+export function filterQuizDataByWeakness(
+  data: QuizData,
+  metaFragen: Record<string, FrageMeta>
+): QuizData | null {
+  const weakFragen = data.fragen
+    .filter(f => {
+      const fm = metaFragen[f.id];
+      if (!fm || fm.attempts === 0) return false;
+      return fm.correctStreak < fm.attempts * 0.5;
+    })
+    .sort((a, b) => {
+      const ma = metaFragen[a.id];
+      const mb = metaFragen[b.id];
+      const scoreA = (ma?.attempts ?? 0) - (ma?.correctStreak ?? 0);
+      const scoreB = (mb?.attempts ?? 0) - (mb?.correctStreak ?? 0);
+      return scoreB - scoreA;
+    });
+  if (weakFragen.length === 0) return null;
+  return { ...data, fragen: weakFragen };
+}
+
+export function filterQuizDataBySRSDue(
+  data: QuizData,
+  dueFrageIds: string[]
+): QuizData | null {
+  const dueIds = new Set(dueFrageIds);
+  const dueFragen = data.fragen.filter(f => dueIds.has(f.id));
+  if (dueFragen.length === 0) return null;
+  return { ...data, fragen: dueFragen };
 }
