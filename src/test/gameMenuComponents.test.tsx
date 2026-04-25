@@ -93,6 +93,7 @@ describe('HUD', () => {
     render(<HUD quiz={quiz} gameMenu={gameMenu} />);
 
     expect(screen.queryByLabelText('Fortschritt')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Quiz fortsetzen')).toBeInTheDocument();
   });
 
   it('does not render stop button or status when quiz is not active', () => {
@@ -140,11 +141,11 @@ describe('HUD', () => {
     const gameMenu = createMockGameMenu();
 
     const { container } = render(<HUD quiz={quiz} gameMenu={gameMenu} />);
-    const hudBar = container.querySelector('[class*="fixed top-3"]');
+    const hudBar = container.querySelector('[class*="fixed bottom-3"]');
 
     expect(() => {
       fireEvent.touchStart(hudBar!, { touches: [{ clientY: 100 }] });
-      fireEvent.touchMove(hudBar!, { touches: [{ clientY: 50 }] });
+      fireEvent.touchMove(hudBar!, { touches: [{ clientY: 150 }] });
     }).not.toThrow();
   });
 
@@ -153,21 +154,21 @@ describe('HUD', () => {
     const gameMenu = createMockGameMenu();
 
     const { container } = render(<HUD quiz={quiz} gameMenu={gameMenu} />);
-    const hudBar = container.querySelector('[class*="fixed top-3"]') as HTMLElement;
+    const hudBar = container.querySelector('[class*="fixed bottom-3"]') as HTMLElement;
 
-    expect(hudBar.className).not.toContain('-translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).not.toContain('translate-y-[calc(100%+24px)]');
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h' }));
     });
 
-    expect(hudBar.className).toContain('-translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).toContain('translate-y-[calc(100%+24px)]');
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'H' }));
     });
 
-    expect(hudBar.className).not.toContain('-translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).not.toContain('translate-y-[calc(100%+24px)]');
   });
 });
 

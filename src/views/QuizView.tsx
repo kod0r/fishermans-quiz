@@ -196,7 +196,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-4xl pt-14 sm:pt-16">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-4xl pb-16">
           <QuizHeader
             gameMode={gameMode}
             korrekt={korrekt}

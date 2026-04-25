@@ -161,7 +161,7 @@ export default function StartView({ quiz }: Props) {
         <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl">
 
           {/* Header */}
-          <div className="text-center mb-5 sm:mb-6 pt-12 sm:pt-14">
+          <div className="text-center mb-5 sm:mb-6 pt-4 sm:pt-6">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Fish className="w-7 h-7 sm:w-8 sm:h-8 text-teal-400" aria-hidden="true" />
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Fisherman's Quiz</h1>
