@@ -241,35 +241,68 @@ describe('useGameMenu', () => {
     expect(result.current.stack).toEqual(['root']);
   });
 
-  it('Enter does not crash', () => {
+  it('Enter fires registered onActivate callback with focusedIndex', () => {
+    const onActivate = vi.fn();
     const { result } = renderHook(() => useGameMenu());
 
     act(() => {
+      result.current.registerItemCount(5);
+    });
+    act(() => {
       result.current.open();
     });
+    act(() => {
+      result.current.setFocusedIndex(2);
+    });
+    act(() => {
+      result.current.registerOnActivate(onActivate);
+    });
 
-    expect(() => {
-      act(() => {
-        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      });
-    }).not.toThrow();
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    });
 
+    expect(onActivate).toHaveBeenCalledWith(2);
     expect(result.current.isOpen).toBe(true);
   });
 
-  it('Space does not crash', () => {
+  it('Space fires registered onActivate callback with focusedIndex', () => {
+    const onActivate = vi.fn();
     const { result } = renderHook(() => useGameMenu());
 
     act(() => {
       result.current.open();
     });
+    act(() => {
+      result.current.registerOnActivate(onActivate);
+    });
 
-    expect(() => {
-      act(() => {
-        window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
-      });
-    }).not.toThrow();
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+    });
 
+    expect(onActivate).toHaveBeenCalledWith(0);
     expect(result.current.isOpen).toBe(true);
+  });
+
+  it('unregistering onActivate stops Enter from firing', () => {
+    const onActivate = vi.fn();
+    const { result } = renderHook(() => useGameMenu());
+
+    act(() => {
+      result.current.open();
+    });
+    act(() => {
+      result.current.registerOnActivate(onActivate);
+    });
+    act(() => {
+      result.current.registerOnActivate(null);
+    });
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    });
+
+    expect(onActivate).not.toHaveBeenCalled();
   });
 });

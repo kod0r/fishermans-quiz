@@ -62,6 +62,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
       {/* Primary CTA: Continue */}
       <section>
         <button
+          data-menu-item
           onClick={handleContinue}
           aria-label="Quiz fortsetzen"
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-teal-500 text-white font-semibold text-[15px] hover:bg-teal-600 active:scale-[0.98] transition-all"
@@ -78,6 +79,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
         </h3>
         <div className="bg-slate-100/80 dark:bg-slate-800/50 rounded-xl overflow-hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
           <button
+            data-menu-item
             onClick={handleRestart}
             aria-label="Quiz neu starten"
             className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-foreground"
@@ -89,6 +91,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
           </button>
 
           <button
+            data-menu-item
             onClick={handleProgress}
             aria-label="Zum Fortschritt"
             className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-foreground"
@@ -100,6 +103,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
           </button>
 
           <button
+            data-menu-item
             onClick={handleExit}
             aria-label="Zur Startseite"
             className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-red-500 dark:text-red-400"

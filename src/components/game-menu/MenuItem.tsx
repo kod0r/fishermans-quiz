@@ -24,6 +24,7 @@ export function MenuItem({
 }: MenuItemProps) {
   return (
     <button
+      data-menu-item
       onClick={onClick}
       disabled={disabled}
       tabIndex={isFocused === true ? 0 : isFocused === false ? -1 : undefined}

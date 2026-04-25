@@ -68,6 +68,7 @@ export default function App() {
         onClose={gameMenu.close}
         onPop={gameMenu.pop}
         onPush={gameMenu.push}
+        registerOnActivate={gameMenu.registerOnActivate}
         quiz={quiz}
       />
 
