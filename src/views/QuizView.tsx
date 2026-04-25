@@ -133,10 +133,6 @@ export default function QuizView({ quiz }: Props) {
         beantworteFrage(aktuelleFrage.id, buchstabe);
         setPendingWrongAnswer(null);
         checkBereichComplete(aktuelleFrage.id);
-      } else if (gameMode === 'arcade' && isPending) {
-        beantworteFrage(aktuelleFrage.id, buchstabe);
-        setPendingWrongAnswer(null);
-        checkBereichComplete(aktuelleFrage.id);
       } else if (gameMode === 'arcade' && !isPending) {
         setPendingWrongAnswer(buchstabe);
       } else {

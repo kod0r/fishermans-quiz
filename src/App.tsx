@@ -1,9 +1,6 @@
 import { useCallback } from 'react';
 import { useQuiz } from '@/hooks/useQuiz';
-import { useGameMenu } from '@/hooks/useGameMenu';
-
-import { HUD } from '@/components/game-menu/HUD';
-import { GameMenuOverlay } from '@/components/game-menu/GameMenuOverlay';
+import { TopNavBar } from '@/components/TopNavBar';
 import { Spinner } from '@/components/ui/spinner';
 import StartView from '@/views/StartView';
 import QuizView from '@/views/QuizView';
@@ -14,7 +11,6 @@ import BrowseView from '@/views/BrowseView';
 
 export default function App() {
   const quiz = useQuiz();
-  const gameMenu = useGameMenu();
 
   const handleRetry = useCallback(() => {
     window.location.reload();
@@ -56,29 +52,20 @@ export default function App() {
   const isQuizActive = quiz.isActive;
   const currentView = quiz.view;
 
+  // Sidebar-Button-Sichtbarkeit
+  const showResumeOnStart = currentView === 'start' && isQuizActive;
+  const showResumeOnProgress = currentView === 'progress' && isQuizActive;
   const showProgressOnQuiz = currentView === 'quiz' && isQuizActive;
 
   return (
     <>
-      <HUD
-        isActive={isQuizActive}
+      <TopNavBar
+        quiz={quiz}
         onHome={() => quiz.goToView('start')}
-        onMenuOpen={gameMenu.open}
+        onResumeQuiz={() => quiz.goToView('quiz')}
+        showResume={showResumeOnStart || showResumeOnProgress}
         onShowProgress={() => quiz.goToView('progress')}
         showProgress={showProgressOnQuiz}
-        onStopQuiz={() => quiz.unterbrecheRun()}
-        runStatus={isQuizActive ? `${quiz.statistiken?.beantwortet ?? 0}/${quiz.statistiken?.gesamt ?? 0}` : undefined}
-      />
-
-      <GameMenuOverlay
-        isOpen={gameMenu.isOpen}
-        stack={gameMenu.stack}
-        currentPage={gameMenu.currentPage}
-        direction={gameMenu.direction}
-        onClose={gameMenu.close}
-        onPop={gameMenu.pop}
-        onPush={gameMenu.push}
-        quiz={quiz}
       />
 
       {currentView === 'quiz' && isQuizActive && (
