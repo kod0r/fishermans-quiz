@@ -186,9 +186,6 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
 
       {/* Danger Zone */}
       <section>
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 px-4 dark:text-slate-400">
-          Danger Zone
-        </h3>
         <div className="bg-slate-100/80 dark:bg-slate-800/50 rounded-xl overflow-hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
           <Button
             data-menu-item

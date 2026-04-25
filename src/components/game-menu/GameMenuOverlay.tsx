@@ -212,7 +212,7 @@ export function GameMenuOverlay({
             rounded-3xl
             shadow-2xl shadow-black/20
             overflow-hidden
-            animate-in fade-in zoom-in-95
+            animate-in fade-in
             duration-300 ease-out
             flex flex-col
           "

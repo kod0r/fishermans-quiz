@@ -1,12 +1,10 @@
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from "lucide-react";
 import {
   Play,
   Timer,
   Settings,
   Search,
   History,
-  BarChart3,
-  LogOut,
   Zap,
   Shield,
   Sun,
@@ -19,23 +17,28 @@ import {
   Database,
   RotateCcw,
   LayoutGrid,
-} from 'lucide-react';
-import type { GameMode, AppView } from '@/types/quiz';
-import type { QuizContext } from '@/hooks/useQuiz';
-import { MenuPageNavigation } from './MenuPageNavigation';
-import { MenuPageRunActions } from './MenuPageRunActions';
+} from "lucide-react";
+import type { GameMode, AppView } from "@/types/quiz";
+import type { QuizContext } from "@/hooks/useQuiz";
+import { MenuPageNavigation } from "./MenuPageNavigation";
+import { MenuPageRunActions } from "./MenuPageRunActions";
 
 // ── Page IDs ──
-export type MenuPageId = 'root' | 'settings' | 'navigation' | 'run-actions' | 'data';
+export type MenuPageId =
+  | "root"
+  | "settings"
+  | "navigation"
+  | "run-actions"
+  | "data";
 
 // ── Action Types ──
-export type MenuActionType = 'navigate' | 'view' | 'action' | 'toggle';
+export type MenuActionType = "navigate" | "view" | "action" | "toggle";
 
 // ── Runtime Context for Conditions & Dynamic Details ──
 export interface MenuContext {
   isQuizActive: boolean;
   gameMode: GameMode;
-  theme: 'light' | 'dark' | 'system';
+  theme: "light" | "dark" | "system";
   currentView: AppView;
   historyCount: number;
   runStatus?: string; // e.g. "3/20"
@@ -79,250 +82,218 @@ export interface MenuPageConfig {
 // ── Helper to build detail strings ──
 const modeDetail = (ctx: MenuContext) => {
   switch (ctx.gameMode) {
-    case 'arcade':
-      return 'Arcade';
-    case 'hardcore':
-      return 'Hardcore';
-    case 'exam':
-      return 'Prüfung';
+    case "arcade":
+      return "Arcade";
+    case "hardcore":
+      return "Hardcore";
+    case "exam":
+      return "Prüfung";
     default:
-      return '';
+      return "";
   }
 };
 
 // ── Static Menu Configuration ──
 export const MENU_PAGES: MenuPageConfig[] = [
   {
-    id: 'root',
-    title: 'Menü',
+    id: "root",
+    title: "Menü",
     sections: [
       {
         items: [
           {
-            id: 'continue-quiz',
-            label: 'Quiz fortsetzen',
+            id: "continue-quiz",
+            label: "Quiz fortsetzen",
             icon: Play,
-            action: 'action',
-            target: 'continue-quiz',
-            condition: (ctx) => ctx.isQuizActive,
+            action: "action",
+            target: "continue-quiz",
+            condition: (ctx) => ctx.isQuizActive && ctx.currentView !== "quiz",
           },
         ],
       },
       {
-        title: 'Modus',
+        title: "Allgemein",
         items: [
           {
-            id: 'current-mode',
-            label: 'Spielmodus',
-            icon: Timer,
-            action: 'navigate',
-            target: 'settings',
+            id: "navigation",
+            label: "Schnellnavigation",
+            icon: LayoutGrid,
+            action: "navigate",
+            target: "navigation",
+            condition: (ctx) => ctx.isQuizActive && ctx.currentView === "quiz",
+          },
+          {
+            id: "history",
+            label: "Session-Verlauf",
+            icon: History,
+            action: "view",
+            target: "history",
+            detail: (ctx) =>
+              ctx.historyCount > 0 ? `${ctx.historyCount}` : "",
+          },
+          {
+            id: "browse",
+            label: "Fragenkatalog",
+            icon: Search,
+            action: "view",
+            target: "browse",
+          },
+          {
+            id: "settings",
+            label: "Einstellungen",
+            icon: Settings,
+            action: "navigate",
+            target: "settings",
             detail: modeDetail,
           },
         ],
       },
-      {
-        title: 'Allgemein',
-        items: [
-          {
-            id: 'settings',
-            label: 'Einstellungen',
-            icon: Settings,
-            action: 'navigate',
-            target: 'settings',
-          },
-          {
-            id: 'browse',
-            label: 'Fragenkatalog',
-            icon: Search,
-            action: 'view',
-            target: 'browse',
-          },
-          {
-            id: 'history',
-            label: 'Session-Verlauf',
-            icon: History,
-            action: 'view',
-            target: 'history',
-            detail: (ctx) => (ctx.historyCount > 0 ? `${ctx.historyCount}` : ''),
-          },
-          {
-            id: 'navigation',
-            label: 'Schnellnavigation',
-            icon: LayoutGrid,
-            action: 'navigate',
-            target: 'navigation',
-            condition: (ctx) => ctx.isQuizActive && ctx.currentView === 'quiz',
-          },
-          {
-            id: 'stats',
-            label: 'Statistiken',
-            icon: BarChart3,
-            action: 'view',
-            target: 'progress',
-            condition: (ctx) => ctx.isQuizActive,
-          },
-        ],
-      },
-      {
-        items: [
-          {
-            id: 'exit-quiz',
-            label: 'Quiz beenden',
-            icon: LogOut,
-            action: 'action',
-            target: 'exit-quiz',
-            destructive: true,
-            condition: (ctx) => ctx.isQuizActive,
-          },
-        ],
-      },
     ],
   },
   {
-    id: 'settings',
-    title: 'Einstellungen',
+    id: "settings",
+    title: "Einstellungen",
     sections: [
       {
-        title: 'Spielmodus',
+        title: "Spielmodus",
         items: [
           {
-            id: 'mode-arcade',
-            label: 'Arcade',
+            id: "mode-arcade",
+            label: "Arcade",
             icon: Zap,
-            action: 'toggle',
-            target: 'arcade',
-            detail: (ctx) => (ctx.gameMode === 'arcade' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "arcade",
+            detail: (ctx) => (ctx.gameMode === "arcade" ? "Aktiv" : ""),
           },
           {
-            id: 'mode-hardcore',
-            label: 'Hardcore',
+            id: "mode-hardcore",
+            label: "Hardcore",
             icon: Shield,
-            action: 'toggle',
-            target: 'hardcore',
-            detail: (ctx) => (ctx.gameMode === 'hardcore' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "hardcore",
+            detail: (ctx) => (ctx.gameMode === "hardcore" ? "Aktiv" : ""),
           },
           {
-            id: 'mode-exam',
-            label: 'Prüfungsmodus',
+            id: "mode-exam",
+            label: "Prüfungsmodus",
             icon: Timer,
-            action: 'toggle',
-            target: 'exam',
-            detail: (ctx) => (ctx.gameMode === 'exam' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "exam",
+            detail: (ctx) => (ctx.gameMode === "exam" ? "Aktiv" : ""),
           },
         ],
       },
       {
-        title: 'Erscheinungsbild',
+        title: "Erscheinungsbild",
         items: [
           {
-            id: 'theme-light',
-            label: 'Hell',
+            id: "theme-light",
+            label: "Hell",
             icon: Sun,
-            action: 'toggle',
-            target: 'light',
-            detail: (ctx) => (ctx.theme === 'light' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "light",
+            detail: (ctx) => (ctx.theme === "light" ? "Aktiv" : ""),
           },
           {
-            id: 'theme-dark',
-            label: 'Dunkel',
+            id: "theme-dark",
+            label: "Dunkel",
             icon: Moon,
-            action: 'toggle',
-            target: 'dark',
-            detail: (ctx) => (ctx.theme === 'dark' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "dark",
+            detail: (ctx) => (ctx.theme === "dark" ? "Aktiv" : ""),
           },
           {
-            id: 'theme-system',
-            label: 'System',
+            id: "theme-system",
+            label: "System",
             icon: Monitor,
-            action: 'toggle',
-            target: 'system',
-            detail: (ctx) => (ctx.theme === 'system' ? 'Aktiv' : ''),
+            action: "toggle",
+            target: "system",
+            detail: (ctx) => (ctx.theme === "system" ? "Aktiv" : ""),
           },
         ],
       },
       {
-        title: 'Daten',
+        title: "Daten",
         items: [
           {
-            id: 'backup',
-            label: 'Backup & Daten',
+            id: "backup",
+            label: "Backup & Daten",
             icon: Database,
-            action: 'navigate',
-            target: 'data',
+            action: "navigate",
+            target: "data",
           },
         ],
       },
     ],
   },
   {
-    id: 'run-actions',
-    title: 'Pause',
+    id: "run-actions",
+    title: "Pause",
     customComponent: MenuPageRunActions,
   },
   {
-    id: 'navigation',
-    title: 'Schnellnavigation',
+    id: "navigation",
+    title: "Schnellnavigation",
     customComponent: MenuPageNavigation,
   },
   {
-    id: 'data',
-    title: 'Backup & Daten',
+    id: "data",
+    title: "Backup & Daten",
     sections: [
       {
-        title: 'Export',
+        title: "Export",
         items: [
           {
-            id: 'export-json',
-            label: 'Als JSON exportieren',
+            id: "export-json",
+            label: "Als JSON exportieren",
             icon: FileJson,
-            action: 'action',
-            target: 'export-json',
+            action: "action",
+            target: "export-json",
           },
           {
-            id: 'export-csv',
-            label: 'Als CSV exportieren',
+            id: "export-csv",
+            label: "Als CSV exportieren",
             icon: FileSpreadsheet,
-            action: 'action',
-            target: 'export-csv',
+            action: "action",
+            target: "export-csv",
           },
           {
-            id: 'export-full',
-            label: 'Vollständiges Backup',
+            id: "export-full",
+            label: "Vollständiges Backup",
             icon: Database,
-            action: 'action',
-            target: 'export-full',
+            action: "action",
+            target: "export-full",
           },
         ],
       },
       {
-        title: 'Import',
+        title: "Import",
         items: [
           {
-            id: 'import-progress',
-            label: 'Fortschritt importieren',
+            id: "import-progress",
+            label: "Fortschritt importieren",
             icon: Upload,
-            action: 'action',
-            target: 'import-progress',
+            action: "action",
+            target: "import-progress",
           },
           {
-            id: 'import-full',
-            label: 'Vollständige Wiederherstellung',
+            id: "import-full",
+            label: "Vollständige Wiederherstellung",
             icon: RotateCcw,
-            action: 'action',
-            target: 'import-full',
+            action: "action",
+            target: "import-full",
           },
         ],
       },
       {
-        title: 'Danger Zone',
+        title: "",
         items: [
           {
-            id: 'delete-all',
-            label: 'Alle Daten löschen',
+            id: "delete-all",
+            label: "Alle Daten löschen",
             icon: Trash2,
-            action: 'action',
-            target: 'delete-all',
+            action: "action",
+            target: "delete-all",
             destructive: true,
           },
         ],

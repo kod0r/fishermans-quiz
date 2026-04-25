@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.3.5](https://github.com/kod0r/fishermans-quiz/compare/v0.3.0...v0.3.5) (2026-04-25)
+
 ### Features
 
 * **game-menu:** overhaul menubar/settings into a video game menu system ([#138](https://github.com/kod0r/fishermans-quiz/issues/138))
@@ -8,11 +10,15 @@
   * `GameMenuOverlay` production shell — vaul drawer on mobile, centered panel on desktop, focus trap, scroll lock, aria-modal ([#141](https://github.com/kod0r/fishermans-quiz/issues/141))
   * `MenuPageRoot` and `MenuPageSettings` production implementations with config-driven rendering ([#142](https://github.com/kod0r/fishermans-quiz/issues/142))
   * `MenuPageNavigation` quick-jump question grid during active quiz ([#143](https://github.com/kod0r/fishermans-quiz/issues/143))
-  * `MenuPageRunActions` pause menu with Continue / Restart / Exit / Progress actions ([#144](https://github.com/kod0r/fishermans-quiz/issues/144))
+  * `MenuPageRunActions` pause menu with Continue / Restart / Exit actions ([#144](https://github.com/kod0r/fishermans-quiz/issues/144))
   * Migrate backup/restore UI from `StartView` into `MenuPageData` ([#145](https://github.com/kod0r/fishermans-quiz/issues/145))
   * `HUD` production polish — accepts `quiz` + `gameMenu` props, context-wired buttons, deletes obsolete `TopNavBar.tsx` ([#146](https://github.com/kod0r/fishermans-quiz/issues/146))
   * Keyboard shortcut gating (`!gameMenuOpen`) and Esc-wiring to pause menu in `QuizView` / `FlashcardView` ([#147](https://github.com/kod0r/fishermans-quiz/issues/147))
-  * Tests: `useGameMenu` hook (15 tests) + HUD/MenuItem/GameMenuOverlay components (16 tests) ([#148](https://github.com/kod0r/fishermans-quiz/issues/148))
+  * Tests: `useGameMenu` hook (16 tests) + HUD/MenuItem/GameMenuOverlay components (16 tests) ([#148](https://github.com/kod0r/fishermans-quiz/issues/148))
+* **ui:** add unique Lucide icons for every Bereich (Fish, Waves, Heart, Crosshair, Scale, Eye)
+* **ui:** quick navigation stays open after jumping to a question
+* **ui:** quick navigation shows solid high-contrast colors for answered questions (green/red)
+* **quiz:** `restarteRun()` — restart current quiz in-place with fresh shuffle, same settings
 
 ### Bug Fixes
 
@@ -21,6 +27,12 @@
 * **settings:** backup reminder effect now uses correct dependencies and timeout cleanup ([#132](https://github.com/kod0r/fishermans-quiz/issues/132))
 * **a11y:** TopNavBar focus timeout now cancelled when menu closes rapidly ([#133](https://github.com/kod0r/fishermans-quiz/issues/133))
 * **quiz:** disable Back button and keyboard nav during arcade retry to prevent input bricking ([#135](https://github.com/kod0r/fishermans-quiz/issues/135))
+* **menu:** remove redundant items (Spielmodus, Statistiken, Quiz beenden) from root menu
+* **menu:** pause button only visible when actively in quiz
+* **menu:** inline confirmation rows replace AlertDialog popups in pause menu (fixes focus-trap/z-index blocking)
+* **menu:** consistent HUD/menu button order and colors
+* **ui:** fix text blurriness in dialogs, menu overlay, and HUD by removing `zoom-in-95` scale transforms and `translate-x/y-[-50%]` centering
+* **ui:** fix meta-progress bar visual inconsistency — fixed-width left/right containers ensure uniform progress bar widths
 
 # [0.3.0](https://github.com/kod0r/fishermans-quiz/compare/v0.2.1...v0.3.0) (2026-04-25)
 

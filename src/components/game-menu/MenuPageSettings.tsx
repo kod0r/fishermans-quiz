@@ -1,9 +1,14 @@
-import { useMemo } from 'react';
-import { useTheme } from 'next-themes';
-import { MENU_PAGES, type MenuContext, type MenuItemConfig, type MenuPageId } from './menuConfig';
-import { MenuItem } from './MenuItem';
-import type { QuizContext } from '@/hooks/useQuiz';
-import type { GameMode } from '@/types/quiz';
+import { useMemo } from "react";
+import { useTheme } from "next-themes";
+import {
+  MENU_PAGES,
+  type MenuContext,
+  type MenuItemConfig,
+  type MenuPageId,
+} from "./menuConfig";
+import { MenuItem } from "./MenuItem";
+import type { QuizContext } from "@/hooks/useQuiz";
+import type { GameMode } from "@/types/quiz";
 
 interface MenuPageSettingsProps {
   onPush: (page: MenuPageId) => void;
@@ -17,28 +22,32 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
     () => ({
       isQuizActive: quiz.isActive,
       gameMode: quiz.gameMode,
-      theme: (theme as 'light' | 'dark' | 'system') ?? 'system',
+      theme: (theme as "light" | "dark" | "system") ?? "system",
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
     }),
-    [quiz, theme]
+    [quiz, theme],
   );
 
-  const pageConfig = MENU_PAGES.find((p) => p.id === 'settings');
+  const pageConfig = MENU_PAGES.find((p) => p.id === "settings");
   if (!pageConfig) return null;
 
   const canChangeMode = !quiz.isActive;
 
   const handleItemClick = (item: MenuItemConfig) => {
-    if (item.action === 'navigate' && item.target) {
+    if (item.action === "navigate" && item.target) {
       onPush(item.target as MenuPageId);
-    } else if (item.action === 'toggle' && item.target) {
+    } else if (item.action === "toggle" && item.target) {
       const target = item.target as string;
-      if (target === 'arcade' || target === 'hardcore' || target === 'exam') {
+      if (target === "arcade" || target === "hardcore" || target === "exam") {
         if (canChangeMode) {
           quiz.setGameMode(target as GameMode);
         }
-      } else if (target === 'light' || target === 'dark' || target === 'system') {
+      } else if (
+        target === "light" ||
+        target === "dark" ||
+        target === "system"
+      ) {
         setTheme(target);
       }
     }
@@ -46,17 +55,21 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
 
   const getDetail = (item: MenuItemConfig): string | undefined => {
     if (!item.detail) return undefined;
-    return typeof item.detail === 'function' ? item.detail(context) : item.detail;
+    return typeof item.detail === "function"
+      ? item.detail(context)
+      : item.detail;
   };
 
   const isItemDisabled = (item: MenuItemConfig): boolean => {
-    if (typeof item.disabled === 'function') return item.disabled(context);
-    if (typeof item.disabled === 'boolean') return item.disabled;
+    if (typeof item.disabled === "function") return item.disabled(context);
+    if (typeof item.disabled === "boolean") return item.disabled;
 
     // Block mode switch during active run
     if (
-      item.action === 'toggle' &&
-      (item.target === 'arcade' || item.target === 'hardcore' || item.target === 'exam')
+      item.action === "toggle" &&
+      (item.target === "arcade" ||
+        item.target === "hardcore" ||
+        item.target === "exam")
     ) {
       return !canChangeMode;
     }
@@ -92,7 +105,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
       {/* Info */}
       <section className="px-4 py-2">
         <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-          Fisherman&apos;s Quiz v0.1.0
+          Fisherman&apos;s Quiz v0.3.5
         </p>
       </section>
     </div>
