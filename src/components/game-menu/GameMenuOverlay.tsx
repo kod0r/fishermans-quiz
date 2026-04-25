@@ -101,11 +101,7 @@ export function GameMenuOverlay({
         return <Component quiz={quiz} onClose={onClose} onPop={onPop} onPush={onPush} />;
       }
 
-      if (config?.sections) {
-        return <MenuPageList sections={config.sections} />;
-      }
-
-      // Legacy fallback for pages not yet fully migrated to config
+      // Known pages with dedicated components take precedence over generic section rendering
       switch (page) {
         case 'root':
           return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
@@ -114,8 +110,14 @@ export function GameMenuOverlay({
         case 'data':
           return <MenuPageData quiz={quiz} />;
         default:
-          return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
+          break;
       }
+
+      if (config?.sections) {
+        return <MenuPageList sections={config.sections} />;
+      }
+
+      return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
     },
     [onPush, onClose, onPop, quiz]
   );

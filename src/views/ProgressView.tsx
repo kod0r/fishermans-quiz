@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, XCircle, HelpCircle, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, XCircle, HelpCircle, ChevronDown, ArrowLeft, Play } from 'lucide-react';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
 }
 
 export default function ProgressView({ quiz }: Props) {
-  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta } = quiz;
+  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta, goToView, isActive } = quiz;
   const [showWrong, setShowWrong] = useState(false);
   const [showUnanswered, setShowUnanswered] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -17,6 +19,17 @@ export default function ProgressView({ quiz }: Props) {
   useEffect(() => {
     headingRef.current?.focus();
   }, []);
+
+  useKeyboardShortcuts({
+    onEscape: () => {
+      if (isActive) {
+        goToView('quiz');
+      } else {
+        goToView('start');
+      }
+    },
+    enabled: true,
+  });
 
   const pct = statistiken.gesamt > 0 ? (statistiken.korrekt / statistiken.gesamt) * 100 : 0;
   const passed = pct >= 60;
@@ -110,7 +123,7 @@ export default function ProgressView({ quiz }: Props) {
                         <div className="flex items-start justify-between gap-3 mb-1.5">
                           <p className="text-slate-900 font-medium text-sm leading-snug dark:text-white">{frage.frage}</p>
                           <button
-                            onClick={() => { const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) springeZuFrage(idx); }}
+                            onClick={() => { const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) { springeZuFrage(idx); goToView('quiz'); } }}
                             className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded"
                           >
                             Zur Frage
@@ -153,7 +166,7 @@ export default function ProgressView({ quiz }: Props) {
                     return (
                       <button
                         key={frage.id}
-                        onClick={() => springeZuFrage(idx)}
+                        onClick={() => { springeZuFrage(idx); goToView('quiz'); }}
                         aria-label={`Zu unbeantworteter Frage ${idx + 1} springen`}
                         className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-600 border border-amber-300/50 hover:bg-amber-100 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20 dark:hover:bg-amber-500/20 dark:focus-visible:ring-offset-slate-900"
                       >
@@ -165,6 +178,33 @@ export default function ProgressView({ quiz }: Props) {
                )}
              </CardContent>
            </Card>
+
+        {/* Continue Quiz Button */}
+        {isActive && (
+          <div className="sticky bottom-4 flex justify-center">
+            <Button
+              onClick={() => goToView('quiz')}
+              className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-6 py-5 text-sm rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Quiz fortsetzen
+            </Button>
+          </div>
+        )}
+
+        {/* Back to Start */}
+        {!isActive && (
+          <div className="flex justify-center mt-4">
+            <Button
+              variant="outline"
+              onClick={() => goToView('start')}
+              className="rounded-xl border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Zurück zur Startseite
+            </Button>
+          </div>
+        )}
        </div>
      </div>
    );
