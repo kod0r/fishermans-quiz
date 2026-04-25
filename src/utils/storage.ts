@@ -1,5 +1,6 @@
 import type { GameMode, HistoryEntry } from '@/types/quiz';
 import { AppSettingsSchema } from '@/utils/quizLoader';
+import type { SRSMeta } from '@/types/quiz';
 
 // ── Legacy Keys (v2, pre-mode-split) ──
 const LEGACY_KEY_RUN = 'fmq:run:v2';
@@ -182,7 +183,7 @@ export const HistoryStorage = {
 const SRS_KEY = 'fmq:meta:srs:v1';
 
 export const SRSStorage = {
-  load: (): Record<string, unknown> => loadJson(SRS_KEY, {}),
-  save: (data: Record<string, unknown>) => saveJson(SRS_KEY, data),
+  load: (): Record<string, SRSMeta> => loadJson(SRS_KEY, {}),
+  save: (data: Record<string, SRSMeta>) => saveJson(SRS_KEY, data),
   clear: () => removeKey(SRS_KEY),
 };

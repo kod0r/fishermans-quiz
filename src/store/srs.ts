@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { SRSMeta, SelfAssessmentGrade } from '@/types/quiz';
+import { SRSMetaSchema } from '@/utils/quizLoader';
 import { SRSStorage } from '@/utils/storage';
 import { sm2, calculateNextReview, DEFAULT_SRS_STATE, SELF_ASSESSMENT_QUALITY } from '@/utils/srs';
 
@@ -15,8 +16,11 @@ export function useSRS() {
     const loaded = SRSStorage.load();
     const result: Record<string, SRSMeta> = {};
     for (const [key, value] of Object.entries(loaded)) {
-      if (value && typeof value === 'object') {
-        result[key] = { ...bootstrapSRSMeta(), ...(value as SRSMeta) };
+      const parsed = SRSMetaSchema.safeParse(value);
+      if (parsed.success) {
+        result[key] = parsed.data;
+      } else {
+        console.warn('[SRS] Invalid entry for', key, parsed.error.format());
       }
     }
     return result;
