@@ -5,6 +5,9 @@ import { QuizHeader } from '@/components/QuizHeader';
 import { QuizFooter } from '@/components/QuizFooter';
 import { QuizCardShell } from '@/components/QuizCardShell';
 import { Eye, RotateCcw, ThumbsDown, ThumbsUp, Zap } from 'lucide-react';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { CheatSheetModal } from '@/components/CheatSheetModal';
+import { PauseMenuDialog } from '@/components/PauseMenuDialog';
 import type { QuizContext } from '@/hooks/useQuiz';
 import type { SelfAssessmentGrade } from '@/types/quiz';
 
@@ -36,6 +39,8 @@ export default function FlashcardView({ quiz }: Props) {
   } = quiz;
 
   const [revealed, setRevealed] = useState(false);
+  const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
+  const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
 
   const userAntwort = antworten[aktuelleFrage?.id || ''];
   const hasAnswered = userAntwort !== undefined;
@@ -71,7 +76,28 @@ export default function FlashcardView({ quiz }: Props) {
   const falsch = aktiveFragen.filter(
     (f) => antworten[f.id] && antworten[f.id] !== f.richtige_antwort
   ).length;
-  const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
+   const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onPrev: handleNavigatePrev,
+    onNext: handleNavigateNext,
+    onToggleFavorite: () => {
+      if (aktuelleFrage) {
+        toggleFavorite(aktuelleFrage.id);
+      }
+    },
+    onSpace: handleReveal,
+    onOpenCheatSheet: () => setCheatSheetOpen(true),
+    onEscape: () => {
+      if (cheatSheetOpen) {
+        setCheatSheetOpen(false);
+      } else {
+        setPauseMenuOpen(true);
+      }
+    },
+    enabled: quiz.isActive && !cheatSheetOpen && !pauseMenuOpen,
+  });
 
   if (!aktuelleFrage) return null;
 
@@ -177,6 +203,10 @@ export default function FlashcardView({ quiz }: Props) {
             onPrev={handleNavigatePrev}
             onNext={handleNavigateNext}
           />
+
+          {/* Keyboard shortcuts modals */}
+          <CheatSheetModal open={cheatSheetOpen} onOpenChange={setCheatSheetOpen} />
+          <PauseMenuDialog open={pauseMenuOpen} onOpenChange={setPauseMenuOpen} quiz={quiz} />
         </div>
       </div>
     </TooltipProvider>

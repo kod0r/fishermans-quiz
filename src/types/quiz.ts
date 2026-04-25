@@ -126,4 +126,4 @@ export interface QuizStartOptions {
 }
 
 // ── View-State ──
-export type AppView = 'start' | 'quiz' | 'progress' | 'history';
+export type AppView = 'start' | 'quiz' | 'progress' | 'history' | 'browse';

@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Home, Play, BarChart3, Menu, X, Zap, Shield, ChevronDown, Sun, Moon, Monitor, History, Square, Timer } from 'lucide-react';
+import { Home, Play, BarChart3, Menu, X, Zap, Shield, ChevronDown, Sun, Moon, Monitor, History, Square, Timer, Search } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import type { QuizContext } from '@/hooks/useQuiz';
 
@@ -346,6 +346,17 @@ export function TopNavBar({
                   )}
                 </div>
               )}
+
+              {/* Browse */}
+              <div className="pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+                <button
+                  onClick={() => { setMenuOpen(false); goToView('browse'); }}
+                  className="w-full flex items-center gap-2 text-slate-600 text-xs hover:text-teal-600 transition-colors dark:text-slate-300 dark:hover:text-teal-400"
+                >
+                  <Search className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Fragenkatalog</span>
+                </button>
+              </div>
 
               {/* History */}
               <div className="pt-2 border-t border-slate-200/50 dark:border-slate-700/50">

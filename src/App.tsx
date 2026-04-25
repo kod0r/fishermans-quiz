@@ -7,6 +7,7 @@ import QuizView from '@/views/QuizView';
 import FlashcardView from '@/views/FlashcardView';
 import ProgressView from '@/views/ProgressView';
 import HistoryView from '@/views/HistoryView';
+import BrowseView from '@/views/BrowseView';
 
 export default function App() {
   const quiz = useQuiz();
@@ -81,7 +82,11 @@ export default function App() {
         <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />
       )}
 
-      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && (
+      {currentView === 'browse' && (
+        <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />
+      )}
+
+      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
         <StartView quiz={quiz} />
       )}
     </>
