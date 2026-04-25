@@ -11,6 +11,7 @@ import { useNotes } from '@/store/notes';
 import { useHistory } from '@/store/history';
 import { useSRS } from '@/store/srs';
 import { isMastered } from '@/utils/srs';
+import { canSelectBereich } from '@/utils/bereichLocks';
 import { filterQuizDataByFavorites, filterQuizDataByWeakness, filterQuizDataBySRSDue } from '@/utils/filter';
 
 const EXAM_DURATION_SECONDS = 60 * 60;
@@ -181,6 +182,13 @@ export function useQuiz() {
   // Starten: Lazy Loading der Bereichs-Fragen
   const starteQuiz = useCallback(async (bereiche: string[], options: QuizStartOptions = {}) => {
     if (!quizMeta) return;
+
+    // Guard: validate all requested bereiche can be selected in current mode
+    const locked = bereiche.filter(id => !canSelectBereich(id, gameMode, meta.meta, quizMeta, run.isActive, run.geladeneBereiche));
+    if (locked.length > 0) {
+      console.error('[useQuiz] Cannot start quiz — locked bereiche:', locked);
+      return;
+    }
 
     const { nurFavoriten = false, filter = 'all' } = options;
     let { limit } = options;

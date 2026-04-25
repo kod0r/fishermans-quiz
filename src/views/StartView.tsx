@@ -16,6 +16,7 @@ import {
 import { Fish, BookOpen, Trophy, Target, Flame, RotateCcw, BarChart3, CheckCircle, Star, Crosshair, Layers, Repeat, Waves, Heart, Scale, Eye } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 import { isMastered } from '@/utils/srs';
+import { canSelectBereich } from '@/utils/bereichLocks';
 
 const BEREICHE = [
   { id: 'Biologie', label: 'Biologie', icon: Fish, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', selectedBg: 'bg-emerald-500' },
@@ -99,6 +100,13 @@ export default function StartView({ quiz }: Props) {
       }
       setDialog({ type: 'remove-arcade', bereichId: id, fragenCount: count });
       return;
+    }
+    // Trying to select a new bereich — enforce lock rules
+    if (!ausgewaehlt.includes(id)) {
+      if (quiz.quizMeta && !canSelectBereich(id, gameMode, metaProgress, quiz.quizMeta, isActive, geladeneBereiche)) {
+        setFehler('Dieser Bereich ist im Hardcore-Modus gesperrt. Beende den aktiven Run oder wähle einen anderen Bereich.');
+        return;
+      }
     }
     setAusgewaehlt(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
   };
@@ -356,15 +364,18 @@ export default function StartView({ quiz }: Props) {
                   const inRun = isActive && geladeneBereiche.includes(b.id);
                   const checked = effektivAusgewaehlt.includes(b.id);
                   const status = getBereichStatus(b.id);
+                  const selectable = quiz.quizMeta ? canSelectBereich(b.id, gameMode, metaProgress, quiz.quizMeta, isActive, geladeneBereiche) : true;
+                  const disabled = !selectable && !checked && !inRun;
                   return (
                     <div
                       key={b.id}
-                      onClick={() => toggle(b.id)}
-                      onKeyDown={(e) => handleKeyToggle(e, b.id)}
+                      onClick={() => !disabled && toggle(b.id)}
+                      onKeyDown={(e) => !disabled && handleKeyToggle(e, b.id)}
                       role="checkbox"
                       aria-checked={checked}
-                      tabIndex={0}
-                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-200/50 border-slate-300/30 hover:bg-slate-300/50 dark:bg-slate-700/30 dark:border-slate-600/30 dark:hover:bg-slate-700/50'} ${inRun ? 'ring-1 ring-teal-400/30' : ''}`}
+                      aria-disabled={disabled}
+                      tabIndex={disabled ? -1 : 0}
+                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-200/50 border-slate-300/30 dark:bg-slate-700/30 dark:border-slate-600/30'} ${inRun ? 'ring-1 ring-teal-400/30' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-slate-300/50 dark:hover:bg-slate-700/50'}`}
                     >
                       <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : 'border-slate-500 bg-transparent'}`} aria-hidden="true">
                         {checked && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
