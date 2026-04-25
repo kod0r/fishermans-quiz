@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { QuizHeader } from '@/components/QuizHeader';
@@ -37,6 +37,13 @@ export default function FlashcardView({ quiz }: Props) {
 
   const [revealed, setRevealed] = useState(false);
 
+  // Track the auto-advance timeout so we can cancel it on unmount, on a
+  // fresh grade, or when the user navigates manually. Without this, the
+  // 300ms timeout could fire after the component had been replaced (pause
+  // menu, route change) and call naechsteFrage() against stale state
+  // (issue #130).
+  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const userAntwort = antworten[aktuelleFrage?.id || ''];
   const hasAnswered = userAntwort !== undefined;
 
@@ -49,10 +56,26 @@ export default function FlashcardView({ quiz }: Props) {
       if (!aktuelleFrage) return;
       beantworteFlashcard(aktuelleFrage.id, grade);
       setRevealed(false);
-      // Auto-advance after short delay
-      setTimeout(() => naechsteFrage(), 300);
+      // Cancel any in-flight auto-advance before scheduling a new one.
+      if (advanceTimeoutRef.current !== null) {
+        clearTimeout(advanceTimeoutRef.current);
+      }
+      advanceTimeoutRef.current = setTimeout(() => {
+        advanceTimeoutRef.current = null;
+        naechsteFrage();
+      }, 300);
     },
     [aktuelleFrage, beantworteFlashcard, naechsteFrage]
+  );
+
+  useEffect(
+    () => () => {
+      if (advanceTimeoutRef.current !== null) {
+        clearTimeout(advanceTimeoutRef.current);
+        advanceTimeoutRef.current = null;
+      }
+    },
+    []
   );
 
   const handleNavigateNext = useCallback(() => {
