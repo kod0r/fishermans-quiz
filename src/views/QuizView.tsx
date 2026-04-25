@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -49,6 +50,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
   const [remainingSeconds, setRemainingSeconds] = useState<number | undefined>();
   const [examAbgelaufen, setExamAbgelaufen] = useState(false);
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
+  const [showExamSubmitDialog, setShowExamSubmitDialog] = useState(false);
 
   // Clear pending wrong answer when navigating to a different question
   useEffect(() => {
@@ -233,24 +235,53 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
             onNext={naechsteFrage}
           />
 
-          {/* Exam: early submit button */}
-          {gameMode === 'exam' && !examAbgelaufen && (
-            <div className="mt-3 flex justify-center">
-              <Button
-                onClick={() => {
-                  if (confirm('Prüfung vorzeitig abgeben?')) {
-                    beendeExam?.();
-                  }
-                }}
-                variant="outline"
-                className="border-blue-300 text-blue-600 hover:bg-blue-50 text-xs dark:border-blue-600 dark:text-blue-400 dark:hover:bg-blue-900/30"
-              >
-                Prüfung abgeben
-              </Button>
-            </div>
-          )}
+           {/* Exam: early submit button */}
+           {gameMode === 'exam' && !examAbgelaufen && (
+             <div className="mt-3 flex justify-center">
+               <Button
+                 onClick={() => setShowExamSubmitDialog(true)}
+                 variant="outline"
+                 className="border-blue-300 text-blue-600 hover:bg-blue-50 text-xs dark:border-blue-600 dark:text-blue-400 dark:hover:bg-blue-900/30"
+               >
+                 Prüfung abgeben
+               </Button>
+             </div>
+           )}
 
-          {/* Bereichs-Abschluss Dialog (Issue #46) */}
+           {/* Exam early submit confirmation dialog */}
+           <Dialog
+             open={showExamSubmitDialog}
+             onOpenChange={setShowExamSubmitDialog}
+           >
+             <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-sm dark:bg-slate-900 dark:border-slate-700 dark:text-white">
+               <DialogHeader>
+                 <DialogTitle className="text-base">Prüfung vorzeitig abgeben?</DialogTitle>
+                 <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
+                   Deine bisherigen Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden.
+                 </DialogDescription>
+               </DialogHeader>
+               <DialogFooter className="gap-2">
+                 <Button
+                   variant="outline"
+                   onClick={() => setShowExamSubmitDialog(false)}
+                   className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+                 >
+                   Weiter machen
+                 </Button>
+                 <Button
+                   onClick={() => {
+                     setShowExamSubmitDialog(false);
+                     beendeExam?.();
+                   }}
+                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                 >
+                   Abgeben
+                 </Button>
+               </DialogFooter>
+             </DialogContent>
+           </Dialog>
+
+           {/* Bereichs-Abschluss Dialog (Issue #46) */}
           <Dialog
             open={bereichComplete !== null}
             onOpenChange={(open) => !open && setBereichComplete(null)}

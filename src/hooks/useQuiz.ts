@@ -105,6 +105,8 @@ export function useQuiz() {
   }, []);
 
   // Periodisches Backup-Prompt
+  const [showBackupPrompt, setShowBackupPrompt] = useState(false);
+
   useEffect(() => {
     if (!backupReminderEnabled) return;
     const daysSince = lastBackupPrompt
@@ -112,15 +114,21 @@ export function useQuiz() {
       : Infinity;
     if (daysSince >= 7) {
       const timer = setTimeout(() => {
-        if (confirm('Es ist Zeit für ein Backup deiner Lerndaten. Jetzt exportieren?')) {
-          exportFullBackup();
-        } else {
-          setLastBackupPrompt(new Date().toISOString());
-        }
+        setShowBackupPrompt(true);
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [backupReminderEnabled, lastBackupPrompt, exportFullBackup, setLastBackupPrompt]);
+  }, [backupReminderEnabled, lastBackupPrompt]);
+
+  const handleBackupConfirm = useCallback(() => {
+    exportFullBackup();
+    setShowBackupPrompt(false);
+  }, [exportFullBackup]);
+
+  const handleBackupCancel = useCallback(() => {
+    setLastBackupPrompt(new Date().toISOString());
+    setShowBackupPrompt(false);
+  }, [setLastBackupPrompt]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
   const logRunIfComplete = useCallback((finalAntworten: Record<string, string>) => {
@@ -418,6 +426,10 @@ export function useQuiz() {
     backupReminderEnabled: settings.backupReminderEnabled,
     lastBackupPrompt: settings.lastBackupPrompt,
     setBackupReminderEnabled: settings.setBackupReminderEnabled,
+    showBackupPrompt,
+    setShowBackupPrompt,
+    handleBackupConfirm,
+    handleBackupCancel,
   };
 }
 
