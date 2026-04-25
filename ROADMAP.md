@@ -84,7 +84,6 @@ look @issues
 ## Rules for this document
 
 1. **GitHub Issues are the source of truth.** This file is a generated view, not the master record.
-2. This file is **regenerated from GitHub API** at `/feierabend`. Manual edits in dynamic sections will be overwritten.
-3. To add annotations that survive regeneration, use the `<!-- CUSTOM-ANNOTATIONS -->` block at the top.
-4. For new features, create a GitHub Issue first, then run `/feierabend`.
-5. To change priority, edit the GitHub Issue label (`priority:low`, `priority:medium`, `priority:high`).
+
+2. To add annotations that survive regeneration, use the `<!-- CUSTOM-ANNOTATIONS -->` block at the top.
+um`, `priority:high`).
