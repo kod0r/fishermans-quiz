@@ -13,10 +13,10 @@
 
 Deliverables:
 
-verify.py — single idempotent script (~5 min runtime)
-audit_report.json — structured findings
-human_review.csv — 531-item stratified review batch
-schema_errors.json — schema failures (empty in this case)
+- verify.py — single idempotent script (~5 min runtime)
+- audit_report.json — structured findings
+- human_review.csv — 531-item stratified review batch
+- schema_errors.json — schema failures (empty in this case)
 
 Executive Summary:
 
