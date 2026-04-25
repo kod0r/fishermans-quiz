@@ -38,6 +38,10 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
         if (INPUT_TAGS.has(tag) || target.getAttribute(EDITABLE_ATTR) === 'true') {
           return;
         }
+        // Skip Enter on buttons/links to avoid double-firing native click + shortcut
+        if (event.key === 'Enter' && (tag === 'BUTTON' || tag === 'A')) {
+          return;
+        }
       }
 
       // Prevent browser defaults only when handler is registered
@@ -48,6 +52,9 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
         event.preventDefault();
       }
       if (event.key === 'ArrowRight' && onNext) {
+        event.preventDefault();
+      }
+      if (event.key === 'Enter' && onNext) {
         event.preventDefault();
       }
 
@@ -65,6 +72,9 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
           onPrev?.();
           break;
         case 'ArrowRight':
+          onNext?.();
+          break;
+        case 'Enter':
           onNext?.();
           break;
         case ' ':

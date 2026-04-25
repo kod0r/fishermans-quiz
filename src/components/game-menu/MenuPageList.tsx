@@ -1,11 +1,12 @@
 import { MenuItem } from './MenuItem';
-import type { MenuSectionConfig } from './menuConfig';
+import type { MenuSectionConfig, MenuItemConfig } from './menuConfig';
 
 interface MenuPageListProps {
   sections?: MenuSectionConfig[];
+  onItemClick?: (item: MenuItemConfig) => void;
 }
 
-export function MenuPageList({ sections }: MenuPageListProps) {
+export function MenuPageList({ sections, onItemClick }: MenuPageListProps) {
   if (!sections || sections.length === 0) return null;
 
   return (
@@ -27,6 +28,7 @@ export function MenuPageList({ sections }: MenuPageListProps) {
                   label={item.label}
                   detail={detail}
                   destructive={item.destructive}
+                  onClick={onItemClick ? () => onItemClick(item) : undefined}
                 />
               );
             })}

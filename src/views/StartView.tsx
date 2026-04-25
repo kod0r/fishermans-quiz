@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -77,9 +77,12 @@ export default function StartView({ quiz }: Props) {
     return null;
   }
 
-  const effektivAusgewaehlt = isActive
-    ? [...new Set([...geladeneBereiche, ...ausgewaehlt])]
-    : ausgewaehlt;
+  const effektivAusgewaehlt = useMemo(() =>
+    isActive
+      ? [...new Set([...geladeneBereiche, ...ausgewaehlt])]
+      : ausgewaehlt,
+    [isActive, geladeneBereiche, ausgewaehlt]
+  );
 
   const toggle = (id: string) => {
     setFehler('');
@@ -107,7 +110,7 @@ export default function StartView({ quiz }: Props) {
     }
   };
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     if (effektivAusgewaehlt.length === 0) {
       setFehler('Bitte wähle mindestens einen Bereich aus.');
       return;
@@ -117,7 +120,26 @@ export default function StartView({ quiz }: Props) {
       return;
     }
     quiz.starteQuiz(effektivAusgewaehlt, { nurFavoriten, sessionType: flashcardMode ? 'flashcard' : 'quiz' });
-  };
+  }, [effektivAusgewaehlt, nurFavoriten, quiz, flashcardMode]);
+
+  // Global Enter handler to start quiz when areas are selected
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && effektivAusgewaehlt.length > 0) {
+        // Only trigger if focus is not inside a button or interactive element
+        const target = e.target;
+        if (target instanceof Element) {
+          const tag = target.tagName;
+          if (tag === 'BUTTON' || tag === 'A' || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+            return;
+          }
+        }
+        handleStart();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [effektivAusgewaehlt, handleStart]);
 
   const handleWeaknessTrainer = () => {
     const allBereiche = BEREICHE.map(b => b.id);
