@@ -120,9 +120,10 @@ export function TopNavBar({
 
   // Focus management: focus first focusable element when menu opens, return focus to toggle on close
   useEffect(() => {
+    let focusTimer: ReturnType<typeof setTimeout> | null = null;
     if (menuOpen) {
       // Focus first focusable element in dropdown after render
-      setTimeout(() => {
+      focusTimer = setTimeout(() => {
         const panel = document.getElementById('menu-panel');
         if (panel) {
           const firstFocusable = panel.querySelector<HTMLElement>(
@@ -135,6 +136,9 @@ export function TopNavBar({
       // Return focus to menu toggle
       menuToggleRef.current?.focus();
     }
+    return () => {
+      if (focusTimer) clearTimeout(focusTimer);
+    };
   }, [menuOpen]);
 
   return (

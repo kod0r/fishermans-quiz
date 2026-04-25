@@ -22,7 +22,7 @@ export function useQuiz() {
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const settings = useSettings();
-  const { gameMode, setGameMode } = settings;
+  const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt } = settings;
   const run = useQuizRun(quizData, gameMode);
   const meta = useMetaProgress(gameMode);
   const srs = useSRS();
@@ -106,22 +106,21 @@ export function useQuiz() {
 
   // Periodisches Backup-Prompt
   useEffect(() => {
-    if (!settings.backupReminderEnabled) return;
-    const last = settings.lastBackupPrompt;
-    const daysSince = last
-      ? (Date.now() - new Date(last).getTime()) / (1000 * 60 * 60 * 24)
+    if (!backupReminderEnabled) return;
+    const daysSince = lastBackupPrompt
+      ? (Date.now() - new Date(lastBackupPrompt).getTime()) / (1000 * 60 * 60 * 24)
       : Infinity;
     if (daysSince >= 7) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (confirm('Es ist Zeit für ein Backup deiner Lerndaten. Jetzt exportieren?')) {
           exportFullBackup();
         } else {
-          settings.setLastBackupPrompt(new Date().toISOString());
+          setLastBackupPrompt(new Date().toISOString());
         }
       }, 1500);
+      return () => clearTimeout(timer);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [backupReminderEnabled, lastBackupPrompt, exportFullBackup, setLastBackupPrompt]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
   const logRunIfComplete = useCallback((finalAntworten: Record<string, string>) => {

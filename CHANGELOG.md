@@ -1,3 +1,13 @@
+## [Unreleased]
+
+### Bug Fixes
+
+* **flashcard:** cancel pending auto-advance timeout on unmount and before new grade ([#130](https://github.com/kod0r/fishermans-quiz/issues/130))
+* **keyboard:** only prevent default on Space/Arrow keys when handler is registered ([#131](https://github.com/kod0r/fishermans-quiz/issues/131))
+* **settings:** backup reminder effect now uses correct dependencies and timeout cleanup ([#132](https://github.com/kod0r/fishermans-quiz/issues/132))
+* **a11y:** TopNavBar focus timeout now cancelled when menu closes rapidly ([#133](https://github.com/kod0r/fishermans-quiz/issues/133))
+* **quiz:** disable Back button and keyboard nav during arcade retry to prevent input bricking ([#135](https://github.com/kod0r/fishermans-quiz/issues/135))
+
 # [0.3.0](https://github.com/kod0r/fishermans-quiz/compare/v0.2.1...v0.3.0) (2026-04-25)
 
 

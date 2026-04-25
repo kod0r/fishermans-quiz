@@ -40,9 +40,14 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
         }
       }
 
-      // Prevent browser defaults for navigation and space
-      const defaultPreventKeys = new Set(['ArrowLeft', 'ArrowRight', ' ']);
-      if (defaultPreventKeys.has(event.key)) {
+      // Prevent browser defaults only when handler is registered
+      if (event.key === ' ' && onSpace) {
+        event.preventDefault();
+      }
+      if (event.key === 'ArrowLeft' && onPrev) {
+        event.preventDefault();
+      }
+      if (event.key === 'ArrowRight' && onNext) {
         event.preventDefault();
       }
 

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { QuizHeader } from '@/components/QuizHeader';
@@ -49,13 +49,27 @@ export default function FlashcardView({ quiz }: Props) {
     setRevealed(true);
   }, []);
 
+  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceRef.current) {
+        clearTimeout(autoAdvanceRef.current);
+      }
+    };
+  }, []);
+
   const handleGrade = useCallback(
     (grade: SelfAssessmentGrade) => {
       if (!aktuelleFrage) return;
+      // Cancel any pending auto-advance before starting a new one
+      if (autoAdvanceRef.current) {
+        clearTimeout(autoAdvanceRef.current);
+      }
       beantworteFlashcard(aktuelleFrage.id, grade);
       setRevealed(false);
       // Auto-advance after short delay
-      setTimeout(() => naechsteFrage(), 300);
+      autoAdvanceRef.current = setTimeout(() => naechsteFrage(), 300);
     },
     [aktuelleFrage, beantworteFlashcard, naechsteFrage]
   );

@@ -194,6 +194,34 @@ describe('useKeyboardShortcuts', () => {
 
     expect(preventDefault).toHaveBeenCalled();
   });
+
+  it('should NOT prevent default for Space when onSpace is not provided', () => {
+    const preventDefault = vi.fn();
+    renderHook(() => useKeyboardShortcuts({ onAnswer: () => {} }));
+
+    const event = new KeyboardEvent('keydown', { key: ' ' });
+    vi.spyOn(event, 'preventDefault').mockImplementation(preventDefault);
+
+    act(() => {
+      window.dispatchEvent(event);
+    });
+
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  it('should NOT prevent default for ArrowLeft when onPrev is not provided', () => {
+    const preventDefault = vi.fn();
+    renderHook(() => useKeyboardShortcuts({ onAnswer: () => {} }));
+
+    const event = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
+    vi.spyOn(event, 'preventDefault').mockImplementation(preventDefault);
+
+    act(() => {
+      window.dispatchEvent(event);
+    });
+
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
 });
 
 /* ── Integration Tests ── */

@@ -50,6 +50,11 @@ export default function QuizView({ quiz }: Props) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
   const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
 
+  // Clear pending wrong answer when navigating to a different question
+  useEffect(() => {
+    setPendingWrongAnswer(null);
+  }, [aktuellerIndex]);
+
   // Exam timer
   useEffect(() => {
     if (gameMode !== 'exam' || !rawRun?.startedAt || !rawRun?.durationSeconds) {
@@ -151,8 +156,8 @@ export default function QuizView({ quiz }: Props) {
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onAnswer: handleAnswerClick,
-    onPrev: vorherigeFrage,
-    onNext: naechsteFrage,
+    onPrev: isPending ? undefined : vorherigeFrage,
+    onNext: isPending ? undefined : naechsteFrage,
     onToggleFavorite: () => {
       if (aktuelleFrage) {
         toggleFavorite(aktuelleFrage.id);

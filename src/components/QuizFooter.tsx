@@ -28,7 +28,7 @@ export const QuizFooter = React.memo(function QuizFooter({
         <TooltipTrigger asChild>
           <Button
             onClick={onPrev}
-            disabled={aktuellerIndex === 0}
+            disabled={aktuellerIndex === 0 || isPending}
             variant="outline"
             aria-label="Vorherige Frage"
             className="border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 text-xs sm:text-sm min-w-[44px] min-h-[44px] py-2 px-4"
