@@ -8,6 +8,7 @@ interface GameMenuState {
   stack: MenuPageId[];
   direction: 'forward' | 'back';
   focusedIndex: number;
+  itemCount: number;
 }
 
 export function useGameMenu() {
@@ -16,6 +17,7 @@ export function useGameMenu() {
     stack: ['root'],
     direction: 'forward',
     focusedIndex: 0,
+    itemCount: 0,
   });
 
   const open = useCallback(() => {
@@ -61,6 +63,32 @@ export function useGameMenu() {
     });
   }, []);
 
+  const openTo = useCallback((page: MenuPageId) => {
+    setState(prev => ({
+      ...prev,
+      isOpen: true,
+      stack: [page],
+      direction: 'forward',
+      focusedIndex: 0,
+    }));
+  }, []);
+
+  const resetFocus = useCallback(() => {
+    setState(prev => ({ ...prev, focusedIndex: 0 }));
+  }, []);
+
+  const setFocusedIndex = useCallback((index: number) => {
+    setState(prev => ({ ...prev, focusedIndex: index }));
+  }, []);
+
+  const registerItemCount = useCallback((count: number) => {
+    setState(prev => ({
+      ...prev,
+      itemCount: count,
+      focusedIndex: Math.min(prev.focusedIndex, Math.max(0, count - 1)),
+    }));
+  }, []);
+
   const currentPage = state.stack[state.stack.length - 1];
 
   // Keyboard navigation
@@ -68,10 +96,41 @@ export function useGameMenu() {
     if (!state.isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        pop();
-        return;
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setState(prev => ({
+            ...prev,
+            focusedIndex: Math.min(prev.focusedIndex + 1, Math.max(0, prev.itemCount - 1)),
+          }));
+          return;
+        case 'ArrowUp':
+          e.preventDefault();
+          setState(prev => ({
+            ...prev,
+            focusedIndex: Math.max(prev.focusedIndex - 1, 0),
+          }));
+          return;
+        case 'Home':
+          e.preventDefault();
+          setState(prev => ({ ...prev, focusedIndex: 0 }));
+          return;
+        case 'End':
+          e.preventDefault();
+          setState(prev => ({
+            ...prev,
+            focusedIndex: Math.max(0, prev.itemCount - 1),
+          }));
+          return;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          // Caller is responsible for wiring the actual action
+          return;
+        case 'Escape':
+          e.preventDefault();
+          pop();
+          return;
       }
     };
 
@@ -84,7 +143,11 @@ export function useGameMenu() {
     currentPage,
     open,
     close,
+    openTo,
     push,
     pop,
+    resetFocus,
+    setFocusedIndex,
+    registerItemCount,
   };
 }

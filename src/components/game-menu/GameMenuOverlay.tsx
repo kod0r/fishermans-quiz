@@ -1,9 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+import { Drawer as DrawerPrimitive } from 'vaul';
 import type { MenuPageId } from '@/hooks/useGameMenu';
 import type { QuizContext } from '@/hooks/useQuiz';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MENU_PAGES } from './menuConfig';
 import { MenuPageRoot } from './MenuPageRoot';
 import { MenuPageSettings } from './MenuPageSettings';
 import { MenuPageData } from './MenuPageData';
+import { MenuPageList } from './MenuPageList';
 import { X, ChevronLeft } from 'lucide-react';
 
 interface GameMenuOverlayProps {
@@ -17,13 +21,8 @@ interface GameMenuOverlayProps {
   quiz: QuizContext;
 }
 
-const pageTitles: Record<MenuPageId, string> = {
-  root: 'Menü',
-  settings: 'Einstellungen',
-  navigation: 'Navigation',
-  'run-actions': 'Run-Aktionen',
-  data: 'Backup & Daten',
-};
+const FOCUSABLE_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 export function GameMenuOverlay({
   isOpen,
@@ -35,97 +34,173 @@ export function GameMenuOverlay({
   onPush,
   quiz,
 }: GameMenuOverlayProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
   const isRoot = stack.length === 1;
 
+  const pageConfig = MENU_PAGES.find((p) => p.id === currentPage);
+  const title = pageConfig?.title ?? '';
+
+  // Store previously focused element when opening, restore on close
+  useEffect(() => {
+    if (isOpen) {
+      lastFocusedRef.current = document.activeElement as HTMLElement;
+    } else if (lastFocusedRef.current) {
+      lastFocusedRef.current.focus();
+      lastFocusedRef.current = null;
+    }
+  }, [isOpen]);
+
+  // Focus first focusable item when opening or changing page
   useEffect(() => {
     if (!isOpen) return;
+    const timer = setTimeout(() => {
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusable = panel.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      focusable?.focus();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [isOpen, currentPage]);
+
+  // Body scroll lock on desktop (vaul handles mobile)
+  useEffect(() => {
+    if (isMobile || !isOpen) return;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
+
+  const renderPage = useCallback(
+    (page: MenuPageId) => {
+      const config = MENU_PAGES.find((p) => p.id === page);
+
+      if (config?.customComponent) {
+        const Component = config.customComponent;
+        return <Component />;
+      }
+
+      if (config?.sections) {
+        return <MenuPageList sections={config.sections} />;
+      }
+
+      // Legacy fallback for pages not yet fully migrated to config
+      switch (page) {
+        case 'root':
+          return <MenuPageRoot onPush={onPush} />;
+        case 'settings':
+          return <MenuPageSettings onPush={onPush} />;
+        case 'data':
+          return <MenuPageData quiz={quiz} />;
+        default:
+          return <MenuPageRoot onPush={onPush} />;
+      }
+    },
+    [onPush, quiz]
+  );
+
+  const header = (
+    <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 dark:border-slate-700/60 shrink-0">
+      <button
+        onClick={isRoot ? onClose : onPop}
+        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        aria-label={isRoot ? 'Schließen' : 'Zurück'}
+      >
+        {isRoot ? (
+          <X className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+        ) : (
+          <ChevronLeft className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+        )}
+      </button>
+
+      <h2 className="text-[17px] font-semibold text-slate-900 dark:text-white">
+        {title}
+      </h2>
+
+      <div className="w-8" />
+    </div>
+  );
+
+  const swipeHandle = (
+    <div className="flex justify-center pt-2 pb-1 shrink-0">
+      <div className="w-10 h-1 rounded-full bg-slate-300/50 dark:bg-slate-600/50" />
+    </div>
+  );
+
+  const pageContent = (
+    <div className="relative flex-1 overflow-y-auto">
+      <div
+        key={stack.join('-')}
+        className={`
+          animate-in
+          ${direction === 'forward' ? 'slide-in-from-right-full' : 'slide-in-from-left-full'}
+          duration-300 ease-out
+        `}
+      >
+        {renderPage(currentPage)}
+      </div>
+    </div>
+  );
 
   if (!isOpen) return null;
 
-  const renderPage = (page: MenuPageId) => {
-    switch (page) {
-      case 'root':
-        return <MenuPageRoot onPush={onPush} />;
-      case 'settings':
-        return <MenuPageSettings onPush={onPush} />;
-      case 'data':
-        return <MenuPageData quiz={quiz} />;
-      default:
-        return <MenuPageRoot onPush={onPush} />;
-    }
-  };
+  if (isMobile) {
+    return (
+      <DrawerPrimitive.Root
+        open={isOpen}
+        onOpenChange={(open) => {
+          if (!open) onClose();
+        }}
+        snapPoints={[0.5, 0.85]}
+        dismissible
+      >
+        <DrawerPrimitive.Portal>
+          <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200" />
+          <DrawerPrimitive.Content
+            ref={panelRef}
+            className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-white dark:bg-slate-900 shadow-2xl shadow-black/20 max-h-[85vh]"
+            aria-modal="true"
+            role="dialog"
+            aria-label={title}
+          >
+            {swipeHandle}
+            {header}
+            {pageContent}
+          </DrawerPrimitive.Content>
+        </DrawerPrimitive.Portal>
+      </DrawerPrimitive.Root>
+    );
+  }
 
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center"
-      onClick={(e) => {
-        if (e.target === overlayRef.current) onClose();
-      }}
-    >
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200" />
-
-      {/* Menu Panel — bottom sheet on mobile, centered on desktop */}
       <div
-        className={`
-          relative w-full sm:max-w-md sm:max-h-[80vh]
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+        onClick={onClose}
+      />
+
+      {/* Menu Panel */}
+      <div
+        ref={panelRef}
+        className="
+          relative w-full max-w-md max-h-[80vh]
           bg-white dark:bg-slate-900
-          rounded-t-3xl sm:rounded-3xl
+          rounded-3xl
           shadow-2xl shadow-black/20
           overflow-hidden
-          animate-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0
-          fade-in zoom-in-95
+          animate-in fade-in zoom-in-95
           duration-300 ease-out
           flex flex-col
-        `}
-        style={{ maxHeight: '85vh' }}
+        "
+        aria-modal="true"
+        role="dialog"
+        aria-label={title}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 dark:border-slate-700/60">
-          <button
-            onClick={isRoot ? onClose : onPop}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            aria-label={isRoot ? 'Schließen' : 'Zurück'}
-          >
-            {isRoot ? (
-              <X className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-            ) : (
-              <ChevronLeft className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-            )}
-          </button>
-
-          <h2 className="text-[17px] font-semibold text-slate-900 dark:text-white">
-            {pageTitles[currentPage]}
-          </h2>
-
-          <div className="w-8" /> {/* spacer for centering */}
-        </div>
-
-        {/* Swipe handle (mobile) */}
-        <div className="sm:hidden flex justify-center pt-2 pb-1">
-          <div className="w-10 h-1 rounded-full bg-slate-300/50 dark:bg-slate-600/50" />
-        </div>
-
-        {/* Page Content with iOS slide transition */}
-        <div className="relative flex-1 overflow-y-auto">
-          <div
-            key={stack.join('-')}
-            className={`
-              animate-in
-              ${direction === 'forward' ? 'slide-in-from-right-full' : 'slide-in-from-left-full'}
-              duration-300 ease-out
-            `}
-          >
-            {renderPage(currentPage)}
-          </div>
-        </div>
+        {header}
+        {pageContent}
       </div>
     </div>
   );
