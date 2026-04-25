@@ -12,6 +12,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useGameMenu } from '@/hooks/useGameMenu';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 import { HUD } from '@/components/game-menu/HUD';
 import { GameMenuOverlay } from '@/components/game-menu/GameMenuOverlay';
@@ -103,6 +104,7 @@ export default function App() {
         quiz={quiz}
       />
 
+      <ErrorBoundary>
       {currentView === 'quiz' && isQuizActive && (
         quiz.rawRun?.sessionType === 'flashcard'
           ? <FlashcardView quiz={quiz} onOpenRunActions={() => gameMenu.openTo('run-actions')} gameMenuOpen={gameMenu.isOpen} />
@@ -120,10 +122,10 @@ export default function App() {
       {currentView === 'browse' && (
         <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />
       )}
-
-       {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
+      {(currentView === 'start' || !isQuizActive) && currentView !== 'history' && currentView !== 'browse' && (
          <StartView quiz={quiz} />
        )}
+      </ErrorBoundary>
 
        {/* Backup reminder dialog */}
        <Dialog open={quiz.showBackupPrompt} onOpenChange={quiz.setShowBackupPrompt}>
