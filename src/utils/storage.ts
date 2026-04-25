@@ -39,11 +39,14 @@ export function saveJson(key: string, value: unknown): void {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (err) {
     if (err instanceof Error && err.name === 'QuotaExceededError') {
-      throw new StorageError(
+      const storageErr = new StorageError(
         `Speicher voll (${key}): Fortschritt konnte nicht gespeichert werden.`,
         err,
       );
+      window.dispatchEvent(new CustomEvent('storage:error', { detail: { key, error: err.message } }));
+      throw storageErr;
     }
+    window.dispatchEvent(new CustomEvent('storage:error', { detail: { key, error: err instanceof Error ? err.message : String(err) } }));
     throw new StorageError(
       `Speicherfehler (${key}): Daten konnten nicht gespeichert werden.`,
       err instanceof Error ? err : undefined,

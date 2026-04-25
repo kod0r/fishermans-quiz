@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useGameMenu } from '@/hooks/useGameMenu';
 
@@ -24,6 +26,26 @@ import BrowseView from '@/views/BrowseView';
 export default function App() {
   const quiz = useQuiz();
   const gameMenu = useGameMenu();
+
+  // Listen for storage errors and show toast (debounced)
+  useEffect(() => {
+    let lastToastTime = 0;
+    const DEBOUNCE_MS = 30000; // 30 seconds
+
+    const handler = () => {
+      const now = Date.now();
+      if (now - lastToastTime < DEBOUNCE_MS) return;
+      lastToastTime = now;
+
+      toast.error('Speicherfehler', {
+        description: 'Dein Fortschritt konnte nicht gespeichert werden. Prüfe den verfügbaren Speicherplatz.',
+        duration: 6000,
+      });
+    };
+
+    window.addEventListener('storage:error', handler as EventListener);
+    return () => window.removeEventListener('storage:error', handler as EventListener);
+  }, []);
 
   const handleRetry = useCallback(() => {
     window.location.reload();
@@ -129,6 +151,7 @@ export default function App() {
            </DialogFooter>
          </DialogContent>
        </Dialog>
+       <Toaster position="top-center" richColors />
      </>
-  );
-}
+   );
+ }
