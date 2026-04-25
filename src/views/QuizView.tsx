@@ -57,7 +57,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
     setPendingWrongAnswer(null);
   }, [aktuellerIndex]);
 
-  // Exam timer
+  // Exam timer - requestAnimationFrame loop prevents drift
   useEffect(() => {
     if (gameMode !== 'exam' || !rawRun?.startedAt || !rawRun?.durationSeconds) {
       setRemainingSeconds(undefined);
@@ -66,20 +66,29 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
 
     const start = new Date(rawRun.startedAt).getTime();
     const durationMs = rawRun.durationSeconds * 1000;
+    let animationFrameId: number | null = null;
 
-    const updateTimer = () => {
+    const tick = () => {
       const elapsed = Date.now() - start;
       const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
       setRemainingSeconds(remaining);
+
       if (remaining <= 0) {
         setExamAbgelaufen(true);
         beendeExam?.();
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        return;
       }
+
+      animationFrameId = requestAnimationFrame(tick);
     };
 
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-    return () => clearInterval(interval);
+    // Start the loop
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [gameMode, rawRun, beendeExam]);
 
   const checkBereichComplete = useCallback(
