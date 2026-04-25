@@ -155,6 +155,23 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     persistRun(null);
   }, [persistRun]);
 
+  const restarteRun = useCallback(() => {
+    if (!run) return;
+    const gemischt = [...run.frageIds];
+    for (let i = gemischt.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
+    }
+    persistRun({
+      ...run,
+      frageIds: gemischt,
+      antworten: {},
+      aktuellerIndex: 0,
+      startedAt: new Date().toISOString(),
+      selfAssessments: {},
+    });
+  }, [run, persistRun]);
+
   // Persistiere Run bei Änderungen
   useEffect(() => {
     if (run) {
@@ -230,6 +247,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     isActive: run?.isActive ?? false,
     statistiken,
     starteRun,
+    restarteRun,
     beantworteFrage,
     bewerteSelbst,
     naechsteFrage,

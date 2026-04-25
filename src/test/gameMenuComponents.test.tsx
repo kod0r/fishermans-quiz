@@ -35,6 +35,7 @@ function createMockQuiz(overrides: Partial<QuizContext> = {}): QuizContext {
     setNote: vi.fn(),
     goToNextUnanswered: vi.fn(),
     unterbrecheRun: vi.fn(),
+    restarteRun: vi.fn(),
     rawRun: null,
     beendeExam: vi.fn(),
     starteQuiz: vi.fn(),
@@ -82,8 +83,7 @@ describe('HUD', () => {
     expect(screen.getByLabelText('Zur Startseite')).toBeInTheDocument();
     expect(screen.getByLabelText('Menü öffnen')).toBeInTheDocument();
     expect(screen.getByLabelText('Fortschritt')).toBeInTheDocument();
-    expect(screen.getByLabelText('Quiz beenden')).toBeInTheDocument();
-    expect(screen.getByText('5/10')).toBeInTheDocument();
+    expect(screen.getByLabelText('Pause')).toBeInTheDocument();
   });
 
   it('does not render progress button when view is not quiz', () => {
@@ -93,17 +93,18 @@ describe('HUD', () => {
     render(<HUD quiz={quiz} gameMenu={gameMenu} />);
 
     expect(screen.queryByLabelText('Fortschritt')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Pause')).not.toBeInTheDocument();
     expect(screen.getByLabelText('Quiz fortsetzen')).toBeInTheDocument();
   });
 
-  it('does not render stop button or status when quiz is not active', () => {
+  it('does not render home button on start view', () => {
     const quiz = createMockQuiz({ isActive: false, view: 'start' });
     const gameMenu = createMockGameMenu();
 
     render(<HUD quiz={quiz} gameMenu={gameMenu} />);
 
-    expect(screen.queryByLabelText('Quiz beenden')).not.toBeInTheDocument();
-    expect(screen.queryByText(/\d+\/\d+/)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Zur Startseite')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Pause')).not.toBeInTheDocument();
   });
 
   it('calls quiz.goToView("start") when home button is clicked', () => {
@@ -131,7 +132,7 @@ describe('HUD', () => {
     const gameMenu = createMockGameMenu();
 
     render(<HUD quiz={quiz} gameMenu={gameMenu} />);
-    fireEvent.click(screen.getByLabelText('Quiz beenden'));
+    fireEvent.click(screen.getByLabelText('Pause'));
 
     expect(gameMenu.openTo).toHaveBeenCalledWith('run-actions');
   });
@@ -141,7 +142,7 @@ describe('HUD', () => {
     const gameMenu = createMockGameMenu();
 
     const { container } = render(<HUD quiz={quiz} gameMenu={gameMenu} />);
-    const hudBar = container.querySelector('[class*="fixed bottom-3"]');
+    const hudBar = container.querySelector('[data-testid="hud-bar"]');
 
     expect(() => {
       fireEvent.touchStart(hudBar!, { touches: [{ clientY: 100 }] });
@@ -154,7 +155,7 @@ describe('HUD', () => {
     const gameMenu = createMockGameMenu();
 
     const { container } = render(<HUD quiz={quiz} gameMenu={gameMenu} />);
-    const hudBar = container.querySelector('[class*="fixed bottom-3"]') as HTMLElement;
+    const hudBar = container.querySelector('[data-testid="hud-bar"]') as HTMLElement;
 
     expect(hudBar.className).not.toContain('translate-y-[calc(100%+24px)]');
 

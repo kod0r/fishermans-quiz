@@ -1,14 +1,5 @@
-import { useState, useMemo } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { useMemo } from 'react';
+
 import { MENU_PAGES, type MenuContext, type MenuItemConfig, type MenuPageId } from './menuConfig';
 import { MenuItem } from './MenuItem';
 import type { QuizContext } from '@/hooks/useQuiz';
@@ -21,7 +12,6 @@ interface MenuPageRootProps {
 }
 
 export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
-  const [showExitDialog, setShowExitDialog] = useState(false);
 
   const context = useMemo<MenuContext>(
     () => ({
@@ -30,9 +20,6 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
       theme: 'system',
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
-      runStatus: quiz.isActive
-        ? `${quiz.statistiken?.beantwortet ?? 0}/${quiz.statistiken?.gesamt ?? 0}`
-        : undefined,
     }),
     [quiz]
   );
@@ -47,16 +34,6 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
     }
   };
 
-  const handleExitQuiz = () => {
-    setShowExitDialog(true);
-  };
-
-  const confirmExitQuiz = () => {
-    setShowExitDialog(false);
-    quiz.unterbrecheRun();
-    onClose();
-  };
-
   const handleItemClick = (item: MenuItemConfig) => {
     if (item.action === 'navigate' && item.target) {
       onPush(item.target as MenuPageId);
@@ -66,8 +43,6 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
     } else if (item.action === 'action' && item.target) {
       if (item.target === 'continue-quiz') {
         handleContinueQuiz();
-      } else if (item.target === 'exit-quiz') {
-        handleExitQuiz();
       }
     }
   };
@@ -133,32 +108,7 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
         );
       })}
 
-      <AlertDialog open={showExitDialog} onOpenChange={setShowExitDialog}>
-        <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-slate-900 dark:text-white">
-              Quiz beenden?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
-              Meta-Fortschritt bleibt erhalten.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={() => setShowExitDialog(false)}
-              className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-            >
-              Abbrechen
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmExitQuiz}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            >
-              Beenden
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+
     </div>
   );
 }

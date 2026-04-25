@@ -1,5 +1,10 @@
 <!-- CUSTOM-ANNOTATIONS: Start -->
 
+> **K2 Code QA Batch — 2026-04-25**
+> Ten new issues created from the comprehensive Code QA review:
+> [#169](https://github.com/kod0r/fishermans-quiz/issues/169) (refactor routing), [#170](https://github.com/kod0r/fishermans-quiz/issues/170) (decouple filename mapping), [#171](https://github.com/kod0r/fishermans-quiz/issues/171) (extract filter helpers), [#172](https://github.com/kod0r/fishermans-quiz/issues/172) (SRS Zod validation), [#173](https://github.com/kod0r/fishermans-quiz/issues/173) (ErrorBoundary), [#174](https://github.com/kod0r/fishermans-quiz/issues/174) (replace confirm()), [#175](https://github.com/kod0r/fishermans-quiz/issues/175) (exam timer drift), [#176](https://github.com/kod0r/fishermans-quiz/issues/176) (bundle splitting), [#177](https://github.com/kod0r/fishermans-quiz/issues/177) (focus trap), [#178](https://github.com/kod0r/fishermans-quiz/issues/178) (storage error surfacing).
+> Run `/feierabend` to regenerate the Planned section from GitHub API.
+
 <!-- CUSTOM-ANNOTATIONS: End -->
 
 ## 🚧 In Progress

@@ -3,12 +3,11 @@ import type { MenuPageId } from '@/hooks/useGameMenu';
 
 interface MenuPageNavigationProps {
   quiz: QuizContext;
-  onClose: () => void;
   onPop: () => void;
   onPush: (page: MenuPageId) => void;
 }
 
-export function MenuPageNavigation({ quiz, onClose }: MenuPageNavigationProps) {
+export function MenuPageNavigation({ quiz }: MenuPageNavigationProps) {
   const {
     aktiveFragen,
     antworten,
@@ -23,7 +22,6 @@ export function MenuPageNavigation({ quiz, onClose }: MenuPageNavigationProps) {
       goToView('quiz');
     }
     springeZuFrage(index);
-    onClose();
   };
 
   return (
@@ -66,9 +64,9 @@ export function MenuPageNavigation({ quiz, onClose }: MenuPageNavigationProps) {
                   ${aktuell
                     ? 'bg-teal-500 text-white'
                     : beantwortet && korrekt
-                      ? 'bg-emerald-100 text-emerald-600 border border-emerald-300/50 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30'
+                      ? 'bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white'
                       : beantwortet && !korrekt
-                        ? 'bg-red-100 text-red-600 border border-red-300/50 dark:bg-red-500/20 dark:text-red-400 dark:border-red-500/30'
+                        ? 'bg-red-500 text-white dark:bg-red-500 dark:text-white'
                         : 'bg-slate-100/80 text-slate-600 border border-slate-300/30 hover:bg-slate-200 dark:bg-slate-700/50 dark:text-slate-400 dark:border-slate-600/30 dark:hover:bg-slate-700'
                   }
                 `}
