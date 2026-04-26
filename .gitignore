@@ -42,8 +42,10 @@ coverage/
 
 # Internal workflow docs — do not commit to public repo
 .agents/
+.playwright-mcp/
 AGENTS.md
 BRAIN.md
 RESEARCH.md
 RTK.md
 feeeshtree.md
+feeeshtree035.md
