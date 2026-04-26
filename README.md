@@ -100,7 +100,6 @@ fix(hooks): prevent empty quiz navigation
 perf(data): optimize chunk loading
 ```
 
-See [AGENTS.md](./AGENTS.md) for detailed conventions and project context.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for coding guidelines.
 
