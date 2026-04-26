@@ -57,13 +57,13 @@ rtk npm run build
 
 ## 🛠️ Tech Stack
 
-| Area      | Technology                                                                       |
-| --------- | -------------------------------------------------------------------------------- |
-| Framework | [Vite](https://vitejs.dev) 8 + [React](https://react.dev) 19                     |
-| Language  | [TypeScript](https://www.typescriptlang.org) 5.9                                 |
-| Styling   | [Tailwind CSS](https://tailwindcss.com) 3.4 + [shadcn/ui](https://ui.shadcn.com) |
-| State     | React Hooks (Custom Stores)                                                      |
-| Icons     | [Lucide React](https://lucide.dev)                                               |
+| Area      | Technology                                                                        |
+| --------- | --------------------------------------------------------------------------------- |
+| Framework | [Vite](https://vitejs.dev) 8+ + [React](https://react.dev) 19                     |
+| Language  | [TypeScript](https://www.typescriptlang.org) 5.9+                                 |
+| Styling   | [Tailwind CSS](https://tailwindcss.com) 3.4+ + [shadcn/ui](https://ui.shadcn.com) |
+| State     | React Hooks (Custom Stores)                                                       |
+| Icons     | [Lucide React](https://lucide.dev)                                                |
 
 ---
 
