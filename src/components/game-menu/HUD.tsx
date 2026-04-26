@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Home, Menu, BarChart3, Pause, Play } from "lucide-react";
+import { Home, Menu, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { QuizContext } from "@/hooks/useQuiz";
 import type { MenuPageId } from "@/hooks/useGameMenu";
@@ -104,19 +104,7 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
             </Button>
           )}
 
-          {currentView === "quiz" && isQuizActive && (
-            <Button
-              onClick={() => quiz.goToView("progress")}
-              variant="ghost"
-              size="icon"
-              aria-label="Fortschritt"
-              className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-500 hover:bg-slate-200 hover:text-teal-600 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-slate-700"
-            >
-              <BarChart3 className="w-4 h-4" />
-            </Button>
-          )}
-
-          {currentView !== "quiz" && isQuizActive && (
+          {currentView !== "quiz" && isQuizActive && quiz.gameMode !== 'exam' && (
             <Button
               onClick={() => quiz.goToView("quiz")}
               variant="ghost"

@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+### Features
+
+* **exam:** Prüfungsabgabe führt jetzt zum Ergebnis statt auf blank screen
+  * `beendeRun()` im Store setzt `isActive = false` statt Run zu löschen — Daten bleiben für ProgressView erhalten
+  * `beendeExam()` wechselt View aktiv auf `'progress'`
+  * `App.tsx` zeigt ProgressView auch bei `!isQuizActive` wenn `rawRun` existiert
+* **hud:** Fortschritt-Button (`BarChart3`) aus QuizView-Menüleiste entfernt
+* **hud:** Play-Button auf ProgressView im Exam-Modus komplett unterdrückt — kein Zurück nach Abgabe
+* **progress:** "Zur Frage"-Buttons in falschen/unbeantworteten Listen sind `disabled` wenn `!isActive`
+
+### Bug Fixes
+
+* **exam:** Timer-Ablauf und manuelle Abgabe zeigen jetzt konsistent das Ergebnis an
+
 ## [0.3.5](https://github.com/kod0r/fishermans-quiz/compare/v0.3.0...v0.3.5) (2026-04-25)
 
 ### Features
