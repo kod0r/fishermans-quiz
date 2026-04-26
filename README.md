@@ -99,8 +99,7 @@ feat(ui): add new progress indicator
 fix(hooks): prevent empty quiz navigation
 perf(data): optimize chunk loading
 ```
-
-
+ 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for coding guidelines.
 
 ---
