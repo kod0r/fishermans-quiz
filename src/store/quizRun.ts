@@ -155,6 +155,13 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     persistRun(null);
   }, [persistRun]);
 
+  const beendeRun = useCallback(() => {
+    setRun(prev => {
+      if (!prev) return prev;
+      return { ...prev, isActive: false };
+    });
+  }, []);
+
   const restarteRun = useCallback(() => {
     if (!run) return;
     const gemischt = [...run.frageIds];
@@ -255,5 +262,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     springeZuFrage,
     entferneBereich,
     unterbrecheRun,
+    beendeRun,
   };
 }

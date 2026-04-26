@@ -82,17 +82,15 @@ describe('HUD', () => {
 
     expect(screen.getByLabelText('Zur Startseite')).toBeInTheDocument();
     expect(screen.getByLabelText('Menü öffnen')).toBeInTheDocument();
-    expect(screen.getByLabelText('Fortschritt')).toBeInTheDocument();
     expect(screen.getByLabelText('Pause')).toBeInTheDocument();
   });
 
-  it('does not render progress button when view is not quiz', () => {
+  it('does not render progress or pause buttons when view is progress', () => {
     const quiz = createMockQuiz({ isActive: true, view: 'progress' });
     const gameMenu = createMockGameMenu();
 
     render(<HUD quiz={quiz} gameMenu={gameMenu} />);
 
-    expect(screen.queryByLabelText('Fortschritt')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('Pause')).not.toBeInTheDocument();
     expect(screen.getByLabelText('Quiz fortsetzen')).toBeInTheDocument();
   });

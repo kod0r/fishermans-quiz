@@ -122,8 +122,9 @@ export default function ProgressView({ quiz }: Props) {
                         <div className="flex items-start justify-between gap-3 mb-1.5">
                           <p className="text-slate-900 font-medium text-sm leading-snug dark:text-white">{frage.frage}</p>
                           <button
-                            onClick={() => { const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) { springeZuFrage(idx); goToView('quiz'); } }}
-                            className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded"
+                            onClick={() => { if (!isActive) return; const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) { springeZuFrage(idx); goToView('quiz'); } }}
+                            disabled={!isActive}
+                            className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:no-underline"
                           >
                             Zur Frage
                           </button>
@@ -165,9 +166,10 @@ export default function ProgressView({ quiz }: Props) {
                     return (
                       <button
                         key={frage.id}
-                        onClick={() => { springeZuFrage(idx); goToView('quiz'); }}
+                        onClick={() => { if (!isActive) return; springeZuFrage(idx); goToView('quiz'); }}
+                        disabled={!isActive}
                         aria-label={`Zu unbeantworteter Frage ${idx + 1} springen`}
-                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-600 border border-amber-300/50 hover:bg-amber-100 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20 dark:hover:bg-amber-500/20 dark:focus-visible:ring-offset-slate-900"
+                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-600 border border-amber-300/50 hover:bg-amber-100 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20 dark:hover:bg-amber-500/20 dark:focus-visible:ring-offset-slate-900 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-amber-50 dark:disabled:hover:bg-amber-500/10"
                       >
                         Frage {idx + 1}
                       </button>
