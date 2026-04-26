@@ -166,10 +166,10 @@ export default function StartView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl">
+        <div className="container mx-auto px-3 sm:px-4 py-1 sm:py-2 max-w-3xl">
 
           {/* Header */}
-          <div className="text-center mb-5 sm:mb-6 pt-4 sm:pt-6">
+          <div className="text-center mb-2 sm:mb-3 pt-0 sm:pt-1">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Fish className="w-7 h-7 sm:w-8 sm:h-8 text-teal-400" aria-hidden="true" />
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Fisherman's Quiz</h1>
@@ -178,8 +178,8 @@ export default function StartView({ quiz }: Props) {
 
           {/* Aktiver Run Info */}
           {isActive && (
-            <Card className="mb-2 bg-teal-50 border-teal-300/50 dark:bg-teal-900/30 dark:border-teal-500/30">
-              <CardContent className="py-2 px-3">
+            <Card className="mb-1.5 py-1 bg-teal-50 border-teal-300/50 dark:bg-teal-900/30 dark:border-teal-500/30">
+              <CardContent className="py-1 px-3">
                 <div className="text-center">
                   <p className="text-teal-700 font-medium text-sm dark:text-teal-300">Aktiver Quiz-Run</p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">{geladeneBereiche.join(', ')} — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet</p>
@@ -190,9 +190,9 @@ export default function StartView({ quiz }: Props) {
           )}
 
           {/* Meta-Progress — immer sichtbar, kompakt */}
-          <Card className="mb-2 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
-            <CardContent className="py-2 px-3">
-              <div className="flex items-center gap-2 mb-3">
+          <Card className="mb-1.5 py-1 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
+            <CardContent className="py-1 px-3">
+              <div className="flex items-center gap-2 mb-2">
                 <BarChart3 className="w-4 h-4 text-teal-400 flex-shrink-0" aria-hidden="true" />
                 <div>
                   <p className="text-slate-900 font-medium text-sm dark:text-white">Lernfortschritt</p>
@@ -214,7 +214,7 @@ export default function StartView({ quiz }: Props) {
               </div>
 
               {/* Statistiken */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-3">
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-2">
                 {gameMode === 'arcade' ? (
                   <>
                     <StatBox icon={CheckCircle} iconColor="text-emerald-400" value={quiz.bestandeneBereicheArcade} label="Bestandene Bereiche" />
@@ -250,7 +250,7 @@ export default function StartView({ quiz }: Props) {
 
               {/* Korrektrate */}
               {metaProgress.stats.totalQuestionsAnswered > 0 && (
-                <div className="mb-3">
+                <div className="mb-2">
                   <div className="flex justify-between text-xs mb-1">
                     <span id="korrektrate-label" className="text-slate-600 dark:text-slate-300">Korrektrate</span>
                     <span className="text-teal-600 font-medium dark:text-teal-400">
@@ -266,7 +266,7 @@ export default function StartView({ quiz }: Props) {
               )}
 
               {/* Bereichs-Fortschritte */}
-              <div className="space-y-2 mb-3">
+              <div className="space-y-1 mb-2">
                 {BEREICHE.map(b => {
                   const Icon = b.icon;
                   const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
@@ -297,9 +297,9 @@ export default function StartView({ quiz }: Props) {
           </Card>
 
           {/* Bereichsauswahl */}
-          <Card className="bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
-            <CardContent className="py-2 px-3">
-              <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-3 sm:mb-4 dark:text-white">
+          <Card className="py-1 bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
+            <CardContent className="py-1 px-3">
+              <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-2 sm:mb-3 dark:text-white">
                 <BookOpen className="w-4 h-4 text-teal-400" aria-hidden="true" />
                 {isActive ? 'Bereiche hinzufügen' : 'Bereiche auswählen'}
               </h2>
@@ -358,7 +358,7 @@ export default function StartView({ quiz }: Props) {
                 </AlertDialogContent>
               </AlertDialog>
 
-              <div className="space-y-1.5 sm:space-y-2" role="group" aria-label="Bereichsauswahl">
+              <div className="space-y-1" role="group" aria-label="Bereichsauswahl">
                 {BEREICHE.map(b => {
                   const Icon = b.icon;
                   const inRun = isActive && geladeneBereiche.includes(b.id);
@@ -375,7 +375,7 @@ export default function StartView({ quiz }: Props) {
                       aria-checked={checked}
                       aria-disabled={disabled}
                       tabIndex={disabled ? -1 : 0}
-                      className={`flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-200/50 border-slate-300/30 dark:bg-slate-700/30 dark:border-slate-600/30'} ${inRun ? 'ring-1 ring-teal-400/30' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-slate-300/50 dark:hover:bg-slate-700/50'}`}
+                      className={`flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : 'bg-slate-200/50 border-slate-300/30 dark:bg-slate-700/30 dark:border-slate-600/30'} ${inRun ? 'ring-1 ring-teal-400/30' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-slate-300/50 dark:hover:bg-slate-700/50'}`}
                     >
                       <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : 'border-slate-500 bg-transparent'}`} aria-hidden="true">
                         {checked && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -396,7 +396,7 @@ export default function StartView({ quiz }: Props) {
               {fehler && <p className="text-red-400 text-xs mt-3 text-center" role="alert">{fehler}</p>}
 
               {/* Study Mode Toggles */}
-              <div className="flex items-center gap-2 mb-3 mt-1 flex-wrap">
+              <div className="flex items-center gap-2 mb-2 mt-1 flex-wrap">
                 <button
                   onClick={() => setNurFavoriten(p => !p)}
                   aria-pressed={nurFavoriten}
@@ -433,7 +433,7 @@ export default function StartView({ quiz }: Props) {
                 </button>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
                 <p className="text-slate-500 text-xs dark:text-slate-400">
                   {effektivAusgewaehlt.length > 0
                     ? <span><span className="text-teal-400 font-bold">
@@ -446,7 +446,7 @@ export default function StartView({ quiz }: Props) {
                 <Button
                   onClick={handleStart}
                   aria-label={isActive ? 'Ausgewählte Bereiche zum Quiz hinzufügen' : 'Quiz mit ausgewählten Bereichen starten'}
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-5 sm:px-6 py-4 sm:py-5 text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base rounded-lg shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
                 >
                   {isActive ? 'Hinzufügen' : 'Quiz starten'}
                 </Button>
@@ -465,7 +465,7 @@ export default function StartView({ quiz }: Props) {
 
 function StatBox({ icon: Icon, iconColor, value, label }: { icon: typeof Trophy; iconColor: string; value: number; label: string }) {
   return (
-    <div className="text-center p-1.5 sm:p-2 rounded-lg bg-slate-200/50 dark:bg-slate-700/30" aria-label={`${label}: ${value}`}>
+    <div className="text-center p-1 sm:p-1.5 rounded-lg bg-slate-200/50 dark:bg-slate-700/30" aria-label={`${label}: ${value}`}>
       <Icon className={`w-4 h-4 ${iconColor} mx-auto mb-0.5`} aria-hidden="true" />
       <p className="text-base sm:text-lg font-bold text-slate-900 leading-tight dark:text-white">{value}</p>
       <p className="text-[10px] text-slate-500 dark:text-slate-400">{label}</p>
