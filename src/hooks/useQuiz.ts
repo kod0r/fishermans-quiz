@@ -289,7 +289,8 @@ export function useQuiz() {
   const beendeExam = useCallback(() => {
     if (!run.isActive || gameMode !== 'exam') return;
     logCurrentRun();
-    run.unterbrecheRun();
+    run.beendeRun();
+    setView('progress');
   }, [run, gameMode, logCurrentRun]);
 
   // Flashcard: Selbstbewertung verarbeiten

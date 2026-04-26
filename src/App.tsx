@@ -132,7 +132,7 @@ function ViewRenderer({
     );
   }
   if (currentView === 'progress') {
-    if (!isQuizActive) return null;
+    if (!isQuizActive && !quiz.rawRun) return null;
     return <ProgressView quiz={quiz} />;
   }
   if (currentView === 'history') {
