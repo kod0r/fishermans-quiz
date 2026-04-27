@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+### Features
+
+* **hud:** exam-mode-aware pause menu labels, exam timer badge, and game-mode indicator ([#208](https://github.com/kod0r/fishermans-quiz/issues/208), [#209](https://github.com/kod0r/fishermans-quiz/issues/209), [#211](https://github.com/kod0r/fishermans-quiz/issues/211))
+  * `MenuPageRunActions`: "Prüfung" terminology in exam mode; restart hidden during exam ([#210](https://github.com/kod0r/fishermans-quiz/issues/210))
+  * `HUD`: compact mode badge (Arcade/Prüfung/Hardcore) and live exam countdown
+* **progress:** favorite star toggle on wrong-answer cards in `ProgressView`
+
+### Bug Fixes
+
+* **quiz:** mode switch now correctly persists ended run / clears hardcore run before switching gameMode
+* **menu:** hide Fragenkatalog menu item while an exam is active
+* **ui:** `StartView` bottom padding prevents HUD overlap on start buttons
+* **hud:** peeking grabber tab when hidden; improved swipe/tap logic with `touch-none` and invisible touch overlay for mobile/tablet
+
 ## [0.3.6](https://github.com/kod0r/fishermans-quiz/compare/v0.3.5...v0.3.6) (2026-04-27)
 
 ### Features
