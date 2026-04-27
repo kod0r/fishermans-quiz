@@ -8,6 +8,7 @@ import TutorialDemo from './TutorialDemo';
 interface ModeExplainerProps {
   mode: 'arcade' | 'hardcore' | 'exam';
   onDemoActiveChange?: (active: boolean) => void;
+  onEndDemo?: () => void;
 }
 
 const MODE_META: Record<
@@ -25,7 +26,7 @@ const DEMO_QUESTIONS: Record<'arcade' | 'hardcore' | 'exam', string[]> = {
   exam: EXAM_DEMO_QUESTIONS,
 };
 
-export default function ModeExplainer({ mode, onDemoActiveChange }: ModeExplainerProps) {
+export default function ModeExplainer({ mode, onDemoActiveChange, onEndDemo }: ModeExplainerProps) {
   const [demoActive, setDemoActive] = useState(false);
 
   const handleSetDemoActive = useCallback((active: boolean) => {
@@ -40,7 +41,10 @@ export default function ModeExplainer({ mode, onDemoActiveChange }: ModeExplaine
       <TutorialDemo
         mode={mode}
         questionIds={DEMO_QUESTIONS[mode]}
-        onBack={() => handleSetDemoActive(false)}
+        onBack={() => {
+          handleSetDemoActive(false);
+          onEndDemo?.();
+        }}
       />
     );
   }

@@ -30,13 +30,13 @@ export default function HelpView({ quiz }: HelpViewProps) {
               </>
             )}
             {panel === 'arcade' && (
-              <ModeExplainer mode="arcade" onDemoActiveChange={quiz.setIsTutorialDemoActive} />
+              <ModeExplainer mode="arcade" onDemoActiveChange={quiz.setIsTutorialDemoActive} onEndDemo={() => setPanel('landing')} />
             )}
             {panel === 'hardcore' && (
-              <ModeExplainer mode="hardcore" onDemoActiveChange={quiz.setIsTutorialDemoActive} />
+              <ModeExplainer mode="hardcore" onDemoActiveChange={quiz.setIsTutorialDemoActive} onEndDemo={() => setPanel('landing')} />
             )}
             {panel === 'exam' && (
-              <ModeExplainer mode="exam" onDemoActiveChange={quiz.setIsTutorialDemoActive} />
+              <ModeExplainer mode="exam" onDemoActiveChange={quiz.setIsTutorialDemoActive} onEndDemo={() => setPanel('landing')} />
             )}
           </CardContent>
         </Card>
