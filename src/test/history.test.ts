@@ -136,4 +136,22 @@ describe('useHistory', () => {
     });
     expect(result.current.entries[0].id).not.toBe(result.current.entries[1].id);
   });
+
+  it('sollte legacy bereiche-Feld zu topics migrieren', () => {
+    const legacy = [
+      {
+        id: 'legacy-1',
+        timestamp: new Date().toISOString(),
+        bereiche: ['Recht', 'Biologie'],
+        score: 5,
+        total: 10,
+        duration: 60,
+        mode: 'arcade',
+      },
+    ];
+    localStorage.setItem('fmq:history:v1', JSON.stringify(legacy));
+    const { result } = renderHook(() => useHistory());
+    expect(result.current.entries).toHaveLength(1);
+    expect(result.current.entries[0].topics).toEqual(['Recht', 'Biologie']);
+  });
 });

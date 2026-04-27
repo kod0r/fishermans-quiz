@@ -3,7 +3,13 @@ import type { HistoryEntry, GameMode } from '@/types/quiz';
 import { HistoryStorage } from '@/utils/storage';
 
 export function useHistory() {
-  const [entries, setEntries] = useState<HistoryEntry[]>(() => HistoryStorage.load());
+  const [entries, setEntries] = useState<HistoryEntry[]>(() => {
+    const loaded = HistoryStorage.load();
+    return loaded.map((entry) => ({
+      ...entry,
+      topics: (entry as unknown as Record<string, unknown>).topics ?? (entry as unknown as Record<string, unknown>).bereiche ?? [],
+    }));
+  });
 
   const addEntry = useCallback((params: {
     topics: string[];

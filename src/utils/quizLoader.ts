@@ -101,12 +101,21 @@ export const AppBackupSchema = z.object({
   history: z.array(z.object({
     id: z.string(),
     timestamp: z.string(),
-    topics: z.array(z.string()),
+    topics: z.array(z.string()).optional().default([]),
+    bereiche: z.array(z.string()).optional(),
     score: z.number(),
     total: z.number(),
     duration: z.number(),
     mode: z.enum(['arcade', 'hardcore', 'exam']),
-  })),
+  }).transform((e) => ({
+    id: e.id,
+    timestamp: e.timestamp,
+    topics: e.topics.length > 0 ? e.topics : e.bereiche ?? [],
+    score: e.score,
+    total: e.total,
+    duration: e.duration,
+    mode: e.mode,
+  }))),
   srs: z.record(z.string(), SRSMetaSchema).optional().default({}),
 });
 
