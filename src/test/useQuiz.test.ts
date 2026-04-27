@@ -352,4 +352,75 @@ describe('useQuiz', () => {
     expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(false);
     expect(result.current.metaProgress.topics['Biologie']?.consecutivePasses).toBe(0);
   });
+
+  it('sollte Flashcard-Selbstbewertung korrekt in History loggen', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie'], { sessionType: 'flashcard' });
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // 2x again, 1x good
+    act(() => {
+      result.current.beantworteFlashcard(fragen[0].id, 'again');
+    });
+    act(() => {
+      result.current.beantworteFlashcard(fragen[1].id, 'again');
+    });
+    act(() => {
+      result.current.beantworteFlashcard(fragen[2].id, 'good');
+    });
+
+    expect(result.current.historyEntries).toHaveLength(1);
+    expect(result.current.historyEntries[0].score).toBe(1);
+    expect(result.current.historyEntries[0].total).toBe(3);
+  });
+
+  it('sollte abgeschlossene Session nicht doppelt loggen', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // Alle beantworten
+    for (const frage of fragen) {
+      act(() => {
+        result.current.beantworteFrage(frage.id, frage.richtige_antwort);
+      });
+    }
+
+    expect(result.current.historyEntries).toHaveLength(1);
+
+    // Versuch, bereits beantwortete Frage erneut zu beantworten
+    act(() => {
+      result.current.beantworteFrage(fragen[0].id, fragen[0].richtige_antwort);
+    });
+
+    expect(result.current.historyEntries).toHaveLength(1);
+  });
 });

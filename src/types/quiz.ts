@@ -38,6 +38,7 @@ export interface QuizRun {
   durationSeconds?: number; // für zeitbegrenzte Modi (Exam)
   sessionType?: SessionType;
   selfAssessments?: Record<string, SelfAssessmentGrade>;
+  completedAt?: string; // verhindert doppeltes Loggen
 }
 
 // ── History Entry ──

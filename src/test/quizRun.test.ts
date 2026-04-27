@@ -234,6 +234,30 @@ describe('useQuizRun', () => {
     expect(result.current.loadedTopics).toContain('Recht');
   });
 
+  it('sollte startedAt beim Erweitern zurücksetzen', () => {
+    vi.useFakeTimers();
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie']);
+    });
+
+    const oldStartedAt = result.current.rawRun?.startedAt;
+    expect(oldStartedAt).toBeDefined();
+
+    vi.advanceTimersByTime(1000);
+
+    act(() => {
+      result.current.starteRun(['Recht']);
+    });
+
+    const newStartedAt = result.current.rawRun?.startedAt;
+    expect(newStartedAt).toBeDefined();
+    expect(newStartedAt).not.toBe(oldStartedAt);
+
+    vi.useRealTimers();
+  });
+
   it('sollte Runs pro Modus getrennt speichern', () => {
     const { result: arcade } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
     const { result: hardcore } = renderHook(() => useQuizRun(mockQuizData, 'hardcore'));

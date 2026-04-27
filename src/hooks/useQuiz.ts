@@ -155,14 +155,22 @@ export function useQuiz() {
   // Hilfsfunktion: Session als abgeschlossen loggen
   const logRunIfComplete = useCallback((finalAntworten: Record<string, string>) => {
     if (!run.isActive || !run.rawRun) return;
+    if (run.rawRun.completedAt) return; // doppeltes Loggen verhindern
     const alleBeantwortet = run.aktiveFragen.every(f => finalAntworten[f.id] !== undefined);
     if (!alleBeantwortet) return;
 
-    const korrekt = run.aktiveFragen.filter(f => finalAntworten[f.id] === f.richtige_antwort).length;
+    const isFlashcard = run.rawRun.sessionType === 'flashcard';
+    const korrekt = run.aktiveFragen.filter(f => {
+      if (isFlashcard) {
+        return run.rawRun?.selfAssessments?.[f.id] !== 'again';
+      }
+      return finalAntworten[f.id] === f.richtige_antwort;
+    }).length;
     const duration = run.rawRun.startedAt
       ? Math.round((Date.now() - new Date(run.rawRun.startedAt).getTime()) / 1000)
       : 0;
 
+    run.markCompleted?.();
     history.addEntry({
       topics: [...run.loadedTopics],
       score: korrekt,

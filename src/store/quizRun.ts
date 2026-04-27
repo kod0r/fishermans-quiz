@@ -43,6 +43,8 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         ...run,
         frageIds: [...run.frageIds, ...gemischt.map(f => f.id)],
         topics: combinedTopics,
+        startedAt: new Date().toISOString(),
+        completedAt: undefined,
       });
     } else {
       // Neuer Run
@@ -162,6 +164,13 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     });
   }, []);
 
+  const markCompleted = useCallback(() => {
+    setRun(prev => {
+      if (!prev) return prev;
+      return { ...prev, completedAt: new Date().toISOString() };
+    });
+  }, []);
+
   const restarteRun = useCallback(() => {
     if (!run) return;
     const gemischt = [...run.frageIds];
@@ -176,6 +185,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       aktuellerIndex: 0,
       startedAt: new Date().toISOString(),
       selfAssessments: {},
+      completedAt: undefined,
     });
   }, [run, persistRun]);
 
@@ -263,5 +273,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     removeTopic,
     unterbrecheRun,
     beendeRun,
+    markCompleted,
   };
 }
