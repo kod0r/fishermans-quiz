@@ -67,6 +67,7 @@ export interface MetaStats {
   totalIncorrect: number;
   bestStreak: number;
   currentStreak: number;
+  arcadeRunsCompleted?: number;
 }
 
 export interface BereichMeta {
@@ -80,6 +81,8 @@ export interface MetaProgression {
   fragen: Record<string, FrageMeta>;
   stats: MetaStats;
   bereiche: Record<string, BereichMeta>;
+  arcadeStars?: Record<string, 1 | 2 | 3>;
+  bestArcadeScore?: Record<string, number>;
 }
 
 // ── Game Mode ──

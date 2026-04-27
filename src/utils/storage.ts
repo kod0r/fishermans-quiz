@@ -142,8 +142,11 @@ const EMPTY_META = {
     totalIncorrect: 0,
     bestStreak: 0,
     currentStreak: 0,
+    arcadeRunsCompleted: 0,
   },
   bereiche: {},
+  arcadeStars: {},
+  bestArcadeScore: {},
 };
 
 export const MetaStorage = {

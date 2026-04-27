@@ -11,8 +11,11 @@ const EMPTY: MetaProgression = Object.freeze({
     totalIncorrect: 0,
     bestStreak: 0,
     currentStreak: 0,
+    arcadeRunsCompleted: 0,
   }),
   bereiche: {},
+  arcadeStars: {},
+  bestArcadeScore: {},
 });
 
 export function useMetaProgress(gameMode: GameMode) {
@@ -85,6 +88,31 @@ export function useMetaProgress(gameMode: GameMode) {
     });
   }, []);
 
+  // Arcade-Run abschließen — Sterne + Highscore pro Bereich
+  const recordArcadeRunComplete = useCallback((bereichId: string, scorePct: number) => {
+    setMeta(prev => {
+      const stars: 1 | 2 | 3 = scorePct >= 100 ? 3 : scorePct >= 75 ? 2 : 1;
+      const currentStars = prev.arcadeStars?.[bereichId] ?? 0;
+      const currentBest = prev.bestArcadeScore?.[bereichId] ?? 0;
+
+      return {
+        ...prev,
+        stats: {
+          ...prev.stats,
+          arcadeRunsCompleted: (prev.stats.arcadeRunsCompleted || 0) + 1,
+        },
+        arcadeStars: {
+          ...prev.arcadeStars,
+          [bereichId]: Math.max(currentStars, stars) as 1 | 2 | 3,
+        },
+        bestArcadeScore: {
+          ...prev.bestArcadeScore,
+          [bereichId]: Math.max(currentBest, scorePct),
+        },
+      };
+    });
+  }, []);
+
   // Komplett zurücksetzen
   const reset = useCallback(() => {
     persist(EMPTY);
@@ -124,6 +152,7 @@ export function useMetaProgress(gameMode: GameMode) {
     recordAnswer,
     recordRunStart,
     recordBereichResult,
+    recordArcadeRunComplete,
     reset,
     getFrageMeta,
     importData,

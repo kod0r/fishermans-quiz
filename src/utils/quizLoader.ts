@@ -49,6 +49,7 @@ const MetaStatsSchema = z.object({
   totalIncorrect: z.number().int().nonnegative(),
   bestStreak: z.number().int().nonnegative(),
   currentStreak: z.number().int().nonnegative(),
+  arcadeRunsCompleted: z.number().int().nonnegative().optional(),
 });
 
 const BereichMetaSchema = z.object({
@@ -69,6 +70,8 @@ export const MetaProgressionSchema = z.object({
   fragen: z.record(z.string(), FrageMetaSchema),
   stats: MetaStatsSchema,
   bereiche: z.record(z.string(), BereichMetaSchema).default({}),
+  arcadeStars: z.record(z.string(), z.union([z.literal(1), z.literal(2), z.literal(3)])).optional().default({}),
+  bestArcadeScore: z.record(z.string(), z.number().nonnegative()).optional().default({}),
 });
 
 export const AppSettingsSchema = z.object({
@@ -83,7 +86,7 @@ export const AppBackupSchema = z.object({
   settings: AppSettingsSchema,
   metaArcade: MetaProgressionSchema,
   metaHardcore: MetaProgressionSchema,
-  metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 }, bereiche: {} }),
+  metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0, arcadeRunsCompleted: 0 }, bereiche: {}, arcadeStars: {}, bestArcadeScore: {} }),
   bereichFiles: z.record(z.string(), z.string()),  // Bereich name → filename
   favorites: z.array(z.string()),
   notes: z.record(z.string(), z.string()),
