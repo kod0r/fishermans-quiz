@@ -10,6 +10,7 @@ interface MenuItemProps {
   disabled?: boolean;
   isFocused?: boolean;
   'aria-label'?: string;
+  'aria-pressed'?: boolean;
 }
 
 export function MenuItem({
@@ -21,6 +22,7 @@ export function MenuItem({
   disabled,
   isFocused,
   'aria-label': ariaLabel,
+  'aria-pressed': ariaPressed,
 }: MenuItemProps) {
   return (
     <button
@@ -29,6 +31,7 @@ export function MenuItem({
       disabled={disabled}
       tabIndex={isFocused === true ? 0 : isFocused === false ? -1 : undefined}
       aria-label={ariaLabel}
+      aria-pressed={ariaPressed}
       className={`
         w-full flex items-center gap-3 px-4 py-3 text-left
         transition-colors duration-150

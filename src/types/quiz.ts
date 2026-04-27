@@ -39,6 +39,7 @@ export interface QuizRun {
   sessionType?: SessionType;
   selfAssessments?: Record<string, SelfAssessmentGrade>;
   completedAt?: string; // verhindert doppeltes Loggen
+  answerShuffle?: Record<string, ('A' | 'B' | 'C')[]>;
 }
 
 // ── History Entry ──
@@ -101,6 +102,7 @@ export interface AppSettings {
   gameMode: GameMode;
   backupReminderEnabled?: boolean;
   lastBackupPrompt?: string;
+  shuffleAnswers?: boolean;
 }
 
 export interface AppBackup {
@@ -135,6 +137,7 @@ export interface QuizStartOptions {
   filter?: 'weak' | 'all' | 'srs-due';
   limit?: number;
   sessionType?: SessionType;
+  shuffleAnswers?: boolean;
 }
 
 // ── View-State ──

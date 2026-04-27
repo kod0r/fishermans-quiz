@@ -114,6 +114,8 @@ export default function ProgressView({ quiz }: Props) {
             {falsche.length === 0 ? (
               <p className="text-emerald-600 text-sm mt-2 dark:text-emerald-400">Keine falschen Antworten — super!</p>
             ) : showWrong && (
+                /* aktiveFragen already carries shuffled order via answerShuffle in quizRun,
+                   so no extra transformation is needed here. */
                 <div id="wrong-answers-list" className="mt-3 space-y-3">
                   {falsche.map(frage => {
                     const meta = getFrageMeta(frage.id);

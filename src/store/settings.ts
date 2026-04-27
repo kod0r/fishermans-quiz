@@ -22,6 +22,10 @@ export function useSettings() {
     setSettings(prev => ({ ...prev, lastBackupPrompt: date }));
   }, []);
 
+  const setShuffleAnswers = useCallback((enabled: boolean) => {
+    setSettings(prev => ({ ...prev, shuffleAnswers: enabled }));
+  }, []);
+
   const importSettings = useCallback((data: AppSettings) => {
     setSettings(data);
   }, []);
@@ -43,6 +47,8 @@ export function useSettings() {
     lastBackupPrompt: settings.lastBackupPrompt,
     setBackupReminderEnabled,
     setLastBackupPrompt,
+    setShuffleAnswers,
     importSettings,
+    shuffleAnswers: settings.shuffleAnswers ?? false,
   };
 }

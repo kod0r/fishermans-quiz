@@ -14,6 +14,7 @@ import {
   Database,
   RotateCcw,
   LayoutGrid,
+  Shuffle,
 } from "lucide-react";
 import type { GameMode, AppView } from "@/types/quiz";
 import type { QuizContext } from "@/hooks/useQuiz";
@@ -39,6 +40,7 @@ export interface MenuContext {
   currentView: AppView;
   historyCount: number;
   runStatus?: string; // e.g. "3/20"
+  shuffleAnswers?: boolean;
 }
 
 // ── Menu Item ──
@@ -214,6 +216,19 @@ export const MENU_PAGES: MenuPageConfig[] = [
             action: "toggle",
             target: "system",
             detail: (ctx) => (ctx.theme === "system" ? "Aktiv" : ""),
+          },
+        ],
+      },
+      {
+        title: "Quiz-Verhalten",
+        items: [
+          {
+            id: "shuffle-answers",
+            label: "Antworten mischen",
+            icon: Shuffle,
+            action: "toggle",
+            target: "shuffle-answers",
+            detail: (ctx) => (ctx.shuffleAnswers ? "Aktiv" : ""),
           },
         ],
       },

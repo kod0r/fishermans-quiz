@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
+import { shuffleAnswers as computeShuffle } from '@/utils/quizShuffle';
 import { RunStorage } from '@/utils/storage';
 
 export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
@@ -16,7 +17,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, []);
 
   // Starte neuen Run oder erweitere bestehenden
-  const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType) => {
+  const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
@@ -39,12 +40,21 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
       }
 
+      let newAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
+      if (newAnswerShuffle && enableShuffle) {
+        for (const f of gemischt) {
+          const { order } = computeShuffle(f);
+          newAnswerShuffle[f.id] = order;
+        }
+      }
+
       persistRun({
         ...run,
         frageIds: [...run.frageIds, ...gemischt.map(f => f.id)],
         topics: combinedTopics,
         startedAt: new Date().toISOString(),
         completedAt: undefined,
+        answerShuffle: newAnswerShuffle,
       });
     } else {
       // Neuer Run
@@ -58,6 +68,15 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       // Limit erst nach dem Shuffle anwenden, damit die Subset-Auswahl zufällig ist
       const finalPool = limit && limit > 0 ? gemischt.slice(0, limit) : gemischt;
 
+      let answerShuffle: Record<string, ('A' | 'B' | 'C')[]> | undefined;
+      if (enableShuffle) {
+        answerShuffle = {};
+        for (const f of finalPool) {
+          const { order } = computeShuffle(f);
+          answerShuffle[f.id] = order;
+        }
+      }
+
       persistRun({
         frageIds: finalPool.map(f => f.id),
         antworten: {},
@@ -67,6 +86,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         startedAt: new Date().toISOString(),
         durationSeconds,
         sessionType: sessionType ?? 'quiz',
+        answerShuffle,
       });
     }
   }, [quizData, run, persistRun]);
@@ -144,16 +164,35 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     const neuerIndex = Math.max(0, run.aktuellerIndex - removedBeforeIndex);
     const finalIndex = Math.min(neuerIndex, neueFrageIds.length - 1);
 
+    let neueAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
+    if (neueAnswerShuffle) {
+      for (const id of Array.from(idsToRemove)) {
+        delete neueAnswerShuffle[id];
+      }
+      if (Object.keys(neueAnswerShuffle).length === 0) {
+        neueAnswerShuffle = undefined;
+      }
+    }
+
     persistRun({
       ...run,
       frageIds: neueFrageIds,
       antworten: neueAntworten,
       topics: newTopics,
       aktuellerIndex: finalIndex,
+      answerShuffle: neueAnswerShuffle,
     });
   }, [run, quizData, persistRun]);
 
   const unterbrecheRun = useCallback(() => {
+    // Strategy: mark inactive instead of wiping so answerShuffle survives for review.
+    setRun(prev => {
+      if (!prev) return prev;
+      return { ...prev, isActive: false };
+    });
+  }, []);
+
+  const wipeRun = useCallback(() => {
     persistRun(null);
   }, [persistRun]);
 
@@ -172,12 +211,25 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, []);
 
   const restarteRun = useCallback(() => {
-    if (!run) return;
+    if (!run || !quizData) return;
     const gemischt = [...run.frageIds];
     for (let i = gemischt.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
     }
+
+    let newAnswerShuffle: Record<string, ('A' | 'B' | 'C')[]> | undefined;
+    if (run.answerShuffle) {
+      newAnswerShuffle = {};
+      for (const id of gemischt) {
+        const f = quizData.fragen.find(q => q.id === id);
+        if (f) {
+          const { order } = computeShuffle(f);
+          newAnswerShuffle[id] = order;
+        }
+      }
+    }
+
     persistRun({
       ...run,
       frageIds: gemischt,
@@ -186,8 +238,9 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       startedAt: new Date().toISOString(),
       selfAssessments: {},
       completedAt: undefined,
+      answerShuffle: newAnswerShuffle,
     });
-  }, [run, persistRun]);
+  }, [run, quizData, persistRun]);
 
   // Persistiere Run bei Änderungen
   useEffect(() => {
@@ -240,7 +293,22 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   const aktiveFragen = useMemo<Frage[]>(() => {
     if (!run || !quizData) return [];
     return run.frageIds
-      .map(id => quizData.fragen.find(f => f.id === id))
+      .map(id => {
+        const f = quizData.fragen.find(q => q.id === id);
+        if (!f) return undefined;
+        const shuffle = run.answerShuffle?.[f.id];
+        if (shuffle) {
+          const keys: ('A' | 'B' | 'C')[] = ['A', 'B', 'C'];
+          const antworten = {
+            A: f.antworten[shuffle[0]],
+            B: f.antworten[shuffle[1]],
+            C: f.antworten[shuffle[2]],
+          };
+          const richtige_antwort = keys[shuffle.indexOf(f.richtige_antwort)];
+          return { ...f, antworten, richtige_antwort };
+        }
+        return f;
+      })
       .filter((f): f is Frage => f !== undefined);
   }, [run, quizData]);
 
@@ -272,6 +340,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     springeZuFrage,
     removeTopic,
     unterbrecheRun,
+    wipeRun,
     beendeRun,
     markCompleted,
   };

@@ -18,6 +18,7 @@ interface TutorialDemoProps {
   onBack: () => void;
 }
 
+// TutorialDemo uses fixed answer order; shuffle can be added here if desired.
 export default function TutorialDemo({ mode, questionIds, onBack }: TutorialDemoProps) {
   const tutorial = useTutorialRun(mode, questionIds);
   const [pendingWrongAnswer, setPendingWrongAnswer] = useState<string | null>(null);

@@ -27,6 +27,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
       theme: (theme as "light" | "dark" | "system") ?? "system",
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
+      shuffleAnswers: quiz.shuffleAnswers,
     }),
     [quiz, theme],
   );
@@ -75,6 +76,8 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
         target === "system"
       ) {
         setTheme(target);
+      } else if (target === "shuffle-answers") {
+        quiz.setShuffleAnswers?.(!quiz.shuffleAnswers);
       }
     }
   };
@@ -118,6 +121,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
                       : isItemDisabled(item)
                   }
                   destructive={item.destructive}
+                  aria-pressed={item.target === "shuffle-answers" ? quiz.shuffleAnswers : undefined}
                 />
               ))}
             </div>

@@ -25,7 +25,7 @@ export function useQuiz() {
   const [isTutorialDemoActive, setIsTutorialDemoActive] = useState(false);
 
   const settings = useSettings();
-  const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt } = settings;
+  const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt, shuffleAnswers, setShuffleAnswers } = settings;
   const run = useQuizRun(quizData, gameMode);
   const meta = useMetaProgress(gameMode);
   const srs = useSRS();
@@ -135,8 +135,9 @@ export function useQuiz() {
 
   // Nur aktuellen Run löschen (ohne Hardcore-Logging)
   const clearCurrentRun = useCallback(() => {
-    run.unterbrecheRun();
-  }, [run]);
+    RunStorage.clear(gameMode);
+    run.wipeRun?.();
+  }, [run, gameMode]);
 
   // Alle Modi zurücksetzen
   const resetAllMetaProgression = useCallback(() => {
@@ -150,7 +151,7 @@ export function useQuiz() {
     RunStorage.clear('arcade');
     RunStorage.clear('hardcore');
     RunStorage.clear('exam');
-    run.unterbrecheRun();
+    run.wipeRun?.();
   }, [run]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
@@ -292,10 +293,10 @@ export function useQuiz() {
     const isNewRun = !run.isActive;
     const durationSeconds = gameMode === 'exam' ? EXAM_DURATION_SECONDS : undefined;
     const sessionType = options.sessionType ?? 'quiz';
-    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType);
+    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType, shuffleAnswers);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
-  }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds]);
+  }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds, shuffleAnswers]);
 
   const goToView = useCallback((v: AppView) => {
     setView(v);
@@ -454,6 +455,8 @@ export function useQuiz() {
     // Settings
     gameMode,
     setGameMode,
+    shuffleAnswers,
+    setShuffleAnswers,
 
     // Run (Session)
     ...run,
