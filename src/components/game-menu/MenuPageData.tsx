@@ -78,7 +78,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
                 }
                 if (expCsv) {
                   const rows = [
-                    ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
+                    ['Frage-ID', 'Thema', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
                     ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
                       id,
                       quiz.quizMeta?.fragenIndex?.[id] ?? '',

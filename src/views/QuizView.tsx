@@ -290,7 +290,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
              </DialogContent>
            </Dialog>
 
-           {/* Bereichs-Abschluss Dialog (Issue #46) */}
+           {/* Themen-Abschluss Dialog (Issue #46) */}
           <Dialog
             open={bereichComplete !== null}
             onOpenChange={(open) => !open && setBereichComplete(null)}
@@ -299,10 +299,10 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2 text-base">
                   <CheckCircle className="w-5 h-5 text-emerald-400" />
-                  Bereich abgeschlossen!
+                  Thema abgeschlossen!
                 </DialogTitle>
                 <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
-                  Du hast alle Fragen im Bereich{' '}
+                  Du hast alle Fragen im Thema{' '}
                   <span className="text-teal-400 font-medium">
                     {bereichComplete}
                   </span>{' '}
@@ -310,7 +310,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
                 </DialogDescription>
               </DialogHeader>
               <p className="text-slate-600 text-sm dark:text-slate-300">
-                Du kannst über die Startansicht einen weiteren Bereich
+                Du kannst über die Startansicht ein weiteres Thema
                 hinzufügen.
               </p>
               <div className="flex gap-2 mt-2">

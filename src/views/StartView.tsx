@@ -124,7 +124,7 @@ export default function StartView({ quiz }: Props) {
   const totalBereiche = BEREICHE.length;
 
   function getBereichStatus(bereichId: string) {
-    if (gameMode === 'exam') return null;
+    if (gameMode === "exam") return null;
     // Arcade: Sterne primär, Fallback Bestanden bei Mastery ohne Sterne
     if (gameMode === "arcade") {
       const stars = metaProgress.arcadeStars?.[bereichId];
@@ -227,7 +227,7 @@ export default function StartView({ quiz }: Props) {
         )
       ) {
         setFehler(
-          "Dieser Bereich ist im Hardcore-Modus gesperrt. Beende den aktiven Run oder wähle einen anderen Bereich.",
+          "Dieses Thema ist im Hardcore-Modus gesperrt. Beende den aktiven Run oder wähle ein anderes Thema.",
         );
         return;
       }
@@ -246,7 +246,7 @@ export default function StartView({ quiz }: Props) {
 
   const handleStart = useCallback(() => {
     if (effektivAusgewaehlt.length === 0) {
-      setFehler("Bitte wähle mindestens einen Bereich aus.");
+      setFehler("Bitte wähle mindestens ein Thema aus.");
       return;
     }
     if (nurFavoriten && quiz.favorites.length === 0) {
@@ -334,7 +334,7 @@ export default function StartView({ quiz }: Props) {
                     {statistiken.gesamt} beantwortet
                   </p>
                   <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">
-                    Weitere Bereiche können hinzugefügt werden.
+                    Weitere Themen können hinzugefügt werden.
                   </p>
                 </div>
               </CardContent>
@@ -356,16 +356,17 @@ export default function StartView({ quiz }: Props) {
                   <p className="text-slate-500 text-xs dark:text-slate-400">
                     {gameMode === "arcade"
                       ? quiz.bestandeneBereicheArcade > 0
-                        ? `${quiz.bestandeneBereicheArcade} von ${totalBereiche} Bereichen bestanden • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
+                        ? `${quiz.bestandeneBereicheArcade} von ${totalBereiche} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
                         : "Noch keine Fragen beantwortet"
                       : gameMode === "exam"
-                        ? metaProgress.examMeta && metaProgress.examMeta.attempts > 0
+                        ? metaProgress.examMeta &&
+                          metaProgress.examMeta.attempts > 0
                           ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
                           : "Noch keine Prüfung absolviert"
                         : quiz.gemeisterteBereicheHardcore > 0 ||
                             quiz.bestandeneBereicheHardcore > 0
                           ? `${quiz.gemeisterteBereicheHardcore} von ${totalBereiche} gemeistert • ${quiz.bestandeneBereicheHardcore} bestanden`
-                          : "Noch keine Bereiche absolviert"}
+                          : "Noch keine Themen absolviert"}
                   </p>
                 </div>
               </div>
@@ -378,43 +379,43 @@ export default function StartView({ quiz }: Props) {
                       icon={CheckCircle}
                       iconColor="text-emerald-400"
                       value={quiz.bestandeneBereicheArcade}
-                      label="Bestandene Bereiche"
+                      label="Gemeisterte Themen"
                     />
                     <StatBox
                       icon={Target}
                       iconColor="text-blue-400"
                       value={lernCount}
-                      label="In Lernung"
+                      label="In Bearbeitung"
                     />
                     <StatBox
                       icon={Flame}
                       iconColor="text-orange-400"
                       value={metaProgress.stats.bestStreak}
-                      label="Beste Serie"
+                      label="Längste Serie"
                     />
                     <StatBox
                       icon={RotateCcw}
                       iconColor="text-emerald-400"
                       value={metaProgress.stats.totalRuns}
-                      label="Durchläufe"
+                      label="Gestartete Runden"
                     />
                     <StatBox
                       icon={Star}
                       iconColor="text-amber-400"
                       value={metaProgress.stats.arcadeRunsCompleted ?? 0}
-                      label="Arcade Runs"
+                      label="Beendete Runden"
                     />
                     <StatBox
                       icon={BarChart3}
                       iconColor="text-purple-400"
                       value={metaProgress.stats.totalQuestionsAnswered}
-                      label="Beantwortet"
+                      label="Beantwortete Fragen"
                     />
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-teal-400"
                       value={metaProgress.stats.totalCorrect}
-                      label="Korrekt"
+                      label="Richtige Antworten"
                     />
                     {quiz.srsDueCount > 0 && (
                       <StatBox
@@ -455,13 +456,13 @@ export default function StartView({ quiz }: Props) {
                       icon={BarChart3}
                       iconColor="text-teal-400"
                       value={metaProgress.stats.totalQuestionsAnswered}
-                      label="Beantwortet"
+                      label="Beantwortete Fragen"
                     />
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-teal-400"
                       value={metaProgress.stats.totalCorrect}
-                      label="Korrekt"
+                      label="Richtige Antworten"
                     />
                   </>
                 ) : (
@@ -470,51 +471,51 @@ export default function StartView({ quiz }: Props) {
                       icon={Trophy}
                       iconColor="text-amber-400"
                       value={quiz.gemeisterteBereicheHardcore}
-                      label="Gemeisterte Bereiche"
+                      label="Gemeisterte Themen"
                     />
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-emerald-400"
                       value={quiz.bestandeneBereicheHardcore}
-                      label="Bestandene Bereiche"
+                      label="Bestandene Themen"
                     />
                     <StatBox
                       icon={Target}
                       iconColor="text-blue-400"
                       value={lernCount}
-                      label="In Lernung"
+                      label="In Bearbeitung"
                     />
                     <StatBox
                       icon={Flame}
                       iconColor="text-orange-400"
                       value={metaProgress.stats.bestStreak}
-                      label="Beste Serie"
+                      label="Längste Serie"
                     />
                     <StatBox
                       icon={BarChart3}
                       iconColor="text-purple-400"
                       value={metaProgress.stats.totalQuestionsAnswered}
-                      label="Beantwortet"
+                      label="Beantwortete Fragen"
                     />
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-teal-400"
                       value={metaProgress.stats.totalCorrect}
-                      label="Korrekt"
+                      label="Richtige Antworten"
                     />
                   </>
                 )}
               </div>
 
-              {/* Korrektrate */}
+              {/* Erfolgsquote */}
               {metaProgress.stats.totalQuestionsAnswered > 0 && (
                 <div className="mb-2">
                   <div className="flex justify-between text-xs mb-1">
                     <span
-                      id="korrektrate-label"
+                      id="erfolgsquote-label"
                       className="text-slate-600 dark:text-slate-300"
                     >
-                      Korrektrate
+                      Erfolgsquote
                     </span>
                     <span className="text-teal-600 font-medium dark:text-teal-400">
                       {Math.round(
@@ -532,12 +533,12 @@ export default function StartView({ quiz }: Props) {
                       100
                     }
                     className="h-1.5 bg-slate-200 dark:bg-slate-700"
-                    aria-labelledby="korrektrate-label"
+                    aria-labelledby="erfolgsquote-label"
                   />
                 </div>
               )}
 
-              {/* Bereichs-Fortschritte */}
+              {/* Themen-Fortschritte */}
               <div className="space-y-1 mb-2">
                 {BEREICHE.map((b) => {
                   const Icon = b.icon;
@@ -596,7 +597,7 @@ export default function StartView({ quiz }: Props) {
             </CardContent>
           </Card>
 
-          {/* Bereichsauswahl */}
+          {/* Themenauswahl */}
           <Card className="py-1 bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
             <CardContent className="py-1 px-3">
               <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-2 sm:mb-3 dark:text-white">
@@ -604,10 +605,10 @@ export default function StartView({ quiz }: Props) {
                   className="w-4 h-4 text-teal-400"
                   aria-hidden="true"
                 />
-                {isActive ? "Bereiche hinzufügen" : "Bereiche auswählen"}
+                {isActive ? "Thema" : "Thema auswählen"}
               </h2>
 
-              {/* Dialog: Arcade — Bereich aus Run entfernen */}
+              {/* Dialog: Arcade — Thema aus Run entfernen */}
               <AlertDialog
                 open={dialog?.type === "remove-arcade"}
                 onOpenChange={() => setDialog(null)}
@@ -615,7 +616,7 @@ export default function StartView({ quiz }: Props) {
                 <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
                   <AlertDialogHeader>
                     <AlertDialogTitle className="text-slate-900 dark:text-white">
-                      Bereich entfernen
+                      Thema entfernen
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
                       Dies entfernt{" "}
@@ -663,7 +664,7 @@ export default function StartView({ quiz }: Props) {
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
                       Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn
-                      du einen Bereich abwählst. Alle Fortschritte dieses Runs
+                      du ein Thema abwählst. Alle Fortschritte dieses Runs
                       gehen verloren.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
@@ -695,7 +696,7 @@ export default function StartView({ quiz }: Props) {
               <div
                 className="space-y-1"
                 role="group"
-                aria-label="Bereichsauswahl"
+                aria-label="Themenauswahl"
               >
                 {BEREICHE.map((b) => {
                   const Icon = b.icon;
@@ -771,7 +772,7 @@ export default function StartView({ quiz }: Props) {
                     <Tooltip key={b.id}>
                       <TooltipTrigger asChild>{bereichItem}</TooltipTrigger>
                       <TooltipContent side="top">
-                        Bereich nicht bestanden. Bestehe einen anderen Bereich,
+                        Thema nicht bestanden. Bestehe ein anderes Thema,
                         um diesen wieder freizuschalten.
                       </TooltipContent>
                     </Tooltip>
@@ -805,7 +806,7 @@ export default function StartView({ quiz }: Props) {
                 <button
                   onClick={handleWeaknessTrainer}
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors text-slate-500 hover:text-red-600 border border-transparent dark:text-slate-400 dark:hover:text-red-400"
-                  title="Nur Fragen mit <50% Korrektrate"
+                  title="Nur Fragen mit <50% Erfolgsquote"
                 >
                   <Crosshair className="w-3.5 h-3.5" />
                   Schwächentrainer
@@ -849,15 +850,15 @@ export default function StartView({ quiz }: Props) {
                       Fragen
                     </span>
                   ) : (
-                    "Keine Bereiche ausgewählt"
+                    "Keine Themen ausgewählt"
                   )}
                 </p>
                 <Button
                   onClick={handleStart}
                   aria-label={
                     isActive
-                      ? "Ausgewählte Bereiche zum Quiz hinzufügen"
-                      : "Quiz mit ausgewählten Bereichen starten"
+                      ? "Ausgewählte Themen zum Quiz hinzufügen"
+                      : "Quiz mit ausgewählten Themen starten"
                   }
                   className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base rounded-lg shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
                 >

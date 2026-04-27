@@ -145,6 +145,6 @@ describe('quizLoader', () => {
       return Promise.resolve({ ok: false, status: 404 } as Response);
     }));
 
-    await expect(loadBereichsFragen(['Unbekannt'])).rejects.toThrow('Unbekannter Bereich');
+    await expect(loadBereichsFragen(['Unbekannt'])).rejects.toThrow('Unbekanntes Thema');
   });
 });

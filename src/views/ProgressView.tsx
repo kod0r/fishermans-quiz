@@ -78,7 +78,7 @@ export default function ProgressView({ quiz }: Props) {
               <p className="text-slate-500 text-xs mt-1.5 dark:text-slate-400">{Math.round(pct)}% — 60% zum Bestehen</p>
             </div>
 
-            {/* Bereichs-Stats */}
+            {/* Themen-Stats */}
             <div className="mt-4 text-left space-y-2 max-w-sm mx-auto">
               {Object.entries(bereichStats).map(([b, s]) => {
                 const p = s.gesamt > 0 ? (s.korrekt / s.gesamt) * 100 : 0;

@@ -60,7 +60,7 @@ export default function BrowseView({ quiz, onBack }: Props) {
 
         <div className="space-y-3 mb-6">
           <div>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Bereiche</p>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Themen</p>
             <div className="flex flex-wrap gap-2">
               {allBereiche.map((bereich) => (
                 <label key={bereich} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs cursor-pointer transition-colors ${selectedBereiche.includes(bereich) ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>

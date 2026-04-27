@@ -145,16 +145,16 @@ export async function loadBereichsFragen(bereiche: string[]): Promise<Frage[]> {
     const meta = await loadQuizMeta();
     const promises = zuLaden.map(async (bereich) => {
       const filename = meta.bereichFiles[bereich];
-      if (!filename) throw new Error(`Unbekannter Bereich: ${bereich}. Kein Dateiname in den Metadaten gefunden.`);
+      if (!filename) throw new Error(`Unbekanntes Thema: ${bereich}. Kein Dateiname in den Metadaten gefunden.`);
 
       const res = await fetch(`${import.meta.env.BASE_URL}data/bereiche/${filename}`);
-      if (!res.ok) throw new Error(`Bereich ${bereich} laden fehlgeschlagen: ${res.status}`);
+      if (!res.ok) throw new Error(`Thema ${bereich} laden fehlgeschlagen: ${res.status}`);
 
       const raw = await res.json();
       const parsed = BereichDataSchema.safeParse(raw);
       if (!parsed.success) {
-        console.error(`[quizLoader] Bereich ${bereich} Validierung fehlgeschlagen:`, parsed.error.format());
-        throw new Error(`Bereich ${bereich} Format ungültig: ${parsed.error.message}`);
+        console.error(`[quizLoader] Thema ${bereich} Validierung fehlgeschlagen:`, parsed.error.format());
+        throw new Error(`Thema ${bereich} Format ungültig: ${parsed.error.message}`);
       }
 
       fragenCache.set(bereich, parsed.data.fragen);
