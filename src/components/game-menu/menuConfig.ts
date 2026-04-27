@@ -14,7 +14,6 @@ import {
   Database,
   RotateCcw,
   LayoutGrid,
-  HelpCircle,
 } from "lucide-react";
 import type { GameMode, AppView } from "@/types/quiz";
 import type { QuizContext } from "@/hooks/useQuiz";
@@ -137,13 +136,13 @@ export const MENU_PAGES: MenuPageConfig[] = [
             target: "browse",
             condition: (ctx) => !(ctx.gameMode === "exam" && ctx.isQuizActive),
           },
-          {
-            id: "help",
-            label: "Hilfe & Tutorials",
-            icon: HelpCircle,
-            action: "view",
-            target: "help",
-          },
+          // {
+          //   id: "help",
+          //   label: "Hilfe & Tutorials",
+          //   icon: HelpCircle,
+          //   action: "view",
+          //   target: "help",
+          // },
           {
             id: "settings",
             label: "Einstellungen",

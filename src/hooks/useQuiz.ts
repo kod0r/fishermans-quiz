@@ -22,6 +22,7 @@ export function useQuiz() {
   const [view, setView] = useState<AppView>('start');
   const [istGeladen, setIstGeladen] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [isTutorialDemoActive, setIsTutorialDemoActive] = useState(false);
 
   const settings = useSettings();
   const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt } = settings;
@@ -296,7 +297,10 @@ export function useQuiz() {
     setView('quiz');
   }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds]);
 
-  const goToView = useCallback((v: AppView) => setView(v), []);
+  const goToView = useCallback((v: AppView) => {
+    setView(v);
+    setIsTutorialDemoActive(false);
+  }, []);
 
   const removeTopicFromRun = useCallback((topicId: string) => {
     run.removeTopic(topicId);
@@ -503,6 +507,10 @@ export function useQuiz() {
     historyEntries: history.entries,
     clearHistory: history.clearHistory,
     importHistory: history.importHistory,
+
+    // Tutorial Demo
+    isTutorialDemoActive,
+    setIsTutorialDemoActive,
 
     // Backup
     exportFullBackup,

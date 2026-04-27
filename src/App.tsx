@@ -137,16 +137,16 @@ function ViewRenderer({
     return <ProgressView quiz={quiz} />;
   }
   if (currentView === 'history') {
-    return <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+    return <HistoryView quiz={quiz} />;
   }
   if (currentView === 'browse') {
-    return <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+    return <BrowseView quiz={quiz} />;
   }
   if (currentView === 'start') {
     return <StartView quiz={quiz} />;
   }
   if (currentView === 'help') {
-    return <HelpView onBack={() => quiz.goToView('start')} />;
+    return <HelpView quiz={quiz} />;
   }
   const _exhaustiveCheck: never = currentView;
   return _exhaustiveCheck;

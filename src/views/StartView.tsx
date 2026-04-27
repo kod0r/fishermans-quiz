@@ -682,8 +682,9 @@ export default function StartView({ quiz }: Props) {
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
                   Dies entfernt{" "}
-                  {dialog?.type === "remove-arcade" ? dialog.fragenCount : 0}{" "}
-                  Fragen aus dem aktiven Quiz.
+                  {dialog?.type === "remove-arcade" ? dialog.fragenCount : 0}{" "} ursprüngliche
+                  Fragen aus dem aktiven Quiz und beendet den aktuellen
+                  Durchlauf.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

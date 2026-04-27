@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Fish, Play } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MODE_COPY } from './modeCopy';
 import { ARCADE_DEMO_QUESTIONS, HARDCORE_DEMO_QUESTIONS, EXAM_DEMO_QUESTIONS } from './demoQuestions';
@@ -7,7 +7,7 @@ import TutorialDemo from './TutorialDemo';
 
 interface ModeExplainerProps {
   mode: 'arcade' | 'hardcore' | 'exam';
-  onBack: () => void;
+  onDemoActiveChange?: (active: boolean) => void;
 }
 
 const MODE_META: Record<
@@ -25,8 +25,13 @@ const DEMO_QUESTIONS: Record<'arcade' | 'hardcore' | 'exam', string[]> = {
   exam: EXAM_DEMO_QUESTIONS,
 };
 
-export default function ModeExplainer({ mode, onBack }: ModeExplainerProps) {
+export default function ModeExplainer({ mode, onDemoActiveChange }: ModeExplainerProps) {
   const [demoActive, setDemoActive] = useState(false);
+
+  const handleSetDemoActive = useCallback((active: boolean) => {
+    setDemoActive(active);
+    onDemoActiveChange?.(active);
+  }, [onDemoActiveChange]);
   const copy = MODE_COPY[mode];
   const meta = MODE_META[mode];
 
@@ -35,21 +40,13 @@ export default function ModeExplainer({ mode, onBack }: ModeExplainerProps) {
       <TutorialDemo
         mode={mode}
         questionIds={DEMO_QUESTIONS[mode]}
-        onBack={() => setDemoActive(false)}
+        onBack={() => handleSetDemoActive(false)}
       />
     );
   }
 
   return (
     <div className="space-y-4">
-      <button
-        onClick={onBack}
-        className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors"
-      >
-        <Fish className="w-4 h-4 text-teal-400 -scale-x-100" />
-        Zurück
-      </button>
-
       <div>
         <h2 className={`text-lg font-bold ${meta.color}`}>{copy.title}</h2>
         <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
@@ -76,7 +73,7 @@ export default function ModeExplainer({ mode, onBack }: ModeExplainerProps) {
       </div>
 
       <Button
-        onClick={() => setDemoActive(true)}
+        onClick={() => handleSetDemoActive(true)}
         className={`w-full ${meta.buttonColor} text-white font-semibold`}
       >
         <Play className="w-4 h-4 mr-1.5" />

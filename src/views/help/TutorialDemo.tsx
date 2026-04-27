@@ -140,14 +140,6 @@ export default function TutorialDemo({ mode, questionIds, onBack }: TutorialDemo
 
     return (
       <div className="space-y-4">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors"
-        >
-          <Fish className="w-4 h-4 text-teal-400 -scale-x-100" />
-          Zurück zum Erklärer
-        </button>
-
         <div className="text-center space-y-2">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Demo beendet
@@ -200,7 +192,7 @@ export default function TutorialDemo({ mode, questionIds, onBack }: TutorialDemo
             className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             <Fish className="w-4 h-4 mr-1 text-teal-400 -scale-x-100" />
-            Zurück zum Erklärer
+            Zurück
           </Button>
           <Button
             onClick={() => window.location.reload()}
@@ -217,13 +209,13 @@ export default function TutorialDemo({ mode, questionIds, onBack }: TutorialDemo
   return (
     <TooltipProvider delayDuration={800}>
       <div className="space-y-3">
-        <button
+        {/* <button
           onClick={onBack}
           className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors"
         >
           <Fish className="w-4 h-4 text-teal-400 -scale-x-100" />
           Demo beenden
-        </button>
+        </button> */}
 
         <QuizHeader
           gameMode={mode}
