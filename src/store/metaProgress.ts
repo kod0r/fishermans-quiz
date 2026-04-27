@@ -88,6 +88,22 @@ export function useMetaProgress(gameMode: GameMode) {
     });
   }, []);
 
+  // Exam abschließen
+  const recordExamResult = useCallback((scorePct: number, passed: boolean) => {
+    setMeta(prev => {
+      const prevExam = prev.examMeta;
+      return {
+        ...prev,
+        examMeta: {
+          attempts: (prevExam?.attempts || 0) + 1,
+          passedCount: (prevExam?.passedCount || 0) + (passed ? 1 : 0),
+          bestScore: Math.max(prevExam?.bestScore || 0, scorePct),
+          lastScore: scorePct,
+        },
+      };
+    });
+  }, []);
+
   // Arcade-Run abschließen — Sterne + Highscore pro Bereich
   const recordArcadeRunComplete = useCallback((bereichId: string, scorePct: number) => {
     setMeta(prev => {
@@ -153,6 +169,7 @@ export function useMetaProgress(gameMode: GameMode) {
     recordRunStart,
     recordBereichResult,
     recordArcadeRunComplete,
+    recordExamResult,
     reset,
     getFrageMeta,
     importData,

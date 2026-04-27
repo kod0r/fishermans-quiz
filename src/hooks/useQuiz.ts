@@ -306,9 +306,16 @@ export function useQuiz() {
   const beendeExam = useCallback(() => {
     if (!run.isActive || gameMode !== 'exam') return;
     logCurrentRun();
+
+    const total = run.aktiveFragen.length;
+    const korrekt = run.statistiken.korrekt;
+    const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
+    const passed = scorePct >= 60;
+    meta.recordExamResult(scorePct, passed);
+
     run.beendeRun();
     setView('progress');
-  }, [run, gameMode, logCurrentRun]);
+  }, [run, gameMode, logCurrentRun, meta]);
 
   // Flashcard: Selbstbewertung verarbeiten
   const beantworteFlashcard = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
@@ -389,6 +396,7 @@ export function useQuiz() {
     bestandeneBereicheArcade,
     bestandeneBereicheHardcore: meta.bestandeneBereicheHardcore,
     gemeisterteBereicheHardcore: meta.gemeisterteBereicheHardcore,
+    examMeta: meta.meta.examMeta,
     getFrageMeta: meta.getFrageMeta,
     resetMetaProgression: meta.reset,
     importMetaProgression: meta.importData,

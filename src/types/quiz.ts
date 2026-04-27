@@ -70,6 +70,13 @@ export interface MetaStats {
   arcadeRunsCompleted?: number;
 }
 
+export interface ExamMeta {
+  attempts: number;
+  passedCount: number;
+  bestScore: number; // percentage 0–100
+  lastScore: number;
+}
+
 export interface BereichMeta {
   passed: boolean;
   consecutivePasses: number;
@@ -83,6 +90,7 @@ export interface MetaProgression {
   bereiche: Record<string, BereichMeta>;
   arcadeStars?: Record<string, 1 | 2 | 3>;
   bestArcadeScore?: Record<string, number>;
+  examMeta?: ExamMeta;
 }
 
 // ── Game Mode ──

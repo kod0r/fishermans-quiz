@@ -107,7 +107,13 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
                   label={item.label}
                   detail={getDetail(item)}
                   onClick={() => handleItemClick(item)}
-                  disabled={isItemDisabled(item)}
+                  disabled={
+                    item.target === "arcade" ||
+                    item.target === "hardcore" ||
+                    item.target === "exam"
+                      ? false
+                      : isItemDisabled(item)
+                  }
                   destructive={item.destructive}
                 />
               ))}

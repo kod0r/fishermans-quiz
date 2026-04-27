@@ -124,6 +124,7 @@ export default function StartView({ quiz }: Props) {
   const totalBereiche = BEREICHE.length;
 
   function getBereichStatus(bereichId: string) {
+    if (gameMode === 'exam') return null;
     // Arcade: Sterne primär, Fallback Bestanden bei Mastery ohne Sterne
     if (gameMode === "arcade") {
       const stars = metaProgress.arcadeStars?.[bereichId];
@@ -358,8 +359,8 @@ export default function StartView({ quiz }: Props) {
                         ? `${quiz.bestandeneBereicheArcade} von ${totalBereiche} Bereichen bestanden • ${metaProgress.stats.totalQuestionsAnswered} beantwortet`
                         : "Noch keine Fragen beantwortet"
                       : gameMode === "exam"
-                        ? metaProgress.stats.totalQuestionsAnswered > 0
-                          ? `${metaProgress.stats.totalQuestionsAnswered} beantwortet • ${Math.round((metaProgress.stats.totalCorrect / metaProgress.stats.totalQuestionsAnswered) * 100)}% Korrektrate`
+                        ? metaProgress.examMeta && metaProgress.examMeta.attempts > 0
+                          ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
                           : "Noch keine Prüfung absolviert"
                         : quiz.gemeisterteBereicheHardcore > 0 ||
                             quiz.bestandeneBereicheHardcore > 0
@@ -429,18 +430,30 @@ export default function StartView({ quiz }: Props) {
                     <StatBox
                       icon={RotateCcw}
                       iconColor="text-blue-400"
-                      value={metaProgress.stats.totalRuns}
-                      label="Prüfungen"
+                      value={metaProgress.examMeta?.attempts ?? 0}
+                      label="Prüfungsversuche"
                     />
                     <StatBox
-                      icon={Flame}
-                      iconColor="text-orange-400"
-                      value={metaProgress.stats.bestStreak}
-                      label="Beste Serie"
+                      icon={CheckCircle}
+                      iconColor="text-emerald-400"
+                      value={metaProgress.examMeta?.passedCount ?? 0}
+                      label="Bestanden"
+                    />
+                    <StatBox
+                      icon={Trophy}
+                      iconColor="text-amber-400"
+                      value={metaProgress.examMeta?.bestScore ?? 0}
+                      label="Bestes Ergebnis %"
+                    />
+                    <StatBox
+                      icon={Target}
+                      iconColor="text-purple-400"
+                      value={metaProgress.examMeta?.lastScore ?? 0}
+                      label="Letztes Ergebnis %"
                     />
                     <StatBox
                       icon={BarChart3}
-                      iconColor="text-purple-400"
+                      iconColor="text-teal-400"
                       value={metaProgress.stats.totalQuestionsAnswered}
                       label="Beantwortet"
                     />
@@ -449,25 +462,6 @@ export default function StartView({ quiz }: Props) {
                       iconColor="text-teal-400"
                       value={metaProgress.stats.totalCorrect}
                       label="Korrekt"
-                    />
-                    <StatBox
-                      icon={Target}
-                      iconColor="text-red-400"
-                      value={metaProgress.stats.totalIncorrect}
-                      label="Falsch"
-                    />
-                    <StatBox
-                      icon={Trophy}
-                      iconColor="text-amber-400"
-                      value={Math.round(
-                        (metaProgress.stats.totalCorrect /
-                          Math.max(
-                            1,
-                            metaProgress.stats.totalQuestionsAnswered,
-                          )) *
-                          100,
-                      )}
-                      label="Korrektrate %"
                     />
                   </>
                 ) : (

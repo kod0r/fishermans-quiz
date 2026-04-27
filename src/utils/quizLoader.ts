@@ -59,6 +59,13 @@ const BereichMetaSchema = z.object({
   lastAttempt: z.string().nullable(),
 });
 
+const ExamMetaSchema = z.object({
+  attempts: z.number().int().nonnegative(),
+  passedCount: z.number().int().nonnegative(),
+  bestScore: z.number().int().nonnegative(),
+  lastScore: z.number().int().nonnegative(),
+});
+
 export const SRSMetaSchema = z.object({
   interval: z.number().nonnegative(),
   repetitions: z.number().int().nonnegative(),
@@ -72,6 +79,7 @@ export const MetaProgressionSchema = z.object({
   bereiche: z.record(z.string(), BereichMetaSchema).default({}),
   arcadeStars: z.record(z.string(), z.union([z.literal(1), z.literal(2), z.literal(3)])).optional().default({}),
   bestArcadeScore: z.record(z.string(), z.number().nonnegative()).optional().default({}),
+  examMeta: ExamMetaSchema.optional(),
 });
 
 export const AppSettingsSchema = z.object({
