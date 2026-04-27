@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { Home, Menu, Pause, Play } from "lucide-react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { Home, Menu, Pause, Play, Zap, Timer, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { QuizContext } from "@/hooks/useQuiz";
 import type { MenuPageId } from "@/hooks/useGameMenu";
@@ -15,6 +15,13 @@ interface HUDProps {
   gameMenu: GameMenuApi;
 }
 
+function formatRemaining(totalSeconds: number): string {
+  const clamped = Math.max(0, totalSeconds);
+  const m = Math.floor(clamped / 60);
+  const s = clamped % 60;
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
 export function HUD({ quiz, gameMenu }: HUDProps) {
   const [hidden, setHidden] = useState(false);
   const touchStartY = useRef<number | null>(null);
@@ -22,6 +29,27 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
 
   const isQuizActive = quiz.isActive;
   const currentView = quiz.view;
+  const isExam = quiz.gameMode === "exam";
+
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isExam || !isQuizActive || !quiz.rawRun?.startedAt || !quiz.rawRun?.durationSeconds) {
+      setRemainingSeconds(null);
+      return;
+    }
+
+    const tick = () => {
+      const started = new Date(quiz.rawRun.startedAt).getTime();
+      const elapsed = Math.floor((Date.now() - started) / 1000);
+      const left = (quiz.rawRun.durationSeconds ?? 0) - elapsed;
+      setRemainingSeconds(left);
+    };
+
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [isExam, isQuizActive, quiz.rawRun?.startedAt, quiz.rawRun?.durationSeconds]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
@@ -54,6 +82,35 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const modeBadge = useMemo(() => {
+    if (!isQuizActive) return null;
+    switch (quiz.gameMode) {
+      case "arcade":
+        return (
+          <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+            <Zap className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-semibold leading-none">Arcade</span>
+          </div>
+        );
+      case "exam":
+        return (
+          <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
+            <Timer className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-semibold leading-none">Prüfung</span>
+          </div>
+        );
+      case "hardcore":
+        return (
+          <div className="flex items-center gap-1 text-red-600 dark:text-red-400">
+            <Shield className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-semibold leading-none">Hardcore</span>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }, [isQuizActive, quiz.gameMode]);
+
   return (
     <>
       {/* Hidden indicator — tap or swipe up to show */}
@@ -82,6 +139,20 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         onTouchMove={handleTouchMove}
       >
         <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
+          {modeBadge && (
+            <div className="flex items-center px-2">
+              {modeBadge}
+            </div>
+          )}
+
+          {remainingSeconds !== null && (
+            <div className={`flex items-center px-1 ${remainingSeconds <= 0 ? "text-red-600 dark:text-red-400" : "text-slate-700 dark:text-slate-200"}`}>
+              <span className="text-xs font-mono font-semibold leading-none">
+                {formatRemaining(remainingSeconds)}
+              </span>
+            </div>
+          )}
+
           <Button
             onClick={gameMenu.open}
             variant="ghost"
@@ -109,7 +180,7 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
               onClick={() => quiz.goToView("quiz")}
               variant="ghost"
               size="icon"
-              aria-label={quiz.gameMode === "exam" ? "Prüfung fortsetzen" : "Quiz fortsetzen"}
+              aria-label={isExam ? "Prüfung fortsetzen" : "Quiz fortsetzen"}
               className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-600 hover:bg-teal-100 hover:text-teal-700 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-teal-900/50"
             >
               <Play className="w-4 h-4 fill-current" />
