@@ -357,6 +357,8 @@ export function useQuiz() {
           logCurrentRun();
         }
         run.unterbrecheRun();
+        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
+        try { RunStorage.clear(gameMode); } catch { /* ignore */ }
       } else if (gameMode === 'exam') {
         // Exam: Ergebnis loggen und beenden
         logCurrentRun();
@@ -365,7 +367,14 @@ export function useQuiz() {
         const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
         const passed = scorePct >= 60;
         meta.recordExamResult(scorePct, passed);
+        const endedRun = run.rawRun ? { ...run.rawRun, isActive: false } : null;
         run.beendeRun();
+        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
+        if (endedRun) {
+          try { RunStorage.save(gameMode, endedRun); } catch { /* ignore */ }
+        } else {
+          try { RunStorage.clear(gameMode); } catch { /* ignore */ }
+        }
         if (view === 'quiz') {
           setView('progress');
         }
