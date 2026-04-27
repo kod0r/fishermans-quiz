@@ -7,7 +7,7 @@ export function useHistory() {
     const loaded = HistoryStorage.load();
     return loaded.map((entry) => ({
       ...entry,
-      topics: (entry as unknown as Record<string, unknown>).topics ?? (entry as unknown as Record<string, unknown>).bereiche ?? [],
+      topics: (((entry as unknown as Record<string, unknown>).topics ?? (entry as unknown as Record<string, unknown>).bereiche ?? []) as string[]),
     }));
   });
 
