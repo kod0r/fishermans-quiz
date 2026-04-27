@@ -274,10 +274,16 @@ export default function StartView({ quiz }: Props) {
     });
   }, [effektivAusgewaehlt, nurFavoriten, quiz, flashcardMode]);
 
+  const handleExamStart = useCallback(() => {
+    quiz.starteQuiz(TOPICS.map((b) => b.id), {
+      sessionType: "quiz",
+    });
+  }, [quiz]);
+
   // Global Enter handler to start quiz when areas are selected
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && effektivAusgewaehlt.length > 0) {
+      if (e.key === "Enter") {
         // Only trigger if focus is not inside a button or interactive element
         const target = e.target;
         if (target instanceof Element) {
@@ -292,12 +298,16 @@ export default function StartView({ quiz }: Props) {
             return;
           }
         }
-        handleStart();
+        if (gameMode === "exam" && !isActive) {
+          handleExamStart();
+        } else if (effektivAusgewaehlt.length > 0) {
+          handleStart();
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [effektivAusgewaehlt, handleStart]);
+  }, [effektivAusgewaehlt, handleStart, gameMode, isActive, handleExamStart]);
 
   const handleWeaknessTrainer = () => {
     const allTopics = TOPICS.map((b) => b.id);
@@ -345,12 +355,14 @@ export default function StartView({ quiz }: Props) {
                     Aktiver Quiz-Run
                   </p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">
-                    {loadedTopics.join(", ")} — {statistiken.beantwortet}/
+                    {gameMode === "exam" ? "Alle Themen" : loadedTopics.join(", ")} — {statistiken.beantwortet}/
                     {statistiken.gesamt} beantwortet
                   </p>
-                  <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">
-                    Weitere Themen können hinzugefügt werden.
-                  </p>
+                  {gameMode !== "exam" && (
+                    <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">
+                      Weitere Themen können hinzugefügt werden.
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -642,317 +654,345 @@ export default function StartView({ quiz }: Props) {
             </CardContent>
           </Card>
 
-          {/* Themenauswahl */}
-          <Card className="py-1 bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
-            <CardContent className="py-1 px-3">
-              <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-2 sm:mb-3 dark:text-white">
-                <BookOpen
-                  className="w-4 h-4 text-teal-400"
-                  aria-hidden="true"
-                />
-                {isActive ? "Thema auswählen" : "Thema auswählen"}
-              </h2>
+          {/* Dialogs — mode-independent, always mounted */}
+          <AlertDialog
+            open={dialog?.type === "remove-arcade"}
+            onOpenChange={() => setDialog(null)}
+          >
+            <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-900 dark:text-white">
+                  Thema entfernen
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                  Dies entfernt{" "}
+                  {dialog?.type === "remove-arcade"
+                    ? dialog.fragenCount
+                    : 0}{" "}
+                  Fragen aus dem aktiven Quiz.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  onClick={() => setDialog(null)}
+                  className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Abbrechen
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    if (dialog?.type === "remove-arcade") {
+                      quiz.removeTopicFromRun(dialog.topicId);
+                      setAusgewaehlt((p) =>
+                        p.filter((x) => x !== dialog.topicId),
+                      );
+                    }
+                    setDialog(null);
+                  }}
+                  className="bg-amber-500 hover:bg-amber-600 text-white"
+                >
+                  Entfernen
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
-              {/* Dialog: Arcade — Thema aus Run entfernen */}
-              <AlertDialog
-                open={dialog?.type === "remove-arcade"}
-                onOpenChange={() => setDialog(null)}
-              >
-                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-slate-900 dark:text-white">
-                      Thema entfernen
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
-                      Dies entfernt{" "}
-                      {dialog?.type === "remove-arcade"
-                        ? dialog.fragenCount
-                        : 0}{" "}
-                      Fragen aus dem aktiven Quiz.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel
-                      onClick={() => setDialog(null)}
-                      className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-                    >
-                      Abbrechen
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        if (dialog?.type === "remove-arcade") {
-                          quiz.removeTopicFromRun(dialog.topicId);
-                          setAusgewaehlt((p) =>
-                            p.filter((x) => x !== dialog.topicId),
-                          );
-                        }
-                        setDialog(null);
-                      }}
-                      className="bg-amber-500 hover:bg-amber-600 text-white"
-                    >
-                      Entfernen
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+          <AlertDialog
+            open={dialog?.type === "end-hardcore"}
+            onOpenChange={() => setDialog(null)}
+          >
+            <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-900 dark:text-white">
+                  Hardcore-Run beenden
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                  Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn
+                  du ein Thema abwählst. Alle Fortschritte dieses Runs gehen
+                  verloren.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  onClick={() => setDialog(null)}
+                  className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Abbrechen
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    if (dialog?.type === "end-hardcore") {
+                      quiz.unterbrecheRun();
+                      setAusgewaehlt((p) =>
+                        p.filter((x) => x !== dialog.topicId),
+                      );
+                    }
+                    setDialog(null);
+                  }}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  Run beenden
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
-              {/* Dialog: Hardcore — Run beenden */}
-              <AlertDialog
-                open={dialog?.type === "end-hardcore"}
-                onOpenChange={() => setDialog(null)}
-              >
-                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-slate-900 dark:text-white">
-                      Hardcore-Run beenden
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
-                      Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn
-                      du ein Thema abwählst. Alle Fortschritte dieses Runs gehen
-                      verloren.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel
-                      onClick={() => setDialog(null)}
-                      className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-                    >
-                      Abbrechen
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        if (dialog?.type === "end-hardcore") {
-                          quiz.unterbrecheRun();
-                          setAusgewaehlt((p) =>
-                            p.filter((x) => x !== dialog.topicId),
-                          );
-                        }
-                        setDialog(null);
-                      }}
-                      className="bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      Run beenden
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+          <AlertDialog
+            open={dialog?.type === "confirm-mode-switch"}
+            onOpenChange={() => setDialog(null)}
+          >
+            <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-900 dark:text-white">
+                  {gameMode === "exam"
+                    ? "Laufende Prüfung beenden?"
+                    : "Hardcore-Run beenden?"}
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                  {gameMode === "exam"
+                    ? "Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden."
+                    : "Im Hardcore-Modus endet der gesamte Run beim Moduswechsel. Alle Themen dieses Runs werden als nicht bestanden gewertet. Dies kann nicht rückgängig gemacht werden."}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  onClick={() => setDialog(null)}
+                  className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Abbrechen
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    if (dialog?.type === "confirm-mode-switch") {
+                      quiz.switchGameMode(dialog.targetMode);
+                    }
+                    setDialog(null);
+                  }}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  {gameMode === "exam"
+                    ? "Prüfung beenden und wechseln"
+                    : "Run beenden und wechseln"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
-              {/* Dialog: Spielmodus wechseln */}
-              <AlertDialog
-                open={dialog?.type === "confirm-mode-switch"}
-                onOpenChange={() => setDialog(null)}
-              >
-                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-slate-900 dark:text-white">
-                      {gameMode === "exam"
-                        ? "Laufende Prüfung beenden?"
-                        : "Hardcore-Run beenden?"}
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
-                      {gameMode === "exam"
-                        ? "Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden."
-                        : "Im Hardcore-Modus endet der gesamte Run beim Moduswechsel. Alle Themen dieses Runs werden als nicht bestanden gewertet. Dies kann nicht rückgängig gemacht werden."}
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel
-                      onClick={() => setDialog(null)}
-                      className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
-                    >
-                      Abbrechen
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        if (dialog?.type === "confirm-mode-switch") {
-                          quiz.switchGameMode(dialog.targetMode);
-                        }
-                        setDialog(null);
-                      }}
-                      className="bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      {gameMode === "exam"
-                        ? "Prüfung beenden und wechseln"
-                        : "Run beenden und wechseln"}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+          {gameMode === "exam" ? (
+            /* Prüfungs-Startkarte */
+            <Card className="py-1 bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
+              <CardContent className="py-1 px-3">
+                <div className="flex flex-col items-center text-center gap-3 py-4 sm:py-6">
+                  <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-500/20">
+                    <Timer className="w-8 h-8 text-blue-600 dark:text-blue-400" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h2 className="text-slate-900 font-semibold text-base sm:text-lg dark:text-white">
+                      {isActive ? "Prüfung läuft" : "Prüfungsmodus"}
+                    </h2>
+                    <p className="text-slate-500 text-xs sm:text-sm mt-1 dark:text-slate-400">
+                      {isActive
+                        ? `${statistiken.beantwortet} von ${statistiken.gesamt} beantwortet`
+                        : "60 zufällige Fragen aus allen Themen • 60 Minuten Zeit"}
+                    </p>
+                  </div>
+                  <Button
+                    onClick={isActive ? () => quiz.goToView("quiz") : handleExamStart}
+                    aria-label={isActive ? "Prüfung fortsetzen" : "Prüfung starten"}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl shadow-lg shadow-blue-600/20 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
+                  >
+                    {isActive ? "Prüfung fortsetzen" : "Prüfung starten"}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            /* Themenauswahl */
+            <Card className="py-1 bg-white/80 border-slate-200/50 backdrop-blur-sm dark:bg-slate-800/50 dark:border-slate-700/50">
+              <CardContent className="py-1 px-3">
+                <h2 className="text-slate-900 font-semibold text-sm sm:text-base flex items-center gap-2 mb-2 sm:mb-3 dark:text-white">
+                  <BookOpen
+                    className="w-4 h-4 text-teal-400"
+                    aria-hidden="true"
+                  />
+                  {isActive ? "Thema auswählen" : "Thema auswählen"}
+                </h2>
 
-              <div
-                className="space-y-1"
-                role="group"
-                aria-label="Themenauswahl"
-              >
-                {TOPICS.map((b) => {
-                  const Icon = b.icon;
-                  const inRun = isActive && loadedTopics.includes(b.id);
-                  const checked = effektivAusgewaehlt.includes(b.id);
-                  const status = getTopicStatus(b.id);
-                  const selectable = quiz.quizMeta
-                    ? canSelectTopic(
-                        b.id,
-                        gameMode,
-                        metaProgress,
-                        quiz.quizMeta,
-                        isActive,
-                        loadedTopics,
-                      )
-                    : true;
-                  const disabled = !selectable && !checked && !inRun;
-                  const locked =
-                    gameMode === "hardcore" &&
-                    isTopicLocked(b.id, gameMode, metaProgress);
+                <div
+                  className="space-y-1"
+                  role="group"
+                  aria-label="Themenauswahl"
+                >
+                  {TOPICS.map((b) => {
+                    const Icon = b.icon;
+                    const inRun = isActive && loadedTopics.includes(b.id);
+                    const checked = effektivAusgewaehlt.includes(b.id);
+                    const status = getTopicStatus(b.id);
+                    const selectable = quiz.quizMeta
+                      ? canSelectTopic(
+                          b.id,
+                          gameMode,
+                          metaProgress,
+                          quiz.quizMeta,
+                          isActive,
+                          loadedTopics,
+                        )
+                      : true;
+                    const disabled = !selectable && !checked && !inRun;
+                    const locked =
+                      gameMode === "hardcore" &&
+                      isTopicLocked(b.id, gameMode, metaProgress);
 
-                  const topicItem = (
-                    <div
-                      onClick={() => !disabled && toggle(b.id)}
-                      onKeyDown={(e) => !disabled && handleKeyToggle(e, b.id)}
-                      role="checkbox"
-                      aria-checked={checked}
-                      aria-disabled={disabled}
-                      tabIndex={disabled ? -1 : 0}
-                      className={`flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : "bg-slate-200/50 border-slate-300/30 dark:bg-slate-700/30 dark:border-slate-600/30"} ${inRun ? "ring-1 ring-teal-400/30" : ""} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-slate-300/50 dark:hover:bg-slate-700/50"}`}
-                    >
+                    const topicItem = (
                       <div
-                        className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : "border-slate-500 bg-transparent"}`}
-                        aria-hidden="true"
+                        onClick={() => !disabled && toggle(b.id)}
+                        onKeyDown={(e) => !disabled && handleKeyToggle(e, b.id)}
+                        role="checkbox"
+                        aria-checked={checked}
+                        aria-disabled={disabled}
+                        tabIndex={disabled ? -1 : 0}
+                        className={`flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg border transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${checked ? `${b.bg} ${b.border} shadow-md` : "bg-slate-200/50 border-slate-300/30 dark:bg-slate-700/30 dark:border-slate-600/30"} ${inRun ? "ring-1 ring-teal-400/30" : ""} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-slate-300/50 dark:hover:bg-slate-700/50"}`}
                       >
-                        {checked && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-white" />
-                        )}
-                      </div>
-                      <div
-                        className={`p-1.5 rounded-md ${b.bg}`}
-                        aria-hidden="true"
-                      >
-                        <Icon className={`w-4 h-4 ${b.color}`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-slate-900 font-medium text-sm truncate dark:text-white">
-                            {b.label}
-                          </p>
-                          {locked ? (
-                            <span className="px-1 py-0 rounded text-[9px] flex-shrink-0 border text-slate-600 bg-slate-500/20 border-slate-500/30 dark:text-slate-400">
-                              🔒 Gesperrt
-                            </span>
-                          ) : (
-                            status && (
-                              <span
-                                className={`px-1 py-0 rounded text-[9px] flex-shrink-0 border ${status.cls}`}
-                              >
-                                {status.icon} {status.label}
-                              </span>
-                            )
+                        <div
+                          className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${checked ? `${b.selectedBg} border-transparent` : "border-slate-500 bg-transparent"}`}
+                          aria-hidden="true"
+                        >
+                          {checked && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-white" />
                           )}
                         </div>
-                        <p className="text-slate-500 text-xs dark:text-slate-400">
-                          {quiz.quizMeta?.meta.topics[b.id] ?? 0} Fragen
-                        </p>
+                        <div
+                          className={`p-1.5 rounded-md ${b.bg}`}
+                          aria-hidden="true"
+                        >
+                          <Icon className={`w-4 h-4 ${b.color}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-slate-900 font-medium text-sm truncate dark:text-white">
+                              {b.label}
+                            </p>
+                            {locked ? (
+                              <span className="px-1 py-0 rounded text-[9px] flex-shrink-0 border text-slate-600 bg-slate-500/20 border-slate-500/30 dark:text-slate-400">
+                                🔒 Gesperrt
+                              </span>
+                            ) : (
+                              status && (
+                                <span
+                                  className={`px-1 py-0 rounded text-[9px] flex-shrink-0 border ${status.cls}`}
+                                >
+                                  {status.icon} {status.label}
+                                </span>
+                              )
+                            )}
+                          </div>
+                          <p className="text-slate-500 text-xs dark:text-slate-400">
+                            {quiz.quizMeta?.meta.topics[b.id] ?? 0} Fragen
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  );
+                    );
 
-                  return locked ? (
-                    <Tooltip key={b.id}>
-                      <TooltipTrigger asChild>{topicItem}</TooltipTrigger>
-                      <TooltipContent side="top">
-                        Thema nicht bestanden. Bestehe ein anderes Thema, um
-                        dieses wieder freizuschalten.
-                      </TooltipContent>
-                    </Tooltip>
-                  ) : (
-                    <Fragment key={b.id}>{topicItem}</Fragment>
-                  );
-                })}
-              </div>
+                    return locked ? (
+                      <Tooltip key={b.id}>
+                        <TooltipTrigger asChild>{topicItem}</TooltipTrigger>
+                        <TooltipContent side="top">
+                          Thema nicht bestanden. Bestehe ein anderes Thema, um
+                          dieses wieder freizuschalten.
+                        </TooltipContent>
+                      </Tooltip>
+                    ) : (
+                      <Fragment key={b.id}>{topicItem}</Fragment>
+                    );
+                  })}
+                </div>
 
-              {fehler && (
-                <p
-                  className="text-red-400 text-xs mt-3 text-center"
-                  role="alert"
-                >
-                  {fehler}
-                </p>
-              )}
+                {fehler && (
+                  <p
+                    className="text-red-400 text-xs mt-3 text-center"
+                    role="alert"
+                  >
+                    {fehler}
+                  </p>
+                )}
 
-              {/* Study Mode Toggles */}
-              <div className="flex items-center gap-2 mb-2 mt-1 flex-wrap">
-                <button
-                  onClick={() => setNurFavoriten((p) => !p)}
-                  aria-pressed={nurFavoriten}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${nurFavoriten ? "bg-amber-50 text-amber-600 border border-amber-300/50 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30" : "text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300"}`}
-                >
-                  <Star
-                    className={`w-3.5 h-3.5 ${nurFavoriten ? "fill-current" : ""}`}
-                  />
-                  Nur Favoriten ({quiz.favorites.length})
-                </button>
-                <button
-                  onClick={handleWeaknessTrainer}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors text-slate-500 hover:text-red-600 border border-transparent dark:text-slate-400 dark:hover:text-red-400"
-                  title="Nur Fragen mit <50% Erfolgsquote"
-                >
-                  <Crosshair className="w-3.5 h-3.5" />
-                  Schwächentrainer
-                </button>
-                <button
-                  onClick={() => setFlashcardMode((p) => !p)}
-                  aria-pressed={flashcardMode}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${flashcardMode ? "bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30" : "text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300"}`}
-                  title="Karteikarten-Modus: Antwort erst aufdecken, dann selbst bewerten"
-                >
-                  <Layers
-                    className={`w-3.5 h-3.5 ${flashcardMode ? "fill-current" : ""}`}
-                  />
-                  Karteikarten
-                </button>
-                <button
-                  onClick={handleSRSReview}
-                  disabled={quiz.srsDueCount === 0}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${quiz.srsDueCount > 0 ? "bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30" : "text-slate-400 border border-transparent cursor-not-allowed dark:text-slate-600"}`}
-                  title="Nur fällige SRS-Wiederholungen"
-                >
-                  <Repeat className="w-3.5 h-3.5" />
-                  Wiederholung{" "}
-                  {quiz.srsDueCount > 0 ? `(${quiz.srsDueCount})` : ""}
-                </button>
-              </div>
+                {/* Study Mode Toggles */}
+                <div className="flex items-center gap-2 mb-2 mt-1 flex-wrap">
+                  <button
+                    onClick={() => setNurFavoriten((p) => !p)}
+                    aria-pressed={nurFavoriten}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${nurFavoriten ? "bg-amber-50 text-amber-600 border border-amber-300/50 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30" : "text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300"}`}
+                  >
+                    <Star
+                      className={`w-3.5 h-3.5 ${nurFavoriten ? "fill-current" : ""}`}
+                    />
+                    Nur Favoriten ({quiz.favorites.length})
+                  </button>
+                  <button
+                    onClick={handleWeaknessTrainer}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors text-slate-500 hover:text-red-600 border border-transparent dark:text-slate-400 dark:hover:text-red-400"
+                    title="Nur Fragen mit <50% Erfolgsquote"
+                  >
+                    <Crosshair className="w-3.5 h-3.5" />
+                    Schwächentrainer
+                  </button>
+                  <button
+                    onClick={() => setFlashcardMode((p) => !p)}
+                    aria-pressed={flashcardMode}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${flashcardMode ? "bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30" : "text-slate-500 hover:text-slate-700 border border-transparent dark:text-slate-400 dark:hover:text-slate-300"}`}
+                    title="Karteikarten-Modus: Antwort erst aufdecken, dann selbst bewerten"
+                  >
+                    <Layers
+                      className={`w-3.5 h-3.5 ${flashcardMode ? "fill-current" : ""}`}
+                    />
+                    Karteikarten
+                  </button>
+                  <button
+                    onClick={handleSRSReview}
+                    disabled={quiz.srsDueCount === 0}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${quiz.srsDueCount > 0 ? "bg-indigo-50 text-indigo-600 border border-indigo-300/50 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30" : "text-slate-400 border border-transparent cursor-not-allowed dark:text-slate-600"}`}
+                    title="Nur fällige SRS-Wiederholungen"
+                  >
+                    <Repeat className="w-3.5 h-3.5" />
+                    Wiederholung{" "}
+                    {quiz.srsDueCount > 0 ? `(${quiz.srsDueCount})` : ""}
+                  </button>
+                </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
-                <p className="text-slate-500 text-xs dark:text-slate-400">
-                  {effektivAusgewaehlt.length > 0 ? (
-                    <span>
-                      <span className="text-teal-400 font-bold">
-                        {nurFavoriten
-                          ? quiz.favorites.filter((id) =>
-                              effektivAusgewaehlt.some(
-                                (b) => quiz.quizMeta?.fragenIndex[id] === b,
-                              ),
-                            ).length
-                          : gesamtFragen}
-                      </span>{" "}
-                      Fragen
-                    </span>
-                  ) : (
-                    "Keine Themen ausgewählt"
-                  )}
-                </p>
-                <Button
-                  onClick={handleStart}
-                  aria-label={
-                    isActive
-                      ? "Ausgewählte Themen zum Quiz hinzufügen"
-                      : "Quiz mit ausgewählten Themen starten"
-                  }
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base rounded-lg shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
-                >
-                  {isActive ? "Hinzufügen" : "Quiz starten"}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+                  <p className="text-slate-500 text-xs dark:text-slate-400">
+                    {effektivAusgewaehlt.length > 0 ? (
+                      <span>
+                        <span className="text-teal-400 font-bold">
+                          {nurFavoriten
+                            ? quiz.favorites.filter((id) =>
+                                effektivAusgewaehlt.some(
+                                  (b) => quiz.quizMeta?.fragenIndex[id] === b,
+                                ),
+                              ).length
+                            : gesamtFragen}
+                        </span>{" "}
+                        Fragen
+                      </span>
+                    ) : (
+                      "Keine Themen ausgewählt"
+                    )}
+                  </p>
+                  <Button
+                    onClick={handleStart}
+                    aria-label={
+                      isActive
+                        ? "Ausgewählte Themen zum Quiz hinzufügen"
+                        : "Quiz mit ausgewählten Themen starten"
+                    }
+                    className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base rounded-lg shadow-lg shadow-teal-500/20 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
+                  >
+                    {isActive ? "Hinzufügen" : "Quiz starten"}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* <p className="text-center text-slate-400 text-xs mt-4 sm:mt-5 dark:text-slate-500">Prüfungsfragen zur Staatlichen Fischerprüfung aus dem Bayerischer Fragenkatalog (Stand: 11.03.2026)</p> */}
         </div>
