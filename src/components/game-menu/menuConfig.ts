@@ -1,12 +1,9 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Play,
-  Timer,
   Settings,
   Search,
   History,
-  Zap,
-  Shield,
   Sun,
   Moon,
   Monitor,
@@ -154,35 +151,35 @@ export const MENU_PAGES: MenuPageConfig[] = [
     id: "settings",
     title: "Einstellungen",
     sections: [
-      {
-        title: "Spielmodus",
-        items: [
-          {
-            id: "mode-arcade",
-            label: "Arcade",
-            icon: Zap,
-            action: "toggle",
-            target: "arcade",
-            detail: (ctx) => (ctx.gameMode === "arcade" ? "Aktiv" : ""),
-          },
-          {
-            id: "mode-hardcore",
-            label: "Hardcore",
-            icon: Shield,
-            action: "toggle",
-            target: "hardcore",
-            detail: (ctx) => (ctx.gameMode === "hardcore" ? "Aktiv" : ""),
-          },
-          {
-            id: "mode-exam",
-            label: "Prüfungsmodus",
-            icon: Timer,
-            action: "toggle",
-            target: "exam",
-            detail: (ctx) => (ctx.gameMode === "exam" ? "Aktiv" : ""),
-          },
-        ],
-      },
+      // {
+      //   title: "Spielmodus",
+      //   items: [
+      //     {
+      //       id: "mode-arcade",
+      //       label: "Arcade",
+      //       icon: Zap,
+      //       action: "toggle",
+      //       target: "arcade",
+      //       detail: (ctx) => (ctx.gameMode === "arcade" ? "Aktiv" : ""),
+      //     },
+      //     {
+      //       id: "mode-hardcore",
+      //       label: "Hardcore",
+      //       icon: Shield,
+      //       action: "toggle",
+      //       target: "hardcore",
+      //       detail: (ctx) => (ctx.gameMode === "hardcore" ? "Aktiv" : ""),
+      //     },
+      //     {
+      //       id: "mode-exam",
+      //       label: "Prüfungsmodus",
+      //       icon: Timer,
+      //       action: "toggle",
+      //       target: "exam",
+      //       detail: (ctx) => (ctx.gameMode === "exam" ? "Aktiv" : ""),
+      //     },
+      //   ],
+      // },
       {
         title: "Erscheinungsbild",
         items: [

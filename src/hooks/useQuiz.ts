@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade } from '@/types/quiz';
+import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData, AppBackupSchema } from '@/utils/quizLoader';
-import { MetaStorage, SettingsStorage, FavoritesStorage, NotesStorage, HistoryStorage, SRSStorage } from '@/utils/storage';
+import { MetaStorage, RunStorage, SettingsStorage, FavoritesStorage, NotesStorage, HistoryStorage, SRSStorage } from '@/utils/storage';
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
 import { useSettings } from '@/store/settings';
@@ -131,6 +131,26 @@ export function useQuiz() {
     setLastBackupPrompt(new Date().toISOString());
     setShowBackupPrompt(false);
   }, [setLastBackupPrompt]);
+
+  // Nur aktuellen Run löschen (ohne Hardcore-Logging)
+  const clearCurrentRun = useCallback(() => {
+    run.unterbrecheRun();
+  }, [run]);
+
+  // Alle Modi zurücksetzen
+  const resetAllMetaProgression = useCallback(() => {
+    MetaStorage.clear('arcade');
+    MetaStorage.clear('hardcore');
+    MetaStorage.clear('exam');
+    meta.reset();
+  }, [meta]);
+
+  const clearAllRuns = useCallback(() => {
+    RunStorage.clear('arcade');
+    RunStorage.clear('hardcore');
+    RunStorage.clear('exam');
+    run.unterbrecheRun();
+  }, [run]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
   const logRunIfComplete = useCallback((finalAntworten: Record<string, string>) => {
@@ -317,6 +337,36 @@ export function useQuiz() {
     setView('progress');
   }, [run, gameMode, logCurrentRun, meta]);
 
+  // Zentraler Moduswechsel — beendet aktive Runs gemäß Modus-Regeln
+  const switchGameMode = useCallback((newMode: GameMode) => {
+    if (run.isActive) {
+      if (gameMode === 'hardcore') {
+        // Hardcore: alle Themen im Run als nicht bestanden markieren
+        for (const topicId of run.loadedTopics) {
+          meta.recordTopicResult(topicId, false);
+        }
+        if (run.statistiken.beantwortet > 0) {
+          logCurrentRun();
+        }
+        run.unterbrecheRun();
+      } else if (gameMode === 'exam') {
+        // Exam: Ergebnis loggen und beenden
+        logCurrentRun();
+        const total = run.aktiveFragen.length;
+        const korrekt = run.statistiken.korrekt;
+        const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
+        const passed = scorePct >= 60;
+        meta.recordExamResult(scorePct, passed);
+        run.beendeRun();
+        if (view === 'quiz') {
+          setView('progress');
+        }
+      }
+      // Arcade: Run bleibt modus-spezifisch erhalten, kein Eingriff nötig
+    }
+    setGameMode(newMode);
+  }, [run, meta, gameMode, logCurrentRun, setGameMode, view]);
+
   // Flashcard: Selbstbewertung verarbeiten
   const beantworteFlashcard = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
     const frage = run.aktiveFragen.find(f => f.id === frageId);
@@ -399,7 +449,10 @@ export function useQuiz() {
     examMeta: meta.meta.examMeta,
     getFrageMeta: meta.getFrageMeta,
     resetMetaProgression: meta.reset,
+    resetAllMetaProgression,
     importMetaProgression: meta.importData,
+    clearCurrentRun,
+    clearAllRuns,
 
     // SRS
     srsMap: srs.srsMap,
@@ -414,6 +467,7 @@ export function useQuiz() {
     removeTopicFromRun,
     unterbrecheRun: handleUnterbrecheRun,
     beendeExam,
+    switchGameMode,
     beantworteFlashcard,
 
     // Favoriten

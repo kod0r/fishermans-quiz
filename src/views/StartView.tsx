@@ -35,8 +35,12 @@ import {
   Heart,
   Scale,
   Eye,
+  Zap,
+  Shield,
+  Timer,
 } from "lucide-react";
 import type { QuizContext } from "@/hooks/useQuiz";
+import type { GameMode } from "@/types/quiz";
 import { isMastered } from "@/utils/srs";
 import { canSelectTopic, isTopicLocked } from "@/utils/topicLocks";
 
@@ -110,8 +114,21 @@ export default function StartView({ quiz }: Props) {
   type DialogState =
     | { type: "remove-arcade"; topicId: string; fragenCount: number }
     | { type: "end-hardcore"; topicId: string }
+    | { type: "confirm-mode-switch"; targetMode: GameMode }
     | null;
   const [dialog, setDialog] = useState<DialogState>(null);
+
+  const handleSwitchMode = (targetMode: GameMode) => {
+    if (targetMode === quiz.gameMode) return;
+    if (
+      quiz.isActive &&
+      (quiz.gameMode === "exam" || quiz.gameMode === "hardcore")
+    ) {
+      setDialog({ type: "confirm-mode-switch", targetMode });
+      return;
+    }
+    quiz.switchGameMode(targetMode);
+  };
 
   const {
     metaProgress,
@@ -191,9 +208,7 @@ export default function StartView({ quiz }: Props) {
 
   const effektivAusgewaehlt = useMemo(
     () =>
-      isActive
-        ? [...new Set([...loadedTopics, ...ausgewaehlt])]
-        : ausgewaehlt,
+      isActive ? [...new Set([...loadedTopics, ...ausgewaehlt])] : ausgewaehlt,
     [isActive, loadedTopics, ausgewaehlt],
   );
 
@@ -344,30 +359,60 @@ export default function StartView({ quiz }: Props) {
           {/* Meta-Progress — immer sichtbar, kompakt */}
           <Card className="mb-1.5 py-1 bg-white/80 border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50">
             <CardContent className="py-1 px-3">
-              <div className="flex items-center gap-2 mb-2">
-                <BarChart3
-                  className="w-4 h-4 text-teal-400 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="text-slate-900 font-medium text-sm dark:text-white">
-                    Gesamtfortschritt
-                  </p>
-                  <p className="text-slate-500 text-xs dark:text-slate-400">
-                    {gameMode === "arcade"
-                      ? quiz.passedTopicsArcade > 0
-                        ? `${quiz.passedTopicsArcade} von ${totalTopics} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
-                        : "Noch keine Fragen beantwortet"
-                      : gameMode === "exam"
-                        ? metaProgress.examMeta &&
-                          metaProgress.examMeta.attempts > 0
-                          ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
-                          : "Noch keine Prüfung absolviert"
-                        : quiz.masteredTopicsHardcore > 0 ||
-                            quiz.passedTopicsHardcore > 0
-                          ? `${quiz.masteredTopicsHardcore} von ${totalTopics} gemeistert • ${quiz.passedTopicsHardcore} bestanden`
-                          : "Noch keine Themen absolviert"}
-                  </p>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <BarChart3
+                    className="w-4 h-4 text-teal-400 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <p className="text-slate-900 font-medium text-sm dark:text-white">
+                      Gesamtfortschritt
+                    </p>
+                    <p className="text-slate-500 text-xs dark:text-slate-400">
+                      {gameMode === "arcade"
+                        ? quiz.passedTopicsArcade > 0
+                          ? `${quiz.passedTopicsArcade} von ${totalTopics} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
+                          : "Noch keine Fragen beantwortet"
+                        : gameMode === "exam"
+                          ? metaProgress.examMeta &&
+                            metaProgress.examMeta.attempts > 0
+                            ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
+                            : "Noch keine Prüfung absolviert"
+                          : quiz.masteredTopicsHardcore > 0 ||
+                              quiz.passedTopicsHardcore > 0
+                            ? `${quiz.masteredTopicsHardcore} von ${totalTopics} gemeistert • ${quiz.passedTopicsHardcore} bestanden`
+                            : "Noch keine Themen absolviert"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Spielmodus-Switcher */}
+                <div className="flex items-center bg-slate-200/60 dark:bg-slate-700/40 rounded-lg p-0.5 shrink-0">
+                  <ModeButton
+                    mode="arcade"
+                    currentMode={gameMode}
+                    icon={Zap}
+                    label="Arcade"
+                    activeClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
+                    onClick={() => handleSwitchMode("arcade")}
+                  />
+                  <ModeButton
+                    mode="exam"
+                    currentMode={gameMode}
+                    icon={Timer}
+                    label="Prüfung"
+                    activeClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+                    onClick={() => handleSwitchMode("exam")}
+                  />
+                  <ModeButton
+                    mode="hardcore"
+                    currentMode={gameMode}
+                    icon={Shield}
+                    label="Hardcore"
+                    activeClass="bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400"
+                    onClick={() => handleSwitchMode("hardcore")}
+                  />
                 </div>
               </div>
 
@@ -376,8 +421,8 @@ export default function StartView({ quiz }: Props) {
                 {gameMode === "arcade" ? (
                   <>
                     <StatBox
-                      icon={CheckCircle}
-                      iconColor="text-emerald-400"
+                      icon={Trophy}
+                      iconColor="text-amber-400"
                       value={quiz.passedTopicsArcade}
                       label="Gemeisterte Themen"
                     />
@@ -605,7 +650,7 @@ export default function StartView({ quiz }: Props) {
                   className="w-4 h-4 text-teal-400"
                   aria-hidden="true"
                 />
-                {isActive ? "Thema" : "Thema auswählen"}
+                {isActive ? "Thema auswählen" : "Thema auswählen"}
               </h2>
 
               {/* Dialog: Arcade — Thema aus Run entfernen */}
@@ -623,8 +668,7 @@ export default function StartView({ quiz }: Props) {
                       {dialog?.type === "remove-arcade"
                         ? dialog.fragenCount
                         : 0}{" "}
-                      Fragen aus dem aktiven Quiz. Der Rest des Runs läuft
-                      normal weiter.
+                      Fragen aus dem aktiven Quiz.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -664,8 +708,8 @@ export default function StartView({ quiz }: Props) {
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
                       Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn
-                      du ein Thema abwählst. Alle Fortschritte dieses Runs
-                      gehen verloren.
+                      du ein Thema abwählst. Alle Fortschritte dieses Runs gehen
+                      verloren.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -688,6 +732,48 @@ export default function StartView({ quiz }: Props) {
                       className="bg-red-500 hover:bg-red-600 text-white"
                     >
                       Run beenden
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              {/* Dialog: Spielmodus wechseln */}
+              <AlertDialog
+                open={dialog?.type === "confirm-mode-switch"}
+                onOpenChange={() => setDialog(null)}
+              >
+                <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-slate-900 dark:text-white">
+                      {gameMode === "exam"
+                        ? "Laufende Prüfung beenden?"
+                        : "Hardcore-Run beenden?"}
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
+                      {gameMode === "exam"
+                        ? "Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden."
+                        : "Im Hardcore-Modus endet der gesamte Run beim Moduswechsel. Alle Themen dieses Runs werden als nicht bestanden gewertet. Dies kann nicht rückgängig gemacht werden."}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel
+                      onClick={() => setDialog(null)}
+                      className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      Abbrechen
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        if (dialog?.type === "confirm-mode-switch") {
+                          quiz.switchGameMode(dialog.targetMode);
+                        }
+                        setDialog(null);
+                      }}
+                      className="bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      {gameMode === "exam"
+                        ? "Prüfung beenden und wechseln"
+                        : "Run beenden und wechseln"}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -772,8 +858,8 @@ export default function StartView({ quiz }: Props) {
                     <Tooltip key={b.id}>
                       <TooltipTrigger asChild>{topicItem}</TooltipTrigger>
                       <TooltipContent side="top">
-                        Thema nicht bestanden. Bestehe ein anderes Thema,
-                        um diesen wieder freizuschalten.
+                        Thema nicht bestanden. Bestehe ein anderes Thema, um
+                        dieses wieder freizuschalten.
                       </TooltipContent>
                     </Tooltip>
                   ) : (
@@ -902,5 +988,38 @@ function StatBox({
       </p>
       <p className="text-[10px] text-slate-500 dark:text-slate-400">{label}</p>
     </div>
+  );
+}
+
+function ModeButton({
+  mode,
+  currentMode,
+  icon: Icon,
+  label,
+  activeClass,
+  onClick,
+}: {
+  mode: GameMode;
+  currentMode: GameMode;
+  icon: typeof Zap;
+  label: string;
+  activeClass: string;
+  onClick: () => void;
+}) {
+  const isActive = mode === currentMode;
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
+        isActive
+          ? `${activeClass} shadow-sm`
+          : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
+      }`}
+      aria-pressed={isActive}
+      aria-label={`${label}${isActive ? " (aktiv)" : ""}`}
+    >
+      <Icon className="w-3 h-3" />
+      <span className="hidden sm:inline">{label}</span>
+    </button>
   );
 }
