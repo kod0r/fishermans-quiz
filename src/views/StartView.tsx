@@ -332,7 +332,7 @@ export default function StartView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-1 sm:py-2 max-w-3xl">
+        <div className="container mx-auto px-3 sm:px-4 py-1 sm:py-2 pb-20 sm:pb-24 max-w-3xl">
           {/* Header */}
           <div className="text-center mb-2 sm:mb-3 pt-0 sm:pt-1">
             <div className="flex items-center justify-center gap-2 mb-2">

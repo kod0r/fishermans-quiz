@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { Home, Menu, Pause, Play, Zap, Timer, Shield } from "lucide-react";
+import { Home, Menu, Pause, Play, Zap, Timer, Shield, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { QuizContext } from "@/hooks/useQuiz";
 import type { MenuPageId } from "@/hooks/useGameMenu";
@@ -116,12 +116,15 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       {/* Hidden indicator — tap or swipe up to show */}
       {hidden && (
         <div
-          className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-1"
+          className="fixed bottom-0 left-0 right-0 z-40 flex justify-center items-end pb-3 h-14"
           onClick={() => setHidden(false)}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
         >
-          <div className="w-10 h-1 rounded-full bg-slate-300/60 dark:bg-slate-600/60 cursor-pointer hover:bg-slate-400/60 transition-colors" />
+          <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/60 dark:border-slate-700/60 shadow-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+            <ChevronUp className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+            <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400">Menü</span>
+          </div>
         </div>
       )}
 
@@ -138,66 +141,69 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
-        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
-          {modeBadge && (
-            <div className="flex items-center px-2">
-              {modeBadge}
-            </div>
-          )}
+        <div className="flex flex-col items-center gap-0.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
+          <div className="w-8 h-1 rounded-full bg-slate-300/60 dark:bg-slate-600/60" />
+          <div className="flex items-center gap-1.5">
+            {modeBadge && (
+              <div className="flex items-center px-2">
+                {modeBadge}
+              </div>
+            )}
 
-          {remainingSeconds !== null && (
-            <div className={`flex items-center px-1 ${remainingSeconds <= 0 ? "text-red-600 dark:text-red-400" : "text-slate-700 dark:text-slate-200"}`}>
-              <span className="text-xs font-mono font-semibold leading-none">
-                {formatRemaining(remainingSeconds)}
-              </span>
-            </div>
-          )}
+            {remainingSeconds !== null && (
+              <div className={`flex items-center px-1 ${remainingSeconds <= 0 ? "text-red-600 dark:text-red-400" : "text-slate-700 dark:text-slate-200"}`}>
+                <span className="text-xs font-mono font-semibold leading-none">
+                  {formatRemaining(remainingSeconds)}
+                </span>
+              </div>
+            )}
 
-          <Button
-            onClick={gameMenu.open}
-            variant="ghost"
-            size="icon"
-            aria-label="Menü öffnen"
-            className="w-9 h-9 rounded-xl bg-slate-100/80 text-slate-600 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700"
-          >
-            <Menu className="w-4 h-4" />
-          </Button>
-
-          {currentView !== "start" && (
             <Button
-              onClick={() => quiz.goToView("start")}
+              onClick={gameMenu.open}
               variant="ghost"
               size="icon"
-              aria-label="Zur Startseite"
-              className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-500 hover:bg-slate-200 hover:text-teal-600 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-slate-700"
+              aria-label="Menü öffnen"
+              className="w-9 h-9 rounded-xl bg-slate-100/80 text-slate-600 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700"
             >
-              <Home className="w-4 h-4" />
+              <Menu className="w-4 h-4" />
             </Button>
-          )}
 
-          {currentView !== "quiz" && isQuizActive && (
-            <Button
-              onClick={() => quiz.goToView("quiz")}
-              variant="ghost"
-              size="icon"
-              aria-label={isExam ? "Prüfung fortsetzen" : "Quiz fortsetzen"}
-              className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-600 hover:bg-teal-100 hover:text-teal-700 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-teal-900/50"
-            >
-              <Play className="w-4 h-4 fill-current" />
-            </Button>
-          )}
+            {currentView !== "start" && (
+              <Button
+                onClick={() => quiz.goToView("start")}
+                variant="ghost"
+                size="icon"
+                aria-label="Zur Startseite"
+                className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-500 hover:bg-slate-200 hover:text-teal-600 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-slate-700"
+              >
+                <Home className="w-4 h-4" />
+              </Button>
+            )}
 
-          {currentView === "quiz" && isQuizActive && (
-            <Button
-              onClick={() => gameMenu.openTo("run-actions")}
-              variant="ghost"
-              size="icon"
-              aria-label="Pause"
-              className="w-8 h-8 rounded-xl bg-slate-100/80 text-amber-500 hover:bg-amber-100 hover:text-amber-600 dark:bg-slate-800/80 dark:text-amber-400 dark:hover:bg-amber-900/50"
-            >
-              <Pause className="w-4 h-4 fill-current" />
-            </Button>
-          )}
+            {currentView !== "quiz" && isQuizActive && (
+              <Button
+                onClick={() => quiz.goToView("quiz")}
+                variant="ghost"
+                size="icon"
+                aria-label={isExam ? "Prüfung fortsetzen" : "Quiz fortsetzen"}
+                className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-600 hover:bg-teal-100 hover:text-teal-700 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-teal-900/50"
+              >
+                <Play className="w-4 h-4 fill-current" />
+              </Button>
+            )}
+
+            {currentView === "quiz" && isQuizActive && (
+              <Button
+                onClick={() => gameMenu.openTo("run-actions")}
+                variant="ghost"
+                size="icon"
+                aria-label="Pause"
+                className="w-8 h-8 rounded-xl bg-slate-100/80 text-amber-500 hover:bg-amber-100 hover:text-amber-600 dark:bg-slate-800/80 dark:text-amber-400 dark:hover:bg-amber-900/50"
+              >
+                <Pause className="w-4 h-4 fill-current" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </>
