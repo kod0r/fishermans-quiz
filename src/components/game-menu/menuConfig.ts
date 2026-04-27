@@ -134,6 +134,7 @@ export const MENU_PAGES: MenuPageConfig[] = [
             icon: Search,
             action: "view",
             target: "browse",
+            condition: (ctx) => !(ctx.gameMode === "exam" && ctx.isQuizActive),
           },
           {
             id: "settings",
