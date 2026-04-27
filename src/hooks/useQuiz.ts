@@ -11,7 +11,7 @@ import { useNotes } from '@/store/notes';
 import { useHistory } from '@/store/history';
 import { useSRS } from '@/store/srs';
 import { isMastered } from '@/utils/srs';
-import { canSelectBereich } from '@/utils/bereichLocks';
+import { canSelectTopic } from '@/utils/topicLocks';
 import { filterQuizDataByFavorites, filterQuizDataByWeakness, filterQuizDataBySRSDue } from '@/utils/filter';
 
 const EXAM_DURATION_SECONDS = 60 * 60;
@@ -144,7 +144,7 @@ export function useQuiz() {
       : 0;
 
     history.addEntry({
-      bereiche: [...run.geladeneBereiche],
+      topics: [...run.loadedTopics],
       score: korrekt,
       total: run.aktiveFragen.length,
       duration,
@@ -168,28 +168,28 @@ export function useQuiz() {
     // Hardcore: Sofortiges Fail bei falscher Antwort + End-Prüfung
     if (gameMode === 'hardcore' && run.isActive) {
       if (!isCorrect) {
-        const bereichId = frage.bereich;
-        if (run.geladeneBereiche.includes(bereichId)) {
-          meta.recordBereichResult(bereichId, false);
+        const topicId = frage.topic;
+        if (run.loadedTopics.includes(topicId)) {
+          meta.recordTopicResult(topicId, false);
         }
       }
 
       if (alleBeantwortet) {
-        for (const bereichId of run.geladeneBereiche) {
-          const bereichFragen = run.aktiveFragen.filter(f => f.bereich === bereichId);
-          const alleRichtig = bereichFragen.every(f => neueAntworten[f.id] === f.richtige_antwort);
-          meta.recordBereichResult(bereichId, alleRichtig);
+        for (const topicId of run.loadedTopics) {
+          const topicQuestions = run.aktiveFragen.filter(f => f.topic === topicId);
+          const alleRichtig = topicQuestions.every(f => neueAntworten[f.id] === f.richtige_antwort);
+          meta.recordTopicResult(topicId, alleRichtig);
         }
       }
     }
 
-    // Arcade: Sterne + Highscore pro Bereich bei Run-Abschluss
+    // Arcade: Sterne + Highscore pro Topic bei Run-Abschluss
     if (gameMode === 'arcade' && alleBeantwortet) {
-      for (const bereichId of run.geladeneBereiche) {
-        const bereichFragen = run.aktiveFragen.filter(f => f.bereich === bereichId);
-        const korrekt = bereichFragen.filter(f => neueAntworten[f.id] === f.richtige_antwort).length;
-        const pct = bereichFragen.length > 0 ? Math.round((korrekt / bereichFragen.length) * 100) : 0;
-        meta.recordArcadeRunComplete(bereichId, pct);
+      for (const topicId of run.loadedTopics) {
+        const topicQuestions = run.aktiveFragen.filter(f => f.topic === topicId);
+        const korrekt = topicQuestions.filter(f => neueAntworten[f.id] === f.richtige_antwort).length;
+        const pct = topicQuestions.length > 0 ? Math.round((korrekt / topicQuestions.length) * 100) : 0;
+        meta.recordArcadeRunComplete(topicId, pct);
       }
     }
 
@@ -197,13 +197,13 @@ export function useQuiz() {
   }, [run, meta, gameMode, logRunIfComplete, srs]);
 
   // Starten: Lazy Loading der Bereichs-Fragen
-  const starteQuiz = useCallback(async (bereiche: string[], options: QuizStartOptions = {}) => {
+  const starteQuiz = useCallback(async (topics: string[], options: QuizStartOptions = {}) => {
     if (!quizMeta) return;
 
-    // Guard: validate all requested bereiche can be selected in current mode
-    const locked = bereiche.filter(id => !canSelectBereich(id, gameMode, meta.meta, quizMeta, run.isActive, run.geladeneBereiche));
+    // Guard: validate all requested topics can be selected in current mode
+    const locked = topics.filter(id => !canSelectTopic(id, gameMode, meta.meta, quizMeta, run.isActive, run.loadedTopics));
     if (locked.length > 0) {
-      console.error('[useQuiz] Cannot start quiz — locked bereiche:', locked);
+      console.error('[useQuiz] Cannot start quiz — locked topics:', locked);
       return;
     }
 
@@ -220,7 +220,7 @@ export function useQuiz() {
     // Falls Hintergrund-Load noch nicht fertig → on-demand laden
     if (!data) {
       try {
-        data = await buildQuizData(bereiche);
+        data = await buildQuizData(topics);
         setQuizData(data);
       } catch (err) {
         console.error('Fehler beim Laden der Quiz-Daten:', err);
@@ -234,7 +234,7 @@ export function useQuiz() {
     if (nurFavoriten) {
       const result = filterQuizDataByFavorites(filteredData, fav.favorites);
       if (!result) {
-        console.warn('[useQuiz] Keine Favoriten in den gewählten Bereichen.');
+        console.warn('[useQuiz] No favorites found in selected topics.');
         return;
       }
       filteredData = result;
@@ -244,7 +244,7 @@ export function useQuiz() {
     if (filter === 'weak') {
       const result = filterQuizDataByWeakness(filteredData, meta.meta.fragen);
       if (!result) {
-        console.warn('[useQuiz] Keine Schwächen in den gewählten Bereichen.');
+        console.warn('[useQuiz] No weaknesses found in selected topics.');
         return;
       }
       filteredData = result;
@@ -263,15 +263,15 @@ export function useQuiz() {
     const isNewRun = !run.isActive;
     const durationSeconds = gameMode === 'exam' ? EXAM_DURATION_SECONDS : undefined;
     const sessionType = options.sessionType ?? 'quiz';
-    run.starteRun(bereiche, filteredData, limit, durationSeconds, sessionType);
+    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
   }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds]);
 
   const goToView = useCallback((v: AppView) => setView(v), []);
 
-  const entferneBereichAusRun = useCallback((bereichId: string) => {
-    run.entferneBereich(bereichId);
+  const removeTopicFromRun = useCallback((topicId: string) => {
+    run.removeTopic(topicId);
   }, [run]);
 
   const logCurrentRun = useCallback((finalDuration?: number) => {
@@ -280,7 +280,7 @@ export function useQuiz() {
       ? Math.round((Date.now() - new Date(run.rawRun.startedAt).getTime()) / 1000)
       : 0);
     history.addEntry({
-      bereiche: [...run.geladeneBereiche],
+      topics: [...run.loadedTopics],
       score: run.statistiken.korrekt,
       total: run.aktiveFragen.length,
       duration,
@@ -290,8 +290,8 @@ export function useQuiz() {
 
   const handleUnterbrecheRun = useCallback(() => {
     if (gameMode === 'hardcore') {
-      for (const bereichId of run.geladeneBereiche) {
-        meta.recordBereichResult(bereichId, false);
+      for (const topicId of run.loadedTopics) {
+        meta.recordTopicResult(topicId, false);
       }
     }
 
@@ -336,9 +336,9 @@ export function useQuiz() {
     logRunIfComplete(neueAntworten);
   }, [run, meta, logRunIfComplete, srs]);
 
-  const kannBereichEntfernen = useCallback(
+  const canRemoveTopic = useCallback(
     (id: string) => {
-      if (!run.isActive || !run.geladeneBereiche.includes(id)) return true;
+      if (!run.isActive || !run.loadedTopics.includes(id)) return true;
       return gameMode === 'arcade';
     },
     [run, gameMode]
@@ -358,13 +358,13 @@ export function useQuiz() {
     return count;
   }, [meta.meta.fragen, srs.srsMap]);
 
-  // Arcade: Bereiche die vollständig gemeistert sind (SRS oder legacy)
-  const bestandeneBereicheArcade = useMemo(() => {
+  // Arcade: Topics die vollständig gemeistert sind (SRS oder legacy)
+  const passedTopicsArcade = useMemo(() => {
     if (!quizMeta || gameMode !== 'arcade') return 0;
-    const allBereiche = Object.keys(quizMeta.meta.bereiche);
-    return allBereiche.filter(bereichId => {
+    const allTopics = Object.keys(quizMeta.meta.topics);
+    return allTopics.filter(topicId => {
       const fragenIds = Object.entries(quizMeta.fragenIndex)
-        .filter(([, b]) => b === bereichId)
+        .filter(([, b]) => b === topicId)
         .map(([id]) => id);
       return fragenIds.length > 0 && fragenIds.every(id => isMastered(meta.meta.fragen[id], srs.srsMap[id]));
     }).length;
@@ -393,9 +393,9 @@ export function useQuiz() {
     metaProgress: meta.meta,
     meisterCount,
     lernCount,
-    bestandeneBereicheArcade,
-    bestandeneBereicheHardcore: meta.bestandeneBereicheHardcore,
-    gemeisterteBereicheHardcore: meta.gemeisterteBereicheHardcore,
+    passedTopicsArcade,
+    passedTopicsHardcore: meta.passedTopicsHardcore,
+    masteredTopicsHardcore: meta.masteredTopicsHardcore,
     examMeta: meta.meta.examMeta,
     getFrageMeta: meta.getFrageMeta,
     resetMetaProgression: meta.reset,
@@ -410,8 +410,8 @@ export function useQuiz() {
 
     // Navigation
     goToView,
-    kannBereichEntfernen,
-    entferneBereichAusRun,
+    canRemoveTopic,
+    removeTopicFromRun,
     unterbrecheRun: handleUnterbrecheRun,
     beendeExam,
     beantworteFlashcard,

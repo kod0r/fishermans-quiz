@@ -1,6 +1,6 @@
 export interface Frage {
   id: string;
-  bereich: string;
+  topic: string;
   frage: string;
   antworten: {
     A: string;
@@ -16,7 +16,7 @@ export interface QuizData {
   meta: {
     titel: string;
     anzahl_fragen: number;
-    bereiche: Record<string, number>;
+    topics: Record<string, number>;
   };
   fragen: Frage[];
 }
@@ -31,7 +31,7 @@ export type SelfAssessmentGrade = 'again' | 'hard' | 'good' | 'easy';
 export interface QuizRun {
   frageIds: string[];
   antworten: Record<string, string>;
-  bereiche: string[];
+  topics: string[];
   aktuellerIndex: number;
   isActive: boolean;
   startedAt?: string;
@@ -44,7 +44,7 @@ export interface QuizRun {
 export interface HistoryEntry {
   id: string;
   timestamp: string;
-  bereiche: string[];
+  topics: string[];
   score: number;
   total: number;
   duration: number; // Sekunden
@@ -77,7 +77,7 @@ export interface ExamMeta {
   lastScore: number;
 }
 
-export interface BereichMeta {
+export interface TopicMeta {
   passed: boolean;
   consecutivePasses: number;
   mastered: boolean;
@@ -87,7 +87,7 @@ export interface BereichMeta {
 export interface MetaProgression {
   fragen: Record<string, FrageMeta>;
   stats: MetaStats;
-  bereiche: Record<string, BereichMeta>;
+  topics: Record<string, TopicMeta>;
   arcadeStars?: Record<string, 1 | 2 | 3>;
   bestArcadeScore?: Record<string, number>;
   examMeta?: ExamMeta;

@@ -7,15 +7,15 @@ const mockQuizData: QuizData = {
   meta: {
     titel: 'Test',
     anzahl_fragen: 6,
-    bereiche: { Biologie: 3, Recht: 3 },
+    topics: { Biologie: 3, Recht: 3 },
   },
   fragen: [
-    { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
-    { id: '2', bereich: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
-    { id: '3', bereich: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
-    { id: '4', bereich: 'Recht', frage: 'F4', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
-    { id: '5', bereich: 'Recht', frage: 'F5', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
-    { id: '6', bereich: 'Recht', frage: 'F6', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
+    { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+    { id: '2', topic: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
+    { id: '3', topic: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
+    { id: '4', topic: 'Recht', frage: 'F4', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+    { id: '5', topic: 'Recht', frage: 'F5', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
+    { id: '6', topic: 'Recht', frage: 'F6', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
   ],
 };
 
@@ -37,7 +37,7 @@ describe('useQuizRun', () => {
 
     expect(result.current.isActive).toBe(true);
     expect(result.current.aktiveFragen.length).toBe(3);
-    expect(result.current.geladeneBereiche).toContain('Biologie');
+    expect(result.current.loadedTopics).toContain('Biologie');
     expect(result.current.statistiken.gesamt).toBe(3);
   });
 
@@ -216,7 +216,7 @@ describe('useQuizRun', () => {
     expect(result.current.statistiken.beantwortet).toBe(2);
   });
 
-  it('sollte Bereiche erweitern', () => {
+  it('sollte Topics erweitern', () => {
     const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
@@ -230,8 +230,8 @@ describe('useQuizRun', () => {
     });
 
     expect(result.current.aktiveFragen.length).toBe(6);
-    expect(result.current.geladeneBereiche).toContain('Biologie');
-    expect(result.current.geladeneBereiche).toContain('Recht');
+    expect(result.current.loadedTopics).toContain('Biologie');
+    expect(result.current.loadedTopics).toContain('Recht');
   });
 
   it('sollte Runs pro Modus getrennt speichern', () => {
@@ -296,7 +296,7 @@ describe('useQuizRun', () => {
     expect(result2.current.aktiveFragen.length).toBe(1);
   });
 
-  it('sollte einen Bereich chirurgisch aus dem Run entfernen', () => {
+  it('sollte einen Topic chirurgisch aus dem Run entfernen', () => {
     const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
@@ -304,16 +304,16 @@ describe('useQuizRun', () => {
     });
 
     expect(result.current.aktiveFragen.length).toBe(6);
-    expect(result.current.geladeneBereiche).toContain('Biologie');
-    expect(result.current.geladeneBereiche).toContain('Recht');
+    expect(result.current.loadedTopics).toContain('Biologie');
+    expect(result.current.loadedTopics).toContain('Recht');
 
     act(() => {
-      result.current.entferneBereich('Biologie');
+      result.current.removeTopic('Biologie');
     });
 
     expect(result.current.aktiveFragen.length).toBe(3);
-    expect(result.current.geladeneBereiche).not.toContain('Biologie');
-    expect(result.current.geladeneBereiche).toContain('Recht');
+    expect(result.current.loadedTopics).not.toContain('Biologie');
+    expect(result.current.loadedTopics).toContain('Recht');
     expect(result.current.isActive).toBe(true);
   });
 
@@ -324,7 +324,7 @@ describe('useQuizRun', () => {
       result.current.starteRun(['Biologie', 'Recht']);
     });
 
-    const bioId = result.current.aktiveFragen.find(f => f.bereich === 'Biologie')!.id;
+    const bioId = result.current.aktiveFragen.find(f => f.topic === 'Biologie')!.id;
 
     act(() => {
       result.current.beantworteFrage(bioId, 'A');
@@ -333,13 +333,13 @@ describe('useQuizRun', () => {
     expect(result.current.antworten[bioId]).toBe('A');
 
     act(() => {
-      result.current.entferneBereich('Biologie');
+      result.current.removeTopic('Biologie');
     });
 
     expect(result.current.antworten[bioId]).toBeUndefined();
   });
 
-  it('sollte den Index anpassen wenn der aktuelle Bereich entfernt wird', () => {
+  it('sollte den Index anpassen wenn der aktuelle Topic entfernt wird', () => {
     const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
@@ -350,7 +350,7 @@ describe('useQuizRun', () => {
     expect(active.length).toBe(6);
 
     // Navigiere zur ersten Recht-Frage im gemischten Run
-    const rechtIndex = active.findIndex(f => f.bereich === 'Recht');
+    const rechtIndex = active.findIndex(f => f.topic === 'Recht');
     expect(rechtIndex).toBeGreaterThanOrEqual(0);
 
     act(() => {
@@ -360,19 +360,19 @@ describe('useQuizRun', () => {
     expect(result.current.aktuellerIndex).toBe(rechtIndex);
 
     act(() => {
-      result.current.entferneBereich('Biologie');
+      result.current.removeTopic('Biologie');
     });
 
     // Nur Recht-Fragen sollten übrig bleiben
     expect(result.current.aktiveFragen.length).toBe(3);
-    expect(result.current.aktiveFragen.every(f => f.bereich === 'Recht')).toBe(true);
+    expect(result.current.aktiveFragen.every(f => f.topic === 'Recht')).toBe(true);
 
     // Der Index muss innerhalb der neuen Grenzen liegen
     expect(result.current.aktuellerIndex).toBeGreaterThanOrEqual(0);
     expect(result.current.aktuellerIndex).toBeLessThan(result.current.aktiveFragen.length);
   });
 
-  it('sollte den Run beenden wenn der letzte Bereich entfernt wird', () => {
+  it('sollte den Run beenden wenn der letzte Topic entfernt wird', () => {
     const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
@@ -382,14 +382,14 @@ describe('useQuizRun', () => {
     expect(result.current.isActive).toBe(true);
 
     act(() => {
-      result.current.entferneBereich('Biologie');
+      result.current.removeTopic('Biologie');
     });
 
     expect(result.current.isActive).toBe(false);
     expect(result.current.aktiveFragen.length).toBe(0);
   });
 
-  it('sollte nichts tun wenn ein unbekannter Bereich entfernt werden soll', () => {
+  it('sollte nichts tun wenn ein unbekannter Topic entfernt werden soll', () => {
     const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
 
     act(() => {
@@ -399,7 +399,7 @@ describe('useQuizRun', () => {
     expect(result.current.aktiveFragen.length).toBe(3);
 
     act(() => {
-      result.current.entferneBereich('Unbekannt');
+      result.current.removeTopic('Unbekannt');
     });
 
     expect(result.current.aktiveFragen.length).toBe(3);

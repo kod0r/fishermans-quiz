@@ -74,10 +74,10 @@
           - 'progressbar "Bilderkennung: 0% gemeistert" [ref=e121]'
           - generic [ref=e124]: 0/54
     - generic [ref=e126]:
-      - heading "Bereiche auswählen" [level=2] [ref=e127]:
+      - heading "Themen auswählen" [level=2] [ref=e127]:
         - img [ref=e128]
-        - text: Bereiche auswählen
-      - group "Bereichsauswahl" [ref=e130]:
+        - text: Themen auswählen
+      - group "Themenauswahl" [ref=e130]:
         - checkbox "Biologie 319 Fragen" [ref=e131] [cursor=pointer]:
           - img [ref=e134]
           - generic [ref=e140]:
@@ -122,6 +122,6 @@
           - img [ref=e207]
           - text: Wiederholung
       - generic [ref=e212]:
-        - paragraph [ref=e213]: Keine Bereiche ausgewählt
-        - button "Quiz mit ausgewählten Bereichen starten" [ref=e214] [cursor=pointer]: Quiz starten
+        - paragraph [ref=e213]: Keine Themen ausgewählt
+        - button "Quiz mit ausgewählten Themen starten" [ref=e214] [cursor=pointer]: Quiz starten
   - region "Notifications alt+T"

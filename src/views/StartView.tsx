@@ -38,9 +38,9 @@ import {
 } from "lucide-react";
 import type { QuizContext } from "@/hooks/useQuiz";
 import { isMastered } from "@/utils/srs";
-import { canSelectBereich, isBereichLocked } from "@/utils/bereichLocks";
+import { canSelectTopic, isTopicLocked } from "@/utils/topicLocks";
 
-const BEREICHE = [
+const TOPICS = [
   {
     id: "Biologie",
     label: "Biologie",
@@ -108,8 +108,8 @@ export default function StartView({ quiz }: Props) {
   const [flashcardMode, setFlashcardMode] = useState(false);
 
   type DialogState =
-    | { type: "remove-arcade"; bereichId: string; fragenCount: number }
-    | { type: "end-hardcore"; bereichId: string }
+    | { type: "remove-arcade"; topicId: string; fragenCount: number }
+    | { type: "end-hardcore"; topicId: string }
     | null;
   const [dialog, setDialog] = useState<DialogState>(null);
 
@@ -117,17 +117,17 @@ export default function StartView({ quiz }: Props) {
     metaProgress,
     lernCount,
     isActive,
-    geladeneBereiche,
+    loadedTopics,
     statistiken,
     gameMode,
   } = quiz;
-  const totalBereiche = BEREICHE.length;
+  const totalTopics = TOPICS.length;
 
-  function getBereichStatus(bereichId: string) {
+  function getTopicStatus(topicId: string) {
     if (gameMode === "exam") return null;
     // Arcade: Sterne primär, Fallback Bestanden bei Mastery ohne Sterne
     if (gameMode === "arcade") {
-      const stars = metaProgress.arcadeStars?.[bereichId];
+      const stars = metaProgress.arcadeStars?.[topicId];
       if (stars) {
         return {
           icon: "★".repeat(stars) + "☆".repeat(3 - stars),
@@ -136,7 +136,7 @@ export default function StartView({ quiz }: Props) {
         };
       }
       const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
-        .filter(([, b]) => b === bereichId)
+        .filter(([, b]) => b === topicId)
         .map(([id]) => id);
       const allMastered =
         fragenIds.length > 0 &&
@@ -151,25 +151,25 @@ export default function StartView({ quiz }: Props) {
         };
       }
     }
-    // Hardcore: check bereich-level results
+    // Hardcore: check topic-level results
     if (gameMode === "hardcore") {
-      const bMeta = metaProgress.bereiche[bereichId];
-      if (bMeta) {
-        if (bMeta.mastered) {
+      const tMeta = metaProgress.topics[topicId];
+      if (tMeta) {
+        if (tMeta.mastered) {
           return {
             icon: "🏆",
             label: "Gemeistert",
             cls: "text-amber-600 bg-amber-500/20 border-amber-500/30 dark:text-amber-400",
           };
         }
-        if (bMeta.passed) {
+        if (tMeta.passed) {
           return {
             icon: "✅",
             label: "Bestanden",
             cls: "text-emerald-600 bg-emerald-500/20 border-emerald-500/30 dark:text-emerald-400",
           };
         }
-        if (bMeta.lastAttempt) {
+        if (tMeta.lastAttempt) {
           return {
             icon: "❌",
             label: "Nicht bestanden",
@@ -179,7 +179,7 @@ export default function StartView({ quiz }: Props) {
       }
     }
     // Only show AKTIV if no completion status exists
-    if (isActive && geladeneBereiche.includes(bereichId)) {
+    if (isActive && loadedTopics.includes(topicId)) {
       return {
         icon: "🔒",
         label: "AKTIV",
@@ -192,38 +192,38 @@ export default function StartView({ quiz }: Props) {
   const effektivAusgewaehlt = useMemo(
     () =>
       isActive
-        ? [...new Set([...geladeneBereiche, ...ausgewaehlt])]
+        ? [...new Set([...loadedTopics, ...ausgewaehlt])]
         : ausgewaehlt,
-    [isActive, geladeneBereiche, ausgewaehlt],
+    [isActive, loadedTopics, ausgewaehlt],
   );
 
   const toggle = (id: string) => {
     setFehler("");
-    if (isActive && geladeneBereiche.includes(id)) {
+    if (isActive && loadedTopics.includes(id)) {
       if (quiz.gameMode === "hardcore") {
-        setDialog({ type: "end-hardcore", bereichId: id });
+        setDialog({ type: "end-hardcore", topicId: id });
         return;
       }
-      const count = quiz.aktiveFragen.filter((f) => f.bereich === id).length;
+      const count = quiz.aktiveFragen.filter((f) => f.topic === id).length;
       if (count === 0) {
-        quiz.entferneBereichAusRun(id);
+        quiz.removeTopicFromRun(id);
         setAusgewaehlt((p) => p.filter((x) => x !== id));
         return;
       }
-      setDialog({ type: "remove-arcade", bereichId: id, fragenCount: count });
+      setDialog({ type: "remove-arcade", topicId: id, fragenCount: count });
       return;
     }
-    // Trying to select a new bereich — enforce lock rules
+    // Trying to select a new topic — enforce lock rules
     if (!ausgewaehlt.includes(id)) {
       if (
         quiz.quizMeta &&
-        !canSelectBereich(
+        !canSelectTopic(
           id,
           gameMode,
           metaProgress,
           quiz.quizMeta,
           isActive,
-          geladeneBereiche,
+          loadedTopics,
         )
       ) {
         setFehler(
@@ -285,23 +285,23 @@ export default function StartView({ quiz }: Props) {
   }, [effektivAusgewaehlt, handleStart]);
 
   const handleWeaknessTrainer = () => {
-    const allBereiche = BEREICHE.map((b) => b.id);
-    quiz.starteQuiz(allBereiche, {
+    const allTopics = TOPICS.map((b) => b.id);
+    quiz.starteQuiz(allTopics, {
       filter: "weak",
       sessionType: flashcardMode ? "flashcard" : "quiz",
     });
   };
 
   const handleSRSReview = () => {
-    const allBereiche = BEREICHE.map((b) => b.id);
-    quiz.starteQuiz(allBereiche, {
+    const allTopics = TOPICS.map((b) => b.id);
+    quiz.starteQuiz(allTopics, {
       filter: "srs-due",
       sessionType: flashcardMode ? "flashcard" : "quiz",
     });
   };
 
-  const gesamtFragen = effektivAusgewaehlt.reduce((sum, bereichId) => {
-    return sum + (quiz.quizMeta?.meta.bereiche[bereichId] ?? 0);
+  const gesamtFragen = effektivAusgewaehlt.reduce((sum, topicId) => {
+    return sum + (quiz.quizMeta?.meta.topics[topicId] ?? 0);
   }, 0);
 
   return (
@@ -330,7 +330,7 @@ export default function StartView({ quiz }: Props) {
                     Aktiver Quiz-Run
                   </p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">
-                    {geladeneBereiche.join(", ")} — {statistiken.beantwortet}/
+                    {loadedTopics.join(", ")} — {statistiken.beantwortet}/
                     {statistiken.gesamt} beantwortet
                   </p>
                   <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">
@@ -355,17 +355,17 @@ export default function StartView({ quiz }: Props) {
                   </p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">
                     {gameMode === "arcade"
-                      ? quiz.bestandeneBereicheArcade > 0
-                        ? `${quiz.bestandeneBereicheArcade} von ${totalBereiche} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
+                      ? quiz.passedTopicsArcade > 0
+                        ? `${quiz.passedTopicsArcade} von ${totalTopics} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
                         : "Noch keine Fragen beantwortet"
                       : gameMode === "exam"
                         ? metaProgress.examMeta &&
                           metaProgress.examMeta.attempts > 0
                           ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
                           : "Noch keine Prüfung absolviert"
-                        : quiz.gemeisterteBereicheHardcore > 0 ||
-                            quiz.bestandeneBereicheHardcore > 0
-                          ? `${quiz.gemeisterteBereicheHardcore} von ${totalBereiche} gemeistert • ${quiz.bestandeneBereicheHardcore} bestanden`
+                        : quiz.masteredTopicsHardcore > 0 ||
+                            quiz.passedTopicsHardcore > 0
+                          ? `${quiz.masteredTopicsHardcore} von ${totalTopics} gemeistert • ${quiz.passedTopicsHardcore} bestanden`
                           : "Noch keine Themen absolviert"}
                   </p>
                 </div>
@@ -378,7 +378,7 @@ export default function StartView({ quiz }: Props) {
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-emerald-400"
-                      value={quiz.bestandeneBereicheArcade}
+                      value={quiz.passedTopicsArcade}
                       label="Gemeisterte Themen"
                     />
                     <StatBox
@@ -470,13 +470,13 @@ export default function StartView({ quiz }: Props) {
                     <StatBox
                       icon={Trophy}
                       iconColor="text-amber-400"
-                      value={quiz.gemeisterteBereicheHardcore}
+                      value={quiz.masteredTopicsHardcore}
                       label="Gemeisterte Themen"
                     />
                     <StatBox
                       icon={CheckCircle}
                       iconColor="text-emerald-400"
-                      value={quiz.bestandeneBereicheHardcore}
+                      value={quiz.passedTopicsHardcore}
                       label="Bestandene Themen"
                     />
                     <StatBox
@@ -540,12 +540,12 @@ export default function StartView({ quiz }: Props) {
 
               {/* Themen-Fortschritte */}
               <div className="space-y-1 mb-2">
-                {BEREICHE.map((b) => {
+                {TOPICS.map((b) => {
                   const Icon = b.icon;
                   const fragenIds = Object.entries(
                     quiz.quizMeta?.fragenIndex ?? {},
                   )
-                    .filter(([, bereich]) => bereich === b.id)
+                    .filter(([, topic]) => topic === b.id)
                     .map(([id]) => id);
                   const gem = fragenIds.filter((id) =>
                     isMastered(metaProgress.fragen[id], quiz.srsMap[id]),
@@ -637,9 +637,9 @@ export default function StartView({ quiz }: Props) {
                     <AlertDialogAction
                       onClick={() => {
                         if (dialog?.type === "remove-arcade") {
-                          quiz.entferneBereichAusRun(dialog.bereichId);
+                          quiz.removeTopicFromRun(dialog.topicId);
                           setAusgewaehlt((p) =>
-                            p.filter((x) => x !== dialog.bereichId),
+                            p.filter((x) => x !== dialog.topicId),
                           );
                         }
                         setDialog(null);
@@ -680,7 +680,7 @@ export default function StartView({ quiz }: Props) {
                         if (dialog?.type === "end-hardcore") {
                           quiz.unterbrecheRun();
                           setAusgewaehlt((p) =>
-                            p.filter((x) => x !== dialog.bereichId),
+                            p.filter((x) => x !== dialog.topicId),
                           );
                         }
                         setDialog(null);
@@ -698,27 +698,27 @@ export default function StartView({ quiz }: Props) {
                 role="group"
                 aria-label="Themenauswahl"
               >
-                {BEREICHE.map((b) => {
+                {TOPICS.map((b) => {
                   const Icon = b.icon;
-                  const inRun = isActive && geladeneBereiche.includes(b.id);
+                  const inRun = isActive && loadedTopics.includes(b.id);
                   const checked = effektivAusgewaehlt.includes(b.id);
-                  const status = getBereichStatus(b.id);
+                  const status = getTopicStatus(b.id);
                   const selectable = quiz.quizMeta
-                    ? canSelectBereich(
+                    ? canSelectTopic(
                         b.id,
                         gameMode,
                         metaProgress,
                         quiz.quizMeta,
                         isActive,
-                        geladeneBereiche,
+                        loadedTopics,
                       )
                     : true;
                   const disabled = !selectable && !checked && !inRun;
                   const locked =
                     gameMode === "hardcore" &&
-                    isBereichLocked(b.id, gameMode, metaProgress);
+                    isTopicLocked(b.id, gameMode, metaProgress);
 
-                  const bereichItem = (
+                  const topicItem = (
                     <div
                       onClick={() => !disabled && toggle(b.id)}
                       onKeyDown={(e) => !disabled && handleKeyToggle(e, b.id)}
@@ -762,7 +762,7 @@ export default function StartView({ quiz }: Props) {
                           )}
                         </div>
                         <p className="text-slate-500 text-xs dark:text-slate-400">
-                          {quiz.quizMeta?.meta.bereiche[b.id] ?? 0} Fragen
+                          {quiz.quizMeta?.meta.topics[b.id] ?? 0} Fragen
                         </p>
                       </div>
                     </div>
@@ -770,14 +770,14 @@ export default function StartView({ quiz }: Props) {
 
                   return locked ? (
                     <Tooltip key={b.id}>
-                      <TooltipTrigger asChild>{bereichItem}</TooltipTrigger>
+                      <TooltipTrigger asChild>{topicItem}</TooltipTrigger>
                       <TooltipContent side="top">
                         Thema nicht bestanden. Bestehe ein anderes Thema,
                         um diesen wieder freizuschalten.
                       </TooltipContent>
                     </Tooltip>
                   ) : (
-                    <Fragment key={b.id}>{bereichItem}</Fragment>
+                    <Fragment key={b.id}>{topicItem}</Fragment>
                   );
                 })}
               </div>

@@ -1,9 +1,9 @@
 {
-  "bereich": "Fanggeräte und -methoden",
+  "topic": "Fanggeräte und -methoden",
   "fragen": [
     {
       "id": "4.001",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Aus welchen Materialien werden Spinn- und Grundruten heute überwiegend hergestellt?",
       "antworten": {
         "A": "Tonkinrohr, Bambus",
@@ -15,7 +15,7 @@
     },
     {
       "id": "4.002",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welchen besonderen Vorteil haben Angelruten aus Kohlefaser?",
       "antworten": {
         "A": "sie sind besonders leicht",
@@ -27,7 +27,7 @@
     },
     {
       "id": "4.003",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist beim Fischen mit einer Kohlefaser-Angelrute zu beachten?",
       "antworten": {
         "A": "Schneller Anhieb, optimale Schwungdämpfung",
@@ -39,7 +39,7 @@
     },
     {
       "id": "4.004",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum sind Schnurführungsringe an der Angelrute aus Gründen der Fischwaidgerechtigkeit zu kontrollieren?",
       "antworten": {
         "A": "Schadhafte Schnurführungsringe können die Schnur beschädigen, die dann beim Fang größerer Fische leichter reißt.",
@@ -51,7 +51,7 @@
     },
     {
       "id": "4.005",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Ring einer Angelrute wird beim Angeln am stärksten durch Reibung beansprucht?",
       "antworten": {
         "A": "Endring",
@@ -63,7 +63,7 @@
     },
     {
       "id": "4.006",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Worin unterscheidet sich im Wesentlichen die einhändige Fliegenrute von der Spinnrute?",
       "antworten": {
         "A": "an der Fliegenrute sitzt die Rolle hinter der Führungshand",
@@ -75,7 +75,7 @@
     },
     {
       "id": "4.007",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist eine Teleskoprute?",
       "antworten": {
         "A": "eine zusammenschiebbare Angelrute",
@@ -87,7 +87,7 @@
     },
     {
       "id": "4.008",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was versteht man unter der Aktion einer Rute?",
       "antworten": {
         "A": "die Art der Verwendung der Rute",
@@ -99,7 +99,7 @@
     },
     {
       "id": "4.009",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wo am Griffteil befindet sich bei einer leichten Fliegengerte die Rollenhalterung?",
       "antworten": {
         "A": "in der Mitte",
@@ -111,7 +111,7 @@
     },
     {
       "id": "4.010",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was sind AFTMA - Klassen?",
       "antworten": {
         "A": "Einteilung der Angelfischer bei Wettbewerben",
@@ -123,7 +123,7 @@
     },
     {
       "id": "4.011",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie lang soll die sogenannte Kopfschnur beim Stippangeln sein?",
       "antworten": {
         "A": "so lang wie die Rute",
@@ -135,7 +135,7 @@
     },
     {
       "id": "4.012",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Regel gilt bei der Zusammenstellung von Rute, monofiler Schnur und Haken?",
       "antworten": {
         "A": "weiche Rutenspitze, starke Schnur und kleiner Haken",
@@ -147,7 +147,7 @@
     },
     {
       "id": "4.013",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wogegen ist eine monofile Kunstfaserschnur aus Polyamid empfindlich?",
       "antworten": {
         "A": "Sie wetzt sich rasch ab.",
@@ -159,7 +159,7 @@
     },
     {
       "id": "4.014",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für den Fang welcher Fischart ist die Verwendung einer monofilen Schnur mit der Stärke 0,20 mm geeignet?",
       "antworten": {
         "A": "Nase",
@@ -171,7 +171,7 @@
     },
     {
       "id": "4.015",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum darf der Angler eine lose und verwickelte Angelschnur (z. B. Perücke) nicht am Fischwasser liegen lassen?",
       "antworten": {
         "A": "Weil er dadurch erfolgversprechende Angelplätze verraten würde.",
@@ -183,7 +183,7 @@
     },
     {
       "id": "4.016",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Teil der Angelschnur nutzt sich am stärksten ab?",
       "antworten": {
         "A": "die ersten paar Meter hinter dem Haken",
@@ -195,7 +195,7 @@
     },
     {
       "id": "4.017",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie kann man vermeiden, dass der Hecht mit seinen spitzen Zähnen die Angelschnur durchtrennt?",
       "antworten": {
         "A": "Man verwendet extra dicke Schnüre.",
@@ -207,7 +207,7 @@
     },
     {
       "id": "4.018",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für den Fang welcher Fischarten ist die Verwendung einer monofilen Schnur mit der Stärke 0,30 mm gut geeignet?",
       "antworten": {
         "A": "Hechte, Waller (Welse), Huchen",
@@ -219,7 +219,7 @@
     },
     {
       "id": "4.019",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Zusammenstellung ist richtig, wenn Haken und monofile Schnur zusammenpassen sollen?",
       "antworten": {
         "A": "Hakengröße 12, Schnurstärke 0,20 mm",
@@ -231,7 +231,7 @@
     },
     {
       "id": "4.020",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für den Fang welcher Fische ist eine monofile Schnur mit der Stärke von 0,50 mm gut geeignet?",
       "antworten": {
         "A": "Huchen",
@@ -243,7 +243,7 @@
     },
     {
       "id": "4.021",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was trifft auf geflochtene Schnüre zu?",
       "antworten": {
         "A": "hohe Dehnung und geringe Knotenfestigkeit",
@@ -255,7 +255,7 @@
     },
     {
       "id": "4.022",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Regel für die Schnur- und Hakenwahl ist richtig?",
       "antworten": {
         "A": "Schnur stark - Haken klein",
@@ -267,7 +267,7 @@
     },
     {
       "id": "4.023",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wodurch wird eine größere Haltbarkeit eines Knotens bei Kunstfaserschnüren erreicht?",
       "antworten": {
         "A": "durch eine größere Zahl von Windungen",
@@ -279,7 +279,7 @@
     },
     {
       "id": "4.024",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie beeinflussen Knoten in der Regel die Tragfähigkeit der Schnur?",
       "antworten": {
         "A": "die Tragfähigkeit ist am Knoten geringer",
@@ -291,7 +291,7 @@
     },
     {
       "id": "4.025",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Vor dem Zusammenziehen des Knotens sollte man eine monofile Schnur",
       "antworten": {
         "A": "erwärmen",
@@ -303,7 +303,7 @@
     },
     {
       "id": "4.026",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie muss ein Schnurknoten vor allem beschaffen sein?",
       "antworten": {
         "A": "er darf sich nicht aufziehen lassen (Zugprobe)",
@@ -315,7 +315,7 @@
     },
     {
       "id": "4.027",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Knoten eignet sich zum Anbinden von Öhrhaken?",
       "antworten": {
         "A": "Blutknoten",
@@ -327,7 +327,7 @@
     },
     {
       "id": "4.028",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Zum Verbinden von zwei Enden einer monofilen Angelschnur eignen sich",
       "antworten": {
         "A": "Turleknoten, Schlaufenknoten",
@@ -339,7 +339,7 @@
     },
     {
       "id": "4.029",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Knoten ist zum Anbinden künstlicher Fliegen geeignet?",
       "antworten": {
         "A": "Blutknoten",
@@ -351,7 +351,7 @@
     },
     {
       "id": "4.030",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist charakteristisch für eine Steckrute?",
       "antworten": {
         "A": "Sie besteht aus zwei oder mehr Teilen, welche beim Aufbau miteinander verbunden werden.",
@@ -363,7 +363,7 @@
     },
     {
       "id": "4.031",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was bewirkt ein zwischen Schnur und Vorfach eingefügter Wirbel?",
       "antworten": {
         "A": "er verhindert das Verdrehen der Schnur",
@@ -375,7 +375,7 @@
     },
     {
       "id": "4.032",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wirbel sind besonders wichtig beim",
       "antworten": {
         "A": "Grundfischen",
@@ -387,7 +387,7 @@
     },
     {
       "id": "4.033",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Angelmethode ist kein Wirbel nötig, um ein Verdrehen der Angelschnur zu verhindern?",
       "antworten": {
         "A": "beim Fliegenfischen",
@@ -399,7 +399,7 @@
     },
     {
       "id": "4.034",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie soll beim Spinnfischen der Wirbel beschaffen sein?",
       "antworten": {
         "A": "Er muss mindestens die gleiche Bruchfestigkeit wie die Schnur haben.",
@@ -411,7 +411,7 @@
     },
     {
       "id": "4.035",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Form haben Fliegenvorfächer?",
       "antworten": {
         "A": "parallel",
@@ -423,7 +423,7 @@
     },
     {
       "id": "4.036",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Kombination von Vorfachstärke und Hakengröße ist zweckmäßig?",
       "antworten": {
         "A": "Vorfachstärke 0,35 mm, Hakengröße 3",
@@ -435,7 +435,7 @@
     },
     {
       "id": "4.037",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Kombination von Hakengröße und Vorfachstärke ist zweckmäßig?",
       "antworten": {
         "A": "Hakengröße 13, Vorfachstärke 0,35",
@@ -447,7 +447,7 @@
     },
     {
       "id": "4.038",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Angelmethode wird ein Schwimmer (Pose) verwendet?",
       "antworten": {
         "A": "Stippfischen",
@@ -459,7 +459,7 @@
     },
     {
       "id": "4.039",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welchen Zweck erfüllt in erster Linie ein Schwimmer (Pose)?",
       "antworten": {
         "A": "Er bietet den Köder in einer bestimmten Wassertiefe an und zeigt den Biss an.",
@@ -471,7 +471,7 @@
     },
     {
       "id": "4.040",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wodurch kann die senkrechte Stellung eines Schwimmers (Pose) im Wasser erreicht werden?",
       "antworten": {
         "A": "durch Einschalten eines Wirbels",
@@ -483,7 +483,7 @@
     },
     {
       "id": "4.041",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Einfachhaken ist am kleinsten?",
       "antworten": {
         "A": "1",
@@ -495,7 +495,7 @@
     },
     {
       "id": "4.042",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Einfachhaken ist am größten?",
       "antworten": {
         "A": "1",
@@ -507,7 +507,7 @@
     },
     {
       "id": "4.043",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Größenordnung hat Hakengröße 5?",
       "antworten": {
         "A": "groß",
@@ -519,7 +519,7 @@
     },
     {
       "id": "4.044",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Aussage trifft auf den Setzkescher zu?",
       "antworten": {
         "A": "Setzkescher sind verboten und dürfen nicht verwendet werden.",
@@ -531,7 +531,7 @@
     },
     {
       "id": "4.045",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für den Fang welcher Fische sind stark drähtige Haken erforderlich?",
       "antworten": {
         "A": "Rotaugen",
@@ -543,7 +543,7 @@
     },
     {
       "id": "4.046",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Fischart sind einfache Haken der Größe 8 bis 11 geeignet?",
       "antworten": {
         "A": "Karpfen",
@@ -555,7 +555,7 @@
     },
     {
       "id": "4.047",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie bezeichnet man Haken mit Widerhaken am Schenkel?",
       "antworten": {
         "A": "Raubfischhaken",
@@ -567,7 +567,7 @@
     },
     {
       "id": "4.048",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Auf welche Hakenart werden Fliegen gebunden?",
       "antworten": {
         "A": "Öhrhaken",
@@ -579,7 +579,7 @@
     },
     {
       "id": "4.049",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist ein Schonhaken?",
       "antworten": {
         "A": "ein Doppelhaken",
@@ -591,7 +591,7 @@
     },
     {
       "id": "4.050",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Haken sollen beim Angeln auf Karpfenartige benützt werden?",
       "antworten": {
         "A": "Drillingshaken",
@@ -603,7 +603,7 @@
     },
     {
       "id": "4.051",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Hakenform bzw. -größe ist beim Fischen auf Karpfen waidgerecht und fischschonend?",
       "antworten": {
         "A": "kleine Haken, Hakengröße 12 oder 14",
@@ -615,7 +615,7 @@
     },
     {
       "id": "4.052",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was bezeichnet man als „Drilling\"? einen Einfachhaken mit drei",
       "antworten": {
         "A": "Widerhaken",
@@ -627,7 +627,7 @@
     },
     {
       "id": "4.053",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist für eine Feederrute charakteristisch?",
       "antworten": {
         "A": "das verlängerte Griffteil",
@@ -639,7 +639,7 @@
     },
     {
       "id": "4.054",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was charakterisiert einen Blinker? er ist ein selbstblinkendes",
       "antworten": {
         "A": "Kunststoffblättchen mit fluoreszierender Oberfläche",
@@ -651,7 +651,7 @@
     },
     {
       "id": "4.055",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was charakterisiert einen Spinner? er besitzt ein rotierendes",
       "antworten": {
         "A": "Metallblatt",
@@ -663,7 +663,7 @@
     },
     {
       "id": "4.056",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie hoch soll das Wurfgewicht für die leichte Spinnangel auf Salmonide oder Barsche sein?",
       "antworten": {
         "A": "60 bis 80 g",
@@ -675,7 +675,7 @@
     },
     {
       "id": "4.057",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Fischarten ist der Spinner ein erfolgversprechender Köder?",
       "antworten": {
         "A": "Hecht, Flussbarsch",
@@ -687,7 +687,7 @@
     },
     {
       "id": "4.058",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Fischart kann in der Regel auch mit der Spinnangel gefangen werden?",
       "antworten": {
         "A": "Nase",
@@ -699,7 +699,7 @@
     },
     {
       "id": "4.059",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist in erster Linie für den Fangerfolg in der Spinnfischerei wichtig?",
       "antworten": {
         "A": "Rutenlänge",
@@ -711,7 +711,7 @@
     },
     {
       "id": "4.060",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Der Wobbler ist",
       "antworten": {
         "A": "ein Blinker",
@@ -723,7 +723,7 @@
     },
     {
       "id": "4.061",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Angelmethode werden kleine Wobbler verwendet?",
       "antworten": {
         "A": "beim leichten Spinnfischen",
@@ -735,7 +735,7 @@
     },
     {
       "id": "4.062",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Vorteile bieten Kescher mit Gumminetz?",
       "antworten": {
         "A": "Sie sind leichter.",
@@ -747,7 +747,7 @@
     },
     {
       "id": "4.063",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Spinnköder haben eine Tauchschaufel zur Tiefenführung?",
       "antworten": {
         "A": "Wobbler",
@@ -759,7 +759,7 @@
     },
     {
       "id": "4.064",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist ein Twister?",
       "antworten": {
         "A": "eine besondere Blinkerart",
@@ -771,7 +771,7 @@
     },
     {
       "id": "4.065",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Auf welche Fischart angelt man speziell mit dem künstlichen Neunaugenzopf?",
       "antworten": {
         "A": "Huchen",
@@ -783,7 +783,7 @@
     },
     {
       "id": "4.066",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Eigenschaft ist für die Trockenfliege kennzeichnend?",
       "antworten": {
         "A": "Sie sinkt rasch ab und treibt über Grund.",
@@ -795,7 +795,7 @@
     },
     {
       "id": "4.067",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welchen Zweck erfüllen die Hecheln bei einer Trockenfliege?",
       "antworten": {
         "A": "sie erhöhen die Schwimmfähigkeit",
@@ -807,7 +807,7 @@
     },
     {
       "id": "4.068",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist ein Knicklicht?",
       "antworten": {
         "A": "eine Stirnlampe",
@@ -819,7 +819,7 @@
     },
     {
       "id": "4.069",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist ein Streamer?",
       "antworten": {
         "A": "eine große Kunstfliege",
@@ -831,7 +831,7 @@
     },
     {
       "id": "4.070",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist beim Fliegenfischen das werfende Gewicht?",
       "antworten": {
         "A": "die Schnur",
@@ -843,7 +843,7 @@
     },
     {
       "id": "4.071",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "In welche Hauptgruppen werden die künstlichen Fliegen eingeteilt?",
       "antworten": {
         "A": "Äschen-, Forellen- und Weißfischfliegen",
@@ -855,7 +855,7 @@
     },
     {
       "id": "4.072",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Die Trockenfliege ist ein erfolgversprechender Köder für den Fang von",
       "antworten": {
         "A": "Äsche",
@@ -867,7 +867,7 @@
     },
     {
       "id": "4.073",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was versteht man unter Leerwürfen beim Fliegenfischen mit der Einhandrute?",
       "antworten": {
         "A": "wenn der Biss nicht erfolgreich war und der Fisch entfliehen kann",
@@ -879,7 +879,7 @@
     },
     {
       "id": "4.074",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Die Trockenfliege ist ein erfolgversprechender Köder für den Fang von",
       "antworten": {
         "A": "Aiteln (Döbeln)",
@@ -891,7 +891,7 @@
     },
     {
       "id": "4.075",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welchen Fisch ist die Trockenfliege ein geeigneter Köder?",
       "antworten": {
         "A": "Bachforelle",
@@ -903,7 +903,7 @@
     },
     {
       "id": "4.076",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was bedeutet der Begriff „Nassfischen“ beim Fliegenfischen?",
       "antworten": {
         "A": "Der Angler führt die künstliche Fliege unter der Wasseroberfläche.",
@@ -915,7 +915,7 @@
     },
     {
       "id": "4.077",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was bezeichnet man beim Fliegenfischen als Springer?",
       "antworten": {
         "A": "eine Forelle, die nach Mücken springt",
@@ -927,7 +927,7 @@
     },
     {
       "id": "4.078",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Art des Fischfangs sind kleinste Angelhaken – etwa der Größe 18–20 – fischwaidgerecht?",
       "antworten": {
         "A": "beim Fliegenfischen auf Äschen",
@@ -939,7 +939,7 @@
     },
     {
       "id": "4.079",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wann ist beim Fliegenfischen die Verwendung einer Keulenschnur vorteilhaft?",
       "antworten": {
         "A": "wenn an einem See oder Fluss weite Würfe erforderlich sind",
@@ -951,7 +951,7 @@
     },
     {
       "id": "4.080",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Art des Fischens werden Leerwürfe angewandt?",
       "antworten": {
         "A": "beim Fliegenfischen",
@@ -963,7 +963,7 @@
     },
     {
       "id": "4.081",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum ist das Fliegenfischen die schonendste Angelmethode?",
       "antworten": {
         "A": "weil man nur kleine Angelhaken verwendet",
@@ -975,7 +975,7 @@
     },
     {
       "id": "4.082",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei einem Drilling handelt es sich um",
       "antworten": {
         "A": "eine Anbissstelle.",
@@ -987,7 +987,7 @@
     },
     {
       "id": "4.083",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Nymphen sind Kunstköder für den Fang",
       "antworten": {
         "A": "von Zandern",
@@ -999,7 +999,7 @@
     },
     {
       "id": "4.084",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wovon hängt bei der Schleppangelfischerei vom Boot aus die Tiefenführung des Köders ab?",
       "antworten": {
         "A": "von der Länge der Angelrute",
@@ -1011,7 +1011,7 @@
     },
     {
       "id": "4.085",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Fischart ist der Blinker ein erfolgversprechender Köder?",
       "antworten": {
         "A": "Aal",
@@ -1023,7 +1023,7 @@
     },
     {
       "id": "4.086",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Angelmethode ist fischwaidgerecht?",
       "antworten": {
         "A": "das Reißangeln",
@@ -1035,7 +1035,7 @@
     },
     {
       "id": "4.087",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wozu dient vorwiegend das leichte Stippfischen?",
       "antworten": {
         "A": "zum Fang kleiner Hechte",
@@ -1047,7 +1047,7 @@
     },
     {
       "id": "4.088",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Angelmethode wird häufig ein Schwimmer (Pose) verwendet?",
       "antworten": {
         "A": "beim Pilken",
@@ -1059,7 +1059,7 @@
     },
     {
       "id": "4.089",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Als Paternosterangel bezeichnet man",
       "antworten": {
         "A": "eine Grundangel mit Beschwerung am Schnurende und Haken an beweglichen Seitenarmen",
@@ -1071,7 +1071,7 @@
     },
     {
       "id": "4.090",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum kann man eine kleine Stationärrolle nicht zum Hecht- oder Welsfang benützen?",
       "antworten": {
         "A": "der Schnurfangbügel könnte beim Drill brechen",
@@ -1083,7 +1083,7 @@
     },
     {
       "id": "4.091",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was versteht man unter einer Multirolle?",
       "antworten": {
         "A": "eine Rolle mit feststehender Spule eine Rolle mit",
@@ -1095,7 +1095,7 @@
     },
     {
       "id": "4.092",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Die Übersetzung einer Stationärrolle besagt für den Fischer,",
       "antworten": {
         "A": "wieviel Kraft er beim Auswerfen aufwenden muss",
@@ -1107,7 +1107,7 @@
     },
     {
       "id": "4.093",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Angelmethode ist die Multirolle besonders gut geeignet?",
       "antworten": {
         "A": "für das Fliegenfischen",
@@ -1119,7 +1119,7 @@
     },
     {
       "id": "4.094",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Angelmethode sind Multi- und Stationärrolle nicht geeignet?",
       "antworten": {
         "A": "für das Fliegenfischen",
@@ -1131,7 +1131,7 @@
     },
     {
       "id": "4.095",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist die Hauptaufgabe der Fliegenrolle?",
       "antworten": {
         "A": "Sie sorgt automatisch für schnelle und schonende Einholung der Schnur.",
@@ -1143,7 +1143,7 @@
     },
     {
       "id": "4.096",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Rolle dreht sich beim Wurf die Schnurtrommel?",
       "antworten": {
         "A": "bei der Multirolle",
@@ -1155,7 +1155,7 @@
     },
     {
       "id": "4.097",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Teil der Stationärrolle ist für eine sichere Landung des Fisches am wichtigsten?",
       "antworten": {
         "A": "die Rücklaufsperre, da sie ein versehentliches Schnurgeben unmöglich macht",
@@ -1167,7 +1167,7 @@
     },
     {
       "id": "4.098",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum hat die Stationärrolle eine verstellbare Schnurbremse?",
       "antworten": {
         "A": "damit man sie so einstellen kann, dass der Fisch beim Drill keine Schnur abziehen kann",
@@ -1179,7 +1179,7 @@
     },
     {
       "id": "4.099",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was soll beim Auswerfen des Köders mit offener Stationärrolle möglichst vermieden werden?",
       "antworten": {
         "A": "das Zurückspringen des Schnurfangbügels",
@@ -1191,7 +1191,7 @@
     },
     {
       "id": "4.100",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Teil der Angelrolle verhindert am ehesten einen Schnurriss beim Drill eines starken Fisches?",
       "antworten": {
         "A": "die Schnurbremse",
@@ -1203,7 +1203,7 @@
     },
     {
       "id": "4.101",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wonach hat sich die Bremseinstellung an der Rolle zu richten?",
       "antworten": {
         "A": "nach dem Gewicht des Köders",
@@ -1215,7 +1215,7 @@
     },
     {
       "id": "4.102",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Ein Schnurfangbügel ist typisch für die",
       "antworten": {
         "A": "Stationärrolle",
@@ -1227,7 +1227,7 @@
     },
     {
       "id": "4.103",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Köder ist besonders erfolgversprechend, wenn Sie große Aale fangen wollen?",
       "antworten": {
         "A": "gekochte Kartoffeln",
@@ -1239,7 +1239,7 @@
     },
     {
       "id": "4.104",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Eine gebräuchliche Fangmethode für Aale ist das",
       "antworten": {
         "A": "Spinnfischen mit Wobbler/Blinker.",
@@ -1251,7 +1251,7 @@
     },
     {
       "id": "4.105",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Für welche Fischart sind gekochte Kartoffeln ein guter Köder?",
       "antworten": {
         "A": "Aal",
@@ -1263,7 +1263,7 @@
     },
     {
       "id": "4.106",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum ist das Wurmfischen auf Forellen in der Forellen- und Äschenregion abzulehnen?",
       "antworten": {
         "A": "Es besteht die Gefahr, zu große Fische zu fangen.",
@@ -1275,7 +1275,7 @@
     },
     {
       "id": "4.107",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welchen Fisch kann man besonders gut mit gekochtem Mais fangen?",
       "antworten": {
         "A": "Seeforelle",
@@ -1287,7 +1287,7 @@
     },
     {
       "id": "4.108",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Als „Boilies“ werden bezeichnet",
       "antworten": {
         "A": "spezielle Teigköder",
@@ -1299,7 +1299,7 @@
     },
     {
       "id": "4.109",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Angelmethode ist zweckmäßig, wenn in einem Renkensee auf kapitale Seeforellen geangelt wird?",
       "antworten": {
         "A": "Schleppfischen",
@@ -1311,7 +1311,7 @@
     },
     {
       "id": "4.110",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie ist das übermäßige Anfüttern in einem Gewässer mit Friedfischen zu beurteilen?",
       "antworten": {
         "A": "Es garantiert mit hoher Wahrscheinlichkeit den Fang eines großen Fisches.",
@@ -1323,7 +1323,7 @@
     },
     {
       "id": "4.111",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Sie fischen mit einer Grundrute auf Karpfen und verwenden Teig als Köder. Welchen Hakentyp sollten Sie aus Gründen der Fischwaidgerechtigkeit nicht verwenden?",
       "antworten": {
         "A": "Drillingshaken",
@@ -1335,7 +1335,7 @@
     },
     {
       "id": "4.112",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie ist beim Spinnfischen ein Verdrehen der Angelschnur zu vermeiden?",
       "antworten": {
         "A": "durch Einsatz eines oder mehrerer Wirbel",
@@ -1347,7 +1347,7 @@
     },
     {
       "id": "4.113",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche der genannten Zusammenstellungen ist für das Fischen auf Äschen zweckmäßig und fischwaidgerecht?",
       "antworten": {
         "A": "Wathose, mittlere Spinnrute, Wasserkugel, Wurmhaken mit Tauwurm beködert",
@@ -1359,7 +1359,7 @@
     },
     {
       "id": "4.114",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Gerätezusammenstellung ist sachgerecht?",
       "antworten": {
         "A": "für den Karpfenfang: mittelstarke Rute – Schnurstärke etwa 0,30 mm – Haken Größe 3",
@@ -1371,7 +1371,7 @@
     },
     {
       "id": "4.115",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Umstände versprechen die besten Fangaussichten auf Aal mit der Angel?",
       "antworten": {
         "A": "warme Sommernächte mit bedecktem Himmel",
@@ -1383,7 +1383,7 @@
     },
     {
       "id": "4.116",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Auswahl ist zu treffen, damit monofile Schnur und Haken eine Einheit bilden?",
       "antworten": {
         "A": "Schnurstärke 0,50 mm, Hakengröße 12",
@@ -1395,7 +1395,7 @@
     },
     {
       "id": "4.117",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Gerätetest ist vor Beginn des Angelns am wichtigsten?",
       "antworten": {
         "A": "Prüfung der Schärfe der Hakenspitzen und der Beschwerung",
@@ -1407,7 +1407,7 @@
     },
     {
       "id": "4.118",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Geräte, außer den Fang- und Landegeräten, sollten aus Gründen der Waidgerechtigkeit beim Fischfang mitgeführt werden?",
       "antworten": {
         "A": "Reserve- und Ersatzteile, Fischwaage",
@@ -1419,7 +1419,7 @@
     },
     {
       "id": "4.119",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist ein Fischgreifer?",
       "antworten": {
         "A": "ein Gerätekasten kombiniert mit Anglersitz",
@@ -1431,7 +1431,7 @@
     },
     {
       "id": "4.120",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie ist beim Landen eines größeren Fisches vorzugehen?",
       "antworten": {
         "A": "den Fisch so schnell wie möglich mit der Rute aus dem Wasser heben",
@@ -1443,7 +1443,7 @@
     },
     {
       "id": "4.121",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie sollte ein guter Kescher beschaffen sein?",
       "antworten": {
         "A": "Der Netzsack muss sehr engmaschig sein.",
@@ -1455,7 +1455,7 @@
     },
     {
       "id": "4.122",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie soll die Schnur beim Anhieb geführt werden?",
       "antworten": {
         "A": "spielt keine Rolle",
@@ -1467,7 +1467,7 @@
     },
     {
       "id": "4.123",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wann soll beim Forellenfischen der Anhieb gesetzt werden?",
       "antworten": {
         "A": "unmittelbar nach dem Biss",
@@ -1479,7 +1479,7 @@
     },
     {
       "id": "4.124",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist beim Drill zu beachten?",
       "antworten": {
         "A": "den Drill möglichst lange ausdehnen",
@@ -1491,7 +1491,7 @@
     },
     {
       "id": "4.125",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie wird ein Karpfen angelandet?",
       "antworten": {
         "A": "mit dem Kescher",
@@ -1503,7 +1503,7 @@
     },
     {
       "id": "4.126",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie wird der Welsgriff ausgeführt? der Daumen drückt außen gegen",
       "antworten": {
         "A": "den Kiemendeckel, die übrigen Finger drücken von der Innenseite dagegen",
@@ -1515,7 +1515,7 @@
     },
     {
       "id": "4.127",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Kombination von monofiler Schnur und Haken ist für das Fischen auf Karpfen in einem mit Teichrosen bewachsenen Weiher fischwaidgerecht?",
       "antworten": {
         "A": "Vorfachstärke 0,30 mm mit Einzelhaken Größe 10 und Hauptschnurstärke 0,20 mm",
@@ -1527,7 +1527,7 @@
     },
     {
       "id": "4.128",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie wird ein untermaßiger, lebensfähiger Fisch nach dem Drill behandelt?",
       "antworten": {
         "A": "man ködert ihn im Wasser oder mit nassen Händen ab und lässt ihn unverzüglich ins Wasser zurückgleiten",
@@ -1539,7 +1539,7 @@
     },
     {
       "id": "4.129",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum darf ein gefangener, untermaßiger und lebensfähiger Fisch beim Zurücksetzen nur mit nassen Händen angefasst werden?",
       "antworten": {
         "A": "damit keine Hautschäden an der Hand des Anglers auftreten",
@@ -1551,7 +1551,7 @@
     },
     {
       "id": "4.130",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie muss ein in der Schonzeit gefangener, lebensfähiger Fisch behandelt werden?",
       "antworten": {
         "A": "Der Fisch ist schonend vom Haken zu lösen und sofort zurückzusetzen.",
@@ -1563,7 +1563,7 @@
     },
     {
       "id": "4.131",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist bei Fischarten mit Stachelstrahlen, Körperbedornung und spitzen Zähnen zu beachten?",
       "antworten": {
         "A": "beim Umgang mit diesen Fischen besteht erhöhte Verletzungsgefahr",
@@ -1575,7 +1575,7 @@
     },
     {
       "id": "4.132",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist bei Fischarten mit Stachelstrahlen in der Rückenflosse zu beachten?",
       "antworten": {
         "A": "diese Fische sind ungenießbar, weil die Stacheln beim Essen zu gefährlich sind",
@@ -1587,7 +1587,7 @@
     },
     {
       "id": "4.133",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist nach dem Landen einer maßigen Bachforelle zuerst zu tun?",
       "antworten": {
         "A": "Wiegen",
@@ -1599,7 +1599,7 @@
     },
     {
       "id": "4.134",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie behandeln Sie einen Karpfen (40 cm lang) unmittelbar nach dem Anlanden?",
       "antworten": {
         "A": "erst abködern, dann töten durch Herzstich",
@@ -1611,7 +1611,7 @@
     },
     {
       "id": "4.135",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Sie haben frühmorgens im Sommer einen Karpfen gefangen und wollen weiter angeln. Für welche der folgenden Möglichkeiten entscheiden Sie sich, um den geschlachteten Fisch am besten frisch zu halten?",
       "antworten": {
         "A": "in einer Plastiktüte in den Schatten legen",
@@ -1623,7 +1623,7 @@
     },
     {
       "id": "4.136",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wozu ist es wichtig die Lage des Fischgehirns zu kennen?",
       "antworten": {
         "A": "um ihn durch Gehirnstich ausbluten zu lassen",
@@ -1635,7 +1635,7 @@
     },
     {
       "id": "4.137",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Woran ist zu erkennen, dass ein Karpfen vor dem Töten einwandfrei betäubt ist?",
       "antworten": {
         "A": "am Muskelzittern des Körpers",
@@ -1647,7 +1647,7 @@
     },
     {
       "id": "4.138",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Worauf ist beim Schlachten von forellenartigen (Salmoniden) und karpfenartigen (Cypriniden) Fischen besonders zu achten?",
       "antworten": {
         "A": "an den Kammschuppen besteht Verletzungsgefahr",
@@ -1659,7 +1659,7 @@
     },
     {
       "id": "4.139",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie ist beim Schlachten von forellenartigen (Salmoniden) und karpfenartigen (Cypriniden) Fischen vorzugehen?",
       "antworten": {
         "A": "den Fisch mit einem geeigneten Messer der Länge nach teilen",
@@ -1671,7 +1671,7 @@
     },
     {
       "id": "4.140",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Beim Schlachten eines Aals ist besonders zu beachten,",
       "antworten": {
         "A": "dass die Niere im Aal verbleibt, da sie besonders delikat schmeckt.",
@@ -1683,7 +1683,7 @@
     },
     {
       "id": "4.141",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was gilt für das Ausnehmen von Aalen?",
       "antworten": {
         "A": "die Bauchdecke darf nicht zu weit nach hinten aufgeschnitten werden, da anderenfalls die Schwimmblase verletzt wird",
@@ -1695,7 +1695,7 @@
     },
     {
       "id": "4.142",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Form der Messerklinge ist zum Auslösen der Rippenbögen bei Weißfischen, Hechten und Forellenartigen besonders geeignet?",
       "antworten": {
         "A": "eine kurze und starre Klinge",
@@ -1707,7 +1707,7 @@
     },
     {
       "id": "4.143",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Form der Messerklinge ist zum Aufschneiden der Leibeshöhle von Weißfischen, Hechten und Forellenartigen besonders geeignet?",
       "antworten": {
         "A": "eine lange Klinge mit Wellenschliff",
@@ -1719,7 +1719,7 @@
     },
     {
       "id": "4.144",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie lässt sich nach dem Filetieren von großen Forellen, Saiblingen und Lachsen die im Filet stehende zweite Rippenreihe entfernen?",
       "antworten": {
         "A": "durch Abschaben mit Hilfe eines Löffels",
@@ -1731,7 +1731,7 @@
     },
     {
       "id": "4.145",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Die für karpfenartige Fische (Cypriniden) typischen Y-förmigen Gräten",
       "antworten": {
         "A": "liegen zwischen den Segmenten der Rumpfmuskulatur.",
@@ -1743,7 +1743,7 @@
     },
     {
       "id": "4.146",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Merkmale weisen darauf hin, dass ein Speisefisch frisch ist?",
       "antworten": {
         "A": "frischer Geruch, glänzende feuchte Haut, leuchtend rote Kiemen",
@@ -1755,7 +1755,7 @@
     },
     {
       "id": "4.147",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "An welchem Merkmal erkennt man, dass ein Fisch noch frisch ist?",
       "antworten": {
         "A": "Nach einer Druckprobe bleibt die entstandene Delle auf der Oberfläche bestehen.",
@@ -1767,7 +1767,7 @@
     },
     {
       "id": "4.148",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welchen Lagerungsbedingungen eines Fisches vermehren sich die für den menschlichen Organismus gefährlichen Botulismuserreger besonders?",
       "antworten": {
         "A": "vakuumverpackt, bei einer Temperatur über 10 °C",
@@ -1779,7 +1779,7 @@
     },
     {
       "id": "4.149",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie wirkt sich der Fettgehalt eines Fisches bei gleicher Temperatur auf die maximale Lagerdauer aus?",
       "antworten": {
         "A": "Je fettärmer der Fisch ist, umso länger kann er gelagert werden.",
@@ -1791,7 +1791,7 @@
     },
     {
       "id": "4.150",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Zeitraum soll bei der Aufbewahrung eines Fisches im Kühlschrank (4 – 6 °C) zwischen Schlachten und Zubereitung nicht überschritten werden?",
       "antworten": {
         "A": "10 Tage",
@@ -1803,7 +1803,7 @@
     },
     {
       "id": "4.151",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist beim Frosten von Fischfilets zu beachten?",
       "antworten": {
         "A": "der Vorgang des Frostens soll möglichst langsam und schonend geschehen",
@@ -1815,7 +1815,7 @@
     },
     {
       "id": "4.152",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wodurch entsteht bei Bachforellen die Rotfärbung der Muskulatur?",
       "antworten": {
         "A": "durch Hormonsteuerung während der Laichzeit",
@@ -1827,7 +1827,7 @@
     },
     {
       "id": "4.153",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Fischart hat zahlreiche Zwischenmuskelgräten (Fleischgräten)?",
       "antworten": {
         "A": "Aal",
@@ -1839,7 +1839,7 @@
     },
     {
       "id": "4.154",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie kann man grätenreiche Fischfilets behandeln, so dass die Fleischgräten nach dem Braten oder Frittieren kaum stören?",
       "antworten": {
         "A": "durch Einschneiden der Muskulatur in Abständen von 2 - 3 mm bis auf die Haut",
@@ -1851,7 +1851,7 @@
     },
     {
       "id": "4.155",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Durch welche der genannten Zubereitungsformen können die beim Verzehr störenden Y- förmigen Gräten der Weißfische unschädlich gemacht werden?",
       "antworten": {
         "A": "durch Einlegen der Filetstücke in einen Essigsud",
@@ -1863,7 +1863,7 @@
     },
     {
       "id": "4.156",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Durch welche der genannten Zubereitungsformen können die beim Verzehr störenden Y- förmigen Gräten bei Weißfischen unschädlich gemacht werden?",
       "antworten": {
         "A": "Einwickeln des Filets mit Speckstreifen",
@@ -1875,7 +1875,7 @@
     },
     {
       "id": "4.157",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wozu dient ein Unterfangkescher? zum Aufbewahren von",
       "antworten": {
         "A": "Angelzubehör",
@@ -1887,7 +1887,7 @@
     },
     {
       "id": "4.158",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wann ist ein Fisch als „lebensfähig\" zu bezeichnen?",
       "antworten": {
         "A": "wenn die Kiemen noch nicht verblasst sind",
@@ -1899,7 +1899,7 @@
     },
     {
       "id": "4.159",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Vorteile haben geflochtene Schnüre?",
       "antworten": {
         "A": "wesentlich billiger",
@@ -1911,7 +1911,7 @@
     },
     {
       "id": "4.160",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche geflochtene Schnur würden Sie beim Vertikalangeln auf Zander benutzen?",
       "antworten": {
         "A": "0,25 (17 kg)",
@@ -1923,7 +1923,7 @@
     },
     {
       "id": "4.161",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche geflochtene Schnur sollte man beim Welsangeln nehmen?",
       "antworten": {
         "A": "0,50 (50 kg)",
@@ -1935,7 +1935,7 @@
     },
     {
       "id": "4.162",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wann ist beim Grundfischen die Verwendung eines Durchlaufschwimmers (Gleitfloß) zu empfehlen?",
       "antworten": {
         "A": "bei starkem Wellengang",
@@ -1947,7 +1947,7 @@
     },
     {
       "id": "4.163",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Sinnvolle Werkzeuge und Gebrauchsgegenstände beim Forellenfischen sind:",
       "antworten": {
         "A": "Lösezange, Schlagholz, Messer",
@@ -1959,7 +1959,7 @@
     },
     {
       "id": "4.164",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Kiemen und Nieren müssen vor weiterer Bearbeitung von Speisefischen",
       "antworten": {
         "A": "gut gewässert werden, dann verliert sich der bittere Geschmack.",
@@ -1971,7 +1971,7 @@
     },
     {
       "id": "4.165",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Gummifischgröße bevorzugt man im Herbst auf Hecht?",
       "antworten": {
         "A": "10-12 cm",
@@ -1983,7 +1983,7 @@
     },
     {
       "id": "4.166",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Geflochtene Schnüre eignen sich besonders zum",
       "antworten": {
         "A": "Flugangeln.",
@@ -1995,7 +1995,7 @@
     },
     {
       "id": "4.167",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Geflochtene Schnüre sind",
       "antworten": {
         "A": "immer transparent",
@@ -2007,7 +2007,7 @@
     },
     {
       "id": "4.168",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum ist die Verwendung von geflochtenen Schnüren im Winter bei starkem Frost nicht sinnvoll?",
       "antworten": {
         "A": "Die Tauchfähigkeit ist im Winter sehr eingeschränkt.",
@@ -2019,7 +2019,7 @@
     },
     {
       "id": "4.169",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Bei welcher Angelmethode benötigt man keine Rolle?",
       "antworten": {
         "A": "Fliegenfischen",
@@ -2031,7 +2031,7 @@
     },
     {
       "id": "4.170",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was sind Jerkbaits, Popper und Twister?",
       "antworten": {
         "A": "moderne Kunstköder für den Fang von Raubfischen",
@@ -2043,7 +2043,7 @@
     },
     {
       "id": "4.171",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welches Laufverhalten hat ein Wobbler mit großer Tauchschaufel, die fast waagerecht am Köder befestigt ist?",
       "antworten": {
         "A": "Der Wobbler läuft sehr flach.",
@@ -2055,7 +2055,7 @@
     },
     {
       "id": "4.172",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was dient beim Wobbler zur Tiefenführung?",
       "antworten": {
         "A": "die Tauchschaufel",
@@ -2067,7 +2067,7 @@
     },
     {
       "id": "4.173",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wird ein Hecht zum Anlanden mit der Hand hinter dem Kopf gefasst,",
       "antworten": {
         "A": "darf der Fisch wieder zurückgesetzt werden.",
@@ -2079,7 +2079,7 @@
     },
     {
       "id": "4.174",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Muss der gefangene Fisch nach dem Betäuben und Töten ausgenommen und sofort im Angelgewässer ausgewaschen werden?",
       "antworten": {
         "A": "Ja, dann kann der Fisch längere Zeit ohne weitere Behandlung liegen bleiben und verdirbt nicht so schnell.",
@@ -2091,7 +2091,7 @@
     },
     {
       "id": "4.175",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Eine Imkergabel",
       "antworten": {
         "A": "ist nützlich beim Mischen von Ködermaterial.",
@@ -2103,7 +2103,7 @@
     },
     {
       "id": "4.176",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Sollen beim Schlachten von Fischen Kiemen und Niere entfernt werden?",
       "antworten": {
         "A": "Nein, die Organe werden mit zubereitet.",
@@ -2115,7 +2115,7 @@
     },
     {
       "id": "4.177",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Sind Fische ein hochwertiges Lebensmittel?",
       "antworten": {
         "A": "Die Omega-3-Fettsäuren wirken sich nachteilig auf den menschlichen Organismus aus und sollten gemieden werden.",
@@ -2127,7 +2127,7 @@
     },
     {
       "id": "4.178",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Vorgehensweise ist beim Versorgen von Fischen richtig?",
       "antworten": {
         "A": "Herzstich und Entfernen der Eingeweide. Schuppen ist nicht notwendig, da die Schuppen bei allen Fischen zum Verzehr geeignet sind.",
@@ -2139,7 +2139,7 @@
     },
     {
       "id": "4.179",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was drückt die Bezeichnung „F” bei einer Fliegenschnur aus?",
       "antworten": {
         "A": "Die Schnur schwimmt auf der Wasseroberfläche (Trockenschnur).",
@@ -2151,7 +2151,7 @@
     },
     {
       "id": "4.180",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welcher Grundsatz ist beim Umgang mit Fischen zu beachten?",
       "antworten": {
         "A": "Der gefangene Fisch muss sofort am Wasser küchenfertig zubereitet werden.",
@@ -2163,7 +2163,7 @@
     },
     {
       "id": "4.181",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Ein Angler möchte auf große Hechte in einem hindernisreichen Gewässer angeln und seine Stationärrolle mit Schnur zum Spinnfischen bespulen lassen. Welcher Schnurtyp ist dafür am ehesten geeignet?",
       "antworten": {
         "A": "multifile Schnüre, da die Schnur keine Dehnung und eine hohe Tragkraft besitzt",
@@ -2175,7 +2175,7 @@
     },
     {
       "id": "4.182",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist in Salmonidengewässern waidgerecht?",
       "antworten": {
         "A": "Wurm",
@@ -2187,7 +2187,7 @@
     },
     {
       "id": "4.183",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Was ist eine Rachensperre?",
       "antworten": {
         "A": "Hilfsgerät zum Abködern von Raubfischen",
@@ -2199,7 +2199,7 @@
     },
     {
       "id": "4.184",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welches Posenmaterial hat den größten Auftrieb?",
       "antworten": {
         "A": "Hartholz",
@@ -2211,7 +2211,7 @@
     },
     {
       "id": "4.185",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Feindrähtige Goldhaken eigenen sich für den Fang von",
       "antworten": {
         "A": "Raubfischen, weil Goldhaken blinken.",
@@ -2223,7 +2223,7 @@
     },
     {
       "id": "4.186",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum ist eine geflochtene Schnur bei Minustemperaturen nicht empfehlenswert?",
       "antworten": {
         "A": "Die Schnur kann einfrieren.",
@@ -2235,7 +2235,7 @@
     },
     {
       "id": "4.187",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welchen Vorteil haben Haarmontagen mit Boilies oder Pellets als Köder?",
       "antworten": {
         "A": "Sie sind preiswert.",
@@ -2247,7 +2247,7 @@
     },
     {
       "id": "4.188",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Welche Aussage ist richtig?",
       "antworten": {
         "A": "Einzelhaken werden beim Kunstköderangeln leicht verschluckt.",
@@ -2259,7 +2259,7 @@
     },
     {
       "id": "4.189",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Wie verhalten Sie sich, wenn Sie feststellen, dass bei Ihrem gefangenen, untermaßigen Fisch der Haken tief im Schlundbereich sitzt und dort massive Blutungen verursacht hat und jegliche Agilität und Fluchtversuche ausbleiben?",
       "antworten": {
         "A": "Der Fisch wird unter allen Umständen zurückgesetzt, um den gesetzlichen Bestimmungen zu folgen.",
@@ -2271,7 +2271,7 @@
     },
     {
       "id": "4.190",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Durch welche Maßnahmen kann der Verlust an Tragkraft bei einer Angelschnur stark reduziert werden?",
       "antworten": {
         "A": "Durch Einsatz von zwei Doppelknoten.",
@@ -2283,7 +2283,7 @@
     },
     {
       "id": "4.191",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "Warum soll ein Drilling Größe 7 beim Fischen mit Kartoffel und Teig nicht verwendet werden?",
       "antworten": {
         "A": "Man fängt zu viele.",
@@ -2295,7 +2295,7 @@
     },
     {
       "id": "4.192",
-      "bereich": "Fanggeräte und -methoden",
+      "topic": "Fanggeräte und -methoden",
       "frage": "An welcher Stelle können Ruten leicht brechen?",
       "antworten": {
         "A": "Am Sitz der Hülsen.",

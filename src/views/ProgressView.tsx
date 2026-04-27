@@ -33,10 +33,10 @@ export default function ProgressView({ quiz }: Props) {
   const pct = statistiken.gesamt > 0 ? (statistiken.korrekt / statistiken.gesamt) * 100 : 0;
   const passed = pct >= 60;
 
-   const bereichStats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = useMemo(() => {
+   const topicStats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = useMemo(() => {
      const stats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = {};
      aktiveFragen.forEach(f => {
-       const b = f.bereich;
+       const b = f.topic;
        if (!stats[b]) stats[b] = { korrekt: 0, falsch: 0, gesamt: 0 };
        stats[b].gesamt++;
        if (antworten[f.id] === f.richtige_antwort) stats[b].korrekt++;
@@ -80,7 +80,7 @@ export default function ProgressView({ quiz }: Props) {
 
             {/* Themen-Stats */}
             <div className="mt-4 text-left space-y-2 max-w-sm mx-auto">
-              {Object.entries(bereichStats).map(([b, s]) => {
+              {Object.entries(topicStats).map(([b, s]) => {
                 const p = s.gesamt > 0 ? (s.korrekt / s.gesamt) * 100 : 0;
                 return (
                   <div key={b}>

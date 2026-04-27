@@ -6,7 +6,7 @@ export function useHistory() {
   const [entries, setEntries] = useState<HistoryEntry[]>(() => HistoryStorage.load());
 
   const addEntry = useCallback((params: {
-    bereiche: string[];
+    topics: string[];
     score: number;
     total: number;
     duration: number;

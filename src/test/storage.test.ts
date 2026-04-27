@@ -93,7 +93,7 @@ describe('storage', () => {
 
   describe('migrateLegacyStorage', () => {
     it('sollte Legacy-Run migrieren', () => {
-      const legacyRun = { frageIds: ['1', '2'], antworten: {}, bereiche: ['Biologie'], aktuellerIndex: 0, isActive: true };
+      const legacyRun = { frageIds: ['1', '2'], antworten: {}, topics: ['Biologie'], aktuellerIndex: 0, isActive: true };
       localStorage.setItem('fmq:run:v2', JSON.stringify(legacyRun));
 
       migrateLegacyStorage();
@@ -153,7 +153,7 @@ describe('storage', () => {
     });
 
     it('sollte Run speichern und laden', () => {
-      const run = { frageIds: ['1'], antworten: {}, bereiche: ['Biologie'], aktuellerIndex: 0, isActive: true };
+      const run = { frageIds: ['1'], antworten: {}, topics: ['Biologie'], aktuellerIndex: 0, isActive: true };
       RunStorage.save('arcade', run);
       expect(RunStorage.load('arcade')).toEqual(run);
     });

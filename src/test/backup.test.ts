@@ -44,18 +44,18 @@ describe('AppBackupSchema', () => {
       metaArcade: {
         fragen: {},
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
-        bereiche: {},
+        topics: {},
       },
       metaHardcore: {
         fragen: {},
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
-        bereiche: {},
+        topics: {},
       },
-      bereichFiles: { 'Biologie': 'biologie.json' },
+      topicFiles: { 'Biologie': 'biologie.json' },
       favorites: ['f1', 'f2'],
       notes: { f1: 'Notiz' },
       history: [
-        { id: 'h1', timestamp: new Date().toISOString(), bereiche: ['Biologie'], score: 5, total: 10, duration: 60, mode: 'arcade' },
+        { id: 'h1', timestamp: new Date().toISOString(), topics: ['Biologie'], score: 5, total: 10, duration: 60, mode: 'arcade' },
       ],
     };
     const parsed = AppBackupSchema.safeParse(backup);
@@ -86,14 +86,14 @@ describe('AppBackupSchema', () => {
       metaArcade: {
         fragen: {},
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
-        bereiche: {},
+        topics: {},
       },
       metaHardcore: {
         fragen: {},
         stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0 },
-        bereiche: {},
+        topics: {},
       },
-      bereichFiles: {},
+      topicFiles: {},
       favorites: [],
       notes: {},
       srs: {},

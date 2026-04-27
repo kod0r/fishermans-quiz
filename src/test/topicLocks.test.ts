@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { canSelectBereich, isBereichLocked } from '@/utils/bereichLocks';
+import { canSelectTopic, isTopicLocked } from '@/utils/topicLocks';
 import type { MetaProgression } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 
 const mockQuizMeta: QuizMeta = {
-  meta: { titel: 'Test', anzahl_fragen: 6, bereiche: { Biologie: 3, Recht: 3 } },
-  bereiche: ['Biologie', 'Recht'],
-  bereichFiles: { Biologie: 'bio.json', Recht: 'recht.json' },
+  meta: { titel: 'Test', anzahl_fragen: 6, topics: { Biologie: 3, Recht: 3 } },
+  topics: ['Biologie', 'Recht'],
+  topicFiles: { Biologie: 'bio.json', Recht: 'recht.json' },
   fragenIndex: { '1': 'Biologie', '2': 'Biologie', '3': 'Biologie', '4': 'Recht', '5': 'Recht', '6': 'Recht' },
 };
 
@@ -21,121 +21,121 @@ function createMeta(overrides: Partial<MetaProgression> = {}): MetaProgression {
       bestStreak: 0,
       currentStreak: 0,
     },
-    bereiche: {},
+    topics: {},
     ...overrides,
   };
 }
 
-describe('isBereichLocked', () => {
+describe('isTopicLocked', () => {
   it('should return false for arcade mode', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(isBereichLocked('Biologie', 'arcade', meta)).toBe(false);
+    expect(isTopicLocked('Biologie', 'arcade', meta)).toBe(false);
   });
 
   it('should return false for exam mode', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(isBereichLocked('Biologie', 'exam', meta)).toBe(false);
+    expect(isTopicLocked('Biologie', 'exam', meta)).toBe(false);
   });
 
-  it('should return false for unattempted bereich in hardcore', () => {
+  it('should return false for unattempted topic in hardcore', () => {
     const meta = createMeta();
-    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+    expect(isTopicLocked('Biologie', 'hardcore', meta)).toBe(false);
   });
 
-  it('should return false for passed bereich in hardcore', () => {
+  it('should return false for passed topic in hardcore', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: true, consecutivePasses: 1, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+    expect(isTopicLocked('Biologie', 'hardcore', meta)).toBe(false);
   });
 
-  it('should return false for mastered bereich in hardcore', () => {
+  it('should return false for mastered topic in hardcore', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: true, consecutivePasses: 3, mastered: true, lastAttempt: '2026-01-01' },
       },
     });
-    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+    expect(isTopicLocked('Biologie', 'hardcore', meta)).toBe(false);
   });
 
-  it('should return true for failed bereich in hardcore', () => {
+  it('should return true for failed topic in hardcore', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(true);
+    expect(isTopicLocked('Biologie', 'hardcore', meta)).toBe(true);
   });
 });
 
-describe('canSelectBereich', () => {
+describe('canSelectTopic', () => {
   it('should always return true for arcade mode', () => {
     const meta = createMeta();
-    expect(canSelectBereich('Biologie', 'arcade', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Biologie', 'arcade', meta, mockQuizMeta, false, [])).toBe(true);
   });
 
   it('should always return true for exam mode', () => {
     const meta = createMeta();
-    expect(canSelectBereich('Biologie', 'exam', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Biologie', 'exam', meta, mockQuizMeta, false, [])).toBe(true);
   });
 
-  it('should return true for hardcore mode when bereich was never attempted', () => {
+  it('should return true for hardcore mode when topic was never attempted', () => {
     const meta = createMeta();
-    expect(canSelectBereich('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
   });
 
-  it('should return true for hardcore mode when bereich is passed', () => {
+  it('should return true for hardcore mode when topic is passed', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: true, consecutivePasses: 1, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(canSelectBereich('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
   });
 
-  it('should return true for hardcore mode when bereich is mastered', () => {
+  it('should return true for hardcore mode when topic is mastered', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: true, consecutivePasses: 3, mastered: true, lastAttempt: '2026-01-01' },
       },
     });
-    expect(canSelectBereich('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
   });
 
-  it('should return false for hardcore mode when bereich was attempted and failed', () => {
+  it('should return false for hardcore mode when topic was attempted and failed', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(canSelectBereich('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(false);
+    expect(canSelectTopic('Biologie', 'hardcore', meta, mockQuizMeta, false, [])).toBe(false);
   });
 
-  it('should always return true for active bereiche even if failed', () => {
+  it('should always return true for active topics even if failed', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(canSelectBereich('Biologie', 'hardcore', meta, mockQuizMeta, true, ['Biologie'])).toBe(true);
+    expect(canSelectTopic('Biologie', 'hardcore', meta, mockQuizMeta, true, ['Biologie'])).toBe(true);
   });
 
-  it('should return true for other bereiche when one is failed', () => {
+  it('should return true for other topics when one is failed', () => {
     const meta = createMeta({
-      bereiche: {
+      topics: {
         Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
       },
     });
-    expect(canSelectBereich('Recht', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
+    expect(canSelectTopic('Recht', 'hardcore', meta, mockQuizMeta, false, [])).toBe(true);
   });
 });

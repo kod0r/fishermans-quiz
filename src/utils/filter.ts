@@ -3,7 +3,7 @@ import { isMastered } from '@/utils/srs';
 
 export interface FilterOptions {
   query?: string;
-  bereiche?: string[];
+  topics?: string[];
   hasImage?: boolean;
   onlyFavorites?: boolean;
   masteryFilter?: 'all' | 'mastered' | 'unmastered';
@@ -18,13 +18,13 @@ export function filterFragen(
     srsMap: Record<string, SRSMeta>;
   }
 ): Frage[] {
-  const { query, bereiche, hasImage, onlyFavorites, masteryFilter } = options;
+  const { query, topics, hasImage, onlyFavorites, masteryFilter } = options;
   const { favorites, metaProgress, srsMap } = context;
   const queryLower = query?.trim().toLowerCase();
 
   return fragen.filter((frage) => {
     if (queryLower && !frage.frage.toLowerCase().includes(queryLower)) return false;
-    if (bereiche?.length && !bereiche.includes(frage.bereich)) return false;
+    if (topics?.length && !topics.includes(frage.topic)) return false;
     if (hasImage && !frage.bild) return false;
     if (onlyFavorites && !favorites.includes(frage.id)) return false;
     if (masteryFilter && masteryFilter !== 'all') {

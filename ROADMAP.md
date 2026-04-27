@@ -2,6 +2,10 @@
 
 look @issues
 
+## ✅ Done
+
+look @closed issues
+
 ## 📋 Planned (Backlog)
 
 | Topic                              | GitHub Issue                                              | Priority |
@@ -11,10 +15,6 @@ look @issues
 | Multi-Language Support             | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | low      |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**
-
-## ✅ Done
-
-look @closed issues
 
 ### Done (before GitHub Issue system)
 

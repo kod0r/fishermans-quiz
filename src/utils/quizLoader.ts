@@ -4,7 +4,7 @@ import type { Frage, QuizData } from '@/types/quiz';
 // ── Zod Schemas für Runtime-Validierung ──
 const FrageSchema = z.object({
   id: z.string().min(1),
-  bereich: z.string().min(1),
+  topic: z.string().min(1),
   frage: z.string().min(1),
   antworten: z.object({
     A: z.string(),
@@ -20,15 +20,15 @@ const QuizMetaSchema = z.object({
   meta: z.object({
     titel: z.string(),
     anzahl_fragen: z.number().int().nonnegative(),
-    bereiche: z.record(z.string(), z.number().int().nonnegative()),
+    topics: z.record(z.string(), z.number().int().nonnegative()),
   }),
-  bereiche: z.array(z.string()),
-  bereichFiles: z.record(z.string(), z.string()),  // Bereich name → filename
+  topics: z.array(z.string()),
+  topicFiles: z.record(z.string(), z.string()),  // Topic name → filename
   fragenIndex: z.record(z.string(), z.string()),
 });
 
-const BereichDataSchema = z.object({
-  bereich: z.string(),
+const TopicDataSchema = z.object({
+  topic: z.string(),
   fragen: z.array(FrageSchema),
 });
 
@@ -52,7 +52,7 @@ const MetaStatsSchema = z.object({
   arcadeRunsCompleted: z.number().int().nonnegative().optional(),
 });
 
-const BereichMetaSchema = z.object({
+const TopicMetaSchema = z.object({
   passed: z.boolean(),
   consecutivePasses: z.number().int().nonnegative(),
   mastered: z.boolean(),
@@ -76,7 +76,7 @@ export const SRSMetaSchema = z.object({
 export const MetaProgressionSchema = z.object({
   fragen: z.record(z.string(), FrageMetaSchema),
   stats: MetaStatsSchema,
-  bereiche: z.record(z.string(), BereichMetaSchema).default({}),
+  topics: z.record(z.string(), TopicMetaSchema).default({}),
   arcadeStars: z.record(z.string(), z.union([z.literal(1), z.literal(2), z.literal(3)])).optional().default({}),
   bestArcadeScore: z.record(z.string(), z.number().nonnegative()).optional().default({}),
   examMeta: ExamMetaSchema.optional(),
@@ -94,14 +94,14 @@ export const AppBackupSchema = z.object({
   settings: AppSettingsSchema,
   metaArcade: MetaProgressionSchema,
   metaHardcore: MetaProgressionSchema,
-  metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0, arcadeRunsCompleted: 0 }, bereiche: {}, arcadeStars: {}, bestArcadeScore: {} }),
-  bereichFiles: z.record(z.string(), z.string()),  // Bereich name → filename
+  metaExam: MetaProgressionSchema.optional().default({ fragen: {}, stats: { totalRuns: 0, totalQuestionsAnswered: 0, totalCorrect: 0, totalIncorrect: 0, bestStreak: 0, currentStreak: 0, arcadeRunsCompleted: 0 }, topics: {}, arcadeStars: {}, bestArcadeScore: {} }),
+  topicFiles: z.record(z.string(), z.string()),  // Topic name → filename
   favorites: z.array(z.string()),
   notes: z.record(z.string(), z.string()),
   history: z.array(z.object({
     id: z.string(),
     timestamp: z.string(),
-    bereiche: z.array(z.string()),
+    topics: z.array(z.string()),
     score: z.number(),
     total: z.number(),
     duration: z.number(),
@@ -135,51 +135,51 @@ export async function loadQuizMeta(): Promise<QuizMeta> {
 }
 
 /**
- * Lädt Fragen für die angegebenen Bereiche.
- * Bereits geladene Bereiche werden aus dem Cache genommen.
+ * Lädt Fragen für die angegebenen Topics.
+ * Bereits geladene Topics werden aus dem Cache genommen.
  */
-export async function loadBereichsFragen(bereiche: string[]): Promise<Frage[]> {
-  const zuLaden = bereiche.filter(b => !fragenCache.has(b));
+export async function loadTopicQuestions(topics: string[]): Promise<Frage[]> {
+  const zuLaden = topics.filter(b => !fragenCache.has(b));
 
   if (zuLaden.length > 0) {
     const meta = await loadQuizMeta();
-    const promises = zuLaden.map(async (bereich) => {
-      const filename = meta.bereichFiles[bereich];
-      if (!filename) throw new Error(`Unbekanntes Thema: ${bereich}. Kein Dateiname in den Metadaten gefunden.`);
+    const promises = zuLaden.map(async (topic) => {
+      const filename = meta.topicFiles[topic];
+      if (!filename) throw new Error(`Unbekanntes Thema: ${topic}. Kein Dateiname in den Metadaten gefunden.`);
 
-      const res = await fetch(`${import.meta.env.BASE_URL}data/bereiche/${filename}`);
-      if (!res.ok) throw new Error(`Thema ${bereich} laden fehlgeschlagen: ${res.status}`);
+      const res = await fetch(`${import.meta.env.BASE_URL}data/topics/${filename}`);
+      if (!res.ok) throw new Error(`Thema ${topic} laden fehlgeschlagen: ${res.status}`);
 
       const raw = await res.json();
-      const parsed = BereichDataSchema.safeParse(raw);
+      const parsed = TopicDataSchema.safeParse(raw);
       if (!parsed.success) {
-        console.error(`[quizLoader] Thema ${bereich} Validierung fehlgeschlagen:`, parsed.error.format());
-        throw new Error(`Thema ${bereich} Format ungültig: ${parsed.error.message}`);
+        console.error(`[quizLoader] Thema ${topic} Validierung fehlgeschlagen:`, parsed.error.format());
+        throw new Error(`Thema ${topic} Format ungültig: ${parsed.error.message}`);
       }
 
-      fragenCache.set(bereich, parsed.data.fragen);
+      fragenCache.set(topic, parsed.data.fragen);
       return parsed.data.fragen;
     });
 
     await Promise.all(promises);
   }
 
-  return bereiche.flatMap(b => fragenCache.get(b) ?? []);
+  return topics.flatMap(b => fragenCache.get(b) ?? []);
 }
 
 /**
- * Baut ein QuizData-Objekt aus geladenen Bereichen.
+ * Baut ein QuizData-Objekt from loaded topics.
  */
-export async function buildQuizData(bereiche: string[]): Promise<QuizData> {
+export async function buildQuizData(topics: string[]): Promise<QuizData> {
   const meta = await loadQuizMeta();
-  const fragen = await loadBereichsFragen(bereiche);
+  const fragen = await loadTopicQuestions(topics);
 
   return {
     meta: {
       ...meta.meta,
       anzahl_fragen: fragen.length,
-      bereiche: Object.fromEntries(
-        bereiche.map(b => [b, fragen.filter(f => f.bereich === b).length])
+      topics: Object.fromEntries(
+        topics.map(b => [b, fragen.filter(f => f.topic === b).length])
       ),
     },
     fragen,
@@ -192,7 +192,7 @@ export async function buildQuizData(bereiche: string[]): Promise<QuizData> {
  */
 export async function loadAllQuizData(): Promise<QuizData> {
   const meta = await loadQuizMeta();
-  return buildQuizData(meta.bereiche);
+  return buildQuizData(meta.topics);
 }
 
 /**

@@ -3,12 +3,12 @@ import { filterFragen } from '@/utils/filter';
 import type { Frage, FrageMeta, SRSMeta } from '@/types/quiz';
 
 const mockFragen: Frage[] = [
-  { id: '1', bereich: 'Biologie', frage: 'Was ist ein Lachs?', antworten: { A: 'Fisch', B: 'Vogel', C: 'Säugetier' }, richtige_antwort: 'A' },
-  { id: '2', bereich: 'Biologie', frage: 'Welche Schuppe hat die Forelle?', antworten: { A: 'Rund', B: 'Cycloid', C: 'Placoid' }, richtige_antwort: 'B', bild: true, bild_url: '/img/forelle.jpg' },
-  { id: '3', bereich: 'Recht', frage: 'Wie viele Ruten darf man haben?', antworten: { A: '1', B: '2', C: '3' }, richtige_antwort: 'B' },
-  { id: '4', bereich: 'Recht', frage: 'Was ist die Mindestgröße?', antworten: { A: '30cm', B: '40cm', C: '50cm' }, richtige_antwort: 'A' },
-  { id: '5', bereich: 'Gewässerkunde', frage: 'Welcher Fluss ist der längste?', antworten: { A: 'Donau', B: 'Rhein', C: 'Elbe' }, richtige_antwort: 'A' },
-  { id: '6', bereich: 'Gewässerkunde', frage: 'Was ist ein Tümpel?', antworten: { A: 'See', B: 'Teich', C: 'Fluss' }, richtige_antwort: 'B', bild: true },
+  { id: '1', topic: 'Biologie', frage: 'Was ist ein Lachs?', antworten: { A: 'Fisch', B: 'Vogel', C: 'Säugetier' }, richtige_antwort: 'A' },
+  { id: '2', topic: 'Biologie', frage: 'Welche Schuppe hat die Forelle?', antworten: { A: 'Rund', B: 'Cycloid', C: 'Placoid' }, richtige_antwort: 'B', bild: true, bild_url: '/img/forelle.jpg' },
+  { id: '3', topic: 'Recht', frage: 'Wie viele Ruten darf man haben?', antworten: { A: '1', B: '2', C: '3' }, richtige_antwort: 'B' },
+  { id: '4', topic: 'Recht', frage: 'Was ist die Mindestgröße?', antworten: { A: '30cm', B: '40cm', C: '50cm' }, richtige_antwort: 'A' },
+  { id: '5', topic: 'Gewässerkunde', frage: 'Welcher Fluss ist der längste?', antworten: { A: 'Donau', B: 'Rhein', C: 'Elbe' }, richtige_antwort: 'A' },
+  { id: '6', topic: 'Gewässerkunde', frage: 'Was ist ein Tümpel?', antworten: { A: 'See', B: 'Teich', C: 'Fluss' }, richtige_antwort: 'B', bild: true },
 ];
 
 const mockFavorites = ['1', '3'];
@@ -40,14 +40,14 @@ describe('filterFragen', () => {
     expect(filterFragen(mockFragen, { query: 'xyz' }, ctx)).toHaveLength(0);
   });
 
-  it('sollte nach Bereich filtern (single)', () => {
-    const result = filterFragen(mockFragen, { bereiche: ['Biologie'] }, ctx);
+  it('sollte nach Topic filtern (single)', () => {
+    const result = filterFragen(mockFragen, { topics: ['Biologie'] }, ctx);
     expect(result).toHaveLength(2);
-    expect(result.every((f) => f.bereich === 'Biologie')).toBe(true);
+    expect(result.every((f) => f.topic === 'Biologie')).toBe(true);
   });
 
-  it('sollte nach Bereich filtern (multiple)', () => {
-    expect(filterFragen(mockFragen, { bereiche: ['Biologie', 'Recht'] }, ctx)).toHaveLength(4);
+  it('sollte nach Topic filtern (multiple)', () => {
+    expect(filterFragen(mockFragen, { topics: ['Biologie', 'Recht'] }, ctx)).toHaveLength(4);
   });
 
   it('sollte nach Bild filtern', () => {
@@ -68,7 +68,7 @@ describe('filterFragen', () => {
   });
 
   it('sollte kombinierte Filter anwenden', () => {
-    const result = filterFragen(mockFragen, { query: 'Forelle', bereiche: ['Biologie', 'Recht'], hasImage: true }, ctx);
+    const result = filterFragen(mockFragen, { query: 'Forelle', topics: ['Biologie', 'Recht'], hasImage: true }, ctx);
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe('2');
   });

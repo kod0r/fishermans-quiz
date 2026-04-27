@@ -144,7 +144,7 @@ const EMPTY_META = {
     currentStreak: 0,
     arcadeRunsCompleted: 0,
   },
-  bereiche: {},
+  topics: {},
   arcadeStars: {},
   bestArcadeScore: {},
 };

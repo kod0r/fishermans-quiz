@@ -46,7 +46,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
   const [pendingWrongAnswer, setPendingWrongAnswer] = useState<string | null>(
     null,
   );
-  const [bereichComplete, setBereichComplete] = useState<string | null>(null);
+  const [topicComplete, setTopicComplete] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState<number | undefined>();
   const [examAbgelaufen, setExamAbgelaufen] = useState(false);
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
@@ -91,20 +91,20 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
     };
   }, [gameMode, rawRun, beendeExam]);
 
-  const checkBereichComplete = useCallback(
+  const checkTopicComplete = useCallback(
     (frageId: string) => {
       const frage = aktiveFragen.find((f) => f.id === frageId);
       if (!frage) return;
 
-      const bereichFragen = aktiveFragen.filter(
-        (f) => f.bereich === frage.bereich,
+      const topicQuestions = aktiveFragen.filter(
+        (f) => f.topic === frage.topic,
       );
-      const alleBeantwortet = bereichFragen.every(
+      const alleBeantwortet = topicQuestions.every(
         (f) => antworten[f.id] !== undefined || f.id === frageId,
       );
 
       if (alleBeantwortet) {
-        setBereichComplete(frage.bereich);
+        setTopicComplete(frage.topic);
       }
     },
     [aktiveFragen, antworten],
@@ -143,17 +143,17 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
       if (isCorrect) {
         beantworteFrage(aktuelleFrage.id, buchstabe);
         setPendingWrongAnswer(null);
-        checkBereichComplete(aktuelleFrage.id);
+        checkTopicComplete(aktuelleFrage.id);
       } else if (gameMode === 'arcade' && isPending) {
         beantworteFrage(aktuelleFrage.id, buchstabe);
         setPendingWrongAnswer(null);
-        checkBereichComplete(aktuelleFrage.id);
+        checkTopicComplete(aktuelleFrage.id);
       } else if (gameMode === 'arcade' && !isPending) {
         setPendingWrongAnswer(buchstabe);
       } else {
         beantworteFrage(aktuelleFrage.id, buchstabe);
         setPendingWrongAnswer(null);
-        checkBereichComplete(aktuelleFrage.id);
+        checkTopicComplete(aktuelleFrage.id);
       }
     },
     [
@@ -163,7 +163,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
       pendingWrongAnswer,
       gameMode,
       beantworteFrage,
-      checkBereichComplete,
+      checkTopicComplete,
       examAbgelaufen,
     ],
    );
@@ -292,8 +292,8 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
 
            {/* Themen-Abschluss Dialog (Issue #46) */}
           <Dialog
-            open={bereichComplete !== null}
-            onOpenChange={(open) => !open && setBereichComplete(null)}
+            open={topicComplete !== null}
+            onOpenChange={(open) => !open && setTopicComplete(null)}
           >
             <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-sm dark:bg-slate-900 dark:border-slate-700 dark:text-white">
               <DialogHeader>
@@ -304,7 +304,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
                 <DialogDescription className="text-slate-500 text-sm dark:text-slate-400">
                   Du hast alle Fragen im Thema{' '}
                   <span className="text-teal-400 font-medium">
-                    {bereichComplete}
+                    {topicComplete}
                   </span>{' '}
                   beantwortet.
                 </DialogDescription>
@@ -315,7 +315,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
               </p>
               <div className="flex gap-2 mt-2">
                 <Button
-                  onClick={() => setBereichComplete(null)}
+                  onClick={() => setTopicComplete(null)}
                   variant="outline"
                   className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-100 text-xs dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
@@ -323,7 +323,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
                 </Button>
                 <Button
                   onClick={() => {
-                    setBereichComplete(null);
+                    setTopicComplete(null);
                     goToView('start');
                   }}
                   className="flex-1 bg-teal-500 hover:bg-teal-600 text-white text-xs"
