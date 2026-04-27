@@ -28,7 +28,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
     }),
-    [quiz, theme]
+    [quiz, theme],
   );
 
   const pageConfig = MENU_PAGES.find((p) => p.id === "settings");
@@ -37,7 +37,10 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
   const handleModeSwitch = (mode: GameMode) => {
     if (mode === quiz.gameMode) return;
     // Confirmation required when exam or hardcore is currently active
-    if (quiz.isActive && (quiz.gameMode === "exam" || quiz.gameMode === "hardcore")) {
+    if (
+      quiz.isActive &&
+      (quiz.gameMode === "exam" || quiz.gameMode === "hardcore")
+    ) {
       setPendingMode(mode);
       setShowExamConfirm(true);
       return;
@@ -124,7 +127,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
         {/* Info */}
         <section className="px-4 py-2">
           <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-            Fisherman&apos;s Quiz v0.3.5
+            Fisherman&apos;s Quiz v0.3.6
           </p>
         </section>
       </div>
