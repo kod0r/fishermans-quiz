@@ -16,6 +16,7 @@ import FlashcardView from '@/views/FlashcardView';
 import ProgressView from '@/views/ProgressView';
 import HistoryView from '@/views/HistoryView';
 import BrowseView from '@/views/BrowseView';
+import HelpView from '@/views/HelpView';
 
 export default function App() {
   const quiz = useQuiz();
@@ -143,6 +144,9 @@ function ViewRenderer({
   }
   if (currentView === 'start') {
     return <StartView quiz={quiz} />;
+  }
+  if (currentView === 'help') {
+    return <HelpView onBack={() => quiz.goToView('start')} />;
   }
   const _exhaustiveCheck: never = currentView;
   return _exhaustiveCheck;

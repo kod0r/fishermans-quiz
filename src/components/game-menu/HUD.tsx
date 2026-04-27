@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { Home, Menu, Pause, Play, Zap, Timer, Shield } from "lucide-react";
+import { Home, Menu, Pause, Play, Zap, Timer, Shield, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { QuizContext } from "@/hooks/useQuiz";
 import type { MenuPageId } from "@/hooks/useGameMenu";
@@ -39,10 +39,12 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       return;
     }
 
+    const startedAt = quiz.rawRun.startedAt;
+    const durationSeconds = quiz.rawRun.durationSeconds;
     const tick = () => {
-      const started = new Date(quiz.rawRun.startedAt).getTime();
+      const started = new Date(startedAt).getTime();
       const elapsed = Math.floor((Date.now() - started) / 1000);
-      const left = (quiz.rawRun.durationSeconds ?? 0) - elapsed;
+      const left = (durationSeconds ?? 0) - elapsed;
       setRemainingSeconds(left);
     };
 
@@ -206,6 +208,16 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
             <Pause className="w-4 h-4 fill-current" />
           </Button>
         )}
+
+        <Button
+          onClick={() => quiz.goToView("help")}
+          variant="ghost"
+          size="icon"
+          aria-label="Hilfe"
+          className="w-8 h-8 rounded-xl bg-slate-100/80 text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:bg-slate-800/80 dark:text-slate-400 dark:hover:bg-slate-700"
+        >
+          <HelpCircle className="w-4 h-4" />
+        </Button>
       </div>
     </div>
     </>
