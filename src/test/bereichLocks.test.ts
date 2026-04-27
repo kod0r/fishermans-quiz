@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { canSelectBereich } from '@/utils/bereichLocks';
+import { canSelectBereich, isBereichLocked } from '@/utils/bereichLocks';
 import type { MetaProgression } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 
@@ -25,6 +25,58 @@ function createMeta(overrides: Partial<MetaProgression> = {}): MetaProgression {
     ...overrides,
   };
 }
+
+describe('isBereichLocked', () => {
+  it('should return false for arcade mode', () => {
+    const meta = createMeta({
+      bereiche: {
+        Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
+      },
+    });
+    expect(isBereichLocked('Biologie', 'arcade', meta)).toBe(false);
+  });
+
+  it('should return false for exam mode', () => {
+    const meta = createMeta({
+      bereiche: {
+        Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
+      },
+    });
+    expect(isBereichLocked('Biologie', 'exam', meta)).toBe(false);
+  });
+
+  it('should return false for unattempted bereich in hardcore', () => {
+    const meta = createMeta();
+    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+  });
+
+  it('should return false for passed bereich in hardcore', () => {
+    const meta = createMeta({
+      bereiche: {
+        Biologie: { passed: true, consecutivePasses: 1, mastered: false, lastAttempt: '2026-01-01' },
+      },
+    });
+    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+  });
+
+  it('should return false for mastered bereich in hardcore', () => {
+    const meta = createMeta({
+      bereiche: {
+        Biologie: { passed: true, consecutivePasses: 3, mastered: true, lastAttempt: '2026-01-01' },
+      },
+    });
+    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(false);
+  });
+
+  it('should return true for failed bereich in hardcore', () => {
+    const meta = createMeta({
+      bereiche: {
+        Biologie: { passed: false, consecutivePasses: 0, mastered: false, lastAttempt: '2026-01-01' },
+      },
+    });
+    expect(isBereichLocked('Biologie', 'hardcore', meta)).toBe(true);
+  });
+});
 
 describe('canSelectBereich', () => {
   it('should always return true for arcade mode', () => {

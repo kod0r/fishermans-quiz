@@ -269,6 +269,52 @@ describe('useQuiz', () => {
     expect(result.current.metaProgress.bereiche['Biologie']?.consecutivePasses).toBe(0);
   });
 
+  it('sollte Hardcore-Bereich SOFORT als failed markieren bei erster falscher Antwort', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    act(() => {
+      result.current.setGameMode('hardcore');
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // Erste Frage richtig
+    act(() => {
+      result.current.beantworteFrage(fragen[0].id, fragen[0].richtige_antwort);
+    });
+
+    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBeUndefined();
+
+    // Zweite Frage falsch — SOFORT fail
+    act(() => {
+      result.current.beantworteFrage(fragen[1].id, 'X');
+    });
+
+    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBe(false);
+    expect(result.current.metaProgress.bereiche['Biologie']?.consecutivePasses).toBe(0);
+
+    // Letzte Frage richtig — bleibt failed
+    act(() => {
+      result.current.beantworteFrage(fragen[2].id, fragen[2].richtige_antwort);
+    });
+
+    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBe(false);
+  });
+
   it('sollte Hardcore-Bereich als failed markieren wenn der Run unterbrochen wird', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 

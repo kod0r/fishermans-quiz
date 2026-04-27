@@ -163,16 +163,33 @@ export function useQuiz() {
     srs.recordAnswer(frageId, isCorrect ? 4 : 0);
 
     const neueAntworten = { ...run.antworten, [frageId]: antwort };
+    const alleBeantwortet = run.aktiveFragen.every(f => neueAntworten[f.id] !== undefined);
 
-    // Hardcore: Prüfe ob alle Fragen beantwortet wurden → Bereich-Results speichern
+    // Hardcore: Sofortiges Fail bei falscher Antwort + End-Prüfung
     if (gameMode === 'hardcore' && run.isActive) {
-      const alleBeantwortet = run.aktiveFragen.every(f => neueAntworten[f.id] !== undefined);
+      if (!isCorrect) {
+        const bereichId = frage.bereich;
+        if (run.geladeneBereiche.includes(bereichId)) {
+          meta.recordBereichResult(bereichId, false);
+        }
+      }
+
       if (alleBeantwortet) {
         for (const bereichId of run.geladeneBereiche) {
           const bereichFragen = run.aktiveFragen.filter(f => f.bereich === bereichId);
           const alleRichtig = bereichFragen.every(f => neueAntworten[f.id] === f.richtige_antwort);
           meta.recordBereichResult(bereichId, alleRichtig);
         }
+      }
+    }
+
+    // Arcade: Sterne + Highscore pro Bereich bei Run-Abschluss
+    if (gameMode === 'arcade' && alleBeantwortet) {
+      for (const bereichId of run.geladeneBereiche) {
+        const bereichFragen = run.aktiveFragen.filter(f => f.bereich === bereichId);
+        const korrekt = bereichFragen.filter(f => neueAntworten[f.id] === f.richtige_antwort).length;
+        const pct = bereichFragen.length > 0 ? Math.round((korrekt / bereichFragen.length) * 100) : 0;
+        meta.recordArcadeRunComplete(bereichId, pct);
       }
     }
 
