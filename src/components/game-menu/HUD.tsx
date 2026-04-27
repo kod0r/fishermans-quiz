@@ -73,7 +73,7 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         ref={hudRef}
         data-testid="hud-bar"
         className={`
-          fixed bottom-[4.51px] left-0 right-0 z-50
+          fixed bottom-[10px] left-0 right-0 z-50
           flex justify-center
           transition-transform duration-300 ease-out
           ${hidden ? "translate-y-[calc(100%+24px)]" : "translate-y-0"}
@@ -104,12 +104,12 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
             </Button>
           )}
 
-          {currentView !== "quiz" && isQuizActive && quiz.gameMode !== 'exam' && (
+          {currentView !== "quiz" && isQuizActive && (
             <Button
               onClick={() => quiz.goToView("quiz")}
               variant="ghost"
               size="icon"
-              aria-label="Quiz fortsetzen"
+              aria-label={quiz.gameMode === "exam" ? "Prüfung fortsetzen" : "Quiz fortsetzen"}
               className="w-8 h-8 rounded-xl bg-slate-100/80 text-teal-600 hover:bg-teal-100 hover:text-teal-700 dark:bg-slate-800/80 dark:text-teal-400 dark:hover:bg-teal-900/50"
             >
               <Play className="w-4 h-4 fill-current" />
