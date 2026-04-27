@@ -126,8 +126,8 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       onTouchMove={handleTouchMove}
     >
       <div className="relative flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
-        {/* Grabber indicator attached to upper inside edge */}
-        <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full bg-slate-300/60 dark:bg-slate-600/60" />
+        {/* Grabber indicator seamlessly on upper inside edge */}
+        <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-slate-300 dark:bg-slate-600" />
 
         {modeBadge && (
           <div className="flex items-center px-2">
