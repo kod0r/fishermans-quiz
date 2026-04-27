@@ -40,7 +40,7 @@ function createMockQuiz(overrides: Partial<QuizContext> = {}): QuizContext {
     beendeExam: vi.fn(),
     starteQuiz: vi.fn(),
     starteFlashcards: vi.fn(),
-    geladeneBereiche: [],
+    loadedTopics: [],
     historyEntries: [],
     exportFullBackup: vi.fn(),
     importFullBackup: vi.fn(),

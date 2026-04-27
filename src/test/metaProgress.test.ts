@@ -126,74 +126,74 @@ describe('useMetaProgress', () => {
     expect(hardcore.current.meta.fragen['q1'].correctStreak).toBe(0);
   });
 
-  it('sollte Bereich-Result als passed speichern', () => {
+  it('sollte Topic-Result als passed speichern', () => {
     const { result } = renderHook(() => useMetaProgress('hardcore'));
 
     act(() => {
-      result.current.recordBereichResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
     });
 
-    expect(result.current.meta.bereiche['Biologie'].passed).toBe(true);
-    expect(result.current.meta.bereiche['Biologie'].consecutivePasses).toBe(1);
-    expect(result.current.meta.bereiche['Biologie'].mastered).toBe(false);
-    expect(result.current.bestandeneBereicheHardcore).toBe(1);
-    expect(result.current.gemeisterteBereicheHardcore).toBe(0);
+    expect(result.current.meta.topics['Biologie'].passed).toBe(true);
+    expect(result.current.meta.topics['Biologie'].consecutivePasses).toBe(1);
+    expect(result.current.meta.topics['Biologie'].mastered).toBe(false);
+    expect(result.current.passedTopicsHardcore).toBe(1);
+    expect(result.current.masteredTopicsHardcore).toBe(0);
   });
 
   it('sollte consecutivePasses bei passed erhöhen', () => {
     const { result } = renderHook(() => useMetaProgress('hardcore'));
 
     act(() => {
-      result.current.recordBereichResult('Biologie', true);
-      result.current.recordBereichResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
     });
 
-    expect(result.current.meta.bereiche['Biologie'].consecutivePasses).toBe(2);
-    expect(result.current.meta.bereiche['Biologie'].mastered).toBe(false);
+    expect(result.current.meta.topics['Biologie'].consecutivePasses).toBe(2);
+    expect(result.current.meta.topics['Biologie'].mastered).toBe(false);
   });
 
   it('sollte mastered nach 3 konsekutiven Passe setzen', () => {
     const { result } = renderHook(() => useMetaProgress('hardcore'));
 
     act(() => {
-      result.current.recordBereichResult('Biologie', true);
-      result.current.recordBereichResult('Biologie', true);
-      result.current.recordBereichResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
     });
 
-    expect(result.current.meta.bereiche['Biologie'].mastered).toBe(true);
-    expect(result.current.meta.bereiche['Biologie'].consecutivePasses).toBe(3);
-    expect(result.current.gemeisterteBereicheHardcore).toBe(1);
+    expect(result.current.meta.topics['Biologie'].mastered).toBe(true);
+    expect(result.current.meta.topics['Biologie'].consecutivePasses).toBe(3);
+    expect(result.current.masteredTopicsHardcore).toBe(1);
   });
 
   it('sollte consecutivePasses bei failed zurücksetzen', () => {
     const { result } = renderHook(() => useMetaProgress('hardcore'));
 
     act(() => {
-      result.current.recordBereichResult('Biologie', true);
-      result.current.recordBereichResult('Biologie', true);
-      result.current.recordBereichResult('Biologie', false);
+      result.current.recordTopicResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', false);
     });
 
-    expect(result.current.meta.bereiche['Biologie'].passed).toBe(false);
-    expect(result.current.meta.bereiche['Biologie'].consecutivePasses).toBe(0);
-    expect(result.current.meta.bereiche['Biologie'].mastered).toBe(false);
+    expect(result.current.meta.topics['Biologie'].passed).toBe(false);
+    expect(result.current.meta.topics['Biologie'].consecutivePasses).toBe(0);
+    expect(result.current.meta.topics['Biologie'].mastered).toBe(false);
   });
 
-  it('sollte Bereich-Results beim Reset löschen', () => {
+  it('sollte Topic-Results beim Reset löschen', () => {
     const { result } = renderHook(() => useMetaProgress('hardcore'));
 
     act(() => {
-      result.current.recordBereichResult('Biologie', true);
+      result.current.recordTopicResult('Biologie', true);
     });
 
-    expect(result.current.bestandeneBereicheHardcore).toBe(1);
+    expect(result.current.passedTopicsHardcore).toBe(1);
 
     act(() => {
       result.current.reset();
     });
 
-    expect(result.current.bestandeneBereicheHardcore).toBe(0);
-    expect(result.current.gemeisterteBereicheHardcore).toBe(0);
+    expect(result.current.passedTopicsHardcore).toBe(0);
+    expect(result.current.masteredTopicsHardcore).toBe(0);
   });
 });

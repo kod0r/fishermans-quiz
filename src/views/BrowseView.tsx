@@ -16,30 +16,30 @@ interface Props { quiz: QuizContext; onBack: () => void; }
 export default function BrowseView({ quiz, onBack }: Props) {
   const { quizData, favorites, metaProgress, srsMap } = quiz;
   const [query, setQuery] = useState('');
-  const [selectedBereiche, setSelectedBereiche] = useState<string[]>([]);
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [hasImage, setHasImage] = useState(false);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [masteryFilter, setMasteryFilter] = useState<'all' | 'mastered' | 'unmastered'>('all');
   const [selectedFrage, setSelectedFrage] = useState<Frage | null>(null);
 
-  const allBereiche = useMemo(() => {
+  const allTopics = useMemo(() => {
     if (!quizData) return [];
-    return Array.from(new Set(quizData.fragen.map((f) => f.bereich))).sort();
+    return Array.from(new Set(quizData.fragen.map((f) => f.topic))).sort();
   }, [quizData]);
 
   const filteredFragen = useMemo(() => {
     if (!quizData) return [];
     return filterFragen(quizData.fragen, {
       query,
-      bereiche: selectedBereiche.length > 0 ? selectedBereiche : undefined,
+      topics: selectedTopics.length > 0 ? selectedTopics : undefined,
       hasImage: hasImage || undefined,
       onlyFavorites: onlyFavorites || undefined,
       masteryFilter: masteryFilter !== 'all' ? masteryFilter : undefined,
     }, { favorites, metaProgress: metaProgress.fragen, srsMap });
-  }, [quizData, query, selectedBereiche, hasImage, onlyFavorites, masteryFilter, favorites, metaProgress.fragen, srsMap]);
+  }, [quizData, query, selectedTopics, hasImage, onlyFavorites, masteryFilter, favorites, metaProgress.fragen, srsMap]);
 
-  const toggleBereich = useCallback((bereich: string) => {
-    setSelectedBereiche((prev) => prev.includes(bereich) ? prev.filter((b) => b !== bereich) : [...prev, bereich]);
+  const toggleTopic = useCallback((topic: string) => {
+    setSelectedTopics((prev) => prev.includes(topic) ? prev.filter((b) => b !== topic) : [...prev, topic]);
   }, []);
 
   if (!quizData) return <div className="min-h-screen flex items-center justify-center"><p className="text-slate-500 dark:text-slate-400">Lade Fragenkatalog...</p></div>;
@@ -60,12 +60,12 @@ export default function BrowseView({ quiz, onBack }: Props) {
 
         <div className="space-y-3 mb-6">
           <div>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Bereiche</p>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Themen</p>
             <div className="flex flex-wrap gap-2">
-              {allBereiche.map((bereich) => (
-                <label key={bereich} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs cursor-pointer transition-colors ${selectedBereiche.includes(bereich) ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>
-                  <Checkbox checked={selectedBereiche.includes(bereich)} onCheckedChange={() => toggleBereich(bereich)} className="sr-only" aria-label={bereich} />
-                  <span>{bereich}</span>
+              {allTopics.map((topic) => (
+                <label key={topic} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs cursor-pointer transition-colors ${selectedTopics.includes(topic) ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>
+                  <Checkbox checked={selectedTopics.includes(topic)} onCheckedChange={() => toggleTopic(topic)} className="sr-only" aria-label={topic} />
+                  <span>{topic}</span>
                 </label>
               ))}
             </div>
@@ -102,7 +102,7 @@ export default function BrowseView({ quiz, onBack }: Props) {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-slate-700 dark:text-slate-200 line-clamp-2">{frage.frage}</p>
                     <div className="flex items-center gap-2 mt-1.5">
-                      <Badge variant="outline" className="text-[10px]">{frage.bereich}</Badge>
+                      <Badge variant="outline" className="text-[10px]">{frage.topic}</Badge>
                       {frage.bild && <Image className="w-3 h-3 text-slate-400" aria-hidden="true" />}
                       {favorites.includes(frage.id) && <Star className="w-3 h-3 text-amber-400 fill-amber-400" aria-hidden="true" />}
                       {metaProgress.fragen[frage.id] && isMastered(metaProgress.fragen[frage.id], srsMap[frage.id]) && <CheckCircle className="w-3 h-3 text-emerald-500" aria-hidden="true" />}
@@ -120,7 +120,7 @@ export default function BrowseView({ quiz, onBack }: Props) {
           <DialogHeader><DialogTitle className="text-base">Frage #{selectedFrage?.id}</DialogTitle></DialogHeader>
           {selectedFrage && (
             <div className="space-y-4">
-              <Badge variant="outline">{selectedFrage.bereich}</Badge>
+              <Badge variant="outline">{selectedFrage.topic}</Badge>
               <p className="text-slate-800 dark:text-slate-100">{selectedFrage.frage}</p>
               <div className="space-y-2">
                 {(['A', 'B', 'C'] as const).map((key) => (

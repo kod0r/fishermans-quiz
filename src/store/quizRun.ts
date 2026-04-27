@@ -16,7 +16,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, []);
 
   // Starte neuen Run oder erweitere bestehenden
-  const starteRun = useCallback((bereiche: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType) => {
+  const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
@@ -25,10 +25,10 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       if (run.durationSeconds) return;
 
       // Erweitere bestehenden Run
-      const combinedBereiche = [...new Set([...run.bereiche, ...bereiche])];
+      const combinedTopics = [...new Set([...run.topics, ...topics])];
       const existingIds = new Set(run.frageIds);
       const neueFragen = qd.fragen.filter(
-        f => bereiche.includes(f.bereich) && !existingIds.has(f.id)
+        f => topics.includes(f.topic) && !existingIds.has(f.id)
       );
       if (neueFragen.length === 0) return;
 
@@ -42,11 +42,13 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       persistRun({
         ...run,
         frageIds: [...run.frageIds, ...gemischt.map(f => f.id)],
-        bereiche: combinedBereiche,
+        topics: combinedTopics,
+        startedAt: new Date().toISOString(),
+        completedAt: undefined,
       });
     } else {
       // Neuer Run
-      const gefiltert = qd.fragen.filter(f => bereiche.includes(f.bereich));
+      const gefiltert = qd.fragen.filter(f => topics.includes(f.topic));
       const gemischt = [...gefiltert];
       for (let i = gemischt.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -59,7 +61,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       persistRun({
         frageIds: finalPool.map(f => f.id),
         antworten: {},
-        bereiche,
+        topics,
         aktuellerIndex: 0,
         isActive: true,
         startedAt: new Date().toISOString(),
@@ -109,17 +111,17 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     });
   }, []);
 
-  const entferneBereich = useCallback((bereichId: string) => {
+  const removeTopic = useCallback((topicId: string) => {
     if (!run || !quizData) return;
 
     const idsToRemove = new Set(
-      quizData.fragen.filter(f => f.bereich === bereichId).map(f => f.id)
+      quizData.fragen.filter(f => f.topic === topicId).map(f => f.id)
     );
 
     const neueFrageIds = run.frageIds.filter(id => !idsToRemove.has(id));
-    const neueBereiche = run.bereiche.filter(b => b !== bereichId);
+    const newTopics = run.topics.filter(b => b !== topicId);
 
-    if (neueFrageIds.length === run.frageIds.length && neueBereiche.length === run.bereiche.length) {
+    if (neueFrageIds.length === run.frageIds.length && newTopics.length === run.topics.length) {
       return;
     }
 
@@ -146,7 +148,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       ...run,
       frageIds: neueFrageIds,
       antworten: neueAntworten,
-      bereiche: neueBereiche,
+      topics: newTopics,
       aktuellerIndex: finalIndex,
     });
   }, [run, quizData, persistRun]);
@@ -159,6 +161,13 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     setRun(prev => {
       if (!prev) return prev;
       return { ...prev, isActive: false };
+    });
+  }, []);
+
+  const markCompleted = useCallback(() => {
+    setRun(prev => {
+      if (!prev) return prev;
+      return { ...prev, completedAt: new Date().toISOString() };
     });
   }, []);
 
@@ -176,6 +185,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       aktuellerIndex: 0,
       startedAt: new Date().toISOString(),
       selfAssessments: {},
+      completedAt: undefined,
     });
   }, [run, persistRun]);
 
@@ -250,7 +260,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     aktuelleFrage,
     aktuellerIndex: run?.aktuellerIndex ?? 0,
     antworten: run?.antworten ?? {},
-    geladeneBereiche: run?.bereiche ?? [],
+    loadedTopics: run?.topics ?? [],
     isActive: run?.isActive ?? false,
     statistiken,
     starteRun,
@@ -260,8 +270,9 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     naechsteFrage,
     vorherigeFrage,
     springeZuFrage,
-    entferneBereich,
+    removeTopic,
     unterbrecheRun,
     beendeRun,
+    markCompleted,
   };
 }

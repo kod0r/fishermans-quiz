@@ -1,9 +1,9 @@
 {
-  "bereich": "Bilderkennung",
+  "topic": "Bilderkennung",
   "fragen": [
     {
       "id": "B1.1",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt?",
       "antworten": {
         "A": "Steinfliegenlarve",
@@ -16,7 +16,7 @@
     },
     {
       "id": "B1.2",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt?",
       "antworten": {
         "A": "Eintagsfliegenlarve",
@@ -29,7 +29,7 @@
     },
     {
       "id": "B1.3",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt?",
       "antworten": {
         "A": "Eintagsfliegenlarve",
@@ -42,7 +42,7 @@
     },
     {
       "id": "B1.4",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt?",
       "antworten": {
         "A": "Köcherfliegenlarve ohne Köcher",
@@ -55,7 +55,7 @@
     },
     {
       "id": "B1.5",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt? © T. Woitzik",
       "antworten": {
         "A": "Köcherfliegenlarve mit Köcher",
@@ -68,7 +68,7 @@
     },
     {
       "id": "B1.6",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Insektenlarve ist hier dargestellt?",
       "antworten": {
         "A": "Großlibellenlarve",
@@ -81,7 +81,7 @@
     },
     {
       "id": "B2.1",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Bachforelle",
@@ -94,7 +94,7 @@
     },
     {
       "id": "B2.2",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Güster",
@@ -107,7 +107,7 @@
     },
     {
       "id": "B2.3",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Perlfisch",
@@ -120,7 +120,7 @@
     },
     {
       "id": "B2.4",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Äsche",
@@ -133,7 +133,7 @@
     },
     {
       "id": "B2.5",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Bachforelle",
@@ -146,7 +146,7 @@
     },
     {
       "id": "B2.6",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Bachforelle",
@@ -159,7 +159,7 @@
     },
     {
       "id": "B2.7",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Gründling",
@@ -172,7 +172,7 @@
     },
     {
       "id": "B2.8",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Flussbarsch",
@@ -185,7 +185,7 @@
     },
     {
       "id": "B2.9",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Güster",
@@ -198,7 +198,7 @@
     },
     {
       "id": "B2.10",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Kaulbarsch",
@@ -211,7 +211,7 @@
     },
     {
       "id": "B2.11",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Schied (Rapfen)",
@@ -224,7 +224,7 @@
     },
     {
       "id": "B2.12",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Waller (Wels)",
@@ -237,7 +237,7 @@
     },
     {
       "id": "B2.13",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Gründling",
@@ -250,7 +250,7 @@
     },
     {
       "id": "B2.14",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Bitterling",
@@ -263,7 +263,7 @@
     },
     {
       "id": "B2.15",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Zingel",
@@ -276,7 +276,7 @@
     },
     {
       "id": "B2.16",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Mühlkoppe",
@@ -289,7 +289,7 @@
     },
     {
       "id": "B2.17",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Kaulbarsch",
@@ -302,7 +302,7 @@
     },
     {
       "id": "B2.18",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Stint",
@@ -315,7 +315,7 @@
     },
     {
       "id": "B2.19",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Wildkarpfen",
@@ -328,7 +328,7 @@
     },
     {
       "id": "B2.20",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Dreistachliger Stichling",
@@ -341,7 +341,7 @@
     },
     {
       "id": "B2.21",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Karausche",
@@ -354,7 +354,7 @@
     },
     {
       "id": "B2.22",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Schleie",
@@ -367,7 +367,7 @@
     },
     {
       "id": "B2.23",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Schleie",
@@ -380,7 +380,7 @@
     },
     {
       "id": "B2.24",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
       "antworten": {
         "A": "Hasel",
@@ -393,7 +393,7 @@
     },
     {
       "id": "B3.1",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei welcher Art der Fischerei wird dieser Rollentyp eingesetzt?",
       "antworten": {
         "A": "beim Fliegenfischen",
@@ -406,7 +406,7 @@
     },
     {
       "id": "B3.2",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Charakteristisch für die Stationärrolle ist",
       "antworten": {
         "A": "der Schnurfangbügel für die Schnurführung",
@@ -419,7 +419,7 @@
     },
     {
       "id": "B3.3",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei welcher Art der Fischerei wird dieser Rollentyp vorwiegend eingesetzt?",
       "antworten": {
         "A": "Fliegenfischen",
@@ -432,7 +432,7 @@
     },
     {
       "id": "B3.4",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Mit diesem künstlichen Köder („dropshot“) fischt man auf",
       "antworten": {
         "A": "Zander",
@@ -445,7 +445,7 @@
     },
     {
       "id": "B3.5",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Was ist hier abgebildet?",
       "antworten": {
         "A": "Futterkorb",
@@ -458,7 +458,7 @@
     },
     {
       "id": "B3.6",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Die abgebildete Montage gehört zur Ausrüstung beim",
       "antworten": {
         "A": "Spinnfischen",
@@ -471,7 +471,7 @@
     },
     {
       "id": "B3.7",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welchen der abgebildeten Haken bezeichnet man als Schonhaken?",
       "antworten": {
         "A": "c)",
@@ -484,7 +484,7 @@
     },
     {
       "id": "B3.8",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Abgebildet ist hier ein",
       "antworten": {
         "A": "Echolot",
@@ -497,7 +497,7 @@
     },
     {
       "id": "B3.9",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei welcher Montage wird dieser Haken eingesetzt?",
       "antworten": {
         "A": "Haarmontage",
@@ -510,7 +510,7 @@
     },
     {
       "id": "B3.10",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei der abgebildeten Fliege handelt es sich um",
       "antworten": {
         "A": "eine Nymphe",
@@ -523,7 +523,7 @@
     },
     {
       "id": "B3.11",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Die abgebildete Unterwasserposen- montage dient zum Fang von",
       "antworten": {
         "A": "Welsen",
@@ -536,7 +536,7 @@
     },
     {
       "id": "B3.12",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Das abgebildete Gerät dient als",
       "antworten": {
         "A": "Werkzeug zum Aufspüren von Tauwürmern",
@@ -549,7 +549,7 @@
     },
     {
       "id": "B3.13",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Was charakterisiert den abgebildeten Spinnköder?",
       "antworten": {
         "A": "Er besitzt eine Tauchschaufel.",
@@ -562,7 +562,7 @@
     },
     {
       "id": "B3.14",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Wofür wird der abgebildete Spezialkescher überwiegend eingesetzt?",
       "antworten": {
         "A": "zum Hältern von Fischen beim Bootsangeln",
@@ -575,7 +575,7 @@
     },
     {
       "id": "B3.15",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei welcher Angelmethode wird der abgebildete Unterfangkescher hauptsächlich eingesetzt?",
       "antworten": {
         "A": "beim Stippfischen",
@@ -588,7 +588,7 @@
     },
     {
       "id": "B3.16",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Der abgebildete Köder ist",
       "antworten": {
         "A": "ein taumelnder Reizköder aus Metall.",
@@ -601,7 +601,7 @@
     },
     {
       "id": "B3.17",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Bei welcher Angelmethode wird der abgebildete Kunstköder meist eingesetzt?",
       "antworten": {
         "A": "beim Grundangeln",
@@ -614,7 +614,7 @@
     },
     {
       "id": "B4.1",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Hakenschaftknoten",
@@ -627,7 +627,7 @@
     },
     {
       "id": "B4.2",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Rapalaknoten",
@@ -640,7 +640,7 @@
     },
     {
       "id": "B4.3",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Blutknoten",
@@ -653,7 +653,7 @@
     },
     {
       "id": "B4.4",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Hakenschaftknoten",
@@ -666,7 +666,7 @@
     },
     {
       "id": "B4.5",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Schlaufenverbindungskno ten",
@@ -679,7 +679,7 @@
     },
     {
       "id": "B4.6",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Chirurgenknoten",
@@ -692,7 +692,7 @@
     },
     {
       "id": "B4.7",
-      "bereich": "Bilderkennung",
+      "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
         "A": "Stopperknoten",

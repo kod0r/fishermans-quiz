@@ -1,6 +1,6 @@
 export interface Frage {
   id: string;
-  bereich: string;
+  topic: string;
   frage: string;
   antworten: {
     A: string;
@@ -16,7 +16,7 @@ export interface QuizData {
   meta: {
     titel: string;
     anzahl_fragen: number;
-    bereiche: Record<string, number>;
+    topics: Record<string, number>;
   };
   fragen: Frage[];
 }
@@ -31,20 +31,21 @@ export type SelfAssessmentGrade = 'again' | 'hard' | 'good' | 'easy';
 export interface QuizRun {
   frageIds: string[];
   antworten: Record<string, string>;
-  bereiche: string[];
+  topics: string[];
   aktuellerIndex: number;
   isActive: boolean;
   startedAt?: string;
   durationSeconds?: number; // für zeitbegrenzte Modi (Exam)
   sessionType?: SessionType;
   selfAssessments?: Record<string, SelfAssessmentGrade>;
+  completedAt?: string; // verhindert doppeltes Loggen
 }
 
 // ── History Entry ──
 export interface HistoryEntry {
   id: string;
   timestamp: string;
-  bereiche: string[];
+  topics: string[];
   score: number;
   total: number;
   duration: number; // Sekunden
@@ -67,9 +68,17 @@ export interface MetaStats {
   totalIncorrect: number;
   bestStreak: number;
   currentStreak: number;
+  arcadeRunsCompleted?: number;
 }
 
-export interface BereichMeta {
+export interface ExamMeta {
+  attempts: number;
+  passedCount: number;
+  bestScore: number; // percentage 0–100
+  lastScore: number;
+}
+
+export interface TopicMeta {
   passed: boolean;
   consecutivePasses: number;
   mastered: boolean;
@@ -79,7 +88,10 @@ export interface BereichMeta {
 export interface MetaProgression {
   fragen: Record<string, FrageMeta>;
   stats: MetaStats;
-  bereiche: Record<string, BereichMeta>;
+  topics: Record<string, TopicMeta>;
+  arcadeStars?: Record<string, 1 | 2 | 3>;
+  bestArcadeScore?: Record<string, number>;
+  examMeta?: ExamMeta;
 }
 
 // ── Game Mode ──

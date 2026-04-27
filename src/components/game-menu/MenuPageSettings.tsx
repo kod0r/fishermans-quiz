@@ -28,33 +28,36 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
     }),
-    [quiz, theme]
+    [quiz, theme],
   );
 
   const pageConfig = MENU_PAGES.find((p) => p.id === "settings");
   if (!pageConfig) return null;
 
   const handleModeSwitch = (mode: GameMode) => {
-    // Exam confirmation required only when exam is currently active
-    if (quiz.isActive && quiz.gameMode === "exam") {
+    if (mode === quiz.gameMode) return;
+    // Confirmation required when exam or hardcore is currently active
+    if (
+      quiz.isActive &&
+      (quiz.gameMode === "exam" || quiz.gameMode === "hardcore")
+    ) {
       setPendingMode(mode);
       setShowExamConfirm(true);
       return;
     }
-    // Otherwise switch immediately
-    quiz.setGameMode(mode);
+    // Arcade or no active run: switch immediately
+    quiz.switchGameMode(mode);
   };
 
-  const handleConfirmExamSwitch = () => {
+  const handleConfirmSwitch = () => {
     if (pendingMode) {
-      quiz.beendeExam();
-      quiz.setGameMode(pendingMode);
+      quiz.switchGameMode(pendingMode);
     }
     setShowExamConfirm(false);
     setPendingMode(null);
   };
 
-  const handleCancelExamSwitch = () => {
+  const handleCancelSwitch = () => {
     setShowExamConfirm(false);
     setPendingMode(null);
   };
@@ -107,7 +110,13 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
                   label={item.label}
                   detail={getDetail(item)}
                   onClick={() => handleItemClick(item)}
-                  disabled={isItemDisabled(item)}
+                  disabled={
+                    item.target === "arcade" ||
+                    item.target === "hardcore" ||
+                    item.target === "exam"
+                      ? false
+                      : isItemDisabled(item)
+                  }
                   destructive={item.destructive}
                 />
               ))}
@@ -118,33 +127,39 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
         {/* Info */}
         <section className="px-4 py-2">
           <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-            Fisherman&apos;s Quiz v0.3.5
+            Fisherman&apos;s Quiz v0.3.6
           </p>
         </section>
       </div>
 
-      {/* Exam Mode Switch Confirmation Dialog */}
+      {/* Mode Switch Confirmation Dialog */}
       {showExamConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-6 max-w-sm mx-4 border border-slate-200 dark:border-slate-700 shadow-xl">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              Laufende Prüfung beenden?
+              {quiz.gameMode === "exam"
+                ? "Laufende Prüfung beenden?"
+                : "Hardcore-Run beenden?"}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
-              Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden.
+              {quiz.gameMode === "exam"
+                ? "Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden."
+                : "Der Moduswechsel beendet den aktiven Hardcore-Run. Alle Themen dieses Runs werden als nicht bestanden gewertet. Dies kann nicht rückgängig gemacht werden."}
             </p>
             <div className="flex gap-3">
               <button
-                onClick={handleCancelExamSwitch}
+                onClick={handleCancelSwitch}
                 className="flex-1 py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 Abbrechen
               </button>
               <button
-                onClick={handleConfirmExamSwitch}
+                onClick={handleConfirmSwitch}
                 className="flex-1 py-2 px-4 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
               >
-                Prüfung beenden und wechseln
+                {quiz.gameMode === "exam"
+                  ? "Prüfung beenden und wechseln"
+                  : "Run beenden und wechseln"}
               </button>
             </div>
           </div>

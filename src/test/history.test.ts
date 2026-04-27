@@ -12,7 +12,7 @@ describe('useHistory', () => {
     const { result } = renderHook(() => useHistory());
     act(() => {
       result.current.addEntry({
-        bereiche: ['Biologie'],
+        topics: ['Biologie'],
         score: 8,
         total: 10,
         duration: 120,
@@ -28,22 +28,22 @@ describe('useHistory', () => {
     const { result } = renderHook(() => useHistory());
     act(() => {
       result.current.addEntry({
-        bereiche: ['Biologie'],
+        topics: ['Biologie'],
         score: 5,
         total: 10,
         duration: 60,
         mode: 'arcade',
       });
       result.current.addEntry({
-        bereiche: ['Recht'],
+        topics: ['Recht'],
         score: 9,
         total: 10,
         duration: 90,
         mode: 'hardcore',
       });
     });
-    expect(result.current.entries[0].bereiche).toEqual(['Recht']);
-    expect(result.current.entries[1].bereiche).toEqual(['Biologie']);
+    expect(result.current.entries[0].topics).toEqual(['Recht']);
+    expect(result.current.entries[1].topics).toEqual(['Biologie']);
   });
 
   it('sollte maximal 500 Einträge halten', () => {
@@ -51,7 +51,7 @@ describe('useHistory', () => {
     act(() => {
       for (let i = 0; i < 502; i++) {
         result.current.addEntry({
-          bereiche: ['Biologie'],
+          topics: ['Biologie'],
           score: 1,
           total: 1,
           duration: 1,
@@ -67,7 +67,7 @@ describe('useHistory', () => {
       {
         id: 'test-1',
         timestamp: new Date().toISOString(),
-        bereiche: ['Recht'],
+        topics: ['Recht'],
         score: 7,
         total: 10,
         duration: 100,
@@ -84,7 +84,7 @@ describe('useHistory', () => {
     const { result } = renderHook(() => useHistory());
     act(() => {
       result.current.addEntry({
-        bereiche: ['Biologie'],
+        topics: ['Biologie'],
         score: 5,
         total: 10,
         duration: 60,
@@ -104,7 +104,7 @@ describe('useHistory', () => {
         {
           id: 'imp-1',
           timestamp: new Date().toISOString(),
-          bereiche: ['Bilderkennung'],
+          topics: ['Bilderkennung'],
           score: 10,
           total: 10,
           duration: 30,
@@ -120,14 +120,14 @@ describe('useHistory', () => {
     const { result } = renderHook(() => useHistory());
     act(() => {
       result.current.addEntry({
-        bereiche: ['Biologie'],
+        topics: ['Biologie'],
         score: 1,
         total: 1,
         duration: 1,
         mode: 'arcade',
       });
       result.current.addEntry({
-        bereiche: ['Recht'],
+        topics: ['Recht'],
         score: 2,
         total: 2,
         duration: 2,
@@ -135,5 +135,23 @@ describe('useHistory', () => {
       });
     });
     expect(result.current.entries[0].id).not.toBe(result.current.entries[1].id);
+  });
+
+  it('sollte legacy bereiche-Feld zu topics migrieren', () => {
+    const legacy = [
+      {
+        id: 'legacy-1',
+        timestamp: new Date().toISOString(),
+        bereiche: ['Recht', 'Biologie'],
+        score: 5,
+        total: 10,
+        duration: 60,
+        mode: 'arcade',
+      },
+    ];
+    localStorage.setItem('fmq:history:v1', JSON.stringify(legacy));
+    const { result } = renderHook(() => useHistory());
+    expect(result.current.entries).toHaveLength(1);
+    expect(result.current.entries[0].topics).toEqual(['Recht', 'Biologie']);
   });
 });

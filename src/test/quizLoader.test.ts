@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { loadQuizMeta, loadBereichsFragen, buildQuizData, clearQuizCache } from '@/utils/quizLoader';
+import { loadQuizMeta, loadTopicQuestions, buildQuizData, clearQuizCache } from '@/utils/quizLoader';
 
 describe('quizLoader', () => {
   beforeEach(() => {
@@ -9,9 +9,9 @@ describe('quizLoader', () => {
 
   it('sollte Meta-Daten laden', async () => {
     const mockMeta = {
-      meta: { titel: 'Test', anzahl_fragen: 10, bereiche: { Biologie: 10 } },
-      bereiche: ['Biologie'],
-      bereichFiles: { 'Biologie': 'biologie.json' },
+      meta: { titel: 'Test', anzahl_fragen: 10, topics: { Biologie: 10 } },
+      topics: ['Biologie'],
+      topicFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
 
@@ -25,20 +25,20 @@ describe('quizLoader', () => {
     const meta = await loadQuizMeta();
 
     expect(meta.meta.anzahl_fragen).toBe(10);
-    expect(meta.bereiche).toContain('Biologie');
+    expect(meta.topics).toContain('Biologie');
   });
 
   it('sollte Bereichs-Fragen laden', async () => {
     const mockMeta = {
-      meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
-      bereiche: ['Biologie'],
-      bereichFiles: { 'Biologie': 'biologie.json' },
+      meta: { titel: 'Test', anzahl_fragen: 1, topics: { Biologie: 1 } },
+      topics: ['Biologie'],
+      topicFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
     const mockFragen = {
-      bereich: 'Biologie',
+      topic: 'Biologie',
       fragen: [
-        { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+        { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
       ],
     };
 
@@ -55,23 +55,23 @@ describe('quizLoader', () => {
       return Promise.resolve({ ok: false, status: 404 } as Response);
     }));
 
-    const fragen = await loadBereichsFragen(['Biologie']);
+    const fragen = await loadTopicQuestions(['Biologie']);
 
     expect(fragen.length).toBe(1);
     expect(fragen[0].id).toBe('1');
   });
 
-  it('sollte geladene Bereiche cachen', async () => {
+  it('sollte geladene Topics cachen', async () => {
     const mockMeta = {
-      meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
-      bereiche: ['Biologie'],
-      bereichFiles: { 'Biologie': 'biologie.json' },
+      meta: { titel: 'Test', anzahl_fragen: 1, topics: { Biologie: 1 } },
+      topics: ['Biologie'],
+      topicFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
     const mockFragen = {
-      bereich: 'Biologie',
+      topic: 'Biologie',
       fragen: [
-        { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+        { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
       ],
     };
 
@@ -91,26 +91,26 @@ describe('quizLoader', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     // Erster Aufruf
-    await loadBereichsFragen(['Biologie']);
+    await loadTopicQuestions(['Biologie']);
     // Zweiter Aufruf (sollte aus Cache kommen)
-    await loadBereichsFragen(['Biologie']);
+    await loadTopicQuestions(['Biologie']);
 
     // Fetch sollte 2x aufgerufen (1x meta, 1x biologie.json)
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it('sollte QuizData aus Bereichen bauen', async () => {
+  it('sollte build QuizData from topics', async () => {
     const mockMeta = {
-      meta: { titel: 'Test', anzahl_fragen: 1, bereiche: { Biologie: 1 } },
-      bereiche: ['Biologie'],
-      bereichFiles: { 'Biologie': 'biologie.json' },
+      meta: { titel: 'Test', anzahl_fragen: 1, topics: { Biologie: 1 } },
+      topics: ['Biologie'],
+      topicFiles: { 'Biologie': 'biologie.json' },
       fragenIndex: { '1': 'Biologie' },
     };
 
     const mockFragen = {
-      bereich: 'Biologie',
+      topic: 'Biologie',
       fragen: [
-        { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+        { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
       ],
     };
 
@@ -130,11 +130,11 @@ describe('quizLoader', () => {
     expect(quizData.meta.anzahl_fragen).toBe(1);
   });
 
-  it('sollte Fehler bei unbekanntem Bereich werfen', async () => {
+  it('sollte Fehler bei unbekanntem Topic werfen', async () => {
     const mockMeta = {
-      meta: { titel: 'Test', anzahl_fragen: 0, bereiche: {} },
-      bereiche: [],
-      bereichFiles: {},
+      meta: { titel: 'Test', anzahl_fragen: 0, topics: {} },
+      topics: [],
+      topicFiles: {},
       fragenIndex: {},
     };
 
@@ -145,6 +145,6 @@ describe('quizLoader', () => {
       return Promise.resolve({ ok: false, status: 404 } as Response);
     }));
 
-    await expect(loadBereichsFragen(['Unbekannt'])).rejects.toThrow('Unbekannter Bereich');
+    await expect(loadTopicQuestions(['Unbekannt'])).rejects.toThrow('Unbekanntes Thema');
   });
 });

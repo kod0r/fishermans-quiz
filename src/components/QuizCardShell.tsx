@@ -25,7 +25,7 @@ export function QuizCardShell({
 }: Props) {
   return (
     <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[520px] sm:h-[600px] md:h-[720px] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
-      {/* Themenbereich + Favorit */}
+      {/* Topic + Favorite */}
       <div className="mb-2 flex items-center justify-between">
         {frage.bild ? (
           <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-purple-100 text-purple-600 border border-purple-300/50 dark:bg-purple-500/10 dark:text-purple-400 dark:border-purple-500/20">
@@ -33,7 +33,7 @@ export function QuizCardShell({
           </span>
         ) : (
           <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-teal-100 text-teal-600 border border-teal-300/50 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/20">
-            {frage.bereich}
+            {frage.topic}
           </span>
         )}
         <button

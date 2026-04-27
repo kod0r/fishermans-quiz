@@ -10,23 +10,23 @@ const mockQuizData: QuizData = {
   meta: {
     titel: 'Test',
     anzahl_fragen: 3,
-    bereiche: { Biologie: 3 },
+    topics: { Biologie: 3 },
   },
   fragen: [
-    { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
-    { id: '2', bereich: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
-    { id: '3', bereich: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
+    { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+    { id: '2', topic: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
+    { id: '3', topic: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
   ],
 };
 
 const mockMeta = {
-  meta: { titel: 'Test', anzahl_fragen: 3, bereiche: { Biologie: 3 } },
-  bereiche: ['Biologie'],
-  bereichFiles: { 'Biologie': 'biologie.json' },
+  meta: { titel: 'Test', anzahl_fragen: 3, topics: { Biologie: 3 } },
+  topics: ['Biologie'],
+  topicFiles: { 'Biologie': 'biologie.json' },
   fragenIndex: { '1': 'Biologie', '2': 'Biologie', '3': 'Biologie' },
 };
 
-const mockBereichResponse = { bereich: 'Biologie', fragen: mockQuizData.fragen };
+const mockTopicResponse = { topic: 'Biologie', fragen: mockQuizData.fragen };
 
 function createFetchMock() {
   return vi.fn((url: string) => {
@@ -34,7 +34,7 @@ function createFetchMock() {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
     }
     if (url.includes('biologie.json')) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockBereichResponse) } as Response);
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockTopicResponse) } as Response);
     }
     return Promise.resolve({ ok: false, status: 404 } as Response);
   });
@@ -70,7 +70,7 @@ function createMockQuiz(overrides: Partial<QuizContext> = {}): QuizContext {
     beendeRun: vi.fn(),
     starteQuiz: vi.fn(),
     starteFlashcards: vi.fn(),
-    geladeneBereiche: [],
+    loadedTopics: [],
     historyEntries: [],
     exportFullBackup: vi.fn(),
     importFullBackup: vi.fn(),

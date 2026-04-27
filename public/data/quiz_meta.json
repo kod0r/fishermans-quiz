@@ -2,7 +2,7 @@
   "meta": {
     "titel": "Bayerische Fischerprüfung - Fragenkatalog 2026",
     "anzahl_fragen": 1052,
-    "bereiche": {
+    "topics": {
       "Biologie": 319,
       "Gewässerkunde": 129,
       "Gewässerpflege": 136,
@@ -11,7 +11,7 @@
       "Bilderkennung": 54
     }
   },
-  "bereiche": [
+  "topics": [
     "Bilderkennung",
     "Biologie",
     "Fanggeräte und -methoden",
@@ -1073,7 +1073,7 @@
     "B4.6": "Bilderkennung",
     "B4.7": "Bilderkennung"
   },
-  "bereichFiles": {
+  "topicFiles": {
     "Biologie": "biologie.json",
     "Gewässerkunde": "gewaesserkunde.json",
     "Gewässerpflege": "gewaesserpflege.json",

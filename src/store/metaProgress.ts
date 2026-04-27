@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import type { FrageMeta, BereichMeta, MetaProgression, GameMode } from '@/types/quiz';
+import type { FrageMeta, TopicMeta, MetaProgression, GameMode } from '@/types/quiz';
 import { MetaStorage } from '@/utils/storage';
 
 const EMPTY: MetaProgression = Object.freeze({
@@ -11,20 +11,23 @@ const EMPTY: MetaProgression = Object.freeze({
     totalIncorrect: 0,
     bestStreak: 0,
     currentStreak: 0,
+    arcadeRunsCompleted: 0,
   }),
-  bereiche: {},
+  topics: {},
+  arcadeStars: {},
+  bestArcadeScore: {},
 });
 
 export function useMetaProgress(gameMode: GameMode) {
   const [meta, setMeta] = useState<MetaProgression>(() => {
     const loaded = MetaStorage.load(gameMode);
-    return { ...loaded, bereiche: loaded.bereiche ?? {} };
+    return { ...loaded, topics: loaded.topics ?? {} };
   });
 
   // Wenn sich der Modus ändert → neu laden
   useEffect(() => {
     const loaded = MetaStorage.load(gameMode);
-    setMeta({ ...loaded, bereiche: loaded.bereiche ?? {} });
+    setMeta({ ...loaded, topics: loaded.topics ?? {} });
   }, [gameMode]);
 
   const persist = useCallback((next: MetaProgression) => {
@@ -67,12 +70,12 @@ export function useMetaProgress(gameMode: GameMode) {
     });
   }, []);
 
-  // Bereich-Result speichern (Hardcore)
-  const recordBereichResult = useCallback((bereichId: string, passed: boolean) => {
+  // Topic-Result speichern (Hardcore)
+  const recordTopicResult = useCallback((topicId: string, passed: boolean) => {
     setMeta(prev => {
-      const existing = prev.bereiche[bereichId];
+      const existing = prev.topics[topicId];
       const consecutivePasses = passed ? (existing?.consecutivePasses || 0) + 1 : 0;
-      const bereichMeta: BereichMeta = {
+      const topicMeta: TopicMeta = {
         passed,
         consecutivePasses,
         mastered: consecutivePasses >= 3,
@@ -80,7 +83,48 @@ export function useMetaProgress(gameMode: GameMode) {
       };
       return {
         ...prev,
-        bereiche: { ...prev.bereiche, [bereichId]: bereichMeta },
+        topics: { ...prev.topics, [topicId]: topicMeta },
+      };
+    });
+  }, []);
+
+  // Exam abschließen
+  const recordExamResult = useCallback((scorePct: number, passed: boolean) => {
+    setMeta(prev => {
+      const prevExam = prev.examMeta;
+      return {
+        ...prev,
+        examMeta: {
+          attempts: (prevExam?.attempts || 0) + 1,
+          passedCount: (prevExam?.passedCount || 0) + (passed ? 1 : 0),
+          bestScore: Math.max(prevExam?.bestScore || 0, scorePct),
+          lastScore: scorePct,
+        },
+      };
+    });
+  }, []);
+
+  // Arcade-Run abschließen — Sterne + Highscore pro Topic
+  const recordArcadeRunComplete = useCallback((topicId: string, scorePct: number) => {
+    setMeta(prev => {
+      const stars: 1 | 2 | 3 = scorePct >= 100 ? 3 : scorePct >= 75 ? 2 : 1;
+      const currentStars = prev.arcadeStars?.[topicId] ?? 0;
+      const currentBest = prev.bestArcadeScore?.[topicId] ?? 0;
+
+      return {
+        ...prev,
+        stats: {
+          ...prev.stats,
+          arcadeRunsCompleted: (prev.stats.arcadeRunsCompleted || 0) + 1,
+        },
+        arcadeStars: {
+          ...prev.arcadeStars,
+          [topicId]: Math.max(currentStars, stars) as 1 | 2 | 3,
+        },
+        bestArcadeScore: {
+          ...prev.bestArcadeScore,
+          [topicId]: Math.max(currentBest, scorePct),
+        },
       };
     });
   }, []);
@@ -104,13 +148,13 @@ export function useMetaProgress(gameMode: GameMode) {
     }
   }, [meta, gameMode]);
 
-  const bestandeneBereicheHardcore = useMemo(() =>
-    Object.values(meta.bereiche ?? {}).filter(b => b.passed).length,
-    [meta.bereiche]
+  const passedTopicsHardcore = useMemo(() =>
+    Object.values(meta.topics ?? {}).filter(b => b.passed).length,
+    [meta.topics]
   );
-  const gemeisterteBereicheHardcore = useMemo(() =>
-    Object.values(meta.bereiche ?? {}).filter(b => b.mastered).length,
-    [meta.bereiche]
+  const masteredTopicsHardcore = useMemo(() =>
+    Object.values(meta.topics ?? {}).filter(b => b.mastered).length,
+    [meta.topics]
   );
 
   const getFrageMeta = useCallback((frageId: string): FrageMeta | undefined => {
@@ -119,11 +163,13 @@ export function useMetaProgress(gameMode: GameMode) {
 
   return {
     meta,
-    bestandeneBereicheHardcore,
-    gemeisterteBereicheHardcore,
+    passedTopicsHardcore,
+    masteredTopicsHardcore,
     recordAnswer,
     recordRunStart,
-    recordBereichResult,
+    recordTopicResult,
+    recordArcadeRunComplete,
+    recordExamResult,
     reset,
     getFrageMeta,
     importData,

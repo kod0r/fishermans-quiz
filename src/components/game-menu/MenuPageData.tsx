@@ -34,7 +34,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
             />
             <Label htmlFor="exp-json-data" className="flex-1 cursor-pointer flex items-center gap-2 text-[15px]">
               <FileJson className="w-4 h-4 text-slate-400" />
-              Progress (JSON)
+              Progress — aktueller Modus (JSON)
             </Label>
           </div>
           <div className="flex items-center space-x-2 px-4 py-3">
@@ -45,7 +45,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
             />
             <Label htmlFor="exp-csv-data" className="flex-1 cursor-pointer flex items-center gap-2 text-[15px]">
               <Table className="w-4 h-4 text-slate-400" />
-              Stats (CSV)
+              Stats — aktueller Modus (CSV)
             </Label>
           </div>
           <div className="flex items-center space-x-2 px-4 py-3">
@@ -78,7 +78,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
                 }
                 if (expCsv) {
                   const rows = [
-                    ['Frage-ID', 'Bereich', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
+                    ['Frage-ID', 'Thema', 'Versuche', 'Serie', 'Letztes Ergebnis', 'Erst gesehen', 'Zuletzt'],
                     ...Object.entries(quiz.metaProgress.fragen).map(([id, m]) => [
                       id,
                       quiz.quizMeta?.fragenIndex?.[id] ?? '',
@@ -130,7 +130,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
                   const data = JSON.parse(ev.target?.result as string);
                   const parsed = MetaProgressionSchema.safeParse(data);
                   if (parsed.success) {
-                    if (confirm('Import progress data? This will overwrite current progress.')) {
+                    if (confirm(`Import progress data for ${quiz.gameMode === 'exam' ? 'Prüfungsmodus' : quiz.gameMode}?\nDies überschreibt nur den Fortschritt des aktuellen Modus.`)) {
                       quiz.importMetaProgression?.(parsed.data);
                     }
                   } else {
@@ -174,7 +174,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
           <div className="px-4 py-3 grid grid-cols-2 gap-3">
             <Button data-menu-item variant="outline" size="sm" className="h-8" onClick={() => fileInputRef.current?.click()}>
               <Upload className="w-4 h-4 mr-2" />
-              Progress
+              Progress (aktueller Modus)
             </Button>
             <Button data-menu-item variant="outline" size="sm" className="h-8" onClick={() => backupInputRef.current?.click()}>
               <RotateCcw className="w-4 h-4 mr-2" />
@@ -186,15 +186,38 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
 
       {/* Danger Zone */}
       <section>
+        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 px-4 dark:text-slate-400">
+          Gefahrenzone
+        </h3>
         <div className="bg-slate-100/80 dark:bg-slate-800/50 rounded-xl overflow-hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
+          {/* Per-Mode Reset */}
+          <Button
+            data-menu-item
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start px-4 py-3 h-auto text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-500/10"
+            onClick={() => {
+              const modeLabel = quiz.gameMode === 'arcade' ? 'Arcade' : quiz.gameMode === 'hardcore' ? 'Hardcore' : 'Prüfungsmodus';
+              if (confirm(`${modeLabel}-Fortschritt löschen?\n\nDies entfernt alle Meta-Daten und den aktiven Run NUR für den ${modeLabel}. Andere Modi bleiben unberührt. Dies kann nicht rückgängig gemacht werden.`)) {
+                quiz.resetMetaProgression();
+                quiz.clearCurrentRun?.();
+              }
+            }}
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            {quiz.gameMode === 'arcade' ? 'Arcade-Fortschritt löschen' : quiz.gameMode === 'hardcore' ? 'Hardcore-Fortschritt löschen' : 'Prüfungs-Fortschritt löschen'}
+          </Button>
+
+          {/* Global Reset */}
           <Button
             data-menu-item
             variant="ghost"
             size="sm"
             className="w-full justify-start px-4 py-3 h-auto text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
             onClick={() => {
-              if (confirm('Delete all data? This cannot be undone.')) {
-                quiz.resetMetaProgression();
+              if (confirm('ALLE Daten löschen?\n\nDies entfernt den Fortschritt ALLER Modi (Arcade, Hardcore, Prüfung), alle Runs, Favoriten, Notizen, Verlauf und SRS-Daten. Dies kann nicht rückgängig gemacht werden.')) {
+                quiz.resetAllMetaProgression?.();
+                quiz.clearAllRuns?.();
                 quiz.resetSRS?.();
                 quiz.resetFavorites?.();
                 quiz.resetNotes?.();

@@ -7,23 +7,23 @@ const mockQuizData: QuizData = {
   meta: {
     titel: 'Test',
     anzahl_fragen: 3,
-    bereiche: { Biologie: 3 },
+    topics: { Biologie: 3 },
   },
   fragen: [
-    { id: '1', bereich: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
-    { id: '2', bereich: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
-    { id: '3', bereich: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
+    { id: '1', topic: 'Biologie', frage: 'F1', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'A' },
+    { id: '2', topic: 'Biologie', frage: 'F2', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'B' },
+    { id: '3', topic: 'Biologie', frage: 'F3', antworten: { A: 'a', B: 'b', C: 'c' }, richtige_antwort: 'C' },
   ],
 };
 
 const mockMeta = {
-  meta: { titel: 'Test', anzahl_fragen: 3, bereiche: { Biologie: 3 } },
-  bereiche: ['Biologie'],
-  bereichFiles: { 'Biologie': 'biologie.json' },
+  meta: { titel: 'Test', anzahl_fragen: 3, topics: { Biologie: 3 } },
+  topics: ['Biologie'],
+  topicFiles: { 'Biologie': 'biologie.json' },
   fragenIndex: { '1': 'Biologie', '2': 'Biologie', '3': 'Biologie' },
 };
 
-const mockBereichResponse = { bereich: 'Biologie', fragen: mockQuizData.fragen };
+const mockTopicResponse = { topic: 'Biologie', fragen: mockQuizData.fragen };
 
 function createFetchMock() {
   return vi.fn((url: string) => {
@@ -31,7 +31,7 @@ function createFetchMock() {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
     }
     if (url.includes('biologie.json')) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockBereichResponse) } as Response);
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockTopicResponse) } as Response);
     }
     return Promise.resolve({ ok: false, status: 404 } as Response);
   });
@@ -159,7 +159,7 @@ describe('useQuiz', () => {
     expect(result.current.gameMode).toBe('hardcore');
   });
 
-  it('sollte bereichEntfernbar korrekt berechnen', async () => {
+  it('sollte topicRemovable korrekt berechnen', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 
     const { result } = renderHook(() => useQuiz());
@@ -168,8 +168,8 @@ describe('useQuiz', () => {
       expect(result.current.istGeladen).toBe(true);
     });
 
-    // Ohne aktiven Run: Bereich kann entfernt werden
-    expect(result.current.kannBereichEntfernen('Biologie')).toBe(true);
+    // Ohne aktiven Run: Topic kann entfernt werden
+    expect(result.current.canRemoveTopic('Biologie')).toBe(true);
 
     await act(async () => {
       await result.current.starteQuiz(['Biologie']);
@@ -179,10 +179,10 @@ describe('useQuiz', () => {
       expect(result.current.isActive).toBe(true);
     });
 
-    // Arcade: Bereich kann entfernt werden (chirurgisch)
-    expect(result.current.kannBereichEntfernen('Biologie')).toBe(true);
+    // Arcade: Topic kann entfernt werden (chirurgisch)
+    expect(result.current.canRemoveTopic('Biologie')).toBe(true);
 
-    // Hardcore: Bereich kann NICHT entfernt werden (all-or-nothing)
+    // Hardcore: Topic kann NICHT entfernt werden (all-or-nothing)
     act(() => {
       result.current.setGameMode('hardcore');
     });
@@ -196,10 +196,10 @@ describe('useQuiz', () => {
       expect(result.current.isActive).toBe(true);
     });
 
-    expect(result.current.kannBereichEntfernen('Biologie')).toBe(false);
+    expect(result.current.canRemoveTopic('Biologie')).toBe(false);
   });
 
-  it('sollte Hardcore-Bereich als passed markieren wenn alle Fragen richtig beantwortet wurden', async () => {
+  it('sollte Hardcore-Topic als passed markieren wenn alle Fragen richtig beantwortet wurden', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 
     const { result } = renderHook(() => useQuiz());
@@ -227,11 +227,11 @@ describe('useQuiz', () => {
       });
     }
 
-    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBe(true);
-    expect(result.current.metaProgress.bereiche['Biologie']?.consecutivePasses).toBe(1);
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(true);
+    expect(result.current.metaProgress.topics['Biologie']?.consecutivePasses).toBe(1);
   });
 
-  it('sollte Hardcore-Bereich als failed markieren wenn eine Frage falsch war', async () => {
+  it('sollte Hardcore-Topic als failed markieren wenn eine Frage falsch war', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 
     const { result } = renderHook(() => useQuiz());
@@ -265,11 +265,57 @@ describe('useQuiz', () => {
       result.current.beantworteFrage(fragen[2].id, fragen[2].richtige_antwort);
     });
 
-    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBe(false);
-    expect(result.current.metaProgress.bereiche['Biologie']?.consecutivePasses).toBe(0);
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(false);
+    expect(result.current.metaProgress.topics['Biologie']?.consecutivePasses).toBe(0);
   });
 
-  it('sollte Hardcore-Bereich als failed markieren wenn der Run unterbrochen wird', async () => {
+  it('sollte Hardcore-Topic SOFORT als failed markieren bei erster falscher Antwort', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    act(() => {
+      result.current.setGameMode('hardcore');
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // Erste Frage richtig
+    act(() => {
+      result.current.beantworteFrage(fragen[0].id, fragen[0].richtige_antwort);
+    });
+
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBeUndefined();
+
+    // Zweite Frage falsch — SOFORT fail
+    act(() => {
+      result.current.beantworteFrage(fragen[1].id, 'X');
+    });
+
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(false);
+    expect(result.current.metaProgress.topics['Biologie']?.consecutivePasses).toBe(0);
+
+    // Letzte Frage richtig — bleibt failed
+    act(() => {
+      result.current.beantworteFrage(fragen[2].id, fragen[2].richtige_antwort);
+    });
+
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(false);
+  });
+
+  it('sollte Hardcore-Topic als failed markieren wenn der Run unterbrochen wird', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 
     const { result } = renderHook(() => useQuiz());
@@ -303,7 +349,78 @@ describe('useQuiz', () => {
       expect(result.current.isActive).toBe(false);
     });
 
-    expect(result.current.metaProgress.bereiche['Biologie']?.passed).toBe(false);
-    expect(result.current.metaProgress.bereiche['Biologie']?.consecutivePasses).toBe(0);
+    expect(result.current.metaProgress.topics['Biologie']?.passed).toBe(false);
+    expect(result.current.metaProgress.topics['Biologie']?.consecutivePasses).toBe(0);
+  });
+
+  it('sollte Flashcard-Selbstbewertung korrekt in History loggen', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie'], { sessionType: 'flashcard' });
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // 2x again, 1x good
+    act(() => {
+      result.current.beantworteFlashcard(fragen[0].id, 'again');
+    });
+    act(() => {
+      result.current.beantworteFlashcard(fragen[1].id, 'again');
+    });
+    act(() => {
+      result.current.beantworteFlashcard(fragen[2].id, 'good');
+    });
+
+    expect(result.current.historyEntries).toHaveLength(1);
+    expect(result.current.historyEntries[0].score).toBe(1);
+    expect(result.current.historyEntries[0].total).toBe(3);
+  });
+
+  it('sollte abgeschlossene Session nicht doppelt loggen', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+
+    // Alle beantworten
+    for (const frage of fragen) {
+      act(() => {
+        result.current.beantworteFrage(frage.id, frage.richtige_antwort);
+      });
+    }
+
+    expect(result.current.historyEntries).toHaveLength(1);
+
+    // Versuch, bereits beantwortete Frage erneut zu beantworten
+    act(() => {
+      result.current.beantworteFrage(fragen[0].id, fragen[0].richtige_antwort);
+    });
+
+    expect(result.current.historyEntries).toHaveLength(1);
   });
 });

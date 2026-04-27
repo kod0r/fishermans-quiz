@@ -175,7 +175,7 @@ export default function HistoryView({ quiz, onBack }: Props) {
                       >
                         <div className="min-w-0">
                           <p className="text-slate-900 text-xs font-medium dark:text-white truncate">
-                            {entry.bereiche.join(', ')}
+                            {entry.topics.join(', ')}
                           </p>
                           <p className="text-slate-500 text-[10px] dark:text-slate-400">
                             {date} • {entry.mode} • {formatDuration(entry.duration)}

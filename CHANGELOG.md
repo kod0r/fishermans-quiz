@@ -1,11 +1,23 @@
 ## [Unreleased]
 
+## [0.3.6](https://github.com/kod0r/fishermans-quiz/compare/v0.3.5...v0.3.6) (2026-04-27)
+
 ### Features
 
+* **exam:** overhaul exam mode — 60 random questions across all topics, no topic selector
+  * StartView hides topic grid in exam mode; shows fancy "Prüfung starten" card below progress card
+  * Active exam shows "Prüfung fortsetzen" with answered count
+  * Enter key starts exam directly when exam mode is selected
+  * Active run info simplified for exam ("Alle Themen", no "hinzufügen" hint)
 * **exam:** Prüfungsabgabe führt jetzt zum Ergebnis statt auf blank screen
   * `beendeRun()` im Store setzt `isActive = false` statt Run zu löschen — Daten bleiben für ProgressView erhalten
   * `beendeExam()` wechselt View aktiv auf `'progress'`
   * `App.tsx` zeigt ProgressView auch bei `!isQuizActive` wenn `rawRun` existiert
+* **arcade:** per-topic star ratings, high-score table, and `arcadeRunsCompleted` stat
+* **hardcore:** strict topic lock enforcement with `isTopicLocked` utility
+* **exam:** isolate exam stats, enforce 60% pass threshold; always allow mode switch with warning
+* **ui:** game mode switcher embedded in StartView progress card (Arcade / Prüfung / Hardcore)
+* **ui:** rename user-facing "Bereich" → "Thema" across UI, errors, and CSV export
 * **hud:** Fortschritt-Button (`BarChart3`) aus QuizView-Menüleiste entfernt
 * **hud:** Play-Button auf ProgressView im Exam-Modus komplett unterdrückt — kein Zurück nach Abgabe
 * **progress:** "Zur Frage"-Buttons in falschen/unbeantworteten Listen sind `disabled` wenn `!isActive`
@@ -13,6 +25,8 @@
 ### Bug Fixes
 
 * **exam:** Timer-Ablauf und manuelle Abgabe zeigen jetzt konsistent das Ergebnis an
+* **session:** flashcard score accuracy, duplicate answer guard, extension `startedAt`
+* **history:** migrate legacy `bereiche` field to `topics`
 
 ## [0.3.5](https://github.com/kod0r/fishermans-quiz/compare/v0.3.0...v0.3.5) (2026-04-25)
 
