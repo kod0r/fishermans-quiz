@@ -71,6 +71,10 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
     [hidden],
   );
 
+  const handleTouchEnd = useCallback(() => {
+    touchStartY.current = null;
+  }, []);
+
   // Keyboard: H to toggle HUD
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -112,22 +116,36 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
   }, [isQuizActive, quiz.gameMode]);
 
   return (
-    <div
-      ref={hudRef}
-      data-testid="hud-bar"
-      className={`
-        fixed bottom-[10px] left-0 right-0 z-50
-        flex justify-center
-        transition-transform duration-300 ease-out
-        ${hidden ? "translate-y-[calc(100%-12px)]" : "translate-y-0"}
-      `}
-      onClick={hidden ? () => setHidden(false) : undefined}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-    >
-      <div className="relative flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
-        {/* Grabber indicator seamlessly on upper inside edge */}
-        <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-slate-300 dark:bg-slate-600" />
+    <>
+      {/* Invisible touch strip when hidden to enlarge swipe-up / tap target */}
+      {hidden && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-40 h-14 touch-none"
+          onClick={() => setHidden(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        />
+      )}
+
+      <div
+        ref={hudRef}
+        data-testid="hud-bar"
+        className={`
+          fixed bottom-[10px] left-0 right-0 z-50
+          flex justify-center
+          transition-transform duration-300 ease-out
+          touch-none
+          ${hidden ? "translate-y-[calc(100%-12px)]" : "translate-y-0"}
+        `}
+        onClick={hidden ? () => setHidden(false) : undefined}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="relative flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
+          {/* Grabber indicator seamlessly on upper inside edge */}
+          <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-slate-300 dark:bg-slate-600" />
 
         {modeBadge && (
           <div className="flex items-center px-2">
@@ -190,5 +208,6 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         )}
       </div>
     </div>
+    </>
   );
 }
