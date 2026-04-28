@@ -1,7 +1,20 @@
 ## [Unreleased]
 
+## [0.3.7](https://github.com/kod0r/fishermans-quiz/compare/v0.3.6...v0.3.7) (2026-04-27)
+
 ### Features
 
+* **shuffle:** per-run answer order randomization ([#218](https://github.com/kod0r/fishermans-quiz/issues/218))
+  * `QuizRun` schema: `answerShuffle` permutation map; `QuizStartOptions.shuffleAnswers`
+  * `shuffleAnswers` utility: pure Fisher-Yates with remapped keys and updated `richtige_antwort`
+  * `aktiveFragen` derives shuffled `Frage` objects automatically; zero view-layer changes needed
+  * `restarteRun` regenerates shuffle map; `removeTopic` prunes orphaned entries
+  * `unterbrecheRun` now marks run inactive (preserves shuffle for post-run review)
+* **settings:** global "Antworten mischen" toggle in Quiz-Verhalten menu ([#219](https://github.com/kod0r/fishermans-quiz/issues/219))
+  * `AppSettings.shuffleAnswers` persisted via generic settings storage
+  * `MenuItem` supports `aria-pressed`
+* **progress:** wrong-answer review cards display shuffled answer texts consistently ([#220](https://github.com/kod0r/fishermans-quiz/issues/220))
+* **flashcard:** zero view-layer changes; consumes already-shuffled `aktiveFragen`
 * **hud:** exam-mode-aware pause menu labels, exam timer badge, and game-mode indicator ([#208](https://github.com/kod0r/fishermans-quiz/issues/208), [#209](https://github.com/kod0r/fishermans-quiz/issues/209), [#211](https://github.com/kod0r/fishermans-quiz/issues/211))
   * `MenuPageRunActions`: "Prüfung" terminology in exam mode; restart hidden during exam ([#210](https://github.com/kod0r/fishermans-quiz/issues/210))
   * `HUD`: compact mode badge (Arcade/Prüfung/Hardcore) and live exam countdown
