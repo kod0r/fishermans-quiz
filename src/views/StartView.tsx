@@ -445,7 +445,7 @@ export default function StartView({ quiz }: Props) {
               </div>
 
               {/* Statistiken */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2 mb-2">
                 {gameMode === "arcade" ? (
                   <>
                     <StatBox

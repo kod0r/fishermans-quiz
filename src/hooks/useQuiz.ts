@@ -372,7 +372,7 @@ export function useQuiz() {
         const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
         const passed = scorePct >= 60;
         meta.recordExamResult(scorePct, passed);
-        const endedRun = run.rawRun ? { ...run.rawRun, isActive: false } : null;
+        const endedRun = run.rawRun ? { ...run.rawRun, isActive: false, gameMode } : null;
         run.beendeRun();
         // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
         if (endedRun) {

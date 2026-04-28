@@ -11,7 +11,7 @@ look @closed issues
 | Topic                              | GitHub Issue                                              | Priority |
 | ---------------------------------- | --------------------------------------------------------- | -------- |
 | Standalone offline Windows-Version | [#5](https://github.com/kod0r/fishermans-quiz/issues/5)   | low      |
-| Android- und iOS-Version           | [#6](https://github.com/kod0r/fishermans-quiz/issues/6)   | high     |
+| Android- und iOS-Version           | [#6](https://github.com/kod0r/fishermans-quiz/issues/6)   | low      |
 | Multi-Language Support             | [#55](https://github.com/kod0r/fishermans-quiz/issues/55) | low      |
 
 **→ [Create new issue](https://github.com/kod0r/fishermans-quiz/issues/new)**

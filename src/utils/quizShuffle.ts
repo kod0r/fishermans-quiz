@@ -13,6 +13,7 @@ export function shuffleAnswers(frage: Frage): { shuffled: Frage; order: ('A' | '
     [entries[i], entries[j]] = [entries[j], entries[i]];
   }
 
+  const keys: ('A' | 'B' | 'C')[] = ['A', 'B', 'C'];
   const order = entries.map(e => e[0]);
 
   const antworten = {
@@ -21,12 +22,12 @@ export function shuffleAnswers(frage: Frage): { shuffled: Frage; order: ('A' | '
     C: entries[2][1],
   } as Record<'A' | 'B' | 'C', string>;
 
-  // Map original correct key to its new position
+  // Map original correct text to its new key
   const originalCorrectText = frage.antworten[frage.richtige_antwort];
   let richtige_antwort: 'A' | 'B' | 'C' = 'A';
-  for (const [key, text] of entries) {
-    if (text === originalCorrectText) {
-      richtige_antwort = key;
+  for (let i = 0; i < entries.length; i++) {
+    if (entries[i][1] === originalCorrectText) {
+      richtige_antwort = keys[i];
       break;
     }
   }

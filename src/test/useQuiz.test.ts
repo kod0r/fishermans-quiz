@@ -423,4 +423,29 @@ describe('useQuiz', () => {
 
     expect(result.current.historyEntries).toHaveLength(1);
   });
+
+  it('sollte shuffleAnswers-Einstellung an starteRun weiterleiten', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    act(() => {
+      result.current.setShuffleAnswers(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    expect(result.current.rawRun?.answerShuffle).toBeDefined();
+    expect(Object.keys(result.current.rawRun!.answerShuffle!).length).toBeGreaterThan(0);
+  });
 });

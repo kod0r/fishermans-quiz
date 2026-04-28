@@ -40,6 +40,7 @@ export interface QuizRun {
   selfAssessments?: Record<string, SelfAssessmentGrade>;
   completedAt?: string; // verhindert doppeltes Loggen
   answerShuffle?: Record<string, ('A' | 'B' | 'C')[]>;
+  gameMode?: GameMode;
 }
 
 // ── History Entry ──
@@ -116,11 +117,6 @@ export interface AppBackup {
   notes: Record<string, string>;
   history: HistoryEntry[];
   srs: Record<string, SRSMeta>;
-}
-
-// ── Question Notes ──
-export interface QuestionNotes {
-  [frageId: string]: string;
 }
 
 // ── SRS Meta ──

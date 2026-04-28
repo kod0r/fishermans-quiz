@@ -99,12 +99,14 @@ export default function App() {
       />
 
       <ErrorBoundary>
-        <ViewRenderer
-          currentView={currentView}
-          isQuizActive={isQuizActive}
-          quiz={quiz}
-          gameMenu={gameMenu}
-        />
+        <main>
+          <ViewRenderer
+            currentView={currentView}
+            isQuizActive={isQuizActive}
+            quiz={quiz}
+            gameMenu={gameMenu}
+          />
+        </main>
       </ErrorBoundary>
        <Toaster position="top-center" richColors />
      </>

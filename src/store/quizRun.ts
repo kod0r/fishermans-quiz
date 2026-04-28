@@ -55,6 +55,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         startedAt: new Date().toISOString(),
         completedAt: undefined,
         answerShuffle: newAnswerShuffle,
+        gameMode: run.gameMode ?? gameMode,
       });
     } else {
       // Neuer Run
@@ -87,9 +88,10 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         durationSeconds,
         sessionType: sessionType ?? 'quiz',
         answerShuffle,
+        gameMode,
       });
     }
-  }, [quizData, run, persistRun]);
+  }, [quizData, run, persistRun, gameMode]);
 
   // Antwort speichern (nur wenn noch nicht beantwortet)
   const beantworteFrage = useCallback((frageId: string, antwort: string) => {
@@ -181,8 +183,9 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       topics: newTopics,
       aktuellerIndex: finalIndex,
       answerShuffle: neueAnswerShuffle,
+      gameMode: run.gameMode ?? gameMode,
     });
-  }, [run, quizData, persistRun]);
+  }, [run, quizData, persistRun, gameMode]);
 
   const unterbrecheRun = useCallback(() => {
     // Strategy: mark inactive instead of wiping so answerShuffle survives for review.
@@ -239,12 +242,15 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       selfAssessments: {},
       completedAt: undefined,
       answerShuffle: newAnswerShuffle,
+      gameMode: run.gameMode ?? gameMode,
     });
-  }, [run, quizData, persistRun]);
+  }, [run, quizData, persistRun, gameMode]);
 
   // Persistiere Run bei Änderungen
   useEffect(() => {
     if (run) {
+      // Verhindert Speichern eines Runs unter dem falschen Modus-Key
+      if (run.gameMode && run.gameMode !== gameMode) return;
       try {
         RunStorage.save(gameMode, run);
       } catch {
@@ -285,9 +291,10 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         frageIds: bereinigteIds,
         antworten: bereinigteAntworten,
         aktuellerIndex: bereinigterIndex,
+        gameMode: run.gameMode ?? gameMode,
       });
     }
-  }, [run, quizData, persistRun]);
+  }, [run, quizData, persistRun, gameMode]);
 
   // Abgeleitete Daten
   const aktiveFragen = useMemo<Frage[]>(() => {

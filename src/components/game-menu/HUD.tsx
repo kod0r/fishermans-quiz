@@ -25,6 +25,7 @@ function formatRemaining(totalSeconds: number): string {
 export function HUD({ quiz, gameMenu }: HUDProps) {
   const [hidden, setHidden] = useState(false);
   const touchStartY = useRef<number | null>(null);
+  const lastButtonTapRef = useRef<number>(0);
   const hudRef = useRef<HTMLDivElement>(null);
 
   const isQuizActive = quiz.isActive;
@@ -55,17 +56,21 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
+    if (e.target instanceof Element && e.target.closest('button')) {
+      lastButtonTapRef.current = Date.now();
+    }
   }, []);
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
       if (touchStartY.current === null) return;
+      if (Date.now() - lastButtonTapRef.current < 200) return;
       const diff = e.touches[0].clientY - touchStartY.current;
       // Bottom HUD: swipe down to hide, swipe up to show
-      if (diff > 40 && !hidden) {
+      if (diff > 100 && !hidden) {
         setHidden(true);
         touchStartY.current = null;
-      } else if (diff < -40 && hidden) {
+      } else if (diff < -100 && hidden) {
         setHidden(false);
         touchStartY.current = null;
       }
@@ -134,10 +139,11 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         ref={hudRef}
         data-testid="hud-bar"
         className={`
-          fixed bottom-[10px] left-0 right-0 z-50
+          fixed bottom-0 left-0 right-0 z-50
           flex justify-center
           transition-transform duration-300 ease-out
           touch-none
+          pb-[env(safe-area-inset-bottom)]
           ${hidden ? "translate-y-[calc(100%-12px)]" : "translate-y-0"}
         `}
         onClick={hidden ? () => setHidden(false) : undefined}
