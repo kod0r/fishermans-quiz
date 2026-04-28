@@ -40,7 +40,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
       }
 
-      let newAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
+      const newAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
       if (newAnswerShuffle && enableShuffle) {
         for (const f of gemischt) {
           const { order } = computeShuffle(f);
