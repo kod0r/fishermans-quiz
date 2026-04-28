@@ -5,15 +5,15 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Search, Image, Star, CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
+import { Search, Image, Star, CheckCircle, XCircle } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 import type { Frage } from '@/types/quiz';
 import { filterFragen } from '@/utils/filter';
 import { isMastered } from '@/utils/srs';
 
-interface Props { quiz: QuizContext; onBack: () => void; }
+interface Props { quiz: QuizContext; }
 
-export default function BrowseView({ quiz, onBack }: Props) {
+export default function BrowseView({ quiz }: Props) {
   const { quizData, favorites, metaProgress, srsMap } = quiz;
   const [query, setQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -48,7 +48,6 @@ export default function BrowseView({ quiz, onBack }: Props) {
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
       <div className="max-w-3xl mx-auto px-4 py-6">
         <div className="flex items-center gap-3 mb-6">
-          <Button variant="ghost" size="icon" onClick={onBack} aria-label="Zurück" className="shrink-0"><ArrowLeft className="w-5 h-5" /></Button>
           <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">Fragenkatalog</h1>
           <Badge variant="secondary" className="ml-auto">{filteredFragen.length} / {quizData.fragen.length}</Badge>
         </div>

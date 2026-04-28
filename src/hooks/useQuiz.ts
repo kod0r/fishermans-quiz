@@ -22,9 +22,10 @@ export function useQuiz() {
   const [view, setView] = useState<AppView>('start');
   const [istGeladen, setIstGeladen] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [isTutorialDemoActive, setIsTutorialDemoActive] = useState(false);
 
   const settings = useSettings();
-  const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt } = settings;
+  const { gameMode, setGameMode, backupReminderEnabled, lastBackupPrompt, setLastBackupPrompt, shuffleAnswers, setShuffleAnswers } = settings;
   const run = useQuizRun(quizData, gameMode);
   const meta = useMetaProgress(gameMode);
   const srs = useSRS();
@@ -134,8 +135,9 @@ export function useQuiz() {
 
   // Nur aktuellen Run löschen (ohne Hardcore-Logging)
   const clearCurrentRun = useCallback(() => {
-    run.unterbrecheRun();
-  }, [run]);
+    RunStorage.clear(gameMode);
+    run.wipeRun?.();
+  }, [run, gameMode]);
 
   // Alle Modi zurücksetzen
   const resetAllMetaProgression = useCallback(() => {
@@ -149,7 +151,7 @@ export function useQuiz() {
     RunStorage.clear('arcade');
     RunStorage.clear('hardcore');
     RunStorage.clear('exam');
-    run.unterbrecheRun();
+    run.wipeRun?.();
   }, [run]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
@@ -291,12 +293,15 @@ export function useQuiz() {
     const isNewRun = !run.isActive;
     const durationSeconds = gameMode === 'exam' ? EXAM_DURATION_SECONDS : undefined;
     const sessionType = options.sessionType ?? 'quiz';
-    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType);
+    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType, shuffleAnswers);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
-  }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds]);
+  }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds, shuffleAnswers]);
 
-  const goToView = useCallback((v: AppView) => setView(v), []);
+  const goToView = useCallback((v: AppView) => {
+    setView(v);
+    setIsTutorialDemoActive(false);
+  }, []);
 
   const removeTopicFromRun = useCallback((topicId: string) => {
     run.removeTopic(topicId);
@@ -357,6 +362,8 @@ export function useQuiz() {
           logCurrentRun();
         }
         run.unterbrecheRun();
+        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
+        try { RunStorage.clear(gameMode); } catch { /* ignore */ }
       } else if (gameMode === 'exam') {
         // Exam: Ergebnis loggen und beenden
         logCurrentRun();
@@ -365,7 +372,14 @@ export function useQuiz() {
         const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
         const passed = scorePct >= 60;
         meta.recordExamResult(scorePct, passed);
+        const endedRun = run.rawRun ? { ...run.rawRun, isActive: false, gameMode } : null;
         run.beendeRun();
+        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
+        if (endedRun) {
+          try { RunStorage.save(gameMode, endedRun); } catch { /* ignore */ }
+        } else {
+          try { RunStorage.clear(gameMode); } catch { /* ignore */ }
+        }
         if (view === 'quiz') {
           setView('progress');
         }
@@ -441,6 +455,8 @@ export function useQuiz() {
     // Settings
     gameMode,
     setGameMode,
+    shuffleAnswers,
+    setShuffleAnswers,
 
     // Run (Session)
     ...run,
@@ -494,6 +510,10 @@ export function useQuiz() {
     historyEntries: history.entries,
     clearHistory: history.clearHistory,
     importHistory: history.importHistory,
+
+    // Tutorial Demo
+    isTutorialDemoActive,
+    setIsTutorialDemoActive,
 
     // Backup
     exportFullBackup,

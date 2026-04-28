@@ -1,5 +1,63 @@
 ## [Unreleased]
 
+## [0.3.8](https://github.com/kod0r/fishermans-quiz/compare/v0.3.7...v0.3.8) (2026-04-28)
+
+### Features
+
+* **pwa:** installable PWA with vite-plugin-pwa ([#226](https://github.com/kod0r/fishermans-quiz/issues/226))
+  * `registerType: 'autoUpdate'` service worker
+  * Manifest: `Fisherman's Quiz` / `Feeesh`, theme_color `#14b8a6`
+  * Icons: `public/pwa-192x192.png`, `public/pwa-512x512.png`
+  * Workbox caches JS/CSS/HTML/JSON topic chunks
+
+### Bug Fixes
+
+* **quiz:** mode-switch race condition — old run no longer persists to wrong storage key ([#222](https://github.com/kod0r/fishermans-quiz/issues/222))
+  * `QuizRun` now tagged with `gameMode`; persist effect guards cross-key writes
+* **shuffle:** `shuffleAnswers` correctly maps `richtige_antwort` to shuffled position ([#224](https://github.com/kod0r/fishermans-quiz/issues/224))
+  * Previously returned original key instead of locating correct text after shuffle
+
+### Hardening
+
+* **mobile:** viewport audit and touch interaction fixes ([#227](https://github.com/kod0r/fishermans-quiz/issues/227))
+  * `QuizCardShell`: flex/min-height replaces fixed `h-[520px]` to fit iPhone SE
+  * `StartView`: `grid-cols-2 sm:grid-cols-3` prevents overflow on 375px viewports
+  * `HUD`: swipe threshold 40px → 100px, 200ms tap grace period, safe-area inset
+  * Lighthouse mobile: Accessibility 96, Best Practices 96, SEO 100
+* **docs:** architecture decision record — `docs/ARCHITECTURE.md` ([#223](https://github.com/kod0r/fishermans-quiz/issues/223))
+  * Data flow trace, state partitioning, game mode differences, shuffle note, localStorage rationale
+* **test:** shuffle utility + QuizRun integration + useQuiz wiring tests ([#224](https://github.com/kod0r/fishermans-quiz/issues/224))
+  * 224 tests passing
+* **chore:** dead code audit and removal ([#225](https://github.com/kod0r/fishermans-quiz/issues/225))
+  * Removed unused `QuestionNotes` interface, commented menu code in `menuConfig.ts`
+
+## [0.3.7](https://github.com/kod0r/fishermans-quiz/compare/v0.3.6...v0.3.7) (2026-04-27)
+
+### Features
+
+* **shuffle:** per-run answer order randomization ([#218](https://github.com/kod0r/fishermans-quiz/issues/218))
+  * `QuizRun` schema: `answerShuffle` permutation map; `QuizStartOptions.shuffleAnswers`
+  * `shuffleAnswers` utility: pure Fisher-Yates with remapped keys and updated `richtige_antwort`
+  * `aktiveFragen` derives shuffled `Frage` objects automatically; zero view-layer changes needed
+  * `restarteRun` regenerates shuffle map; `removeTopic` prunes orphaned entries
+  * `unterbrecheRun` now marks run inactive (preserves shuffle for post-run review)
+* **settings:** global "Antworten mischen" toggle in Quiz-Verhalten menu ([#219](https://github.com/kod0r/fishermans-quiz/issues/219))
+  * `AppSettings.shuffleAnswers` persisted via generic settings storage
+  * `MenuItem` supports `aria-pressed`
+* **progress:** wrong-answer review cards display shuffled answer texts consistently ([#220](https://github.com/kod0r/fishermans-quiz/issues/220))
+* **flashcard:** zero view-layer changes; consumes already-shuffled `aktiveFragen`
+* **hud:** exam-mode-aware pause menu labels, exam timer badge, and game-mode indicator ([#208](https://github.com/kod0r/fishermans-quiz/issues/208), [#209](https://github.com/kod0r/fishermans-quiz/issues/209), [#211](https://github.com/kod0r/fishermans-quiz/issues/211))
+  * `MenuPageRunActions`: "Prüfung" terminology in exam mode; restart hidden during exam ([#210](https://github.com/kod0r/fishermans-quiz/issues/210))
+  * `HUD`: compact mode badge (Arcade/Prüfung/Hardcore) and live exam countdown
+* **progress:** favorite star toggle on wrong-answer cards in `ProgressView`
+
+### Bug Fixes
+
+* **quiz:** mode switch now correctly persists ended run / clears hardcore run before switching gameMode
+* **menu:** hide Fragenkatalog menu item while an exam is active
+* **ui:** `StartView` bottom padding prevents HUD overlap on start buttons
+* **hud:** peeking grabber tab when hidden; improved swipe/tap logic with `touch-none` and invisible touch overlay for mobile/tablet
+
 ## [0.3.6](https://github.com/kod0r/fishermans-quiz/compare/v0.3.5...v0.3.6) (2026-04-27)
 
 ### Features

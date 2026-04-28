@@ -4,6 +4,7 @@ import type { MenuPageComponentProps } from './menuConfig';
 
 export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
   const [confirming, setConfirming] = useState<'restart' | 'exit' | null>(null);
+  const isExam = quiz.gameMode === 'exam';
 
   const handleContinue = () => {
     onClose();
@@ -38,7 +39,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
     return (
       <div className="py-8 px-4 text-center">
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Kein aktives Quiz.
+          {isExam ? 'Keine aktive Prüfung.' : 'Kein aktives Quiz.'}
         </p>
       </div>
     );
@@ -51,7 +52,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
         <button
           data-menu-item
           onClick={handleContinue}
-          aria-label="Quiz fortsetzen"
+          aria-label={isExam ? 'Prüfung fortsetzen' : 'Quiz fortsetzen'}
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-teal-500 text-white font-semibold text-[15px] hover:bg-teal-600 active:scale-[0.98] transition-all"
         >
           <Play className="w-5 h-5" />
@@ -65,39 +66,41 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
           Aktionen
         </h3>
         <div className="bg-slate-100/80 dark:bg-slate-800/50 rounded-xl overflow-hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
-          {/* Restart */}
-          {confirming === 'restart' ? (
-            <div className="flex items-center gap-2 px-4 py-3 bg-amber-50 dark:bg-amber-900/20">
-              <span className="flex-1 text-[15px] font-medium text-amber-700 dark:text-amber-400">
-                Wirklich neustarten?
-              </span>
+          {/* Restart — hidden in exam mode */}
+          {!isExam && (
+            confirming === 'restart' ? (
+              <div className="flex items-center gap-2 px-4 py-3 bg-amber-50 dark:bg-amber-900/20">
+                <span className="flex-1 text-[15px] font-medium text-amber-700 dark:text-amber-400">
+                  Wirklich neustarten?
+                </span>
+                <button
+                  data-menu-item
+                  onClick={cancelConfirm}
+                  className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 px-2 py-1 rounded"
+                >
+                  Abbrechen
+                </button>
+                <button
+                  data-menu-item
+                  onClick={confirmRestart}
+                  className="text-xs font-semibold text-amber-700 dark:text-amber-400 px-2 py-1 rounded hover:bg-amber-100 dark:hover:bg-amber-900/40"
+                >
+                  Neustart
+                </button>
+              </div>
+            ) : (
               <button
                 data-menu-item
-                onClick={cancelConfirm}
-                className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 px-2 py-1 rounded"
+                onClick={handleRestart}
+                aria-label="Quiz neu starten"
+                className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-foreground"
               >
-                Abbrechen
+                <span className="flex-shrink-0 text-muted-foreground">
+                  <RotateCcw className="w-5 h-5" />
+                </span>
+                <span className="flex-1 text-[15px] font-medium leading-tight">Neustart</span>
               </button>
-              <button
-                data-menu-item
-                onClick={confirmRestart}
-                className="text-xs font-semibold text-amber-700 dark:text-amber-400 px-2 py-1 rounded hover:bg-amber-100 dark:hover:bg-amber-900/40"
-              >
-                Neustart
-              </button>
-            </div>
-          ) : (
-            <button
-              data-menu-item
-              onClick={handleRestart}
-              aria-label="Quiz neu starten"
-              className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-foreground"
-            >
-              <span className="flex-shrink-0 text-muted-foreground">
-                <RotateCcw className="w-5 h-5" />
-              </span>
-              <span className="flex-1 text-[15px] font-medium leading-tight">Neustart</span>
-            </button>
+            )
           )}
 
           {/* Exit */}
@@ -125,13 +128,15 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
             <button
               data-menu-item
               onClick={handleExit}
-              aria-label="Quiz beenden"
+              aria-label={isExam ? 'Prüfung beenden' : 'Quiz beenden'}
               className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none active:scale-[0.98] cursor-pointer hover:bg-accent/50 text-red-500 dark:text-red-400"
             >
               <span className="flex-shrink-0 text-red-500 dark:text-red-400">
                 <Home className="w-5 h-5" />
               </span>
-              <span className="flex-1 text-[15px] font-medium leading-tight">Quiz beenden</span>
+              <span className="flex-1 text-[15px] font-medium leading-tight">
+                {isExam ? 'Prüfung beenden' : 'Quiz beenden'}
+              </span>
             </button>
           )}
         </div>

@@ -146,6 +146,8 @@ export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: 
               </div>
             ) : (
               <div className="flex-1 flex flex-col justify-center gap-3">
+                {/* FlashcardView consumes aktiveFragen which is already shuffled in quizRun.
+                    Zero view-layer changes needed for answer shuffle consistency. */}
                 <div className="space-y-2 mb-2">
                   {(['A', 'B', 'C'] as const).map((buchstabe) => {
                     const isCorrect = aktuelleFrage.richtige_antwort === buchstabe;

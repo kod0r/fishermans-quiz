@@ -429,4 +429,105 @@ describe('useQuizRun', () => {
     expect(result.current.aktiveFragen.length).toBe(3);
     expect(result.current.isActive).toBe(true);
   });
+
+  it('sollte answerShuffle für jede Frage generieren wenn Shuffle aktiviert', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie'], undefined, undefined, undefined, undefined, true);
+    });
+
+    expect(result.current.rawRun?.answerShuffle).toBeDefined();
+    const shuffleMap = result.current.rawRun!.answerShuffle!;
+    for (const frage of result.current.aktiveFragen) {
+      expect(shuffleMap[frage.id]).toBeDefined();
+      expect(shuffleMap[frage.id]).toHaveLength(3);
+    }
+  });
+
+  it('sollte aktiveFragen in gemischter Reihenfolge anzeigen wenn Shuffle aktiv', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie'], undefined, undefined, undefined, undefined, true);
+    });
+
+    const frage = result.current.aktiveFragen[0];
+    const shuffleMap = result.current.rawRun!.answerShuffle!;
+    const order = shuffleMap[frage.id];
+    const original = mockQuizData.fragen.find(f => f.id === frage.id)!;
+    expect(frage.antworten.A).toBe(original.antworten[order[0]]);
+    expect(frage.antworten.B).toBe(original.antworten[order[1]]);
+    expect(frage.antworten.C).toBe(original.antworten[order[2]]);
+  });
+
+  it('sollte bei restarteRun eine neue answerShuffle generieren', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie'], undefined, undefined, undefined, undefined, true);
+    });
+
+    const oldShuffle = result.current.rawRun!.answerShuffle;
+
+    act(() => {
+      result.current.restarteRun();
+    });
+
+    const newShuffle = result.current.rawRun!.answerShuffle;
+    expect(newShuffle).toBeDefined();
+    expect(newShuffle).not.toBe(oldShuffle);
+  });
+
+  it('sollte Shuffle-Einträge beim Entfernen eines Topics löschen', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie', 'Recht'], undefined, undefined, undefined, undefined, true);
+    });
+
+    const bioIds = mockQuizData.fragen.filter(f => f.topic === 'Biologie').map(f => f.id);
+    for (const id of bioIds) {
+      expect(result.current.rawRun!.answerShuffle![id]).toBeDefined();
+    }
+
+    act(() => {
+      result.current.removeTopic('Biologie');
+    });
+
+    for (const id of bioIds) {
+      expect(result.current.rawRun!.answerShuffle![id]).toBeUndefined();
+    }
+    for (const f of mockQuizData.fragen.filter(f => f.topic === 'Recht')) {
+      expect(result.current.rawRun!.answerShuffle![f.id]).toBeDefined();
+    }
+  });
+
+  it('sollte Antworten nach Shuffle korrekt bewerten', () => {
+    const { result } = renderHook(() => useQuizRun(mockQuizData, 'arcade'));
+
+    act(() => {
+      result.current.starteRun(['Biologie'], undefined, undefined, undefined, undefined, true);
+    });
+
+    const frage = result.current.aktiveFragen[0];
+    const correctKey = frage.richtige_antwort;
+
+    act(() => {
+      result.current.beantworteFrage(frage.id, correctKey);
+    });
+
+    expect(result.current.antworten[frage.id]).toBe(correctKey);
+    expect(result.current.statistiken.korrekt).toBe(1);
+    expect(result.current.statistiken.falsch).toBe(0);
+
+    const frage2 = result.current.aktiveFragen[1];
+    const wrongKey2 = (['A', 'B', 'C'] as const).find(k => k !== frage2.richtige_antwort)!;
+    act(() => {
+      result.current.beantworteFrage(frage2.id, wrongKey2);
+    });
+
+    expect(result.current.antworten[frage2.id]).toBe(wrongKey2);
+    expect(result.current.statistiken.falsch).toBe(1);
+  });
 });

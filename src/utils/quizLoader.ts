@@ -86,6 +86,7 @@ export const AppSettingsSchema = z.object({
   gameMode: z.enum(['arcade', 'hardcore', 'exam']),
   backupReminderEnabled: z.boolean().optional(),
   lastBackupPrompt: z.string().optional(),
+  shuffleAnswers: z.boolean().optional(),
 });
 
 export const AppBackupSchema = z.object({

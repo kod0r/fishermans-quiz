@@ -16,6 +16,7 @@ import FlashcardView from '@/views/FlashcardView';
 import ProgressView from '@/views/ProgressView';
 import HistoryView from '@/views/HistoryView';
 import BrowseView from '@/views/BrowseView';
+import HelpView from '@/views/HelpView';
 
 export default function App() {
   const quiz = useQuiz();
@@ -98,12 +99,14 @@ export default function App() {
       />
 
       <ErrorBoundary>
-        <ViewRenderer
-          currentView={currentView}
-          isQuizActive={isQuizActive}
-          quiz={quiz}
-          gameMenu={gameMenu}
-        />
+        <main>
+          <ViewRenderer
+            currentView={currentView}
+            isQuizActive={isQuizActive}
+            quiz={quiz}
+            gameMenu={gameMenu}
+          />
+        </main>
       </ErrorBoundary>
        <Toaster position="top-center" richColors />
      </>
@@ -136,13 +139,16 @@ function ViewRenderer({
     return <ProgressView quiz={quiz} />;
   }
   if (currentView === 'history') {
-    return <HistoryView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+    return <HistoryView quiz={quiz} />;
   }
   if (currentView === 'browse') {
-    return <BrowseView quiz={quiz} onBack={() => quiz.goToView('start')} />;
+    return <BrowseView quiz={quiz} />;
   }
   if (currentView === 'start') {
     return <StartView quiz={quiz} />;
+  }
+  if (currentView === 'help') {
+    return <HelpView quiz={quiz} />;
   }
   const _exhaustiveCheck: never = currentView;
   return _exhaustiveCheck;

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, XCircle, HelpCircle, ChevronDown } from 'lucide-react';
+import { CheckCircle, XCircle, HelpCircle, ChevronDown, Star } from 'lucide-react';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import type { QuizContext } from '@/hooks/useQuiz';
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function ProgressView({ quiz }: Props) {
-  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta, goToView, isActive } = quiz;
+  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta, goToView, isActive, toggleFavorite, isFavorite } = quiz;
   const [showWrong, setShowWrong] = useState(false);
   const [showUnanswered, setShowUnanswered] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -114,6 +114,8 @@ export default function ProgressView({ quiz }: Props) {
             {falsche.length === 0 ? (
               <p className="text-emerald-600 text-sm mt-2 dark:text-emerald-400">Keine falschen Antworten — super!</p>
             ) : showWrong && (
+                /* aktiveFragen already carries shuffled order via answerShuffle in quizRun,
+                   so no extra transformation is needed here. */
                 <div id="wrong-answers-list" className="mt-3 space-y-3">
                   {falsche.map(frage => {
                     const meta = getFrageMeta(frage.id);
@@ -121,13 +123,22 @@ export default function ProgressView({ quiz }: Props) {
                       <div key={frage.id} className="p-2.5 sm:p-3 rounded-lg bg-red-50 border border-red-200/50 dark:bg-red-500/5 dark:border-red-500/10">
                         <div className="flex items-start justify-between gap-3 mb-1.5">
                           <p className="text-slate-900 font-medium text-sm leading-snug dark:text-white">{frage.frage}</p>
-                          <button
-                            onClick={() => { if (!isActive) return; const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) { springeZuFrage(idx); goToView('quiz'); } }}
-                            disabled={!isActive}
-                            className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:no-underline"
-                          >
-                            Zur Frage
-                          </button>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <button
+                              onClick={() => toggleFavorite(frage.id)}
+                              aria-label={isFavorite(frage.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}
+                              className={`p-1.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${isFavorite(frage.id) ? 'text-amber-400 hover:text-amber-300' : 'text-slate-400 hover:text-amber-400 dark:text-slate-500'}`}
+                            >
+                              <Star className={`w-4 h-4 ${isFavorite(frage.id) ? 'fill-current' : ''}`} />
+                            </button>
+                            <button
+                              onClick={() => { if (!isActive) return; const idx = aktiveFragen.findIndex(f => f.id === frage.id); if (idx >= 0) { springeZuFrage(idx); goToView('quiz'); } }}
+                              disabled={!isActive}
+                              className="text-teal-600 text-xs hover:underline whitespace-nowrap flex-shrink-0 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-teal-400 dark:focus-visible:ring-offset-slate-900 rounded disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:no-underline"
+                            >
+                              Zur Frage
+                            </button>
+                          </div>
                         </div>
                         <div className="space-y-0.5 text-xs sm:text-sm">
                            <p className="text-red-600 dark:text-red-400">Deine Antwort: {antworten[frage.id]} — {frage.antworten[antworten[frage.id] as 'A' | 'B' | 'C']}</p>

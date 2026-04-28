@@ -275,9 +275,12 @@ export default function StartView({ quiz }: Props) {
   }, [effektivAusgewaehlt, nurFavoriten, quiz, flashcardMode]);
 
   const handleExamStart = useCallback(() => {
-    quiz.starteQuiz(TOPICS.map((b) => b.id), {
-      sessionType: "quiz",
-    });
+    quiz.starteQuiz(
+      TOPICS.map((b) => b.id),
+      {
+        sessionType: "quiz",
+      },
+    );
   }, [quiz]);
 
   // Global Enter handler to start quiz when areas are selected
@@ -332,7 +335,7 @@ export default function StartView({ quiz }: Props) {
   return (
     <TooltipProvider delayDuration={800}>
       <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950">
-        <div className="container mx-auto px-3 sm:px-4 py-1 sm:py-2 max-w-3xl">
+        <div className="container mx-auto px-3 sm:px-4 py-1 sm:py-2 pb-20 sm:pb-24 max-w-3xl">
           {/* Header */}
           <div className="text-center mb-2 sm:mb-3 pt-0 sm:pt-1">
             <div className="flex items-center justify-center gap-2 mb-2">
@@ -343,6 +346,14 @@ export default function StartView({ quiz }: Props) {
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
                 Fisherman's Quiz
               </h1>
+              {/* <button
+                onClick={() => quiz.goToView('help')}
+                className="ml-1 p-1 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors"
+                aria-label="Hilfe öffnen"
+                title="Hilfe & Tutorials"
+              >
+                <HelpCircle className="w-5 h-5 text-slate-400 hover:text-teal-400 transition-colors" />
+              </button> */}
             </div>
           </div>
 
@@ -355,8 +366,10 @@ export default function StartView({ quiz }: Props) {
                     Aktiver Quiz-Run
                   </p>
                   <p className="text-slate-500 text-xs dark:text-slate-400">
-                    {gameMode === "exam" ? "Alle Themen" : loadedTopics.join(", ")} — {statistiken.beantwortet}/
-                    {statistiken.gesamt} beantwortet
+                    {gameMode === "exam"
+                      ? "Alle Themen"
+                      : loadedTopics.join(", ")}{" "}
+                    — {statistiken.beantwortet}/{statistiken.gesamt} beantwortet
                   </p>
                   {gameMode !== "exam" && (
                     <p className="text-slate-400 text-[10px] mt-0.5 dark:text-slate-500">
@@ -406,6 +419,7 @@ export default function StartView({ quiz }: Props) {
                     currentMode={gameMode}
                     icon={Zap}
                     label="Arcade"
+                    subtitle="Ein Retry pro Frage. Themen jederzeit änderbar."
                     activeClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
                     onClick={() => handleSwitchMode("arcade")}
                   />
@@ -414,6 +428,7 @@ export default function StartView({ quiz }: Props) {
                     currentMode={gameMode}
                     icon={Timer}
                     label="Prüfung"
+                    subtitle="60 Fragen, 60 Minuten, 60 % zum Bestehen."
                     activeClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
                     onClick={() => handleSwitchMode("exam")}
                   />
@@ -422,6 +437,7 @@ export default function StartView({ quiz }: Props) {
                     currentMode={gameMode}
                     icon={Shield}
                     label="Hardcore"
+                    subtitle="Ein Fehler sperrt das Thema. Keine Retries."
                     activeClass="bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400"
                     onClick={() => handleSwitchMode("hardcore")}
                   />
@@ -429,7 +445,7 @@ export default function StartView({ quiz }: Props) {
               </div>
 
               {/* Statistiken */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2 mb-2">
                 {gameMode === "arcade" ? (
                   <>
                     <StatBox
@@ -666,10 +682,9 @@ export default function StartView({ quiz }: Props) {
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
                   Dies entfernt{" "}
-                  {dialog?.type === "remove-arcade"
-                    ? dialog.fragenCount
-                    : 0}{" "}
-                  Fragen aus dem aktiven Quiz.
+                  {dialog?.type === "remove-arcade" ? dialog.fragenCount : 0}{" "} ursprüngliche
+                  Fragen aus dem aktiven Quiz und beendet den aktuellen
+                  Durchlauf.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -707,8 +722,8 @@ export default function StartView({ quiz }: Props) {
                   Hardcore-Run beenden
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
-                  Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn
-                  du ein Thema abwählst. Alle Fortschritte dieses Runs gehen
+                  Im Hardcore-Modus wird der gesamte Run unterbrochen, wenn du
+                  ein Thema abwählst. Alle Fortschritte dieses Runs gehen
                   verloren.
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -784,7 +799,10 @@ export default function StartView({ quiz }: Props) {
               <CardContent className="py-1 px-3">
                 <div className="flex flex-col items-center text-center gap-3 py-4 sm:py-6">
                   <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-500/20">
-                    <Timer className="w-8 h-8 text-blue-600 dark:text-blue-400" aria-hidden="true" />
+                    <Timer
+                      className="w-8 h-8 text-blue-600 dark:text-blue-400"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div>
                     <h2 className="text-slate-900 font-semibold text-base sm:text-lg dark:text-white">
@@ -797,8 +815,12 @@ export default function StartView({ quiz }: Props) {
                     </p>
                   </div>
                   <Button
-                    onClick={isActive ? () => quiz.goToView("quiz") : handleExamStart}
-                    aria-label={isActive ? "Prüfung fortsetzen" : "Prüfung starten"}
+                    onClick={
+                      isActive ? () => quiz.goToView("quiz") : handleExamStart
+                    }
+                    aria-label={
+                      isActive ? "Prüfung fortsetzen" : "Prüfung starten"
+                    }
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl shadow-lg shadow-blue-600/20 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 w-full sm:w-auto"
                   >
                     {isActive ? "Prüfung fortsetzen" : "Prüfung starten"}
@@ -897,8 +919,8 @@ export default function StartView({ quiz }: Props) {
                       <Tooltip key={b.id}>
                         <TooltipTrigger asChild>{topicItem}</TooltipTrigger>
                         <TooltipContent side="top">
-                          Thema nicht bestanden. Bestehe ein anderes Thema, um
-                          dieses wieder freizuschalten.
+                          Fehlversuch. Bestehe ein anderes Thema, um dieses
+                          wieder freizuschalten.
                         </TooltipContent>
                       </Tooltip>
                     ) : (
@@ -1036,6 +1058,7 @@ function ModeButton({
   currentMode,
   icon: Icon,
   label,
+  subtitle,
   activeClass,
   onClick,
 }: {
@@ -1043,6 +1066,7 @@ function ModeButton({
   currentMode: GameMode;
   icon: typeof Zap;
   label: string;
+  subtitle: string;
   activeClass: string;
   onClick: () => void;
 }) {
@@ -1050,7 +1074,7 @@ function ModeButton({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
+      className={`flex flex-col items-center px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
         isActive
           ? `${activeClass} shadow-sm`
           : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
@@ -1058,8 +1082,15 @@ function ModeButton({
       aria-pressed={isActive}
       aria-label={`${label}${isActive ? " (aktiv)" : ""}`}
     >
-      <Icon className="w-3 h-3" />
-      <span className="hidden sm:inline">{label}</span>
+      <span className="flex items-center gap-1">
+        <Icon className="w-3 h-3" />
+        <span className="hidden sm:inline">{label}</span>
+      </span>
+      {isActive && (
+        <span className="hidden md:inline text-[9px] opacity-80 mt-0.5 max-w-[140px] truncate">
+          {subtitle}
+        </span>
+      )}
     </button>
   );
 }

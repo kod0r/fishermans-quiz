@@ -10,15 +10,14 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { History, Trash2, ArrowLeft } from 'lucide-react';
+import { History, Trash2 } from 'lucide-react';
 import type { QuizContext } from '@/hooks/useQuiz';
 
 interface Props {
   quiz: QuizContext;
-  onBack: () => void;
 }
 
-export default function HistoryView({ quiz, onBack }: Props) {
+export default function HistoryView({ quiz }: Props) {
   const { historyEntries, clearHistory } = quiz;
 
   const chartData = useMemo(() => {
@@ -62,15 +61,6 @@ export default function HistoryView({ quiz, onBack }: Props) {
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-5 max-w-3xl pb-16">
         {/* Header */}
         <div className="flex items-center gap-2 mb-4">
-          <Button
-            onClick={onBack}
-            variant="ghost"
-            size="icon"
-            aria-label="Zurück"
-            className="w-8 h-8 rounded-full bg-slate-100/80 text-slate-600 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
-          >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          </Button>
           <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <History className="w-5 h-5 text-teal-400" aria-hidden="true" />
             Session-Verlauf

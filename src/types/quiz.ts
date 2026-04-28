@@ -39,6 +39,8 @@ export interface QuizRun {
   sessionType?: SessionType;
   selfAssessments?: Record<string, SelfAssessmentGrade>;
   completedAt?: string; // verhindert doppeltes Loggen
+  answerShuffle?: Record<string, ('A' | 'B' | 'C')[]>;
+  gameMode?: GameMode;
 }
 
 // ── History Entry ──
@@ -101,6 +103,7 @@ export interface AppSettings {
   gameMode: GameMode;
   backupReminderEnabled?: boolean;
   lastBackupPrompt?: string;
+  shuffleAnswers?: boolean;
 }
 
 export interface AppBackup {
@@ -114,11 +117,6 @@ export interface AppBackup {
   notes: Record<string, string>;
   history: HistoryEntry[];
   srs: Record<string, SRSMeta>;
-}
-
-// ── Question Notes ──
-export interface QuestionNotes {
-  [frageId: string]: string;
 }
 
 // ── SRS Meta ──
@@ -135,7 +133,8 @@ export interface QuizStartOptions {
   filter?: 'weak' | 'all' | 'srs-due';
   limit?: number;
   sessionType?: SessionType;
+  shuffleAnswers?: boolean;
 }
 
 // ── View-State ──
-export type AppView = 'start' | 'quiz' | 'progress' | 'history' | 'browse';
+export type AppView = 'start' | 'quiz' | 'progress' | 'history' | 'browse' | 'help';

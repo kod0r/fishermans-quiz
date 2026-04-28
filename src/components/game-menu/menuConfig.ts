@@ -14,6 +14,7 @@ import {
   Database,
   RotateCcw,
   LayoutGrid,
+  Shuffle,
 } from "lucide-react";
 import type { GameMode, AppView } from "@/types/quiz";
 import type { QuizContext } from "@/hooks/useQuiz";
@@ -39,6 +40,7 @@ export interface MenuContext {
   currentView: AppView;
   historyCount: number;
   runStatus?: string; // e.g. "3/20"
+  shuffleAnswers?: boolean;
 }
 
 // ── Menu Item ──
@@ -134,6 +136,7 @@ export const MENU_PAGES: MenuPageConfig[] = [
             icon: Search,
             action: "view",
             target: "browse",
+            condition: (ctx) => !(ctx.gameMode === "exam" && ctx.isQuizActive),
           },
           {
             id: "settings",
@@ -151,35 +154,6 @@ export const MENU_PAGES: MenuPageConfig[] = [
     id: "settings",
     title: "Einstellungen",
     sections: [
-      // {
-      //   title: "Spielmodus",
-      //   items: [
-      //     {
-      //       id: "mode-arcade",
-      //       label: "Arcade",
-      //       icon: Zap,
-      //       action: "toggle",
-      //       target: "arcade",
-      //       detail: (ctx) => (ctx.gameMode === "arcade" ? "Aktiv" : ""),
-      //     },
-      //     {
-      //       id: "mode-hardcore",
-      //       label: "Hardcore",
-      //       icon: Shield,
-      //       action: "toggle",
-      //       target: "hardcore",
-      //       detail: (ctx) => (ctx.gameMode === "hardcore" ? "Aktiv" : ""),
-      //     },
-      //     {
-      //       id: "mode-exam",
-      //       label: "Prüfungsmodus",
-      //       icon: Timer,
-      //       action: "toggle",
-      //       target: "exam",
-      //       detail: (ctx) => (ctx.gameMode === "exam" ? "Aktiv" : ""),
-      //     },
-      //   ],
-      // },
       {
         title: "Erscheinungsbild",
         items: [
@@ -206,6 +180,19 @@ export const MENU_PAGES: MenuPageConfig[] = [
             action: "toggle",
             target: "system",
             detail: (ctx) => (ctx.theme === "system" ? "Aktiv" : ""),
+          },
+        ],
+      },
+      {
+        title: "Quiz-Verhalten",
+        items: [
+          {
+            id: "shuffle-answers",
+            label: "Antworten mischen",
+            icon: Shuffle,
+            action: "toggle",
+            target: "shuffle-answers",
+            detail: (ctx) => (ctx.shuffleAnswers ? "Aktiv" : ""),
           },
         ],
       },

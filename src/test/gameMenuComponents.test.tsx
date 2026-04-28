@@ -155,19 +155,19 @@ describe('HUD', () => {
     const { container } = render(<HUD quiz={quiz} gameMenu={gameMenu} />);
     const hudBar = container.querySelector('[data-testid="hud-bar"]') as HTMLElement;
 
-    expect(hudBar.className).not.toContain('translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).not.toContain('translate-y-[calc(100%-12px)]');
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h' }));
     });
 
-    expect(hudBar.className).toContain('translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).toContain('translate-y-[calc(100%-12px)]');
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'H' }));
     });
 
-    expect(hudBar.className).not.toContain('translate-y-[calc(100%+24px)]');
+    expect(hudBar.className).not.toContain('translate-y-[calc(100%-12px)]');
   });
 });
 

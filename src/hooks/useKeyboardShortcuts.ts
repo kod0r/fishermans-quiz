@@ -58,6 +58,9 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
         event.preventDefault();
       }
 
+      // Keys 1/2/3 map to the first/second/third visual button.
+      // AnswerGrid renders A/B/C in fixed order with shuffled texts,
+      // so these shortcuts naturally target the correct visual positions.
       switch (event.key) {
         case '1':
           onAnswer?.('A');

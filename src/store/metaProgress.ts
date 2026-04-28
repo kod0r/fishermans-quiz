@@ -81,9 +81,29 @@ export function useMetaProgress(gameMode: GameMode) {
         mastered: consecutivePasses >= 3,
         lastAttempt: new Date().toISOString(),
       };
+
+      const nextTopics: Record<string, TopicMeta> = {
+        ...prev.topics,
+        [topicId]: topicMeta,
+      };
+
+      // Freischalten: bestandenes Thema entsperrt alle gesperrten Themen
+      if (passed) {
+        for (const [id, tMeta] of Object.entries(nextTopics)) {
+          if (
+            id !== topicId &&
+            tMeta.lastAttempt !== null &&
+            tMeta.passed === false &&
+            tMeta.mastered === false
+          ) {
+            nextTopics[id] = { ...tMeta, lastAttempt: null };
+          }
+        }
+      }
+
       return {
         ...prev,
-        topics: { ...prev.topics, [topicId]: topicMeta },
+        topics: nextTopics,
       };
     });
   }, []);
