@@ -2,8 +2,6 @@ import type { ModePolicy, AnswerEffect, AbortEffect, CompleteEffect, ModeSwitchE
 import { canSelectTopic } from '@/utils/topicLocks';
 import type { MetaProgression } from '@/types/quiz';
 
-const DUMMY_QUIZ_META = {} as Parameters<typeof canSelectTopic>[3];
-
 export const HardcorePolicy: ModePolicy = {
   hideFeedback: false,
   allowsPendingRetry: true,
@@ -22,7 +20,7 @@ export const HardcorePolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'hardcore', meta, DUMMY_QUIZ_META, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'hardcore', meta, undefined, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

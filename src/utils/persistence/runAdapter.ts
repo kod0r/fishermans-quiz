@@ -1,9 +1,9 @@
 import type { PersistenceAdapter } from './types';
 import { localStorageAdapter } from './localStorageAdapter';
 import { QuizRunSchema } from '@/utils/quizLoader';
-import type { QuizRun, GameMode } from '@/types/quiz';
+import type { QuizRun } from '@/types/quiz';
 
-export function createRunAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter, currentMode?: GameMode): PersistenceAdapter<QuizRun | null> {
+export function createRunAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<QuizRun | null> {
   return {
     load: (key) => {
       const raw = base.load(key);
@@ -17,18 +17,8 @@ export function createRunAdapter(base: PersistenceAdapter<unknown> = localStorag
       return parsed.data;
     },
     save: (key, value) => {
-      const run = value;
-      if (run && currentMode) {
-        if (run.gameMode && run.gameMode !== currentMode) {
-          return;
-        }
-        base.save(key, { ...run, gameMode: currentMode });
-        return;
-      }
       base.save(key, value);
     },
     clear: (key) => base.clear(key),
   };
 }
-
-export const runAdapter = createRunAdapter();

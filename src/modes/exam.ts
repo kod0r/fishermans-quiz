@@ -6,8 +6,6 @@ const EXAM_LIMIT = 60;
 const EXAM_DURATION_SECONDS = 60 * 60;
 const PASS_THRESHOLD = 60;
 
-const DUMMY_QUIZ_META = {} as Parameters<typeof canSelectTopic>[3];
-
 export const ExamPolicy: ModePolicy = {
   hideFeedback: true,
   allowsPendingRetry: false,
@@ -26,7 +24,7 @@ export const ExamPolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'exam', meta, DUMMY_QUIZ_META, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'exam', meta, undefined, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

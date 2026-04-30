@@ -11,7 +11,15 @@ export const localStorageAdapter: PersistenceAdapter<unknown> = {
     return null;
   },
   save: (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'QuotaExceededError') {
+        console.warn('[localStorageAdapter] Quota exceeded, write dropped');
+      } else {
+        throw err;
+      }
+    }
   },
   clear: (key) => {
     localStorage.removeItem(key);

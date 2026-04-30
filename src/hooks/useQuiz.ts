@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData, AppBackupSchema } from '@/utils/quizLoader';
-import { metaAdapter, runAdapter, localStorageAdapter, createRunAdapter } from '@/utils/persistence';
+import { metaAdapter, localStorageAdapter, createRunAdapter } from '@/utils/persistence';
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
 import { useSettings } from '@/store/settings';
@@ -146,9 +146,9 @@ export function useQuiz() {
   }, [meta]);
 
   const clearAllRuns = useCallback(() => {
-    runAdapter.clear('fmq:run:arcade:v2');
-    runAdapter.clear('fmq:run:hardcore:v2');
-    runAdapter.clear('fmq:run:exam:v2');
+    localStorageAdapter.clear('fmq:run:arcade:v2');
+    localStorageAdapter.clear('fmq:run:hardcore:v2');
+    localStorageAdapter.clear('fmq:run:exam:v2');
     run.wipeRun?.();
   }, [run]);
 
@@ -166,9 +166,10 @@ export function useQuiz() {
       }
       return finalAntworten[f.id] === f.richtige_antwort;
     }).length;
-    const duration = run.rawRun.startedAt
-      ? Math.round((Date.now() - new Date(run.rawRun.startedAt).getTime()) / 1000)
-      : 0;
+    const started = run.rawRun.startedAt
+      ? new Date(run.rawRun.startedAt).getTime()
+      : NaN;
+    const duration = Number.isNaN(started) ? 0 : Math.round((Date.now() - started) / 1000);
 
     run.markCompleted?.();
     history.addEntry({
@@ -292,9 +293,10 @@ export function useQuiz() {
 
   const logCurrentRun = useCallback((finalDuration?: number) => {
     if (!run.isActive) return;
-    const duration = finalDuration ?? (run.rawRun?.startedAt
-      ? Math.round((Date.now() - new Date(run.rawRun.startedAt).getTime()) / 1000)
-      : 0);
+    const started = run.rawRun?.startedAt
+      ? new Date(run.rawRun.startedAt).getTime()
+      : NaN;
+    const duration = finalDuration ?? (Number.isNaN(started) ? 0 : Math.round((Date.now() - started) / 1000));
     history.addEntry({
       topics: [...run.loadedTopics],
       score: run.statistiken.korrekt,

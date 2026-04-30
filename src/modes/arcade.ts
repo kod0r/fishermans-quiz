@@ -2,8 +2,6 @@ import type { ModePolicy, AnswerEffect, AbortEffect, CompleteEffect, ModeSwitchE
 import { canSelectTopic } from '@/utils/topicLocks';
 import type { MetaProgression } from '@/types/quiz';
 
-const DUMMY_QUIZ_META = {} as Parameters<typeof canSelectTopic>[3];
-
 export const ArcadePolicy: ModePolicy = {
   hideFeedback: false,
   allowsPendingRetry: true,
@@ -22,7 +20,7 @@ export const ArcadePolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'arcade', meta, DUMMY_QUIZ_META, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'arcade', meta, undefined, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

@@ -9,7 +9,7 @@ import { selectActiveQuestions, selectStatistics } from '@/engine/runSelectors';
 const runKey = (mode: GameMode) => `fmq:run:${mode}:v2`;
 
 export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapter?: PersistenceAdapter) {
-  const safeAdapter = useMemo(() => createRunAdapter(adapter, gameMode), [adapter, gameMode]);
+  const safeAdapter = useMemo(() => createRunAdapter(adapter), [adapter]);
 
   const [run, setRun] = usePersistentStatePerMode<QuizRun | null>(
     runKey(gameMode),

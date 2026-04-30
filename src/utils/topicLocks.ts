@@ -39,7 +39,7 @@ export function canSelectTopic(
   topicId: string,
   mode: GameMode,
   meta: MetaProgression,
-  _quizMeta: QuizMeta,
+  _quizMeta: QuizMeta | undefined,
   isActive: boolean,
   loadedTopics: string[]
 ): boolean {
