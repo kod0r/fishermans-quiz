@@ -21,7 +21,7 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
       currentView: quiz.view,
       historyCount: quiz.historyEntries.length,
     }),
-    [quiz]
+    [quiz.isActive, quiz.gameMode, quiz.view, quiz.historyEntries.length]
   );
 
   const pageConfig = MENU_PAGES.find((p) => p.id === 'root');

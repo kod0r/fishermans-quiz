@@ -40,18 +40,25 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
       return;
     }
 
-    const startedAt = quiz.rawRun.startedAt;
-    const durationSeconds = quiz.rawRun.durationSeconds;
+    const start = new Date(quiz.rawRun.startedAt).getTime();
+    const durationMs = quiz.rawRun.durationSeconds * 1000;
+    let animationFrameId: number | null = null;
+
     const tick = () => {
-      const started = new Date(startedAt).getTime();
-      const elapsed = Math.floor((Date.now() - started) / 1000);
-      const left = (durationSeconds ?? 0) - elapsed;
-      setRemainingSeconds(left);
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
+      setRemainingSeconds(remaining);
+
+      if (remaining > 0) {
+        animationFrameId = requestAnimationFrame(tick);
+      }
     };
 
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [isExam, isQuizActive, quiz.rawRun?.startedAt, quiz.rawRun?.durationSeconds]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {

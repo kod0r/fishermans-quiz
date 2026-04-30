@@ -41,6 +41,7 @@ export function GameMenuOverlay({
   const panelRef = useRef<HTMLDivElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const isRoot = stack.length === 1;
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   const pageConfig = MENU_PAGES.find((p) => p.id === currentPage);
   const title = pageConfig?.title ?? '';
@@ -58,17 +59,32 @@ export function GameMenuOverlay({
     }
   }, [isOpen]);
 
-  // Focus first focusable item when opening or changing page
+  // Wrap onPush to capture trigger element before navigation
+  const handlePush = useCallback((page: MenuPageId) => {
+    const active = document.activeElement;
+    if (active instanceof HTMLElement) {
+      triggerRef.current = active;
+    }
+    onPush(page);
+  }, [onPush]);
+
+  // Focus first focusable item when opening or changing page;
+  // on back-navigation restore focus to the trigger element
   useEffect(() => {
     if (!isOpen) return;
     const timer = setTimeout(() => {
       const panel = panelRef.current;
       if (!panel) return;
+      if (direction === 'back' && triggerRef.current) {
+        triggerRef.current.focus();
+        triggerRef.current = null;
+        return;
+      }
       const focusable = panel.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
       focusable?.focus();
     }, 50);
     return () => clearTimeout(timer);
-  }, [isOpen, currentPage]);
+  }, [isOpen, currentPage, direction]);
 
   // Wire Enter/Space activation to the focused menu item
   useEffect(() => {
@@ -98,15 +114,15 @@ export function GameMenuOverlay({
 
       if (config?.customComponent) {
         const Component = config.customComponent;
-        return <Component quiz={quiz} onClose={onClose} onPop={onPop} onPush={onPush} />;
+        return <Component quiz={quiz} onClose={onClose} onPop={onPop} onPush={handlePush} />;
       }
 
       // Known pages with dedicated components take precedence over generic section rendering
       switch (page) {
         case 'root':
-          return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
+          return <MenuPageRoot onPush={handlePush} onClose={onClose} quiz={quiz} />;
         case 'settings':
-          return <MenuPageSettings onPush={onPush} quiz={quiz} />;
+          return <MenuPageSettings onPush={handlePush} quiz={quiz} />;
         case 'data':
           return <MenuPageData quiz={quiz} />;
         default:
@@ -117,9 +133,9 @@ export function GameMenuOverlay({
         return <MenuPageList sections={config.sections} />;
       }
 
-      return <MenuPageRoot onPush={onPush} onClose={onClose} quiz={quiz} />;
+      return <MenuPageRoot onPush={handlePush} onClose={onClose} quiz={quiz} />;
     },
-    [onPush, onClose, onPop, quiz]
+    [handlePush, onClose, onPop, quiz]
   );
 
   const header = (
