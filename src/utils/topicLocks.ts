@@ -1,5 +1,4 @@
 import type { GameMode, MetaProgression } from '@/types/quiz';
-import type { QuizMeta } from '@/utils/quizLoader';
 
 /**
  * Determines whether a specific topic (topic) is locked in the given mode.
@@ -39,7 +38,6 @@ export function canSelectTopic(
   topicId: string,
   mode: GameMode,
   meta: MetaProgression,
-  _quizMeta: QuizMeta | undefined,
   isActive: boolean,
   loadedTopics: string[]
 ): boolean {

@@ -20,7 +20,7 @@ export const HardcorePolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'hardcore', meta, undefined, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'hardcore', meta, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

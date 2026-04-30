@@ -1,4 +1,4 @@
-import { useLayoutEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 export interface KeyboardShortcutsOptions {
   onAnswer?: (letter: 'A' | 'B' | 'C') => void;
@@ -99,7 +99,7 @@ export function useKeyboardShortcuts(options: KeyboardShortcutsOptions) {
     [enabled, onAnswer, onPrev, onNext, onToggleFavorite, onSpace, onOpenCheatSheet, onEscape]
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);

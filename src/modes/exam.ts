@@ -24,7 +24,7 @@ export const ExamPolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'exam', meta, undefined, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'exam', meta, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

@@ -20,7 +20,7 @@ export const ArcadePolicy: ModePolicy = {
     isActive: boolean,
     loadedTopics: string[]
   ) {
-    return canSelectTopic(topicId, 'arcade', meta, undefined, isActive, loadedTopics);
+    return canSelectTopic(topicId, 'arcade', meta, isActive, loadedTopics);
   },
 
   canRemoveTopic() {

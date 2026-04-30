@@ -22,6 +22,8 @@ export default defineConfig([
     rules: {
       // setState-in-effect is too strict for our patterns (shadcn/ui + store initialization)
       'react-hooks/set-state-in-effect': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
     },
   },
   {

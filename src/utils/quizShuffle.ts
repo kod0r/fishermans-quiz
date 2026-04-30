@@ -20,7 +20,7 @@ export function shuffleAnswers(frage: Frage): { shuffled: Frage; order: ('A' | '
     A: entries[0][1],
     B: entries[1][1],
     C: entries[2][1],
-  } as Record<'A' | 'B' | 'C', string>;
+  };
 
   // Map original correct key to its new position
   const correctIndex = order.indexOf(frage.richtige_antwort);
