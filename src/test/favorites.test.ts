@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useFavorites } from '@/store/favorites';
+import { createFavoritesAdapter } from '@/utils/persistence/favoritesAdapter';
 import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
 
 const TEST_KEY = 'fmq:favorites:v1';
@@ -11,13 +12,13 @@ describe('useFavorites', () => {
   });
 
   it('sollte initial leere Favoriten haben', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
     expect(result.current.favorites).toEqual([]);
     expect(result.current.isFavorite('1')).toBe(false);
   });
 
   it('sollte einen Favoriten hinzufügen', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     act(() => {
       result.current.toggleFavorite('1');
@@ -28,7 +29,7 @@ describe('useFavorites', () => {
   });
 
   it('sollte einen Favoriten entfernen', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     act(() => {
       result.current.toggleFavorite('1');
@@ -40,7 +41,7 @@ describe('useFavorites', () => {
   });
 
   it('sollte Favoriten zurücksetzen', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     act(() => {
       result.current.toggleFavorite('1');
@@ -57,7 +58,7 @@ describe('useFavorites', () => {
   });
 
   it('sollte Favoriten importieren', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     act(() => {
       result.current.importFavorites(['3', '4']);
@@ -69,7 +70,7 @@ describe('useFavorites', () => {
   });
 
   it('sollte Favoriten im Adapter persistieren', () => {
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     act(() => {
       result.current.toggleFavorite('1');
@@ -82,7 +83,7 @@ describe('useFavorites', () => {
   it('sollte Favoriten aus Adapter laden', () => {
     memoryAdapter.save(TEST_KEY, ['5', '6']);
 
-    const { result } = renderHook(() => useFavorites(memoryAdapter));
+    const { result } = renderHook(() => useFavorites(createFavoritesAdapter(memoryAdapter)));
 
     expect(result.current.favorites).toEqual(['5', '6']);
     expect(result.current.isFavorite('5')).toBe(true);

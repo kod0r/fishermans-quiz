@@ -3,7 +3,7 @@ import { localStorageAdapter } from './localStorageAdapter';
 import { SRSMetaSchema } from '@/utils/quizLoader';
 import type { SRSMeta } from '@/types/quiz';
 
-export function createSRSAdapter(base: PersistenceAdapter = localStorageAdapter): PersistenceAdapter {
+export function createSRSAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<Record<string, SRSMeta>> {
   return {
     load: (key) => {
       const raw = base.load(key);
@@ -14,13 +14,13 @@ export function createSRSAdapter(base: PersistenceAdapter = localStorageAdapter)
         if (parsed.success) {
           result[k] = parsed.data;
         } else {
-          console.warn('[SRS] Invalid entry for', k, parsed.error.format());
+          console.warn('[SRSAdapter] Invalid entry for', k, parsed.error.format());
         }
       }
       return result;
     },
-    save: base.save,
-    clear: base.clear,
+    save: (key, value) => base.save(key, value),
+    clear: (key) => base.clear(key),
   };
 }
 

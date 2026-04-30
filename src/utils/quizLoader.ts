@@ -73,6 +73,40 @@ export const SRSMetaSchema = z.object({
   nextReview: z.string(),
 });
 
+export const QuizRunSchema = z.object({
+  frageIds: z.array(z.string()),
+  antworten: z.record(z.string(), z.string()),
+  topics: z.array(z.string()),
+  aktuellerIndex: z.number().int().nonnegative(),
+  isActive: z.boolean(),
+  startedAt: z.string().optional(),
+  durationSeconds: z.number().nonnegative().optional(),
+  sessionType: z.enum(['quiz', 'flashcard']).optional(),
+  selfAssessments: z.record(z.string(), z.enum(['again', 'hard', 'good', 'easy'])).optional(),
+  completedAt: z.string().optional(),
+  answerShuffle: z.record(z.string(), z.array(z.enum(['A', 'B', 'C']))).optional(),
+  gameMode: z.enum(['arcade', 'hardcore', 'exam']).optional(),
+});
+
+export const HistoryEntrySchema = z.object({
+  id: z.string(),
+  timestamp: z.string(),
+  topics: z.array(z.string()).optional().default([]),
+  bereiche: z.array(z.string()).optional(),
+  score: z.number(),
+  total: z.number(),
+  duration: z.number(),
+  mode: z.enum(['arcade', 'hardcore', 'exam']),
+}).transform((e) => ({
+  id: e.id,
+  timestamp: e.timestamp,
+  topics: e.topics.length > 0 ? e.topics : e.bereiche ?? [],
+  score: e.score,
+  total: e.total,
+  duration: e.duration,
+  mode: e.mode,
+}));
+
 export const MetaProgressionSchema = z.object({
   fragen: z.record(z.string(), FrageMetaSchema),
   stats: MetaStatsSchema,
@@ -99,24 +133,7 @@ export const AppBackupSchema = z.object({
   topicFiles: z.record(z.string(), z.string()),  // Topic name → filename
   favorites: z.array(z.string()),
   notes: z.record(z.string(), z.string()),
-  history: z.array(z.object({
-    id: z.string(),
-    timestamp: z.string(),
-    topics: z.array(z.string()).optional().default([]),
-    bereiche: z.array(z.string()).optional(),
-    score: z.number(),
-    total: z.number(),
-    duration: z.number(),
-    mode: z.enum(['arcade', 'hardcore', 'exam']),
-  }).transform((e) => ({
-    id: e.id,
-    timestamp: e.timestamp,
-    topics: e.topics.length > 0 ? e.topics : e.bereiche ?? [],
-    score: e.score,
-    total: e.total,
-    duration: e.duration,
-    mode: e.mode,
-  }))),
+  history: z.array(HistoryEntrySchema),
   srs: z.record(z.string(), SRSMetaSchema).optional().default({}),
 });
 

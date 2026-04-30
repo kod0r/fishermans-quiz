@@ -9,7 +9,7 @@ const STORAGE_KEY_SETTINGS = 'fmq:settings:v1';
 const DEFAULT_SETTINGS: AppSettings = { gameMode: 'arcade' };
 const defaultAdapter = createSettingsAdapter();
 
-export function useSettings(adapter: PersistenceAdapter = defaultAdapter) {
+export function useSettings(adapter: PersistenceAdapter<AppSettings> = defaultAdapter) {
   // Einmalig beim App-Start: Legacy-Storage migrieren
   useEffect(() => {
     migrateLegacyStorage();

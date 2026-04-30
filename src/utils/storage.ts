@@ -1,6 +1,7 @@
 import type { GameMode, HistoryEntry } from '@/types/quiz';
-import { AppSettingsSchema } from '@/utils/quizLoader';
+import { AppSettingsSchema, QuizRunSchema, MetaProgressionSchema, HistoryEntrySchema, SRSMetaSchema } from '@/utils/quizLoader';
 import type { SRSMeta } from '@/types/quiz';
+import { z } from 'zod';
 
 // ── Legacy Keys (v2, pre-mode-split) ──
 const LEGACY_KEY_RUN = 'fmq:run:v2';
@@ -127,7 +128,15 @@ export const SettingsStorage = {
 
 // ── QuizRun (mode-specific) ──
 export const RunStorage = {
-  load: (mode: GameMode) => loadJson(runKey(mode), null),
+  load: (mode: GameMode) => {
+    const raw = loadJson<unknown>(runKey(mode), null);
+    const parsed = QuizRunSchema.safeParse(raw);
+    if (!parsed.success) {
+      if (raw !== null) console.warn('[Storage] Invalid run data, resetting:', parsed.error.format());
+      return null;
+    }
+    return parsed.data;
+  },
   save: (mode: GameMode, run: unknown) => saveJson(runKey(mode), run),
   clear: (mode: GameMode) => removeKey(runKey(mode)),
 };
@@ -150,25 +159,51 @@ const EMPTY_META = {
 };
 
 export const MetaStorage = {
-  load: (mode: GameMode) => loadJson(metaKey(mode), EMPTY_META),
+  load: (mode: GameMode) => {
+    const raw = loadJson<unknown>(metaKey(mode), EMPTY_META);
+    const parsed = MetaProgressionSchema.safeParse(raw);
+    if (!parsed.success) {
+      if (raw !== null) console.warn('[Storage] Invalid meta data, using defaults:', parsed.error.format());
+      return EMPTY_META;
+    }
+    return parsed.data;
+  },
   save: (mode: GameMode, meta: unknown) => saveJson(metaKey(mode), meta),
   clear: (mode: GameMode) => removeKey(metaKey(mode)),
 };
 
 // ── Favorites (global, nicht modus-spezifisch) ──
 const FAVORITES_KEY = 'fmq:favorites:v1';
+const FavoritesSchema = z.array(z.string());
 
 export const FavoritesStorage = {
-  load: (): string[] => loadJson(FAVORITES_KEY, []),
+  load: (): string[] => {
+    const raw = loadJson<unknown>(FAVORITES_KEY, []);
+    const parsed = FavoritesSchema.safeParse(raw);
+    if (!parsed.success) {
+      if (raw !== null) console.warn('[Storage] Invalid favorites data, resetting:', parsed.error.format());
+      return [];
+    }
+    return parsed.data;
+  },
   save: (favorites: string[]) => saveJson(FAVORITES_KEY, favorites),
   clear: () => removeKey(FAVORITES_KEY),
 };
 
 // ── Notes (global, nicht modus-spezifisch) ──
 const NOTES_KEY = 'fmq:notes:v1';
+const NotesSchema = z.record(z.string(), z.string());
 
 export const NotesStorage = {
-  load: (): Record<string, string> => loadJson(NOTES_KEY, {}),
+  load: (): Record<string, string> => {
+    const raw = loadJson<unknown>(NOTES_KEY, {});
+    const parsed = NotesSchema.safeParse(raw);
+    if (!parsed.success) {
+      if (raw !== null) console.warn('[Storage] Invalid notes data, resetting:', parsed.error.format());
+      return {};
+    }
+    return parsed.data;
+  },
   save: (notes: Record<string, string>) => saveJson(NOTES_KEY, notes),
   clear: () => removeKey(NOTES_KEY),
 };
@@ -177,7 +212,23 @@ export const NotesStorage = {
 const HISTORY_KEY = 'fmq:history:v1';
 
 export const HistoryStorage = {
-  load: (): HistoryEntry[] => loadJson(HISTORY_KEY, []),
+  load: (): HistoryEntry[] => {
+    const raw = loadJson<unknown>(HISTORY_KEY, []);
+    if (!Array.isArray(raw)) {
+      if (raw !== null) console.warn('[Storage] Invalid history data (not an array), resetting');
+      return [];
+    }
+    const valid: HistoryEntry[] = [];
+    for (const entry of raw) {
+      const parsed = HistoryEntrySchema.safeParse(entry);
+      if (parsed.success) {
+        valid.push(parsed.data);
+      } else {
+        console.warn('[Storage] Invalid history entry skipped:', parsed.error.format());
+      }
+    }
+    return valid;
+  },
   save: (entries: HistoryEntry[]) => saveJson(HISTORY_KEY, entries),
   clear: () => removeKey(HISTORY_KEY),
 };
@@ -186,7 +237,23 @@ export const HistoryStorage = {
 const SRS_KEY = 'fmq:meta:srs:v1';
 
 export const SRSStorage = {
-  load: (): Record<string, SRSMeta> => loadJson(SRS_KEY, {}),
+  load: (): Record<string, SRSMeta> => {
+    const raw = loadJson<unknown>(SRS_KEY, {});
+    if (typeof raw !== 'object' || raw === null) {
+      if (raw !== null) console.warn('[Storage] Invalid SRS data, resetting');
+      return {};
+    }
+    const result: Record<string, SRSMeta> = {};
+    for (const [k, value] of Object.entries(raw)) {
+      const parsed = SRSMetaSchema.safeParse(value);
+      if (parsed.success) {
+        result[k] = parsed.data;
+      } else {
+        console.warn('[Storage] Invalid SRS entry skipped for', k, parsed.error.format());
+      }
+    }
+    return result;
+  },
   save: (data: Record<string, SRSMeta>) => saveJson(SRS_KEY, data),
   clear: () => removeKey(SRS_KEY),
 };

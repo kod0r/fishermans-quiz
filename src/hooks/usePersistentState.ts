@@ -5,11 +5,11 @@ import { localStorageAdapter } from '@/utils/persistence';
 export function usePersistentState<T>(
   key: string,
   defaultValue: T,
-  adapter: PersistenceAdapter = localStorageAdapter,
+  adapter: PersistenceAdapter<T> = localStorageAdapter as PersistenceAdapter<T>,
 ): [T, React.Dispatch<React.SetStateAction<T>>, () => void] {
   const [state, setState] = useState<T>(() => {
     const loaded = adapter.load(key);
-    return loaded !== null ? (loaded as T) : defaultValue;
+    return loaded !== null ? loaded : defaultValue;
   });
   const clearedRef = useRef(false);
 
@@ -33,12 +33,12 @@ export function usePersistentState<T>(
 export function usePersistentStatePerMode<T>(
   key: string,
   defaultValue: T,
-  adapter: PersistenceAdapter = localStorageAdapter,
+  adapter: PersistenceAdapter<T> = localStorageAdapter as PersistenceAdapter<T>,
   shouldSave?: (state: T) => boolean,
 ): [T, React.Dispatch<React.SetStateAction<T>>, () => void] {
   const [state, setState] = useState<T>(() => {
     const loaded = adapter.load(key);
-    return loaded !== null ? (loaded as T) : defaultValue;
+    return loaded !== null ? loaded : defaultValue;
   });
   const clearedRef = useRef(false);
   const adapterRef = useRef(adapter);
@@ -49,7 +49,7 @@ export function usePersistentStatePerMode<T>(
 
   useEffect(() => {
     const loaded = adapterRef.current.load(key);
-    setState(loaded !== null ? (loaded as T) : defaultValue);
+    setState(loaded !== null ? loaded : defaultValue);
     clearedRef.current = false;
   }, [key, defaultValue]);
 

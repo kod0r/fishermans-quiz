@@ -8,7 +8,7 @@ const STORAGE_KEY = 'fmq:history:v1';
 const MAX_ENTRIES = 500;
 const defaultAdapter = createHistoryAdapter();
 
-export function useHistory(adapter: PersistenceAdapter = defaultAdapter) {
+export function useHistory(adapter: PersistenceAdapter<HistoryEntry[]> = defaultAdapter) {
   const [entries, setEntries] = usePersistentState<HistoryEntry[]>(
     STORAGE_KEY,
     [],

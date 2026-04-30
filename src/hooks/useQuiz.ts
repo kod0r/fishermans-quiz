@@ -67,11 +67,11 @@ export function useQuiz() {
     metaAdapter.save('fmq:meta:arcade:v2', backup.metaArcade);
     metaAdapter.save('fmq:meta:hardcore:v2', backup.metaHardcore);
     metaAdapter.save('fmq:meta:exam:v2', backup.metaExam);
-    runAdapter.save('fmq:settings:v1', backup.settings);
-    runAdapter.save('fmq:favorites:v1', backup.favorites);
-    runAdapter.save('fmq:notes:v1', backup.notes);
-    runAdapter.save('fmq:history:v1', backup.history);
-    runAdapter.save('fmq:meta:srs:v1', backup.srs);
+    localStorageAdapter.save('fmq:settings:v1', backup.settings);
+    localStorageAdapter.save('fmq:favorites:v1', backup.favorites);
+    localStorageAdapter.save('fmq:notes:v1', backup.notes);
+    localStorageAdapter.save('fmq:history:v1', backup.history);
+    localStorageAdapter.save('fmq:meta:srs:v1', backup.srs);
     window.location.reload();
     return true;
   }, []);

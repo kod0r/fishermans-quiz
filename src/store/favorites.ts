@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 import { usePersistentState } from '@/hooks/usePersistentState';
+import { createFavoritesAdapter } from '@/utils/persistence/favoritesAdapter';
 import type { PersistenceAdapter } from '@/utils/persistence';
 
 const STORAGE_KEY = 'fmq:favorites:v1';
+const defaultAdapter = createFavoritesAdapter();
 
-export function useFavorites(adapter?: PersistenceAdapter) {
+export function useFavorites(adapter: PersistenceAdapter<string[]> = defaultAdapter) {
   const [favorites, setFavorites] = usePersistentState<string[]>(STORAGE_KEY, [], adapter);
 
   const toggleFavorite = useCallback((frageId: string) => {

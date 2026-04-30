@@ -1,16 +1,39 @@
 import type { PersistenceAdapter } from './types';
 import { localStorageAdapter } from './localStorageAdapter';
+import { MetaProgressionSchema } from '@/utils/quizLoader';
 import type { MetaProgression } from '@/types/quiz';
 
-export function createMetaAdapter(base: PersistenceAdapter = localStorageAdapter): PersistenceAdapter {
+const EMPTY_META: MetaProgression = {
+  fragen: {},
+  stats: {
+    totalRuns: 0,
+    totalQuestionsAnswered: 0,
+    totalCorrect: 0,
+    totalIncorrect: 0,
+    bestStreak: 0,
+    currentStreak: 0,
+    arcadeRunsCompleted: 0,
+  },
+  topics: {},
+  arcadeStars: {},
+  bestArcadeScore: {},
+};
+
+export function createMetaAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<MetaProgression> {
   return {
     load: (key) => {
       const raw = base.load(key);
-      if (typeof raw !== 'object' || raw === null) return null;
-      return { ...(raw as MetaProgression), topics: (raw as MetaProgression).topics ?? {} };
+      const parsed = MetaProgressionSchema.safeParse(raw);
+      if (!parsed.success) {
+        if (raw !== null) {
+          console.warn('[MetaAdapter] Invalid meta data, using defaults:', parsed.error.format());
+        }
+        return EMPTY_META;
+      }
+      return parsed.data;
     },
-    save: base.save,
-    clear: base.clear,
+    save: (key, value) => base.save(key, value),
+    clear: (key) => base.clear(key),
   };
 }
 

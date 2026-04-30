@@ -1,25 +1,28 @@
 import type { PersistenceAdapter } from './types';
 import { localStorageAdapter } from './localStorageAdapter';
-// HistoryEntry type used implicitly via mapped entries
+import { HistoryEntrySchema } from '@/utils/quizLoader';
+import type { HistoryEntry } from '@/types/quiz';
 
 const MAX_ENTRIES = 500;
 
-export function createHistoryAdapter(base: PersistenceAdapter = localStorageAdapter): PersistenceAdapter {
+export function createHistoryAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<HistoryEntry[]> {
   return {
     load: (key) => {
       const raw = base.load(key);
       if (!Array.isArray(raw)) return [];
-      const migrated = raw.map((entry: unknown) => {
-        const e = entry as Record<string, unknown>;
-        return {
-          ...e,
-          topics: ((e.topics ?? e.bereiche ?? []) as string[]),
-        };
-      });
-      return migrated.slice(0, MAX_ENTRIES);
+      const valid: HistoryEntry[] = [];
+      for (const entry of raw) {
+        const parsed = HistoryEntrySchema.safeParse(entry);
+        if (parsed.success) {
+          valid.push(parsed.data);
+        } else {
+          console.warn('[HistoryAdapter] Invalid entry skipped:', parsed.error.format());
+        }
+      }
+      return valid.slice(0, MAX_ENTRIES);
     },
-    save: base.save,
-    clear: base.clear,
+    save: (key, value) => base.save(key, value),
+    clear: (key) => base.clear(key),
   };
 }
 

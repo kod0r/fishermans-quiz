@@ -1,6 +1,6 @@
 import type { PersistenceAdapter } from './types';
 
-export const localStorageAdapter: PersistenceAdapter = {
+export const localStorageAdapter: PersistenceAdapter<unknown> = {
   load: (key) => {
     try {
       const raw = localStorage.getItem(key);

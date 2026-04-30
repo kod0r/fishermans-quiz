@@ -9,6 +9,10 @@ import {
   SettingsStorage,
   RunStorage,
   MetaStorage,
+  HistoryStorage,
+  FavoritesStorage,
+  NotesStorage,
+  SRSStorage,
 } from '@/utils/storage';
 
 describe('storage', () => {
@@ -159,11 +163,20 @@ describe('storage', () => {
     });
 
     it('sollte Runs pro Modus getrennt speichern', () => {
-      RunStorage.save('arcade', { mode: 'arcade' });
-      RunStorage.save('hardcore', { mode: 'hardcore' });
+      const arcadeRun = { frageIds: ['1'], antworten: {}, topics: ['A'], aktuellerIndex: 0, isActive: true, gameMode: 'arcade' as const };
+      const hardcoreRun = { frageIds: ['2'], antworten: {}, topics: ['B'], aktuellerIndex: 0, isActive: true, gameMode: 'hardcore' as const };
+      RunStorage.save('arcade', arcadeRun);
+      RunStorage.save('hardcore', hardcoreRun);
 
-      expect(RunStorage.load('arcade')).toEqual({ mode: 'arcade' });
-      expect(RunStorage.load('hardcore')).toEqual({ mode: 'hardcore' });
+      expect(RunStorage.load('arcade')).toEqual(arcadeRun);
+      expect(RunStorage.load('hardcore')).toEqual(hardcoreRun);
+    });
+
+    it('sollte invaliden Run zurücksetzen', () => {
+      localStorage.setItem('fmq:run:arcade:v2', JSON.stringify({ isActive: 'yes' }));
+      const result = RunStorage.load('arcade');
+      expect(result).toBeNull();
+      expect(console.warn).toHaveBeenCalled();
     });
   });
 
@@ -175,9 +188,105 @@ describe('storage', () => {
     });
 
     it('sollte Meta speichern und laden', () => {
-      const meta = { fragen: { '1': { attempts: 1, correctStreak: 1 } }, stats: { totalRuns: 1 } };
+      const meta = {
+        fragen: {
+          '1': { attempts: 1, correctStreak: 1, lastResult: 'correct' as const, firstSeen: '2024-01-01T00:00:00Z', lastAttempt: '2024-01-01T00:00:00Z' },
+        },
+        stats: { totalRuns: 1, totalQuestionsAnswered: 1, totalCorrect: 1, totalIncorrect: 0, bestStreak: 1, currentStreak: 1, arcadeRunsCompleted: 0 },
+        topics: {},
+        arcadeStars: {},
+        bestArcadeScore: {},
+      };
       MetaStorage.save('arcade', meta);
       expect(MetaStorage.load('arcade')).toEqual(meta);
+    });
+
+    it('sollte invalides Meta zurücksetzen', () => {
+      localStorage.setItem('fmq:meta:arcade:v2', JSON.stringify({ stats: { totalRuns: -1 } }));
+      const result = MetaStorage.load('arcade');
+      expect(result.stats.totalRuns).toBe(0);
+      expect(console.warn).toHaveBeenCalled();
+    });
+  });
+
+  describe('HistoryStorage', () => {
+    it('sollte leere History laden wenn nichts gespeichert', () => {
+      expect(HistoryStorage.load()).toEqual([]);
+    });
+
+    it('sollte validen Verlauf speichern und laden', () => {
+      const entry = {
+        id: '1',
+        timestamp: '2024-01-01T00:00:00Z',
+        topics: ['Biologie'],
+        score: 80,
+        total: 10,
+        duration: 120,
+        mode: 'arcade' as const,
+      };
+      HistoryStorage.save([entry]);
+      expect(HistoryStorage.load()).toEqual([entry]);
+    });
+
+    it('sollte invaliden Verlauf zurücksetzen', () => {
+      localStorage.setItem('fmq:history:v1', JSON.stringify({ notAnArray: true }));
+      expect(HistoryStorage.load()).toEqual([]);
+      expect(console.warn).toHaveBeenCalled();
+    });
+
+    it('sollte invaliden Eintrag überspringen und validen behalten', () => {
+      const valid = {
+        id: '1',
+        timestamp: '2024-01-01T00:00:00Z',
+        topics: ['Biologie'],
+        score: 80,
+        total: 10,
+        duration: 120,
+        mode: 'arcade',
+      };
+      localStorage.setItem('fmq:history:v1', JSON.stringify([valid, { score: 'bad' }]));
+      expect(HistoryStorage.load()).toEqual([valid]);
+      expect(console.warn).toHaveBeenCalled();
+    });
+  });
+
+  describe('FavoritesStorage', () => {
+    it('sollte Favoriten speichern und laden', () => {
+      FavoritesStorage.save(['a', 'b']);
+      expect(FavoritesStorage.load()).toEqual(['a', 'b']);
+    });
+
+    it('sollte invalides zurücksetzen', () => {
+      localStorage.setItem('fmq:favorites:v1', JSON.stringify({ notAnArray: true }));
+      expect(FavoritesStorage.load()).toEqual([]);
+      expect(console.warn).toHaveBeenCalled();
+    });
+  });
+
+  describe('NotesStorage', () => {
+    it('sollte Notizen speichern und laden', () => {
+      NotesStorage.save({ q1: 'note' });
+      expect(NotesStorage.load()).toEqual({ q1: 'note' });
+    });
+
+    it('sollte invalides zurücksetzen', () => {
+      localStorage.setItem('fmq:notes:v1', JSON.stringify(['notAnObject']));
+      expect(NotesStorage.load()).toEqual({});
+      expect(console.warn).toHaveBeenCalled();
+    });
+  });
+
+  describe('SRSStorage', () => {
+    it('sollte SRS speichern und laden', () => {
+      const data = { q1: { interval: 1, repetitions: 0, efactor: 2.5, nextReview: '2024-01-01' } };
+      SRSStorage.save(data);
+      expect(SRSStorage.load()).toEqual(data);
+    });
+
+    it('sollte invalides SRS zurücksetzen', () => {
+      localStorage.setItem('fmq:meta:srs:v1', JSON.stringify({ q1: { interval: 'bad' } }));
+      expect(SRSStorage.load()).toEqual({});
+      expect(console.warn).toHaveBeenCalled();
     });
   });
 });

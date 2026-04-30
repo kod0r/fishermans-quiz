@@ -5,7 +5,7 @@ import type { AppSettings } from '@/types/quiz';
 
 const DEFAULT_SETTINGS: AppSettings = { gameMode: 'arcade' };
 
-export function createSettingsAdapter(base: PersistenceAdapter = localStorageAdapter): PersistenceAdapter {
+export function createSettingsAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<AppSettings> {
   return {
     load: (key) => {
       const raw = base.load(key);
@@ -16,8 +16,8 @@ export function createSettingsAdapter(base: PersistenceAdapter = localStorageAda
       }
       return parsed.data;
     },
-    save: base.save,
-    clear: base.clear,
+    save: (key, value) => base.save(key, value),
+    clear: (key) => base.clear(key),
   };
 }
 

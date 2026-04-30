@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 import { usePersistentState } from '@/hooks/usePersistentState';
+import { createNotesAdapter } from '@/utils/persistence/notesAdapter';
 import type { PersistenceAdapter } from '@/utils/persistence';
 
 const STORAGE_KEY = 'fmq:notes:v1';
+const defaultAdapter = createNotesAdapter();
 
-export function useNotes(adapter?: PersistenceAdapter) {
+export function useNotes(adapter: PersistenceAdapter<Record<string, string>> = defaultAdapter) {
   const [notes, setNotes] = usePersistentState<Record<string, string>>(STORAGE_KEY, {}, adapter);
 
   const setNote = useCallback((frageId: string, text: string) => {

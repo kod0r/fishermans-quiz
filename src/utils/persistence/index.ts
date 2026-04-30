@@ -6,3 +6,5 @@ export { createHistoryAdapter, historyAdapter } from './historyAdapter';
 export { createSRSAdapter, srsAdapter } from './srsAdapter';
 export { createMetaAdapter, metaAdapter } from './metaAdapter';
 export { createRunAdapter, runAdapter } from './runAdapter';
+export { createFavoritesAdapter, favoritesAdapter } from './favoritesAdapter';
+export { createNotesAdapter, notesAdapter } from './notesAdapter';

@@ -23,7 +23,7 @@ const EMPTY: MetaProgression = Object.freeze({
 const metaKey = (mode: GameMode) => `fmq:meta:${mode}:v2`;
 const defaultAdapter = createMetaAdapter();
 
-export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter = defaultAdapter) {
+export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter<MetaProgression> = defaultAdapter) {
   const [meta, setMeta] = usePersistentStatePerMode<MetaProgression>(
     metaKey(gameMode),
     EMPTY,

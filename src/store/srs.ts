@@ -15,7 +15,7 @@ function bootstrapSRSMeta(): SRSMeta {
   };
 }
 
-export function useSRS(adapter: PersistenceAdapter = defaultAdapter) {
+export function useSRS(adapter: PersistenceAdapter<Record<string, SRSMeta>> = defaultAdapter) {
   const [srsMap, setSrsMap] = usePersistentState<Record<string, SRSMeta>>(
     STORAGE_KEY,
     {},
