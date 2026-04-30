@@ -1,6 +1,16 @@
 import { useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   MENU_PAGES,
   type MenuContext,
   type MenuItemConfig,
@@ -137,38 +147,38 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
       </div>
 
       {/* Mode Switch Confirmation Dialog */}
-      {showExamConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-6 max-w-sm mx-4 border border-slate-200 dark:border-slate-700 shadow-xl">
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+      <AlertDialog open={showExamConfirm} onOpenChange={(open) => !open && handleCancelSwitch()}>
+        <AlertDialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-slate-900 dark:text-white">
               {quiz.gameMode === "exam"
                 ? "Laufende Prüfung beenden?"
                 : "Hardcore-Run beenden?"}
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500 dark:text-slate-400">
               {quiz.gameMode === "exam"
                 ? "Der Moduswechsel beendet die aktuelle Prüfung. Bereits gegebene Antworten werden gewertet. Dies kann nicht rückgängig gemacht werden."
                 : "Der Moduswechsel beendet den aktiven Hardcore-Run. Alle Themen dieses Runs werden als nicht bestanden gewertet. Dies kann nicht rückgängig gemacht werden."}
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={handleCancelSwitch}
-                className="flex-1 py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={handleConfirmSwitch}
-                className="flex-1 py-2 px-4 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
-              >
-                {quiz.gameMode === "exam"
-                  ? "Prüfung beenden und wechseln"
-                  : "Run beenden und wechseln"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={handleCancelSwitch}
+              className="border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              Abbrechen
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmSwitch}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              {quiz.gameMode === "exam"
+                ? "Prüfung beenden und wechseln"
+                : "Run beenden und wechseln"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

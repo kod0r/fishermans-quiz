@@ -287,8 +287,10 @@ export default function StartView({ quiz }: Props) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
+        if (e.ctrlKey || e.altKey || e.metaKey) return;
+        const target = e.target as HTMLElement;
+        if (target.isContentEditable) return;
         // Only trigger if focus is not inside a button or interactive element
-        const target = e.target;
         if (target instanceof Element) {
           const tag = target.tagName;
           if (

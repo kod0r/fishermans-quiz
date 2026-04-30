@@ -127,7 +127,7 @@ export default function ProgressView({ quiz }: Props) {
                             <button
                               onClick={() => toggleFavorite(frage.id)}
                               aria-label={isFavorite(frage.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}
-                              className={`p-1.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 ${isFavorite(frage.id) ? 'text-amber-400 hover:text-amber-300' : 'text-slate-400 hover:text-amber-400 dark:text-slate-500'}`}
+                              className={`p-2.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 min-w-[44px] min-h-[44px] flex items-center justify-center ${isFavorite(frage.id) ? 'text-amber-400 hover:text-amber-300' : 'text-slate-400 hover:text-amber-400 dark:text-slate-500'}`}
                             >
                               <Star className={`w-4 h-4 ${isFavorite(frage.id) ? 'fill-current' : ''}`} />
                             </button>

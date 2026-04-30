@@ -153,7 +153,6 @@ export function GameMenuOverlay({
   const pageContent = (
     <div className="relative flex-1 overflow-y-auto">
       <div
-        key={stack.join('-')}
         className={`
           animate-in
           ${direction === 'forward' ? 'slide-in-from-right-full' : 'slide-in-from-left-full'}
