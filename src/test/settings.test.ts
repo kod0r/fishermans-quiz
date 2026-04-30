@@ -1,17 +1,23 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useSettings } from '@/store/settings';
+import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
+import { createSettingsAdapter } from '@/utils/persistence/settingsAdapter';
+
+const TEST_KEY = 'fmq:settings:v1';
 
 describe('useSettings', () => {
-  it('sollte initial Arcade als Default haben', () => {
-    const { result } = renderHook(() => useSettings());
+  beforeEach(() => {
+    memoryAdapter.clear(TEST_KEY);
+  });
 
+  it('sollte initial Arcade als Default haben', () => {
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     expect(result.current.gameMode).toBe('arcade');
   });
 
   it('sollte den Spielmodus wechseln', () => {
-    const { result } = renderHook(() => useSettings());
-
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     expect(result.current.gameMode).toBe('arcade');
 
     act(() => {
@@ -22,30 +28,30 @@ describe('useSettings', () => {
     expect(result.current.settings.gameMode).toBe('hardcore');
   });
 
-  it('sollte Settings in localStorage persistieren', () => {
-    const { result } = renderHook(() => useSettings());
+  it('sollte Settings in Adapter persistieren', () => {
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
 
     act(() => {
       result.current.setGameMode('hardcore');
     });
 
-    const stored = localStorage.getItem('fmq:settings:v1');
+    const stored = memoryAdapter.load(TEST_KEY);
     expect(stored).toBeTruthy();
-    expect(JSON.parse(stored!).gameMode).toBe('hardcore');
+    expect((stored as { gameMode: string }).gameMode).toBe('hardcore');
   });
 
-  it('sollte Settings aus localStorage laden', () => {
-    localStorage.setItem('fmq:settings:v1', JSON.stringify({ gameMode: 'hardcore' }));
+  it('sollte Settings aus Adapter laden', () => {
+    memoryAdapter.save(TEST_KEY, { gameMode: 'hardcore' });
 
-    const { result } = renderHook(() => useSettings());
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
 
     expect(result.current.gameMode).toBe('hardcore');
   });
 
-  it('sollte bei korruptem localStorage auf Defaults zurückfallen', () => {
-    localStorage.setItem('fmq:settings:v1', JSON.stringify({ gameMode: 'invalid_mode' }));
+  it('sollte bei korruptem Adapter-Daten auf Defaults zurückfallen', () => {
+    memoryAdapter.save(TEST_KEY, { gameMode: 'invalid_mode' });
 
-    const { result } = renderHook(() => useSettings());
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
 
     expect(result.current.gameMode).toBe('arcade');
   });
