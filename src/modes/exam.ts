@@ -11,7 +11,7 @@ export const ExamPolicy: ModePolicy = {
   allowsPendingRetry: false,
 
   getStartLimit(userLimit?: number) {
-    return userLimit ?? EXAM_LIMIT;
+    return Math.max(1, userLimit ?? EXAM_LIMIT);
   },
 
   getDurationSeconds() {

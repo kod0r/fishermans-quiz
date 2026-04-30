@@ -88,7 +88,7 @@ export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter<
         for (const [id, tMeta] of Object.entries(nextTopics)) {
           if (
             id !== topicId &&
-            tMeta.lastAttempt !== null &&
+            tMeta.lastAttempt != null &&
             tMeta.passed === false &&
             tMeta.mastered === false
           ) {

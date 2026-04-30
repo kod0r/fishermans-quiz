@@ -131,7 +131,7 @@ export function removeTopicFromRun(run: QuizRun, quizData: QuizData, topicId: st
   }
 
   const removedBeforeIndex = run.frageIds
-    .slice(0, run.aktuellerIndex + 1)
+    .slice(0, run.aktuellerIndex)
     .filter(id => idsToRemove.has(id)).length;
 
   const neuerIndex = Math.max(0, run.aktuellerIndex - removedBeforeIndex);

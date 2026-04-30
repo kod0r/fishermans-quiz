@@ -153,7 +153,7 @@ export function useQuiz() {
   }, [run]);
 
   // Hilfsfunktion: Session als abgeschlossen loggen
-  const logRunIfComplete = useCallback((finalAntworten: Record<string, string>) => {
+  const logRunIfComplete = useCallback((finalAntworten: Record<string, string>, finalSelfAssessments?: Record<string, SelfAssessmentGrade>) => {
     if (!run.isActive || !run.rawRun) return;
     if (run.rawRun.completedAt) return; // doppeltes Loggen verhindern
     const alleBeantwortet = run.aktiveFragen.every(f => finalAntworten[f.id] !== undefined);
@@ -162,7 +162,8 @@ export function useQuiz() {
     const isFlashcard = run.rawRun.sessionType === 'flashcard';
     const korrekt = run.aktiveFragen.filter(f => {
       if (isFlashcard) {
-        return run.rawRun?.selfAssessments?.[f.id] !== 'again';
+        const grade = finalSelfAssessments?.[f.id] ?? run.rawRun?.selfAssessments?.[f.id];
+        return grade !== undefined && grade !== 'again';
       }
       return finalAntworten[f.id] === f.richtige_antwort;
     }).length;
@@ -399,7 +400,8 @@ export function useQuiz() {
     srs.recordSelfAssessment(frageId, grade);
 
     const neueAntworten = { ...run.antworten, [frageId]: frage.richtige_antwort };
-    logRunIfComplete(neueAntworten);
+    const neueSelfAssessments = { ...run.rawRun?.selfAssessments, [frageId]: grade };
+    logRunIfComplete(neueAntworten, neueSelfAssessments);
   }, [run, meta, logRunIfComplete, srs]);
 
   const canRemoveTopic = useCallback(
