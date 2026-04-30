@@ -23,7 +23,9 @@ export function useHistory(adapter: PersistenceAdapter<HistoryEntry[]> = default
     mode: GameMode;
   }) => {
     const entry: HistoryEntry = {
-      id: crypto.randomUUID(),
+      id: typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`,
       timestamp: new Date().toISOString(),
       ...params,
     };
