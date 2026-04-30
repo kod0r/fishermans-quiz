@@ -160,6 +160,13 @@ export function useQuiz() {
     if (!alleBeantwortet) return;
 
     const isFlashcard = run.rawRun.sessionType === 'flashcard';
+    if (isFlashcard) {
+      const alleBewertet = run.aktiveFragen.every(
+        f => (finalSelfAssessments?.[f.id] ?? run.rawRun?.selfAssessments?.[f.id]) !== undefined,
+      );
+      if (!alleBewertet) return;
+    }
+
     const korrekt = run.aktiveFragen.filter(f => {
       if (isFlashcard) {
         const grade = finalSelfAssessments?.[f.id] ?? run.rawRun?.selfAssessments?.[f.id];
