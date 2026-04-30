@@ -11,10 +11,8 @@ import { useNotes } from '@/store/notes';
 import { useHistory } from '@/store/history';
 import { useSRS } from '@/store/srs';
 import { isMastered } from '@/utils/srs';
-import { canSelectTopic } from '@/utils/topicLocks';
 import { filterQuizDataByFavorites, filterQuizDataByWeakness, filterQuizDataBySRSDue } from '@/utils/filter';
-
-const EXAM_DURATION_SECONDS = 60 * 60;
+import { MODE_POLICIES } from '@/modes';
 
 export function useQuiz() {
   const [quizMeta, setQuizMeta] = useState<QuizMeta | null>(null);
@@ -32,6 +30,7 @@ export function useQuiz() {
   const fav = useFavorites();
   const notes = useNotes();
   const history = useHistory();
+  const policy = MODE_POLICIES[gameMode];
 
   // Vollständiger Backup-Export
   const exportFullBackup = useCallback(() => {
@@ -194,43 +193,31 @@ export function useQuiz() {
     const neueAntworten = { ...run.antworten, [frageId]: antwort };
     const alleBeantwortet = run.aktiveFragen.every(f => neueAntworten[f.id] !== undefined);
 
-    // Hardcore: Sofortiges Fail bei falscher Antwort + End-Prüfung
-    if (gameMode === 'hardcore' && run.isActive) {
-      if (!isCorrect) {
-        const topicId = frage.topic;
-        if (run.loadedTopics.includes(topicId)) {
-          meta.recordTopicResult(topicId, false);
-        }
-      }
+    const effect = policy.onAnswer({
+      frage,
+      isCorrect,
+      neueAntworten,
+      alleBeantwortet,
+      aktiveFragen: run.aktiveFragen,
+      loadedTopics: run.loadedTopics,
+    });
 
-      if (alleBeantwortet) {
-        for (const topicId of run.loadedTopics) {
-          const topicQuestions = run.aktiveFragen.filter(f => f.topic === topicId);
-          const alleRichtig = topicQuestions.every(f => neueAntworten[f.id] === f.richtige_antwort);
-          meta.recordTopicResult(topicId, alleRichtig);
-        }
-      }
+    for (const tr of effect.topicResults ?? []) {
+      meta.recordTopicResult(tr.topicId, tr.passed);
     }
-
-    // Arcade: Sterne + Highscore pro Topic bei Run-Abschluss
-    if (gameMode === 'arcade' && alleBeantwortet) {
-      for (const topicId of run.loadedTopics) {
-        const topicQuestions = run.aktiveFragen.filter(f => f.topic === topicId);
-        const korrekt = topicQuestions.filter(f => neueAntworten[f.id] === f.richtige_antwort).length;
-        const pct = topicQuestions.length > 0 ? Math.round((korrekt / topicQuestions.length) * 100) : 0;
-        meta.recordArcadeRunComplete(topicId, pct);
-      }
+    for (const ac of effect.arcadeCompletions ?? []) {
+      meta.recordArcadeRunComplete(ac.topicId, ac.scorePct);
     }
 
     logRunIfComplete(neueAntworten);
-  }, [run, meta, gameMode, logRunIfComplete, srs]);
+  }, [run, meta, policy, logRunIfComplete, srs]);
 
   // Starten: Lazy Loading der Bereichs-Fragen
   const starteQuiz = useCallback(async (topics: string[], options: QuizStartOptions = {}) => {
     if (!quizMeta) return;
 
     // Guard: validate all requested topics can be selected in current mode
-    const locked = topics.filter(id => !canSelectTopic(id, gameMode, meta.meta, quizMeta, run.isActive, run.loadedTopics));
+    const locked = topics.filter(id => !policy.canStartTopic(id, meta.meta, run.isActive, run.loadedTopics));
     if (locked.length > 0) {
       console.error('[useQuiz] Cannot start quiz — locked topics:', locked);
       return;
@@ -239,10 +226,7 @@ export function useQuiz() {
     const { nurFavoriten = false, filter = 'all' } = options;
     let { limit } = options;
 
-    // Exam mode: fixed 60 questions, 60 minutes
-    if (gameMode === 'exam' && !limit) {
-      limit = 60;
-    }
+    limit = policy.getStartLimit(limit);
 
     let data = quizData;
 
@@ -290,12 +274,12 @@ export function useQuiz() {
     }
 
     const isNewRun = !run.isActive;
-    const durationSeconds = gameMode === 'exam' ? EXAM_DURATION_SECONDS : undefined;
+    const durationSeconds = policy.getDurationSeconds();
     const sessionType = options.sessionType ?? 'quiz';
     run.starteRun(topics, filteredData, limit, durationSeconds, sessionType, shuffleAnswers);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
-  }, [run, meta, quizData, quizMeta, fav.favorites, gameMode, srs.dueFrageIds, shuffleAnswers]);
+  }, [run, meta, quizData, quizMeta, fav.favorites, policy, srs.dueFrageIds, shuffleAnswers]);
 
   const goToView = useCallback((v: AppView) => {
     setView(v);
@@ -321,72 +305,79 @@ export function useQuiz() {
   }, [run, history, gameMode]);
 
   const handleUnterbrecheRun = useCallback(() => {
-    if (gameMode === 'hardcore') {
-      for (const topicId of run.loadedTopics) {
-        meta.recordTopicResult(topicId, false);
-      }
+    const effect = policy.onAbort({
+      loadedTopics: run.loadedTopics,
+      beantwortet: run.statistiken.beantwortet,
+    });
+
+    for (const tr of effect.topicResults ?? []) {
+      meta.recordTopicResult(tr.topicId, tr.passed);
     }
 
-    // Logge abgebrochene Session nur wenn mindestens eine Frage beantwortet wurde
-    if (run.isActive && run.statistiken.beantwortet > 0) {
+    if (effect.shouldLogHistory && run.isActive && run.statistiken.beantwortet > 0) {
       logCurrentRun();
     }
 
     run.unterbrecheRun();
-  }, [run, meta, gameMode, logCurrentRun]);
+  }, [run, meta, policy, logCurrentRun]);
 
   const beendeExam = useCallback(() => {
-    if (!run.isActive || gameMode !== 'exam') return;
-    logCurrentRun();
+    if (!run.isActive) return;
+    const effect = policy.onComplete({
+      aktiveFragen: run.aktiveFragen,
+      korrekt: run.statistiken.korrekt,
+    });
+    if (!effect.examResult) return;
 
-    const total = run.aktiveFragen.length;
-    const korrekt = run.statistiken.korrekt;
-    const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
-    const passed = scorePct >= 60;
-    meta.recordExamResult(scorePct, passed);
+    logCurrentRun();
+    meta.recordExamResult(effect.examResult.scorePct, effect.examResult.passed);
 
     run.beendeRun();
     setView('progress');
-  }, [run, gameMode, logCurrentRun, meta]);
+  }, [run, policy, logCurrentRun, meta]);
 
   // Zentraler Moduswechsel — beendet aktive Runs gemäß Modus-Regeln
   const switchGameMode = useCallback((newMode: GameMode) => {
     if (run.isActive) {
-      if (gameMode === 'hardcore') {
-        // Hardcore: alle Themen im Run als nicht bestanden markieren
-        for (const topicId of run.loadedTopics) {
-          meta.recordTopicResult(topicId, false);
-        }
-        if (run.statistiken.beantwortet > 0) {
-          logCurrentRun();
-        }
-        run.unterbrecheRun();
-        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-        try { runAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
-      } else if (gameMode === 'exam') {
-        // Exam: Ergebnis loggen und beenden
+      const effect = policy.onModeSwitch({
+        rawRun: run.rawRun,
+        aktiveFragen: run.aktiveFragen,
+        loadedTopics: run.loadedTopics,
+        beantwortet: run.statistiken.beantwortet,
+        korrekt: run.statistiken.korrekt,
+      });
+
+      for (const tr of effect.topicResults ?? []) {
+        meta.recordTopicResult(tr.topicId, tr.passed);
+      }
+
+      if (effect.shouldLogHistory && run.isActive) {
         logCurrentRun();
-        const total = run.aktiveFragen.length;
-        const korrekt = run.statistiken.korrekt;
-        const scorePct = total > 0 ? Math.round((korrekt / total) * 100) : 0;
-        const passed = scorePct >= 60;
-        meta.recordExamResult(scorePct, passed);
-        const endedRun = run.rawRun ? { ...run.rawRun, isActive: false, gameMode } : null;
-        run.beendeRun();
-        // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-        if (endedRun) {
+      }
+
+      if (effect.examResult) {
+        meta.recordExamResult(effect.examResult.scorePct, effect.examResult.passed);
+      }
+
+      if (effect.shouldEndRun) {
+        if (effect.shouldSaveEndedRun && run.rawRun) {
+          const endedRun = { ...run.rawRun, isActive: false, gameMode };
+          run.beendeRun();
+          // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
           try { runAdapter.save(`fmq:run:${gameMode}:v2`, endedRun); } catch { /* ignore */ }
         } else {
+          run.unterbrecheRun();
+          // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
           try { runAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
         }
-        if (view === 'quiz') {
-          setView('progress');
-        }
       }
-      // Arcade: Run bleibt modus-spezifisch erhalten, kein Eingriff nötig
+
+      if (effect.navigateTo && view === 'quiz') {
+        setView(effect.navigateTo);
+      }
     }
     setGameMode(newMode);
-  }, [run, meta, gameMode, logCurrentRun, setGameMode, view]);
+  }, [run, meta, policy, logCurrentRun, setGameMode, view, gameMode]);
 
   // Flashcard: Selbstbewertung verarbeiten
   const beantworteFlashcard = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
@@ -410,9 +401,9 @@ export function useQuiz() {
   const canRemoveTopic = useCallback(
     (id: string) => {
       if (!run.isActive || !run.loadedTopics.includes(id)) return true;
-      return gameMode === 'arcade';
+      return policy.canRemoveTopic(id);
     },
-    [run, gameMode]
+    [run, policy]
   );
 
   // SRS-aware mastery counts
@@ -431,7 +422,7 @@ export function useQuiz() {
 
   // Arcade: Topics die vollständig gemeistert sind (SRS oder legacy)
   const passedTopicsArcade = useMemo(() => {
-    if (!quizMeta || gameMode !== 'arcade') return 0;
+    if (!quizMeta) return 0;
     const allTopics = Object.keys(quizMeta.meta.topics);
     return allTopics.filter(topicId => {
       const fragenIds = Object.entries(quizMeta.fragenIndex)
@@ -439,7 +430,7 @@ export function useQuiz() {
         .map(([id]) => id);
       return fragenIds.length > 0 && fragenIds.every(id => isMastered(meta.meta.fragen[id], srs.srsMap[id]));
     }).length;
-  }, [quizMeta, meta.meta.fragen, srs.srsMap, gameMode]);
+  }, [quizMeta, meta.meta.fragen, srs.srsMap]);
 
   return {
     // Meta (immer verfügbar)
