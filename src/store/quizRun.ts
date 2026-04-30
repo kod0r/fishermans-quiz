@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
-import { shuffleAnswers as computeShuffle } from '@/utils/quizShuffle';
 import { usePersistentStatePerMode } from '@/hooks/usePersistentState';
 import type { PersistenceAdapter } from '@/utils/persistence';
+import * as RunEngine from '@/engine/runEngine';
+import { selectActiveQuestions, selectStatistics } from '@/engine/runSelectors';
 
 const runKey = (mode: GameMode) => `fmq:run:${mode}:v2`;
 
@@ -19,208 +20,88 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     shouldSave,
   );
 
-  // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
-  useEffect(() => {
-    if (!run || !quizData) return;
-
-    const vorhandeneIds = new Set(quizData.fragen.map(f => f.id));
-    const fehlendeIds = run.frageIds.filter(id => !vorhandeneIds.has(id));
-
-    if (fehlendeIds.length > 0) {
-      console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
-      const bereinigteIds = run.frageIds.filter(id => vorhandeneIds.has(id));
-      if (bereinigteIds.length === 0) {
-        setRun(null);
-        return;
-      }
-      const bereinigteAntworten: Record<string, string> = {};
-      for (const id of bereinigteIds) {
-        if (run.antworten[id] !== undefined) {
-          bereinigteAntworten[id] = run.antworten[id];
-        }
-      }
-      const bereinigterIndex = Math.min(run.aktuellerIndex, bereinigteIds.length - 1);
-      setRun({
-        ...run,
-        frageIds: bereinigteIds,
-        antworten: bereinigteAntworten,
-        aktuellerIndex: bereinigterIndex,
-        gameMode: run.gameMode ?? gameMode,
-      });
-    }
-  }, [run, quizData, setRun, gameMode]);
-
   const persistRun = useCallback((next: QuizRun | null) => {
     setRun(next);
   }, [setRun]);
+
+  // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
+  useEffect(() => {
+    if (!run || !quizData) return;
+    const bereinigt = RunEngine.purgeMissingQuestions(run, quizData);
+    if (bereinigt !== run) {
+      const fehlendeIds = RunEngine.detectInconsistency(run, quizData);
+      console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
+      if (bereinigt === null) {
+        setRun(null);
+      } else {
+        setRun({ ...bereinigt, gameMode: bereinigt.gameMode ?? gameMode });
+      }
+    }
+  }, [run, quizData, setRun, gameMode]);
 
   const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
     if (run?.isActive) {
-      if (run.durationSeconds) return;
-
-      const combinedTopics = [...new Set([...run.topics, ...topics])];
-      const existingIds = new Set(run.frageIds);
-      const neueFragen = qd.fragen.filter(
-        f => topics.includes(f.topic) && !existingIds.has(f.id)
-      );
-      if (neueFragen.length === 0) return;
-
-      const gemischt = [...neueFragen];
-      for (let i = gemischt.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
-      }
-
-      const newAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
-      if (newAnswerShuffle && enableShuffle) {
-        for (const f of gemischt) {
-          const { order } = computeShuffle(f);
-          newAnswerShuffle[f.id] = order;
-        }
-      }
-
-      persistRun({
-        ...run,
-        frageIds: [...run.frageIds, ...gemischt.map(f => f.id)],
-        topics: combinedTopics,
-        startedAt: new Date().toISOString(),
-        completedAt: undefined,
-        answerShuffle: newAnswerShuffle,
-        gameMode: run.gameMode ?? gameMode,
-      });
+      const extended = RunEngine.extendRun(run, qd, topics, enableShuffle);
+      if (!extended) return;
+      persistRun({ ...extended, gameMode: extended.gameMode ?? gameMode });
     } else {
-      const gefiltert = qd.fragen.filter(f => topics.includes(f.topic));
-      const gemischt = [...gefiltert];
-      for (let i = gemischt.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
-      }
-
-      const finalPool = limit && limit > 0 ? gemischt.slice(0, limit) : gemischt;
-
-      let answerShuffle: Record<string, ('A' | 'B' | 'C')[]> | undefined;
-      if (enableShuffle) {
-        answerShuffle = {};
-        for (const f of finalPool) {
-          const { order } = computeShuffle(f);
-          answerShuffle[f.id] = order;
-        }
-      }
-
-      persistRun({
-        frageIds: finalPool.map(f => f.id),
-        antworten: {},
-        topics,
-        aktuellerIndex: 0,
-        isActive: true,
-        startedAt: new Date().toISOString(),
-        durationSeconds,
-        sessionType: sessionType ?? 'quiz',
-        answerShuffle,
-        gameMode,
-      });
+      const created = RunEngine.createRun(qd, topics, { limit, durationSeconds, sessionType, enableShuffle });
+      persistRun({ ...created, gameMode });
     }
   }, [quizData, run, persistRun, gameMode]);
 
   const beantworteFrage = useCallback((frageId: string, antwort: string) => {
     setRun(prev => {
-      if (!prev || prev.antworten[frageId]) return prev;
-      return { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
+      if (!prev) return prev;
+      return RunEngine.answerQuestion(prev, frageId, antwort);
     });
   }, [setRun]);
 
   const bewerteSelbst = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
     setRun(prev => {
       if (!prev) return prev;
-      return {
-        ...prev,
-        selfAssessments: { ...(prev.selfAssessments ?? {}), [frageId]: grade },
-      };
+      return RunEngine.selfAssess(prev, frageId, grade);
     });
   }, [setRun]);
 
   const naechsteFrage = useCallback(() => {
     setRun(prev => {
-      if (!prev || prev.aktuellerIndex >= prev.frageIds.length - 1) return prev;
-      return { ...prev, aktuellerIndex: prev.aktuellerIndex + 1 };
+      if (!prev) return prev;
+      return RunEngine.nextQuestion(prev);
     });
   }, [setRun]);
 
   const vorherigeFrage = useCallback(() => {
     setRun(prev => {
-      if (!prev || prev.aktuellerIndex <= 0) return prev;
-      return { ...prev, aktuellerIndex: prev.aktuellerIndex - 1 };
+      if (!prev) return prev;
+      return RunEngine.prevQuestion(prev);
     });
   }, [setRun]);
 
   const springeZuFrage = useCallback((index: number) => {
     setRun(prev => {
-      if (!prev || index < 0 || index >= prev.frageIds.length) return prev;
-      return { ...prev, aktuellerIndex: index };
+      if (!prev) return prev;
+      return RunEngine.jumpToQuestion(prev, index);
     });
   }, [setRun]);
 
   const removeTopic = useCallback((topicId: string) => {
     if (!run || !quizData) return;
-
-    const idsToRemove = new Set(
-      quizData.fragen.filter(f => f.topic === topicId).map(f => f.id)
-    );
-
-    const neueFrageIds = run.frageIds.filter(id => !idsToRemove.has(id));
-    const newTopics = run.topics.filter(b => b !== topicId);
-
-    if (neueFrageIds.length === run.frageIds.length && newTopics.length === run.topics.length) {
-      return;
-    }
-
-    if (neueFrageIds.length === 0) {
+    const next = RunEngine.removeTopicFromRun(run, quizData, topicId);
+    if (next === null) {
       persistRun(null);
-      return;
+    } else if (next !== run) {
+      persistRun({ ...next, gameMode: next.gameMode ?? gameMode });
     }
-
-    const neueAntworten: Record<string, string> = {};
-    for (const id of neueFrageIds) {
-      if (run.antworten[id] !== undefined) {
-        neueAntworten[id] = run.antworten[id];
-      }
-    }
-
-    const removedBeforeIndex = run.frageIds
-      .slice(0, run.aktuellerIndex + 1)
-      .filter(id => idsToRemove.has(id)).length;
-
-    const neuerIndex = Math.max(0, run.aktuellerIndex - removedBeforeIndex);
-    const finalIndex = Math.min(neuerIndex, neueFrageIds.length - 1);
-
-    let neueAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
-    if (neueAnswerShuffle) {
-      for (const id of Array.from(idsToRemove)) {
-        delete neueAnswerShuffle[id];
-      }
-      if (Object.keys(neueAnswerShuffle).length === 0) {
-        neueAnswerShuffle = undefined;
-      }
-    }
-
-    persistRun({
-      ...run,
-      frageIds: neueFrageIds,
-      antworten: neueAntworten,
-      topics: newTopics,
-      aktuellerIndex: finalIndex,
-      answerShuffle: neueAnswerShuffle,
-      gameMode: run.gameMode ?? gameMode,
-    });
   }, [run, quizData, persistRun, gameMode]);
 
   const unterbrecheRun = useCallback(() => {
     setRun(prev => {
       if (!prev) return prev;
-      return { ...prev, isActive: false };
+      return RunEngine.interruptRun(prev);
     });
   }, [setRun]);
 
@@ -231,80 +112,34 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
   const beendeRun = useCallback(() => {
     setRun(prev => {
       if (!prev) return prev;
-      return { ...prev, isActive: false };
+      return RunEngine.interruptRun(prev);
     });
   }, [setRun]);
 
   const markCompleted = useCallback(() => {
     setRun(prev => {
       if (!prev) return prev;
-      return { ...prev, completedAt: new Date().toISOString() };
+      return RunEngine.completeRun(prev);
     });
   }, [setRun]);
 
   const restarteRun = useCallback(() => {
     if (!run || !quizData) return;
-    const gemischt = [...run.frageIds];
-    for (let i = gemischt.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
-    }
-
-    let newAnswerShuffle: Record<string, ('A' | 'B' | 'C')[]> | undefined;
-    if (run.answerShuffle) {
-      newAnswerShuffle = {};
-      for (const id of gemischt) {
-        const f = quizData.fragen.find(q => q.id === id);
-        if (f) {
-          const { order } = computeShuffle(f);
-          newAnswerShuffle[id] = order;
-        }
-      }
-    }
-
-    persistRun({
-      ...run,
-      frageIds: gemischt,
-      antworten: {},
-      aktuellerIndex: 0,
-      startedAt: new Date().toISOString(),
-      selfAssessments: {},
-      completedAt: undefined,
-      answerShuffle: newAnswerShuffle,
-      gameMode: run.gameMode ?? gameMode,
-    });
+    const next = RunEngine.restartRun(run, quizData);
+    persistRun({ ...next, gameMode: next.gameMode ?? gameMode });
   }, [run, quizData, persistRun, gameMode]);
 
   const aktiveFragen = useMemo<Frage[]>(() => {
     if (!run || !quizData) return [];
-    return run.frageIds
-      .map(id => {
-        const f = quizData.fragen.find(q => q.id === id);
-        if (!f) return undefined;
-        const shuffle = run.answerShuffle?.[f.id];
-        if (shuffle) {
-          const keys: ('A' | 'B' | 'C')[] = ['A', 'B', 'C'];
-          const antworten = {
-            A: f.antworten[shuffle[0]],
-            B: f.antworten[shuffle[1]],
-            C: f.antworten[shuffle[2]],
-          };
-          const richtige_antwort = keys[shuffle.indexOf(f.richtige_antwort)];
-          return { ...f, antworten, richtige_antwort };
-        }
-        return f;
-      })
-      .filter((f): f is Frage => f !== undefined);
+    return selectActiveQuestions(run, quizData);
   }, [run, quizData]);
 
   const aktuelleFrage = aktiveFragen[run?.aktuellerIndex ?? 0] || null;
 
-  const statistiken = useMemo(() => ({
-    beantwortet: run ? Object.keys(run.antworten).length : 0,
-    korrekt: aktiveFragen.filter(f => run && run.antworten[f.id] === f.richtige_antwort).length,
-    falsch: aktiveFragen.filter(f => run && f.id in run.antworten && run.antworten[f.id] !== f.richtige_antwort).length,
-    gesamt: aktiveFragen.length,
-  }), [aktiveFragen, run]);
+  const statistiken = useMemo(() => {
+    if (!run) return { beantwortet: 0, korrekt: 0, falsch: 0, gesamt: 0 };
+    return selectStatistics(run, aktiveFragen);
+  }, [aktiveFragen, run]);
 
   return {
     run,
