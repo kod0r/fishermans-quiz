@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { version } from "../../../package.json";
 import { useTheme } from "next-themes";
 import {
   AlertDialog,
@@ -141,7 +142,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
         {/* Info */}
         <section className="px-4 py-2">
           <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-            Fisherman&apos;s Quiz v0.3.6
+            Fisherman&apos;s Quiz v{version}
           </p>
         </section>
       </div>

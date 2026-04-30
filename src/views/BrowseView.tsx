@@ -92,7 +92,7 @@ export default function BrowseView({ quiz }: Props) {
           </div>
         </div>
 
-        <ScrollArea className="h-[calc(100vh-380px)]">
+        <ScrollArea className="flex-1 min-h-0">
           <div className="space-y-2">
             {filteredFragen.length === 0 && <p className="text-center text-slate-500 dark:text-slate-400 py-8">Keine Fragen gefunden.</p>}
             {filteredFragen.map((frage) => (

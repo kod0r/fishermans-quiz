@@ -74,7 +74,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
                   a.href = url;
                   a.download = `fishermans-quiz-meta-${new Date().toISOString().split('T')[0]}.json`;
                   a.click();
-                  URL.revokeObjectURL(url);
+                  setTimeout(() => URL.revokeObjectURL(url), 100);
                 }
                 if (expCsv) {
                   const rows = [
@@ -96,7 +96,7 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
                   a.href = url;
                   a.download = `fishermans-quiz-stats-${new Date().toISOString().split('T')[0]}.csv`;
                   a.click();
-                  URL.revokeObjectURL(url);
+                  setTimeout(() => URL.revokeObjectURL(url), 100);
                 }
                 if (expBackup) {
                   quiz.exportFullBackup?.();
@@ -127,7 +127,8 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
               const reader = new FileReader();
               reader.onload = (ev) => {
                 try {
-                  const data = JSON.parse(ev.target?.result as string);
+                  const raw = ev.target?.result;
+                  const data = JSON.parse(typeof raw === 'string' ? raw : '');
                   const parsed = MetaProgressionSchema.safeParse(data);
                   if (parsed.success) {
                     if (confirm(`Import progress data for ${quiz.gameMode === 'exam' ? 'Prüfungsmodus' : quiz.gameMode}?\nDies überschreibt nur den Fortschritt des aktuellen Modus.`)) {
@@ -156,7 +157,8 @@ export function MenuPageData({ quiz }: MenuPageDataProps) {
               const reader = new FileReader();
               reader.onload = (ev) => {
                 try {
-                  const data = JSON.parse(ev.target?.result as string);
+                  const raw = ev.target?.result;
+                  const data = JSON.parse(typeof raw === 'string' ? raw : '');
                   if (confirm('Restore full backup? This will overwrite ALL data and reload the page.')) {
                     const ok = quiz.importFullBackup?.(data);
                     if (ok === false) {

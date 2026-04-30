@@ -12,7 +12,6 @@ const SHORTCUTS: { key: string; description: string; keys: string[] }[] = [
   { key: 'nav-prev', description: 'Previous question', keys: ['←'] },
   { key: 'nav-next', description: 'Next question', keys: ['→'] },
   { key: 'reveal', description: 'Reveal answer (flashcard)', keys: ['Space'] },
-  { key: 'submit', description: 'Submit answer (quiz)', keys: ['Space'] },
   { key: 'favorite', description: 'Toggle favorite', keys: ['F'] },
   { key: 'help', description: 'Show help', keys: ['?'] },
   { key: 'menu', description: 'Open menu', keys: ['Esc'] },
