@@ -1,15 +1,23 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useHistory } from '@/store/history';
+import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
+import { createHistoryAdapter } from '@/utils/persistence/historyAdapter';
+
+const TEST_KEY = 'fmq:history:v1';
 
 describe('useHistory', () => {
+  beforeEach(() => {
+    memoryAdapter.clear(TEST_KEY);
+  });
+
   it('sollte mit leerem Verlauf starten', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     expect(result.current.entries).toEqual([]);
   });
 
   it('sollte einen Eintrag hinzufügen', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       result.current.addEntry({
         topics: ['Biologie'],
@@ -25,7 +33,7 @@ describe('useHistory', () => {
   });
 
   it('sollte Einträge an den Anfang stellen', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       result.current.addEntry({
         topics: ['Biologie'],
@@ -47,7 +55,7 @@ describe('useHistory', () => {
   });
 
   it('sollte maximal 500 Einträge halten', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       for (let i = 0; i < 502; i++) {
         result.current.addEntry({
@@ -62,7 +70,7 @@ describe('useHistory', () => {
     expect(result.current.entries).toHaveLength(500);
   });
 
-  it('sollte Einträge aus localStorage laden', () => {
+  it('sollte Einträge aus Adapter laden', () => {
     const existing = [
       {
         id: 'test-1',
@@ -74,14 +82,14 @@ describe('useHistory', () => {
         mode: 'arcade',
       },
     ];
-    localStorage.setItem('fmq:history:v1', JSON.stringify(existing));
-    const { result } = renderHook(() => useHistory());
+    memoryAdapter.save(TEST_KEY, existing);
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     expect(result.current.entries).toHaveLength(1);
     expect(result.current.entries[0].id).toBe('test-1');
   });
 
   it('sollte den Verlauf löschen', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       result.current.addEntry({
         topics: ['Biologie'],
@@ -98,7 +106,7 @@ describe('useHistory', () => {
   });
 
   it('sollte Einträge importieren', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       result.current.importHistory([
         {
@@ -117,7 +125,7 @@ describe('useHistory', () => {
   });
 
   it('sollte jeder Eintrag eine eindeutige ID haben', () => {
-    const { result } = renderHook(() => useHistory());
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     act(() => {
       result.current.addEntry({
         topics: ['Biologie'],
@@ -149,8 +157,8 @@ describe('useHistory', () => {
         mode: 'arcade',
       },
     ];
-    localStorage.setItem('fmq:history:v1', JSON.stringify(legacy));
-    const { result } = renderHook(() => useHistory());
+    memoryAdapter.save(TEST_KEY, legacy);
+    const { result } = renderHook(() => useHistory(createHistoryAdapter(memoryAdapter)));
     expect(result.current.entries).toHaveLength(1);
     expect(result.current.entries[0].topics).toEqual(['Recht', 'Biologie']);
   });

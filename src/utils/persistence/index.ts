@@ -1,3 +1,8 @@
 export type { PersistenceAdapter } from './types';
 export { memoryAdapter } from './memoryAdapter';
 export { localStorageAdapter } from './localStorageAdapter';
+export { createSettingsAdapter, settingsAdapter } from './settingsAdapter';
+export { createHistoryAdapter, historyAdapter } from './historyAdapter';
+export { createSRSAdapter, srsAdapter } from './srsAdapter';
+export { createMetaAdapter, metaAdapter } from './metaAdapter';
+export { createRunAdapter, runAdapter } from './runAdapter';

@@ -1,15 +1,19 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import type { HistoryEntry, GameMode } from '@/types/quiz';
-import { HistoryStorage } from '@/utils/storage';
+import { usePersistentState } from '@/hooks/usePersistentState';
+import { createHistoryAdapter } from '@/utils/persistence/historyAdapter';
+import type { PersistenceAdapter } from '@/utils/persistence';
 
-export function useHistory() {
-  const [entries, setEntries] = useState<HistoryEntry[]>(() => {
-    const loaded = HistoryStorage.load();
-    return loaded.map((entry) => ({
-      ...entry,
-      topics: (((entry as unknown as Record<string, unknown>).topics ?? (entry as unknown as Record<string, unknown>).bereiche ?? []) as string[]),
-    }));
-  });
+const STORAGE_KEY = 'fmq:history:v1';
+const MAX_ENTRIES = 500;
+const defaultAdapter = createHistoryAdapter();
+
+export function useHistory(adapter: PersistenceAdapter = defaultAdapter) {
+  const [entries, setEntries] = usePersistentState<HistoryEntry[]>(
+    STORAGE_KEY,
+    [],
+    adapter,
+  );
 
   const addEntry = useCallback((params: {
     topics: string[];
@@ -23,25 +27,16 @@ export function useHistory() {
       timestamp: new Date().toISOString(),
       ...params,
     };
-    setEntries(prev => [entry, ...prev].slice(0, 500));
-  }, []);
+    setEntries(prev => [entry, ...prev].slice(0, MAX_ENTRIES));
+  }, [setEntries]);
 
   const clearHistory = useCallback(() => {
     setEntries([]);
-  }, []);
+  }, [setEntries]);
 
   const importHistory = useCallback((data: HistoryEntry[]) => {
-    setEntries(data);
-  }, []);
-
-  // Persistiere History bei Änderungen
-  useEffect(() => {
-    try {
-      HistoryStorage.save(entries);
-    } catch {
-      // Silently ignore storage errors to avoid blocking UI updates
-    }
-  }, [entries]);
+    setEntries(data.slice(0, MAX_ENTRIES));
+  }, [setEntries]);
 
   return {
     entries,

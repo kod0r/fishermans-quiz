@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData, AppBackupSchema } from '@/utils/quizLoader';
-import { MetaStorage, RunStorage, SettingsStorage, FavoritesStorage, NotesStorage, HistoryStorage, SRSStorage } from '@/utils/storage';
+import { metaAdapter, runAdapter } from '@/utils/persistence';
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
 import { useSettings } from '@/store/settings';
@@ -39,9 +39,9 @@ export function useQuiz() {
       version: '1' as const,
       exportedAt: new Date().toISOString(),
       settings: settings.settings,
-      metaArcade: MetaStorage.load('arcade'),
-      metaHardcore: MetaStorage.load('hardcore'),
-      metaExam: MetaStorage.load('exam'),
+      metaArcade: metaAdapter.load('fmq:meta:arcade:v2'),
+      metaHardcore: metaAdapter.load('fmq:meta:hardcore:v2'),
+      metaExam: metaAdapter.load('fmq:meta:exam:v2'),
       favorites: fav.favorites,
       notes: notes.notes,
       history: history.entries,
@@ -65,14 +65,14 @@ export function useQuiz() {
       return false;
     }
     const backup = parsed.data;
-    MetaStorage.save('arcade', backup.metaArcade);
-    MetaStorage.save('hardcore', backup.metaHardcore);
-    MetaStorage.save('exam', backup.metaExam);
-    SettingsStorage.save(backup.settings);
-    FavoritesStorage.save(backup.favorites);
-    NotesStorage.save(backup.notes);
-    HistoryStorage.save(backup.history);
-    SRSStorage.save(backup.srs);
+    metaAdapter.save('fmq:meta:arcade:v2', backup.metaArcade);
+    metaAdapter.save('fmq:meta:hardcore:v2', backup.metaHardcore);
+    metaAdapter.save('fmq:meta:exam:v2', backup.metaExam);
+    runAdapter.save('fmq:settings:v1', backup.settings);
+    runAdapter.save('fmq:favorites:v1', backup.favorites);
+    runAdapter.save('fmq:notes:v1', backup.notes);
+    runAdapter.save('fmq:history:v1', backup.history);
+    runAdapter.save('fmq:meta:srs:v1', backup.srs);
     window.location.reload();
     return true;
   }, []);
@@ -135,22 +135,21 @@ export function useQuiz() {
 
   // Nur aktuellen Run löschen (ohne Hardcore-Logging)
   const clearCurrentRun = useCallback(() => {
-    RunStorage.clear(gameMode);
     run.wipeRun?.();
-  }, [run, gameMode]);
+  }, [run]);
 
   // Alle Modi zurücksetzen
   const resetAllMetaProgression = useCallback(() => {
-    MetaStorage.clear('arcade');
-    MetaStorage.clear('hardcore');
-    MetaStorage.clear('exam');
+    metaAdapter.clear('fmq:meta:arcade:v2');
+    metaAdapter.clear('fmq:meta:hardcore:v2');
+    metaAdapter.clear('fmq:meta:exam:v2');
     meta.reset();
   }, [meta]);
 
   const clearAllRuns = useCallback(() => {
-    RunStorage.clear('arcade');
-    RunStorage.clear('hardcore');
-    RunStorage.clear('exam');
+    runAdapter.clear('fmq:run:arcade:v2');
+    runAdapter.clear('fmq:run:hardcore:v2');
+    runAdapter.clear('fmq:run:exam:v2');
     run.wipeRun?.();
   }, [run]);
 
@@ -363,7 +362,7 @@ export function useQuiz() {
         }
         run.unterbrecheRun();
         // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-        try { RunStorage.clear(gameMode); } catch { /* ignore */ }
+        try { runAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
       } else if (gameMode === 'exam') {
         // Exam: Ergebnis loggen und beenden
         logCurrentRun();
@@ -376,9 +375,9 @@ export function useQuiz() {
         run.beendeRun();
         // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
         if (endedRun) {
-          try { RunStorage.save(gameMode, endedRun); } catch { /* ignore */ }
+          try { runAdapter.save(`fmq:run:${gameMode}:v2`, endedRun); } catch { /* ignore */ }
         } else {
-          try { RunStorage.clear(gameMode); } catch { /* ignore */ }
+          try { runAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
         }
         if (view === 'quiz') {
           setView('progress');

@@ -1,8 +1,12 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { SRSMeta, SelfAssessmentGrade } from '@/types/quiz';
-import { SRSMetaSchema } from '@/utils/quizLoader';
-import { SRSStorage } from '@/utils/storage';
+import { usePersistentState } from '@/hooks/usePersistentState';
+import { createSRSAdapter } from '@/utils/persistence/srsAdapter';
+import type { PersistenceAdapter } from '@/utils/persistence';
 import { sm2, calculateNextReview, DEFAULT_SRS_STATE, SELF_ASSESSMENT_QUALITY } from '@/utils/srs';
+
+const STORAGE_KEY = 'fmq:meta:srs:v1';
+const defaultAdapter = createSRSAdapter();
 
 function bootstrapSRSMeta(): SRSMeta {
   return {
@@ -11,24 +15,12 @@ function bootstrapSRSMeta(): SRSMeta {
   };
 }
 
-export function useSRS() {
-  const [srsMap, setSrsMap] = useState<Record<string, SRSMeta>>(() => {
-    const loaded = SRSStorage.load();
-    const result: Record<string, SRSMeta> = {};
-    for (const [key, value] of Object.entries(loaded)) {
-      const parsed = SRSMetaSchema.safeParse(value);
-      if (parsed.success) {
-        result[key] = parsed.data;
-      } else {
-        console.warn('[SRS] Invalid entry for', key, parsed.error.format());
-      }
-    }
-    return result;
-  });
-
-  const persist = useCallback((next: Record<string, SRSMeta>) => {
-    setSrsMap(next);
-  }, []);
+export function useSRS(adapter: PersistenceAdapter = defaultAdapter) {
+  const [srsMap, setSrsMap] = usePersistentState<Record<string, SRSMeta>>(
+    STORAGE_KEY,
+    {},
+    adapter,
+  );
 
   const recordAnswer = useCallback((frageId: string, quality: number) => {
     setSrsMap(prev => {
@@ -40,7 +32,7 @@ export function useSRS() {
       };
       return { ...prev, [frageId]: nextMeta };
     });
-  }, []);
+  }, [setSrsMap]);
 
   const recordSelfAssessment = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
     const quality = SELF_ASSESSMENT_QUALITY[grade] ?? 0;
@@ -74,16 +66,8 @@ export function useSRS() {
   }, [srsMap]);
 
   const reset = useCallback(() => {
-    persist({});
-  }, [persist]);
-
-  useEffect(() => {
-    try {
-      SRSStorage.save(srsMap);
-    } catch {
-      // Silently ignore storage errors
-    }
-  }, [srsMap]);
+    setSrsMap({});
+  }, [setSrsMap]);
 
   return {
     srsMap,

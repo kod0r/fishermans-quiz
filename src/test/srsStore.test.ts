@@ -1,14 +1,18 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useSRS } from '@/store/srs';
+import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
+import { createSRSAdapter } from '@/utils/persistence/srsAdapter';
+
+const TEST_KEY = 'fmq:meta:srs:v1';
 
 describe('useSRS', () => {
   beforeEach(() => {
-    localStorage.clear();
+    memoryAdapter.clear(TEST_KEY);
   });
 
   it('sollte initial leere SRS-Daten haben', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     expect(result.current.dueCount).toBe(0);
     expect(result.current.dueFrageIds).toEqual([]);
@@ -16,7 +20,7 @@ describe('useSRS', () => {
   });
 
   it('sollte eine Antwort mit quality 4 aufnehmen', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', 4);
@@ -30,7 +34,7 @@ describe('useSRS', () => {
   });
 
   it('sollte eine Selbstbewertung (again) als quality 0 aufnehmen', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordSelfAssessment('q1', 'again');
@@ -43,7 +47,7 @@ describe('useSRS', () => {
   });
 
   it('sollte nach 3 erfolgreichen Wiederholungen repetitions >= 3 haben', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', 4); // interval 1
@@ -60,9 +64,8 @@ describe('useSRS', () => {
   });
 
   it('sollte dueCount für fällige Wiederholungen erhöhen', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
-    // Manuell eine überfällige Frage einfügen (nextReview gestern)
     act(() => {
       result.current.recordAnswer('q1', 4);
     });
@@ -70,17 +73,16 @@ describe('useSRS', () => {
     expect(meta).toBeDefined();
 
     // Überschreibe nextReview auf gestern, um Überfälligkeit zu simulieren
-    localStorage.setItem('fmq:meta:srs:v1', JSON.stringify({
+    memoryAdapter.save(TEST_KEY, {
       q1: { ...meta!, nextReview: new Date(Date.now() - 86400000).toISOString() },
-    }));
+    });
 
-    // Neu rendern um aus localStorage zu laden
-    const { result: result2 } = renderHook(() => useSRS());
+    const { result: result2 } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
     expect(result2.current.dueCount).toBe(1);
   });
 
   it('sollte alles zurücksetzen', () => {
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', 4);
@@ -97,27 +99,25 @@ describe('useSRS', () => {
     expect(result.current.srsMap).toEqual({});
   });
 
-  it('sollte SRS-Daten in localStorage persistieren', () => {
-    const { result } = renderHook(() => useSRS());
+  it('sollte SRS-Daten in Adapter persistieren', () => {
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', 4);
     });
 
-    const raw = localStorage.getItem('fmq:meta:srs:v1');
+    const raw = memoryAdapter.load(TEST_KEY);
     expect(raw).not.toBeNull();
-
-    const parsed = JSON.parse(raw!);
-    expect(parsed.q1).toBeDefined();
-    expect(parsed.q1.repetitions).toBe(1);
+    expect((raw as Record<string, unknown>).q1).toBeDefined();
+    expect(((raw as Record<string, unknown>).q1 as { repetitions: number }).repetitions).toBe(1);
   });
 
-  it('sollte beim Laden aus localStorage vorhandene Daten übernehmen', () => {
-    localStorage.setItem('fmq:meta:srs:v1', JSON.stringify({
+  it('sollte beim Laden aus Adapter vorhandene Daten übernehmen', () => {
+    memoryAdapter.save(TEST_KEY, {
       q1: { interval: 6, repetitions: 2, efactor: 2.5, nextReview: new Date().toISOString() },
-    }));
+    });
 
-    const { result } = renderHook(() => useSRS());
+    const { result } = renderHook(() => useSRS(createSRSAdapter(memoryAdapter)));
 
     const meta = result.current.getSRSMeta('q1');
     expect(meta).toBeDefined();

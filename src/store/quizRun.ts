@@ -1,31 +1,66 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
 import { shuffleAnswers as computeShuffle } from '@/utils/quizShuffle';
-import { RunStorage } from '@/utils/storage';
+import { usePersistentStatePerMode } from '@/hooks/usePersistentState';
+import type { PersistenceAdapter } from '@/utils/persistence';
 
-export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
-  const [run, setRun] = useState<QuizRun | null>(() => RunStorage.load(gameMode));
+const runKey = (mode: GameMode) => `fmq:run:${mode}:v2`;
 
-  // Wenn sich der Modus ändert → neu laden
-  useEffect(() => {
-    setRun(RunStorage.load(gameMode));
+export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapter?: PersistenceAdapter) {
+  const shouldSave = useCallback((run: QuizRun | null) => {
+    if (run && run.gameMode && run.gameMode !== gameMode) return false;
+    return true;
   }, [gameMode]);
 
-  // Persistiere Run bei Änderungen
+  const [run, setRun] = usePersistentStatePerMode<QuizRun | null>(
+    runKey(gameMode),
+    null,
+    adapter,
+    shouldSave,
+  );
+
+  // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
+  useEffect(() => {
+    if (!run || !quizData) return;
+
+    const vorhandeneIds = new Set(quizData.fragen.map(f => f.id));
+    const fehlendeIds = run.frageIds.filter(id => !vorhandeneIds.has(id));
+
+    if (fehlendeIds.length > 0) {
+      console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
+      const bereinigteIds = run.frageIds.filter(id => vorhandeneIds.has(id));
+      if (bereinigteIds.length === 0) {
+        setRun(null);
+        return;
+      }
+      const bereinigteAntworten: Record<string, string> = {};
+      for (const id of bereinigteIds) {
+        if (run.antworten[id] !== undefined) {
+          bereinigteAntworten[id] = run.antworten[id];
+        }
+      }
+      const bereinigterIndex = Math.min(run.aktuellerIndex, bereinigteIds.length - 1);
+      setRun({
+        ...run,
+        frageIds: bereinigteIds,
+        antworten: bereinigteAntworten,
+        aktuellerIndex: bereinigterIndex,
+        gameMode: run.gameMode ?? gameMode,
+      });
+    }
+  }, [run, quizData, setRun, gameMode]);
+
   const persistRun = useCallback((next: QuizRun | null) => {
     setRun(next);
-  }, []);
+  }, [setRun]);
 
-  // Starte neuen Run oder erweitere bestehenden
   const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean) => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
     if (run?.isActive) {
-      // Zeitbegrenzte Runs können nicht erweitert werden
       if (run.durationSeconds) return;
 
-      // Erweitere bestehenden Run
       const combinedTopics = [...new Set([...run.topics, ...topics])];
       const existingIds = new Set(run.frageIds);
       const neueFragen = qd.fragen.filter(
@@ -33,7 +68,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       );
       if (neueFragen.length === 0) return;
 
-      // Fisher-Yates Shuffle
       const gemischt = [...neueFragen];
       for (let i = gemischt.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -58,7 +92,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         gameMode: run.gameMode ?? gameMode,
       });
     } else {
-      // Neuer Run
       const gefiltert = qd.fragen.filter(f => topics.includes(f.topic));
       const gemischt = [...gefiltert];
       for (let i = gemischt.length - 1; i > 0; i--) {
@@ -66,7 +99,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         [gemischt[i], gemischt[j]] = [gemischt[j], gemischt[i]];
       }
 
-      // Limit erst nach dem Shuffle anwenden, damit die Subset-Auswahl zufällig ist
       const finalPool = limit && limit > 0 ? gemischt.slice(0, limit) : gemischt;
 
       let answerShuffle: Record<string, ('A' | 'B' | 'C')[]> | undefined;
@@ -93,15 +125,13 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     }
   }, [quizData, run, persistRun, gameMode]);
 
-  // Antwort speichern (nur wenn noch nicht beantwortet)
   const beantworteFrage = useCallback((frageId: string, antwort: string) => {
     setRun(prev => {
       if (!prev || prev.antworten[frageId]) return prev;
       return { ...prev, antworten: { ...prev.antworten, [frageId]: antwort } };
     });
-  }, []);
+  }, [setRun]);
 
-  // Selbstbewertung speichern (Flashcard Mode)
   const bewerteSelbst = useCallback((frageId: string, grade: SelfAssessmentGrade) => {
     setRun(prev => {
       if (!prev) return prev;
@@ -110,28 +140,28 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
         selfAssessments: { ...(prev.selfAssessments ?? {}), [frageId]: grade },
       };
     });
-  }, []);
+  }, [setRun]);
 
   const naechsteFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex >= prev.frageIds.length - 1) return prev;
       return { ...prev, aktuellerIndex: prev.aktuellerIndex + 1 };
     });
-  }, []);
+  }, [setRun]);
 
   const vorherigeFrage = useCallback(() => {
     setRun(prev => {
       if (!prev || prev.aktuellerIndex <= 0) return prev;
       return { ...prev, aktuellerIndex: prev.aktuellerIndex - 1 };
     });
-  }, []);
+  }, [setRun]);
 
   const springeZuFrage = useCallback((index: number) => {
     setRun(prev => {
       if (!prev || index < 0 || index >= prev.frageIds.length) return prev;
       return { ...prev, aktuellerIndex: index };
     });
-  }, []);
+  }, [setRun]);
 
   const removeTopic = useCallback((topicId: string) => {
     if (!run || !quizData) return;
@@ -188,12 +218,11 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
   }, [run, quizData, persistRun, gameMode]);
 
   const unterbrecheRun = useCallback(() => {
-    // Strategy: mark inactive instead of wiping so answerShuffle survives for review.
     setRun(prev => {
       if (!prev) return prev;
       return { ...prev, isActive: false };
     });
-  }, []);
+  }, [setRun]);
 
   const wipeRun = useCallback(() => {
     persistRun(null);
@@ -204,14 +233,14 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
       if (!prev) return prev;
       return { ...prev, isActive: false };
     });
-  }, []);
+  }, [setRun]);
 
   const markCompleted = useCallback(() => {
     setRun(prev => {
       if (!prev) return prev;
       return { ...prev, completedAt: new Date().toISOString() };
     });
-  }, []);
+  }, [setRun]);
 
   const restarteRun = useCallback(() => {
     if (!run || !quizData) return;
@@ -246,57 +275,6 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode) {
     });
   }, [run, quizData, persistRun, gameMode]);
 
-  // Persistiere Run bei Änderungen
-  useEffect(() => {
-    if (run) {
-      // Verhindert Speichern eines Runs unter dem falschen Modus-Key
-      if (run.gameMode && run.gameMode !== gameMode) return;
-      try {
-        RunStorage.save(gameMode, run);
-      } catch {
-        // Silently ignore storage errors to avoid blocking UI updates
-      }
-    } else {
-      try {
-        RunStorage.clear(gameMode);
-      } catch {
-        // Silently ignore storage errors
-      }
-    }
-  }, [run, gameMode]);
-
-  // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
-  useEffect(() => {
-    if (!run || !quizData) return;
-
-    const vorhandeneIds = new Set(quizData.fragen.map(f => f.id));
-    const fehlendeIds = run.frageIds.filter(id => !vorhandeneIds.has(id));
-
-    if (fehlendeIds.length > 0) {
-      console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
-      const bereinigteIds = run.frageIds.filter(id => vorhandeneIds.has(id));
-      if (bereinigteIds.length === 0) {
-        persistRun(null);
-        return;
-      }
-      const bereinigteAntworten: Record<string, string> = {};
-      for (const id of bereinigteIds) {
-        if (run.antworten[id] !== undefined) {
-          bereinigteAntworten[id] = run.antworten[id];
-        }
-      }
-      const bereinigterIndex = Math.min(run.aktuellerIndex, bereinigteIds.length - 1);
-      persistRun({
-        ...run,
-        frageIds: bereinigteIds,
-        antworten: bereinigteAntworten,
-        aktuellerIndex: bereinigterIndex,
-        gameMode: run.gameMode ?? gameMode,
-      });
-    }
-  }, [run, quizData, persistRun, gameMode]);
-
-  // Abgeleitete Daten
   const aktiveFragen = useMemo<Frage[]>(() => {
     if (!run || !quizData) return [];
     return run.frageIds

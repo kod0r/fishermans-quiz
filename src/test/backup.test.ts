@@ -1,26 +1,34 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useSettings } from '@/store/settings';
 import { AppBackupSchema } from '@/utils/quizLoader';
+import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
+import { createSettingsAdapter } from '@/utils/persistence/settingsAdapter';
+
+const TEST_KEY = 'fmq:settings:v1';
 
 describe('Backup / Settings', () => {
+  beforeEach(() => {
+    memoryAdapter.clear(TEST_KEY);
+  });
+
   it('sollte backupReminderEnabled default false haben', () => {
-    const { result } = renderHook(() => useSettings());
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     expect(result.current.backupReminderEnabled).toBe(false);
     expect(result.current.lastBackupPrompt).toBeUndefined();
   });
 
   it('sollte backupReminderEnabled aktivieren', () => {
-    const { result } = renderHook(() => useSettings());
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     act(() => {
       result.current.setBackupReminderEnabled(true);
     });
     expect(result.current.backupReminderEnabled).toBe(true);
-    expect(localStorage.getItem('fmq:settings:v1')).toContain('backupReminderEnabled');
+    expect((memoryAdapter.load(TEST_KEY) as { backupReminderEnabled?: boolean }).backupReminderEnabled).toBe(true);
   });
 
   it('sollte lastBackupPrompt setzen', () => {
-    const { result } = renderHook(() => useSettings());
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     const now = new Date().toISOString();
     act(() => {
       result.current.setLastBackupPrompt(now);
@@ -29,8 +37,8 @@ describe('Backup / Settings', () => {
   });
 
   it('sollte korrupte Settings mit Defaults ersetzen', () => {
-    localStorage.setItem('fmq:settings:v1', JSON.stringify({ backupReminderEnabled: 'ja' }));
-    const { result } = renderHook(() => useSettings());
+    memoryAdapter.save(TEST_KEY, { backupReminderEnabled: 'ja' });
+    const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
     expect(result.current.backupReminderEnabled).toBe(false);
   });
 });

@@ -1,8 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
-import { NotesStorage } from '@/utils/storage';
+import { useCallback } from 'react';
+import { usePersistentState } from '@/hooks/usePersistentState';
+import type { PersistenceAdapter } from '@/utils/persistence';
 
-export function useNotes() {
-  const [notes, setNotes] = useState<Record<string, string>>(() => NotesStorage.load());
+const STORAGE_KEY = 'fmq:notes:v1';
+
+export function useNotes(adapter?: PersistenceAdapter) {
+  const [notes, setNotes] = usePersistentState<Record<string, string>>(STORAGE_KEY, {}, adapter);
 
   const setNote = useCallback((frageId: string, text: string) => {
     setNotes(prev => {
@@ -15,28 +18,19 @@ export function useNotes() {
       }
       return { ...prev, [frageId]: text.trim() };
     });
-  }, []);
+  }, [setNotes]);
 
   const getNote = useCallback((frageId: string) => {
     return notes[frageId] ?? '';
   }, [notes]);
 
-  // Persistiere Notizen bei Änderungen
-  useEffect(() => {
-    try {
-      NotesStorage.save(notes);
-    } catch {
-      // Silently ignore storage errors to avoid blocking UI updates
-    }
-  }, [notes]);
-
   const resetNotes = useCallback(() => {
     setNotes({});
-  }, []);
+  }, [setNotes]);
 
   const importNotes = useCallback((data: Record<string, string>) => {
     setNotes(data);
-  }, []);
+  }, [setNotes]);
 
   return {
     notes,

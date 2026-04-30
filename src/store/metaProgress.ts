@@ -1,6 +1,8 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { FrageMeta, TopicMeta, MetaProgression, GameMode } from '@/types/quiz';
-import { MetaStorage } from '@/utils/storage';
+import { usePersistentStatePerMode } from '@/hooks/usePersistentState';
+import { createMetaAdapter } from '@/utils/persistence/metaAdapter';
+import type { PersistenceAdapter } from '@/utils/persistence';
 
 const EMPTY: MetaProgression = Object.freeze({
   fragen: {},
@@ -18,23 +20,20 @@ const EMPTY: MetaProgression = Object.freeze({
   bestArcadeScore: {},
 });
 
-export function useMetaProgress(gameMode: GameMode) {
-  const [meta, setMeta] = useState<MetaProgression>(() => {
-    const loaded = MetaStorage.load(gameMode);
-    return { ...loaded, topics: loaded.topics ?? {} };
-  });
+const metaKey = (mode: GameMode) => `fmq:meta:${mode}:v2`;
+const defaultAdapter = createMetaAdapter();
 
-  // Wenn sich der Modus ändert → neu laden
-  useEffect(() => {
-    const loaded = MetaStorage.load(gameMode);
-    setMeta({ ...loaded, topics: loaded.topics ?? {} });
-  }, [gameMode]);
+export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter = defaultAdapter) {
+  const [meta, setMeta] = usePersistentStatePerMode<MetaProgression>(
+    metaKey(gameMode),
+    EMPTY,
+    adapter,
+  );
 
   const persist = useCallback((next: MetaProgression) => {
     setMeta(next);
-  }, []);
+  }, [setMeta]);
 
-  // Einzelne Antwort verarbeiten
   const recordAnswer = useCallback((frageId: string, isCorrect: boolean) => {
     setMeta(prev => {
       const now = new Date().toISOString();
@@ -61,16 +60,14 @@ export function useMetaProgress(gameMode: GameMode) {
 
       return { ...prev, fragen: { ...prev.fragen, [frageId]: frageMeta }, stats };
     });
-  }, []);
+  }, [setMeta]);
 
-  // Neuer Durchlauf gestartet
   const recordRunStart = useCallback(() => {
     setMeta(prev => {
       return { ...prev, stats: { ...prev.stats, totalRuns: prev.stats.totalRuns + 1 } };
     });
-  }, []);
+  }, [setMeta]);
 
-  // Topic-Result speichern (Hardcore)
   const recordTopicResult = useCallback((topicId: string, passed: boolean) => {
     setMeta(prev => {
       const existing = prev.topics[topicId];
@@ -87,7 +84,6 @@ export function useMetaProgress(gameMode: GameMode) {
         [topicId]: topicMeta,
       };
 
-      // Freischalten: bestandenes Thema entsperrt alle gesperrten Themen
       if (passed) {
         for (const [id, tMeta] of Object.entries(nextTopics)) {
           if (
@@ -106,9 +102,8 @@ export function useMetaProgress(gameMode: GameMode) {
         topics: nextTopics,
       };
     });
-  }, []);
+  }, [setMeta]);
 
-  // Exam abschließen
   const recordExamResult = useCallback((scorePct: number, passed: boolean) => {
     setMeta(prev => {
       const prevExam = prev.examMeta;
@@ -122,9 +117,8 @@ export function useMetaProgress(gameMode: GameMode) {
         },
       };
     });
-  }, []);
+  }, [setMeta]);
 
-  // Arcade-Run abschließen — Sterne + Highscore pro Topic
   const recordArcadeRunComplete = useCallback((topicId: string, scorePct: number) => {
     setMeta(prev => {
       const stars: 1 | 2 | 3 = scorePct >= 100 ? 3 : scorePct >= 75 ? 2 : 1;
@@ -147,26 +141,15 @@ export function useMetaProgress(gameMode: GameMode) {
         },
       };
     });
-  }, []);
+  }, [setMeta]);
 
-  // Komplett zurücksetzen
   const reset = useCallback(() => {
     persist(EMPTY);
   }, [persist]);
 
-  // Importieren
   const importData = useCallback((data: MetaProgression) => {
     persist(data);
   }, [persist]);
-
-  // Persistiere Meta bei Änderungen
-  useEffect(() => {
-    try {
-      MetaStorage.save(gameMode, meta);
-    } catch {
-      // Silently ignore storage errors to avoid blocking UI updates
-    }
-  }, [meta, gameMode]);
 
   const passedTopicsHardcore = useMemo(() =>
     Object.values(meta.topics ?? {}).filter(b => b.passed).length,

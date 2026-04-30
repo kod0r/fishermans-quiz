@@ -1,10 +1,18 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useMetaProgress } from '@/store/metaProgress';
+import { memoryAdapter } from '@/utils/persistence/memoryAdapter';
+import { createMetaAdapter } from '@/utils/persistence/metaAdapter';
 
 describe('useMetaProgress', () => {
+  beforeEach(() => {
+    memoryAdapter.clear('fmq:meta:arcade:v2');
+    memoryAdapter.clear('fmq:meta:hardcore:v2');
+    memoryAdapter.clear('fmq:meta:exam:v2');
+  });
+
   it('sollte initial leere Meta-Daten haben', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     expect(result.current.meta.stats.totalRuns).toBe(0);
     expect(result.current.meta.stats.totalQuestionsAnswered).toBe(0);
@@ -12,7 +20,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei richtiger Antwort erhöhen', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -25,7 +33,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei 3 richtigen Antworten zu Meister machen', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -37,7 +45,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte correctStreak bei falscher Antwort zurücksetzen', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -49,7 +57,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte beste Serie (bestStreak) tracken', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -69,7 +77,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte totalRuns erhöhen', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordRunStart();
@@ -79,7 +87,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte alles zurücksetzen', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -99,7 +107,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte getFrageMeta für bekannte Fragen zurückgeben', () => {
-    const { result } = renderHook(() => useMetaProgress('arcade'));
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordAnswer('q1', true);
@@ -114,8 +122,8 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte Meta-Daten pro Modus getrennt speichern', () => {
-    const { result: arcade } = renderHook(() => useMetaProgress('arcade'));
-    const { result: hardcore } = renderHook(() => useMetaProgress('hardcore'));
+    const { result: arcade } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
+    const { result: hardcore } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       arcade.current.recordAnswer('q1', true);
@@ -127,7 +135,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte Topic-Result als passed speichern', () => {
-    const { result } = renderHook(() => useMetaProgress('hardcore'));
+    const { result } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordTopicResult('Biologie', true);
@@ -141,7 +149,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte consecutivePasses bei passed erhöhen', () => {
-    const { result } = renderHook(() => useMetaProgress('hardcore'));
+    const { result } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordTopicResult('Biologie', true);
@@ -153,7 +161,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte mastered nach 3 konsekutiven Passe setzen', () => {
-    const { result } = renderHook(() => useMetaProgress('hardcore'));
+    const { result } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordTopicResult('Biologie', true);
@@ -167,7 +175,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte consecutivePasses bei failed zurücksetzen', () => {
-    const { result } = renderHook(() => useMetaProgress('hardcore'));
+    const { result } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordTopicResult('Biologie', true);
@@ -181,7 +189,7 @@ describe('useMetaProgress', () => {
   });
 
   it('sollte Topic-Results beim Reset löschen', () => {
-    const { result } = renderHook(() => useMetaProgress('hardcore'));
+    const { result } = renderHook(() => useMetaProgress('hardcore', createMetaAdapter(memoryAdapter)));
 
     act(() => {
       result.current.recordTopicResult('Biologie', true);
