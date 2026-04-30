@@ -48,4 +48,30 @@ describe('shuffleAnswers', () => {
     const unique = new Set(results);
     expect(unique.size).toBeGreaterThan(1);
   });
+
+  it('correctly maps richtige_antwort when duplicate answer text exists', () => {
+    const duplicateFrage: Frage = {
+      id: '2',
+      topic: 'Biologie',
+      frage: 'F2',
+      antworten: { A: 'Same', B: 'Same', C: 'Different' },
+      richtige_antwort: 'B',
+    };
+
+    // Force no swap so order stays ['A', 'B', 'C'].
+    // Buggy text-matching code would find A first (also 'Same') and wrongly map to 'A'.
+    const originalRandom = Math.random;
+    Math.random = () => 0.99;
+
+    const { shuffled, order } = shuffleAnswers(duplicateFrage);
+    Math.random = originalRandom;
+
+    expect(order).toEqual(['A', 'B', 'C']);
+    expect(shuffled.antworten.A).toBe('Same');
+    expect(shuffled.antworten.B).toBe('Same');
+
+    // Original correct key was B. B stayed at position 1 -> key B.
+    // Buggy code would incorrectly return 'A' because A's text also matches.
+    expect(shuffled.richtige_antwort).toBe('B');
+  });
 });

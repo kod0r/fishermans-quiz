@@ -22,15 +22,9 @@ export function shuffleAnswers(frage: Frage): { shuffled: Frage; order: ('A' | '
     C: entries[2][1],
   } as Record<'A' | 'B' | 'C', string>;
 
-  // Map original correct text to its new key
-  const originalCorrectText = frage.antworten[frage.richtige_antwort];
-  let richtige_antwort: 'A' | 'B' | 'C' = 'A';
-  for (let i = 0; i < entries.length; i++) {
-    if (entries[i][1] === originalCorrectText) {
-      richtige_antwort = keys[i];
-      break;
-    }
-  }
+  // Map original correct key to its new position
+  const correctIndex = order.indexOf(frage.richtige_antwort);
+  const richtige_antwort = keys[correctIndex];
 
   return {
     shuffled: { ...frage, antworten, richtige_antwort },
