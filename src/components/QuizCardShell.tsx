@@ -82,6 +82,7 @@ export function QuizCardShell({
             Persönliche Notiz
           </label>
           <textarea
+            key={frage.id}
             id={`note-${frage.id}`}
             defaultValue={note}
             onBlur={(e) => onNoteChange(e.target.value)}

@@ -73,11 +73,19 @@ export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: 
   );
 
   const handleNavigateNext = useCallback(() => {
+    if (autoAdvanceRef.current) {
+      clearTimeout(autoAdvanceRef.current);
+      autoAdvanceRef.current = null;
+    }
     setRevealed(false);
     naechsteFrage();
   }, [naechsteFrage]);
 
   const handleNavigatePrev = useCallback(() => {
+    if (autoAdvanceRef.current) {
+      clearTimeout(autoAdvanceRef.current);
+      autoAdvanceRef.current = null;
+    }
     setRevealed(false);
     vorherigeFrage();
   }, [vorherigeFrage]);
