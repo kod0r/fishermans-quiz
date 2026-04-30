@@ -363,16 +363,15 @@ export function useQuiz() {
       }
 
       if (effect.shouldEndRun) {
+        const safeAdapter = createRunAdapter(localStorageAdapter, gameMode);
         if (effect.shouldSaveEndedRun && run.rawRun) {
           const endedRun = { ...run.rawRun, isActive: false, gameMode };
           run.beendeRun();
           // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-          const safeAdapter = createRunAdapter(localStorageAdapter);
           try { safeAdapter.save(`fmq:run:${gameMode}:v2`, endedRun); } catch { /* ignore */ }
         } else {
           run.unterbrecheRun();
           // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-          const safeAdapter = createRunAdapter(localStorageAdapter);
           try { safeAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
         }
       }
