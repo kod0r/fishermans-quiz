@@ -1,18 +1,30 @@
 # Architecture — Fisherman's Quiz
 
+## Layer Overview
+
+```
+Views (React)
+  └─ Hooks (orchestration)
+       └─ Stores (React state + persistence)
+            ├─ Engine (pure state transitions)
+            ├─ Modes (policy objects)
+            └─ Persistence (adapters)
+```
+
 ## Quiz Data Flow
 
-1. `StartView` selects topics → `useQuiz.starteQuiz()` (`src/hooks/useQuiz.ts:230`).
-2. `starteQuiz` validates locks (`canSelectTopic`), loads `QuizData` (`buildQuizData` or cache), applies optional filters (`favorites`, `weak`, `srs-due`), then calls `run.starteRun()` (`src/store/quizRun.ts:20`).
-3. `starteRun` creates a `QuizRun` object, shuffles questions (Fisher-Yates), optionally builds `answerShuffle`, and persists via `RunStorage.save()` (`src/utils/storage.ts:131`).
-4. `QuizView` renders `aktiveFragen` (`src/store/quizRun.ts:293`) — a `useMemo` that maps `frageIds` to real questions and applies the shuffle map.
-5. User clicks an answer → `QuizView.handleAnswerClick` → `useQuiz.beantworteFrage` (`src/hooks/useQuiz.ts:186`).
+1. `StartView` selects topics → `useQuiz.starteQuiz()` (`src/hooks/useQuiz.ts`).
+2. `starteQuiz` validates locks via the active `ModePolicy.canStartTopic`, loads `QuizData` (`buildQuizData` or cache), applies optional filters (`favorites`, `weak`, `srs-due`), then calls `run.starteRun()` (`src/store/quizRun.ts`).
+3. `starteRun` delegates to `RunEngine.createRun` or `RunEngine.extendRun` (`src/engine/runEngine.ts`), shuffles questions (Fisher-Yates), optionally builds `answerShuffle`, and persists via `usePersistentStatePerMode` + `runAdapter`.
+4. `QuizView` renders `aktiveFragen` — a `useMemo` that calls `selectActiveQuestions(run, quizData)` (`src/engine/runSelectors.ts`) and applies the shuffle map.
+5. User clicks an answer → `QuizView.handleAnswerClick` → `useQuiz.beantworteFrage` (`src/hooks/useQuiz.ts`).
 6. `beantworteFrage` calls:
-   - `run.beantworteFrage(frageId, antwort)` — writes to `run.antworten`.
+   - `run.beantworteFrage(frageId, antwort)` — delegates to `RunEngine.answerQuestion`.
    - `meta.recordAnswer(frageId, isCorrect)` — updates per-question stats.
    - `srs.recordAnswer(frageId, quality)` — updates SRS state.
+   - The active `ModePolicy.onAnswer` computes mode-specific effects (e.g., hardcore immediate-fail, arcade star thresholds) which `useQuiz` applies to `meta`.
 7. `logRunIfComplete` fires when every question has an entry in `run.antworten`, logs a `HistoryEntry`, and marks the run `completedAt`.
-8. All stores auto-persist to `localStorage` in their respective `useEffect` hooks.
+8. All stores auto-persist via `usePersistentState` / `usePersistentStatePerMode` hooks.
 
 ### Hook Integration Points
 
@@ -30,17 +42,30 @@
 | Global user data | `fmq:favorites:v1`<br>`fmq:notes:v1`<br>`fmq:history:v1`<br>`fmq:meta:srs:v1` | Cross-mode data shared by all game modes | Never reset on mode switch |
 | App settings | `fmq:settings:v1` | `AppSettings` — `gameMode`, `shuffleAnswers`, backup reminders | Loaded once at boot |
 
-## Game Mode Differences
+## Game Mode Policies
 
-**Arcade** — `pendingWrongAnswer` allows one retry per question (`src/views/QuizView.tsx:147`). Topics can be added mid-run. On completion each topic gets a star rating (1–3) based on accuracy (`src/store/metaProgress.ts:128`).
+Mode-specific rules live in `src/modes/` as pure policy objects. `useQuiz` delegates to the active policy via `MODE_POLICIES[gameMode]`.
 
-**Hardcore** — A single wrong answer fails the entire topic. `meta.recordTopicResult(topicId, false)` locks the topic; unlocking requires 3 consecutive passes (`src/store/metaProgress.ts:74`). No retries.
+| Mode | Policy | Key Behaviours |
+|------|--------|----------------|
+| **Arcade** | `ArcadePolicy` | Allows topic removal mid-run. `onAnswer` computes per-topic star ratings (1–3) on completion. No timer. |
+| **Hardcore** | `HardcorePolicy` | `onAnswer` immediately fails a topic on any wrong answer. `onAbort` / `onModeSwitch` fail all loaded topics. Topic locks require 3 consecutive passes to unlock. |
+| **Exam** | `ExamPolicy` | Fixed 60-question pool, 3600-second timer. `hideFeedback = true`. `onComplete` computes pass/fail at ≥60%. |
 
-**Exam** — Fixed pool of 60 questions, 60-minute timer (`src/views/QuizView.tsx:61`). No feedback until submit. 60% score required to pass. Result stored in `examMeta` (`src/store/metaProgress.ts:112`).
+Policies implement `ModePolicy` with hooks: `onAnswer`, `onAbort`, `onComplete`, `onModeSwitch`, `canStartTopic`, `canRemoveTopic`, `getStartLimit`, `getDurationSeconds`.
+
+## Engine Layer
+
+`src/engine/` contains pure, deterministic state transitions with zero React dependencies.
+
+- **`runEngine.ts`** — `createRun`, `extendRun`, `answerQuestion`, `selfAssess`, `nextQuestion`, `prevQuestion`, `jumpToQuestion`, `removeTopicFromRun`, `restartRun`, `interruptRun`, `completeRun`, `detectInconsistency`, `purgeMissingQuestions`.
+- **`runSelectors.ts`** — `selectActiveQuestions`, `selectStatistics`.
+
+`useQuizRun` (`src/store/quizRun.ts`) is a thin React wrapper: it holds state via `usePersistentStatePerMode`, delegates all mutations to `RunEngine`, and exposes memoised selectors.
 
 ## Shuffle Implementation Note
 
-`shuffleAnswers` in `src/utils/quizShuffle.ts` returns a new `Frage` and an `order` array that records the permutation. At run creation (`src/store/quizRun.ts:72`) an `answerShuffle` map is built: `{ [frageId]: order }`. The `aktiveFragen` derived list (`src/store/quizRun.ts:293`) applies this map by remapping both `antworten` and `richtige_antwort`. Because the correct text is tracked to its new key, the existing correctness check (`antworten[id] === frage.richtige_antwort`) works unchanged.
+`shuffleAnswers` in `src/utils/quizShuffle.ts` returns a new `Frage` and an `order` array that records the permutation. At run creation an `answerShuffle` map is built: `{ [frageId]: order }`. The `aktiveFragen` derived list applies this map by remapping both `antworten` and `richtige_antwort`. Because the correct text is tracked to its new key, the existing correctness check (`antworten[id] === frage.richtige_antwort`) works unchanged.
 
 ## Why localStorage
 
