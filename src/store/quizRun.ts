@@ -134,7 +134,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     return selectStatistics(run, aktiveFragen);
   }, [aktiveFragen, run]);
 
-  return {
+  return useMemo(() => ({
     run,
     rawRun: run,
     aktiveFragen,
@@ -156,5 +156,22 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     wipeRun,
     beendeRun,
     markCompleted,
-  };
+  }), [
+    run,
+    aktiveFragen,
+    aktuelleFrage,
+    statistiken,
+    starteRun,
+    restarteRun,
+    beantworteFrage,
+    bewerteSelbst,
+    naechsteFrage,
+    vorherigeFrage,
+    springeZuFrage,
+    removeTopic,
+    unterbrecheRun,
+    wipeRun,
+    beendeRun,
+    markCompleted,
+  ]);
 }
