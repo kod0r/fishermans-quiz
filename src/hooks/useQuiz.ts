@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData, AppBackupSchema } from '@/utils/quizLoader';
-import { metaAdapter, runAdapter } from '@/utils/persistence';
+import { metaAdapter, runAdapter, localStorageAdapter, createRunAdapter } from '@/utils/persistence';
 import { useQuizRun } from '@/store/quizRun';
 import { useMetaProgress } from '@/store/metaProgress';
 import { useSettings } from '@/store/settings';
@@ -364,11 +364,13 @@ export function useQuiz() {
           const endedRun = { ...run.rawRun, isActive: false, gameMode };
           run.beendeRun();
           // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-          try { runAdapter.save(`fmq:run:${gameMode}:v2`, endedRun); } catch { /* ignore */ }
+          const safeAdapter = createRunAdapter(localStorageAdapter, gameMode);
+          try { safeAdapter.save(`fmq:run:${gameMode}:v2`, endedRun); } catch { /* ignore */ }
         } else {
           run.unterbrecheRun();
           // Persistenz-Effekt läuft nach gameMode-Wechsel mit falscher Key → manuell sicherstellen
-          try { runAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
+          const safeAdapter = createRunAdapter(localStorageAdapter, gameMode);
+          try { safeAdapter.clear(`fmq:run:${gameMode}:v2`); } catch { /* ignore */ }
         }
       }
 

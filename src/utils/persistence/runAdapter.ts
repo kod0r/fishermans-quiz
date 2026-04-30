@@ -7,7 +7,11 @@ export function createRunAdapter(base: PersistenceAdapter = localStorageAdapter,
     load: base.load,
     save: (key, value) => {
       const run = value as QuizRun | null;
-      if (run && run.gameMode && currentMode && run.gameMode !== currentMode) {
+      if (run && currentMode) {
+        if (run.gameMode && run.gameMode !== currentMode) {
+          return;
+        }
+        base.save(key, { ...run, gameMode: currentMode });
         return;
       }
       base.save(key, value);

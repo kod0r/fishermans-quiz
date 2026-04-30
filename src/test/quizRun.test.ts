@@ -64,6 +64,7 @@ describe('useQuizRun', () => {
     expect(ids).toContain('4');
     expect(ids).toContain('5');
     expect(ids).toContain('6');
+    expect(ids).not.toEqual(['1', '2', '3', '4', '5', '6']);
   });
 
   it('sollte eine Antwort speichern', () => {
@@ -536,5 +537,24 @@ describe('useQuizRun', () => {
 
     expect(result.current.antworten[frage2.id]).toBe(wrongKey2);
     expect(result.current.statistiken.falsch).toBe(1);
+  });
+
+  it('sollte keinen Cross-Mode-Schreibzugriff erlauben', () => {
+    const { result, rerender } = renderHook(
+      ({ mode }) => useQuizRun(mockQuizData, mode, memoryAdapter),
+      { initialProps: { mode: 'arcade' as const } },
+    );
+
+    act(() => {
+      result.current.starteRun(['Biologie']);
+    });
+
+    expect(result.current.isActive).toBe(true);
+    expect(memoryAdapter.load('fmq:run:arcade:v2')).not.toBeNull();
+
+    // Wechsle zu hardcore — der alte Arcade-Run darf nicht in den Hardcore-Slot geschrieben werden
+    rerender({ mode: 'hardcore' });
+
+    expect(memoryAdapter.load('fmq:run:hardcore:v2')).toBeNull();
   });
 });

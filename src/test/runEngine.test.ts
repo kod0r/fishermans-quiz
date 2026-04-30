@@ -31,33 +31,35 @@ describe('RunEngine', () => {
 
   describe('createRun', () => {
     it('creates an active run with shuffled question IDs for given topics', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie']);
+      const run = RunEngine.createRun(mockQuizData, ['Biologie'], 'arcade');
       expect(run.isActive).toBe(true);
       expect(run.frageIds).toHaveLength(3);
       expect(run.topics).toEqual(['Biologie']);
       expect(run.aktuellerIndex).toBe(0);
       expect(run.antworten).toEqual({});
       expect(run.startedAt).toBe('2026-01-01T00:00:00.000Z');
+      expect(run.gameMode).toBe('arcade');
     });
 
     it('respects limit option', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie', 'Recht'], { limit: 2 });
+      const run = RunEngine.createRun(mockQuizData, ['Biologie', 'Recht'], 'arcade', { limit: 2 });
       expect(run.frageIds).toHaveLength(2);
     });
 
     it('sets durationSeconds and sessionType', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie'], { durationSeconds: 3600, sessionType: 'flashcard' });
+      const run = RunEngine.createRun(mockQuizData, ['Biologie'], 'hardcore', { durationSeconds: 3600, sessionType: 'flashcard' });
       expect(run.durationSeconds).toBe(3600);
       expect(run.sessionType).toBe('flashcard');
+      expect(run.gameMode).toBe('hardcore');
     });
 
     it('defaults sessionType to quiz', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie']);
+      const run = RunEngine.createRun(mockQuizData, ['Biologie'], 'arcade');
       expect(run.sessionType).toBe('quiz');
     });
 
     it('generates answerShuffle when enableShuffle is true', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie'], { enableShuffle: true });
+      const run = RunEngine.createRun(mockQuizData, ['Biologie'], 'arcade', { enableShuffle: true });
       expect(run.answerShuffle).toBeDefined();
       for (const id of run.frageIds) {
         expect(run.answerShuffle![id]).toHaveLength(3);
@@ -65,8 +67,17 @@ describe('RunEngine', () => {
     });
 
     it('does not generate answerShuffle when enableShuffle is false', () => {
-      const run = RunEngine.createRun(mockQuizData, ['Biologie'], { enableShuffle: false });
+      const run = RunEngine.createRun(mockQuizData, ['Biologie'], 'arcade', { enableShuffle: false });
       expect(run.answerShuffle).toBeUndefined();
+    });
+
+    it('handles empty question array gracefully', () => {
+      const run = RunEngine.createRun(mockQuizData, ['Unbekannt'], 'arcade');
+      expect(run.frageIds).toEqual([]);
+      expect(run.isActive).toBe(true);
+      expect(run.aktuellerIndex).toBe(0);
+      expect(run.antworten).toEqual({});
+      expect(run.gameMode).toBe('arcade');
     });
   });
 
@@ -155,7 +166,7 @@ describe('RunEngine', () => {
       };
       const next = RunEngine.answerQuestion(run, '1', 'B');
       expect(next.antworten['1']).toBe('A');
-      expect(next).toBe(run);
+      expect(next).toEqual(run);
     });
   });
 
@@ -189,7 +200,7 @@ describe('RunEngine', () => {
 
     it('nextQuestion clamps at end', () => {
       const run = { ...baseRun, aktuellerIndex: 2 };
-      expect(RunEngine.nextQuestion(run)).toBe(run);
+      expect(RunEngine.nextQuestion(run)).toEqual(run);
     });
 
     it('prevQuestion decrements index', () => {
@@ -199,7 +210,7 @@ describe('RunEngine', () => {
 
     it('prevQuestion clamps at start', () => {
       const run = { ...baseRun, aktuellerIndex: 0 };
-      expect(RunEngine.prevQuestion(run)).toBe(run);
+      expect(RunEngine.prevQuestion(run)).toEqual(run);
     });
 
     it('jumpToQuestion sets index', () => {
@@ -208,8 +219,8 @@ describe('RunEngine', () => {
     });
 
     it('jumpToQuestion clamps out of bounds', () => {
-      expect(RunEngine.jumpToQuestion(baseRun, -1)).toBe(baseRun);
-      expect(RunEngine.jumpToQuestion(baseRun, 3)).toBe(baseRun);
+      expect(RunEngine.jumpToQuestion(baseRun, -1)).toEqual(baseRun);
+      expect(RunEngine.jumpToQuestion(baseRun, 3)).toEqual(baseRun);
     });
   });
 
@@ -350,7 +361,7 @@ describe('RunEngine', () => {
         aktuellerIndex: 1,
         isActive: true,
       };
-      expect(RunEngine.purgeMissingQuestions(run, mockQuizData)).toBe(run);
+      expect(RunEngine.purgeMissingQuestions(run, mockQuizData)).toEqual(run);
     });
 
     it('removes missing questions and adjusts index', () => {
@@ -402,6 +413,51 @@ describe('RunEngine', () => {
       };
       const next = RunEngine.completeRun(run);
       expect(next.completedAt).toBe('2026-01-01T00:00:00.000Z');
+    });
+  });
+
+  describe('isRunExpired', () => {
+    it('returns false when run has no durationSeconds', () => {
+      const run: QuizRun = {
+        frageIds: ['1'],
+        antworten: {},
+        topics: ['Biologie'],
+        aktuellerIndex: 0,
+        isActive: true,
+        startedAt: new Date().toISOString(),
+      };
+      expect(RunEngine.isRunExpired(run)).toBe(false);
+    });
+
+    it('returns false when elapsed time is within limit', () => {
+      const run: QuizRun = {
+        frageIds: ['1'],
+        antworten: {},
+        topics: ['Biologie'],
+        aktuellerIndex: 0,
+        isActive: true,
+        startedAt: '2026-01-01T00:00:00.000Z',
+        durationSeconds: 3600,
+      };
+      vi.setSystemTime(new Date('2026-01-01T00:30:00.000Z'));
+      expect(RunEngine.isRunExpired(run)).toBe(false);
+    });
+
+    it('returns true when elapsed time meets or exceeds durationSeconds', () => {
+      const run: QuizRun = {
+        frageIds: ['1'],
+        antworten: {},
+        topics: ['Biologie'],
+        aktuellerIndex: 0,
+        isActive: true,
+        startedAt: '2026-01-01T00:00:00.000Z',
+        durationSeconds: 3600,
+      };
+      vi.setSystemTime(new Date('2026-01-01T01:00:00.000Z'));
+      expect(RunEngine.isRunExpired(run)).toBe(true);
+
+      vi.setSystemTime(new Date('2026-01-01T01:01:00.000Z'));
+      expect(RunEngine.isRunExpired(run)).toBe(true);
     });
   });
 });

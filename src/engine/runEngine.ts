@@ -1,4 +1,4 @@
-import type { Frage, QuizRun, QuizData, SessionType, SelfAssessmentGrade } from '@/types/quiz';
+import type { Frage, QuizRun, QuizData, SessionType, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import { shuffleAnswers as computeShuffle } from '@/utils/quizShuffle';
 
 export interface CreateRunOptions {
@@ -26,7 +26,7 @@ function buildAnswerShuffle(fragen: Frage[]): Record<string, ('A' | 'B' | 'C')[]
   return map;
 }
 
-export function createRun(quizData: QuizData, topics: string[], options?: CreateRunOptions): QuizRun {
+export function createRun(quizData: QuizData, topics: string[], gameMode: GameMode, options?: CreateRunOptions): QuizRun {
   const { limit, durationSeconds, sessionType, enableShuffle } = options ?? {};
   const gefiltert = quizData.fragen.filter(f => topics.includes(f.topic));
   const gemischt = shuffleArray(gefiltert);
@@ -47,6 +47,7 @@ export function createRun(quizData: QuizData, topics: string[], options?: Create
     durationSeconds,
     sessionType: sessionType ?? 'quiz',
     answerShuffle,
+    gameMode,
   };
 }
 
@@ -189,6 +190,12 @@ export function interruptRun(run: QuizRun): QuizRun {
 
 export function completeRun(run: QuizRun): QuizRun {
   return { ...run, completedAt: new Date().toISOString() };
+}
+
+export function isRunExpired(run: QuizRun): boolean {
+  if (!run.startedAt || !run.durationSeconds) return false;
+  const elapsed = (Date.now() - new Date(run.startedAt).getTime()) / 1000;
+  return elapsed >= run.durationSeconds;
 }
 
 export function detectInconsistency(run: QuizRun, quizData: QuizData): string[] {

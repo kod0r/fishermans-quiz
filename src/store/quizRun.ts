@@ -2,22 +2,19 @@ import { useCallback, useEffect, useMemo } from 'react';
 import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
 import { usePersistentStatePerMode } from '@/hooks/usePersistentState';
 import type { PersistenceAdapter } from '@/utils/persistence';
+import { createRunAdapter } from '@/utils/persistence/runAdapter';
 import * as RunEngine from '@/engine/runEngine';
 import { selectActiveQuestions, selectStatistics } from '@/engine/runSelectors';
 
 const runKey = (mode: GameMode) => `fmq:run:${mode}:v2`;
 
 export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapter?: PersistenceAdapter) {
-  const shouldSave = useCallback((run: QuizRun | null) => {
-    if (run && run.gameMode && run.gameMode !== gameMode) return false;
-    return true;
-  }, [gameMode]);
+  const safeAdapter = useMemo(() => createRunAdapter(adapter, gameMode), [adapter, gameMode]);
 
   const [run, setRun] = usePersistentStatePerMode<QuizRun | null>(
     runKey(gameMode),
     null,
-    adapter,
-    shouldSave,
+    safeAdapter,
   );
 
   const persistRun = useCallback((next: QuizRun | null) => {
@@ -31,11 +28,7 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     if (bereinigt !== run) {
       const fehlendeIds = RunEngine.detectInconsistency(run, quizData);
       console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
-      if (bereinigt === null) {
-        setRun(null);
-      } else {
-        setRun({ ...bereinigt, gameMode: bereinigt.gameMode ?? gameMode });
-      }
+      setRun(bereinigt);
     }
   }, [run, quizData, setRun, gameMode]);
 
@@ -46,10 +39,10 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     if (run?.isActive) {
       const extended = RunEngine.extendRun(run, qd, topics, enableShuffle);
       if (!extended) return;
-      persistRun({ ...extended, gameMode: extended.gameMode ?? gameMode });
+      persistRun(extended);
     } else {
-      const created = RunEngine.createRun(qd, topics, { limit, durationSeconds, sessionType, enableShuffle });
-      persistRun({ ...created, gameMode });
+      const created = RunEngine.createRun(qd, topics, gameMode, { limit, durationSeconds, sessionType, enableShuffle });
+      persistRun(created);
     }
   }, [quizData, run, persistRun, gameMode]);
 
@@ -94,9 +87,9 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     if (next === null) {
       persistRun(null);
     } else if (next !== run) {
-      persistRun({ ...next, gameMode: next.gameMode ?? gameMode });
+      persistRun(next);
     }
-  }, [run, quizData, persistRun, gameMode]);
+  }, [run, quizData, persistRun]);
 
   const unterbrecheRun = useCallback(() => {
     setRun(prev => {
@@ -126,8 +119,8 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
   const restarteRun = useCallback(() => {
     if (!run || !quizData) return;
     const next = RunEngine.restartRun(run, quizData);
-    persistRun({ ...next, gameMode: next.gameMode ?? gameMode });
-  }, [run, quizData, persistRun, gameMode]);
+    persistRun(next);
+  }, [run, quizData, persistRun]);
 
   const aktiveFragen = useMemo<Frage[]>(() => {
     if (!run || !quizData) return [];

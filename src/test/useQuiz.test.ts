@@ -448,4 +448,98 @@ describe('useQuiz', () => {
     expect(result.current.rawRun?.answerShuffle).toBeDefined();
     expect(Object.keys(result.current.rawRun!.answerShuffle!).length).toBeGreaterThan(0);
   });
+
+  describe('Fehlerpfade', () => {
+    it('sollte loadError setzen bei Netzwerkfehler', async () => {
+      vi.stubGlobal('fetch', vi.fn(() => Promise.reject(new Error('Network error'))));
+
+      const { result } = renderHook(() => useQuiz());
+
+      await waitFor(() => {
+        expect(result.current.istGeladen).toBe(true);
+      });
+
+      expect(result.current.loadError).toBe('Network error');
+      expect(result.current.quizMeta).toBeNull();
+    });
+
+    it('sollte loadError setzen bei non-OK Response', async () => {
+      vi.stubGlobal('fetch', vi.fn(() =>
+        Promise.resolve({ ok: false, status: 500, json: () => Promise.resolve({}) } as Response)
+      ));
+
+      const { result } = renderHook(() => useQuiz());
+
+      await waitFor(() => {
+        expect(result.current.istGeladen).toBe(true);
+      });
+
+      expect(result.current.loadError).toContain('500');
+      expect(result.current.quizMeta).toBeNull();
+    });
+
+    it('sollte loadError setzen bei ungültigem Meta-JSON', async () => {
+      vi.stubGlobal('fetch', vi.fn((url: string) => {
+        if (url.includes('quiz_meta.json')) {
+          return Promise.resolve({ ok: true, json: () => Promise.resolve({ invalid: true }) } as Response);
+        }
+        return Promise.resolve({ ok: false, status: 404 } as Response);
+      }));
+
+      const { result } = renderHook(() => useQuiz());
+
+      await waitFor(() => {
+        expect(result.current.istGeladen).toBe(true);
+      });
+
+      expect(result.current.loadError).toContain('Meta-Format ungültig');
+      expect(result.current.quizMeta).toBeNull();
+    });
+
+    it('sollte starteQuiz abbrechen wenn buildQuizData fehlschlägt', async () => {
+      vi.stubGlobal('fetch', vi.fn((url: string) => {
+        if (url.includes('quiz_meta.json')) {
+          return Promise.resolve({ ok: true, json: () => Promise.resolve(mockMeta) } as Response);
+        }
+        return Promise.resolve({ ok: false, status: 500 } as Response);
+      }));
+
+      const { result } = renderHook(() => useQuiz());
+
+      await waitFor(() => {
+        expect(result.current.istGeladen).toBe(true);
+      });
+
+      await act(async () => {
+        await result.current.starteQuiz(['Biologie']);
+      });
+
+      expect(result.current.isActive).toBe(false);
+    });
+  });
+
+  it('sollte bei Moduswechsel keinen Cross-Mode-Pollution erzeugen', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    expect(result.current.isActive).toBe(true);
+    expect(result.current.gameMode).toBe('arcade');
+
+    act(() => {
+      result.current.switchGameMode('hardcore');
+    });
+
+    expect(result.current.gameMode).toBe('hardcore');
+    const hardcoreRun = localStorage.getItem('fmq:run:hardcore:v2');
+    expect(hardcoreRun === null || JSON.parse(hardcoreRun) === null).toBe(true);
+  });
 });
