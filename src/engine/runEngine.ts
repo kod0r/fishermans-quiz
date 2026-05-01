@@ -84,7 +84,7 @@ export function extendRun(
 }
 
 export function answerQuestion(run: QuizRun, frageId: string, antwort: string): QuizRun {
-  if (run.antworten[frageId]) return run;
+  if (frageId in run.antworten) return run;
   return { ...run, antworten: { ...run.antworten, [frageId]: antwort } };
 }
 
@@ -147,6 +147,16 @@ export function removeTopicFromRun(run: QuizRun, quizData: QuizData, topicId: st
     }
   }
 
+  const neueSelfAssessments = run.selfAssessments ? { ...run.selfAssessments } : undefined;
+  if (neueSelfAssessments) {
+    for (const id of Array.from(idsToRemove)) {
+      delete neueSelfAssessments[id];
+    }
+    if (Object.keys(neueSelfAssessments).length === 0) {
+      /* keep empty object explicitly to avoid undefined vs {} drift elsewhere */
+    }
+  }
+
   return {
     ...run,
     frageIds: neueFrageIds,
@@ -154,6 +164,7 @@ export function removeTopicFromRun(run: QuizRun, quizData: QuizData, topicId: st
     topics: newTopics,
     aktuellerIndex: finalIndex,
     answerShuffle: neueAnswerShuffle,
+    selfAssessments: neueSelfAssessments,
   };
 }
 

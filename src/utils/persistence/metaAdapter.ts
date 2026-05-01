@@ -28,7 +28,7 @@ export function createMetaAdapter(base: PersistenceAdapter<unknown> = localStora
         if (raw !== null) {
           console.warn('[MetaAdapter] Invalid meta data, using defaults:', parsed.error.format());
         }
-        return EMPTY_META;
+        return { ...EMPTY_META };
       }
       return parsed.data;
     },
