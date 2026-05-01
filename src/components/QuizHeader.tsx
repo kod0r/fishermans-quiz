@@ -28,9 +28,10 @@ export const QuizHeader = React.memo(function QuizHeader({
 
   const timerDisplay = useMemo(() => {
     if (remainingSeconds === undefined) return null;
-    const m = Math.floor(remainingSeconds / 60);
-    const s = remainingSeconds % 60;
-    const isLow = remainingSeconds < 300; // < 5 minutes
+    const clamped = Math.max(0, remainingSeconds);
+    const m = Math.floor(clamped / 60);
+    const s = clamped % 60;
+    const isLow = clamped < 300; // < 5 minutes
     return (
       <span
         className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${

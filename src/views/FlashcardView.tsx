@@ -4,7 +4,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { QuizHeader } from '@/components/QuizHeader';
 import { QuizFooter } from '@/components/QuizFooter';
 import { QuizCardShell } from '@/components/QuizCardShell';
-import { Eye, RotateCcw, ThumbsDown, ThumbsUp, Zap } from 'lucide-react';
+import { Eye, Home, RotateCcw, ThumbsDown, ThumbsUp, Zap } from 'lucide-react';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { CheatSheetModal } from '@/components/CheatSheetModal';
 import type { QuizContext } from '@/hooks/useQuiz';
@@ -126,7 +126,19 @@ export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: 
     enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
-  if (!aktuelleFrage) return null;
+  if (!aktuelleFrage) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-blue-950 dark:via-slate-900 dark:to-teal-950 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-lg text-slate-700 dark:text-slate-200">Keine Frage verfügbar.</p>
+          <Button variant="outline" onClick={onOpenRunActions}>
+            <Home className="mr-2 h-4 w-4" />
+            Zurück zum Menü
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <TooltipProvider delayDuration={800}>
