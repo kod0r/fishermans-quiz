@@ -6,5 +6,8 @@ npx lint-staged
 echo "→ Running typecheck..."
 npx tsc -b
 
+echo "→ Running Tailwind v3 validation..."
+npm run lint:tailwind
+
 echo "→ Running tests..."
 npm run test:run
