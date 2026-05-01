@@ -54,12 +54,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
             <div className="flex flex-col sm:flex-row gap-2 justify-center mb-4">
               <button
+                type="button"
                 onClick={this.reloadPage}
                 className="px-5 py-2.5 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg shadow-lg shadow-teal-500/20 transition-colors"
               >
                 Seite neu laden
               </button>
               <button
+                type="button"
                 onClick={() => {
                   this.resetErrorBoundary();
                   window.location.hash = '';

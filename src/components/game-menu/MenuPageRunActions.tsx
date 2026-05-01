@@ -50,6 +50,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
       {/* Primary CTA: Continue */}
       <section>
         <button
+          type="button"
           data-menu-item
           onClick={handleContinue}
           aria-label={isExam ? 'Prüfung fortsetzen' : 'Quiz fortsetzen'}
@@ -74,6 +75,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
                   Wirklich neustarten?
                 </span>
                 <button
+                  type="button"
                   data-menu-item
                   onClick={cancelConfirm}
                   className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 px-2 py-1 rounded"
@@ -81,6 +83,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
                   Abbrechen
                 </button>
                 <button
+                  type="button"
                   data-menu-item
                   onClick={confirmRestart}
                   className="text-xs font-semibold text-amber-700 dark:text-amber-400 px-2 py-1 rounded hover:bg-amber-100 dark:hover:bg-amber-900/40"
@@ -90,6 +93,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
               </div>
             ) : (
               <button
+                type="button"
                 data-menu-item
                 onClick={handleRestart}
                 aria-label="Quiz neu starten"
@@ -110,6 +114,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
                 Wirklich beenden?
               </span>
               <button
+                type="button"
                 data-menu-item
                 onClick={cancelConfirm}
                 className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 px-2 py-1 rounded"
@@ -117,6 +122,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
                 Abbrechen
               </button>
               <button
+                type="button"
                 data-menu-item
                 onClick={confirmExit}
                 className="text-xs font-semibold text-red-700 dark:text-red-400 px-2 py-1 rounded hover:bg-red-100 dark:hover:bg-red-900/40"
@@ -126,6 +132,7 @@ export function MenuPageRunActions({ quiz, onClose }: MenuPageComponentProps) {
             </div>
           ) : (
             <button
+              type="button"
               data-menu-item
               onClick={handleExit}
               aria-label={isExam ? 'Prüfung beenden' : 'Quiz beenden'}

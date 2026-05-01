@@ -141,6 +141,7 @@ export function GameMenuOverlay({
   const header = (
     <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 dark:border-slate-700/60 shrink-0 flex-shrink-0">
       <button
+        type="button"
         onClick={isRoot ? onClose : onPop}
         className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         aria-label={isRoot ? 'Schließen' : 'Zurück'}

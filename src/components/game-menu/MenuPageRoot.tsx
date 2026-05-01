@@ -73,6 +73,7 @@ export function MenuPageRoot({ onPush, onClose, quiz }: MenuPageRootProps) {
           return (
             <div key={sectionIndex} className="px-4 pb-3">
               <button
+                type="button"
                 data-menu-item
                 onClick={() => handleItemClick(item)}
                 disabled={!quiz.isActive}
