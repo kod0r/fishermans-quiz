@@ -179,12 +179,8 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
   }, []);
 
   const handleEscape = useCallback(() => {
-    if (cheatSheetOpen) {
-      setCheatSheetOpen(false);
-    } else {
-      onOpenRunActions();
-    }
-  }, [cheatSheetOpen, onOpenRunActions]);
+    onOpenRunActions();
+  }, [onOpenRunActions]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
