@@ -168,27 +168,40 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
     ],
    );
 
+  const handleToggleFavorite = useCallback(() => {
+    if (aktuelleFrage) {
+      toggleFavorite(aktuelleFrage.id);
+    }
+  }, [aktuelleFrage, toggleFavorite]);
+
+  const handleOpenCheatSheet = useCallback(() => {
+    setCheatSheetOpen(true);
+  }, []);
+
+  const handleEscape = useCallback(() => {
+    if (cheatSheetOpen) {
+      setCheatSheetOpen(false);
+    } else {
+      onOpenRunActions();
+    }
+  }, [cheatSheetOpen, onOpenRunActions]);
+
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onAnswer: handleAnswerClick,
     onPrev: isPending ? undefined : vorherigeFrage,
     onNext: isPending ? undefined : naechsteFrage,
-    onToggleFavorite: () => {
-      if (aktuelleFrage) {
-        toggleFavorite(aktuelleFrage.id);
-      }
-    },
+    onToggleFavorite: handleToggleFavorite,
     // Space is a no-op in quiz mode (answer selection via number keys only)
     onSpace: undefined,
-    onOpenCheatSheet: () => setCheatSheetOpen(true),
-    onEscape: () => {
-      if (cheatSheetOpen) {
-        setCheatSheetOpen(false);
-      } else {
-        onOpenRunActions();
-      }
-    },
-    enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
+    onOpenCheatSheet: handleOpenCheatSheet,
+    onEscape: handleEscape,
+    enabled:
+      quiz.isActive &&
+      !cheatSheetOpen &&
+      !gameMenuOpen &&
+      !showExamSubmitDialog &&
+      !topicComplete,
   });
 
   if (!aktuelleFrage) return null;

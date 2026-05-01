@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle, XCircle, HelpCircle, ChevronDown, Star } from 'lucide-react';
@@ -19,14 +19,16 @@ export default function ProgressView({ quiz }: Props) {
     headingRef.current?.focus();
   }, []);
 
+  const handleEscape = useCallback(() => {
+    if (isActive) {
+      goToView('quiz');
+    } else {
+      goToView('start');
+    }
+  }, [isActive, goToView]);
+
   useKeyboardShortcuts({
-    onEscape: () => {
-      if (isActive) {
-        goToView('quiz');
-      } else {
-        goToView('start');
-      }
-    },
+    onEscape: handleEscape,
     enabled: true,
   });
 

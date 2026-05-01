@@ -98,23 +98,31 @@ export default function FlashcardView({ quiz, onOpenRunActions, gameMenuOpen }: 
   ).length;
   const offen = aktiveFragen.filter((f) => !antworten[f.id]).length;
 
+  const handleToggleFavorite = useCallback(() => {
+    if (aktuelleFrage) {
+      toggleFavorite(aktuelleFrage.id);
+    }
+  }, [aktuelleFrage, toggleFavorite]);
+
+  const handleOpenCheatSheet = useCallback(() => {
+    setCheatSheetOpen(true);
+  }, []);
+
+  const handleEscape = useCallback(() => {
+    if (cheatSheetOpen) {
+      setCheatSheetOpen(false);
+    } else {
+      onOpenRunActions();
+    }
+  }, [cheatSheetOpen, onOpenRunActions]);
+
   useKeyboardShortcuts({
     onPrev: handleNavigatePrev,
     onNext: handleNavigateNext,
-    onToggleFavorite: () => {
-      if (aktuelleFrage) {
-        toggleFavorite(aktuelleFrage.id);
-      }
-    },
+    onToggleFavorite: handleToggleFavorite,
     onSpace: handleReveal,
-    onOpenCheatSheet: () => setCheatSheetOpen(true),
-    onEscape: () => {
-      if (cheatSheetOpen) {
-        setCheatSheetOpen(false);
-      } else {
-        onOpenRunActions();
-      }
-    },
+    onOpenCheatSheet: handleOpenCheatSheet,
+    onEscape: handleEscape,
     enabled: quiz.isActive && !cheatSheetOpen && !gameMenuOpen,
   });
 
