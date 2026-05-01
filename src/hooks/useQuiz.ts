@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import type { QuizData, AppView, QuizStartOptions, SelfAssessmentGrade, GameMode } from '@/types/quiz';
 import type { QuizMeta } from '@/utils/quizLoader';
 import { loadQuizMeta, buildQuizData, loadAllQuizData, AppBackupSchema } from '@/utils/quizLoader';
@@ -80,21 +80,27 @@ export function useQuiz() {
   // 1. Meta sofort laden (~360 Bytes) → App wird sofort nutzbar
   // 2. Alle Fragen im Hintergrund nachladen (~420KB)
   // 3. Falls User schneller ist als Hintergrund-Load → on-demand laden
+  const cancelledRef = useRef(false);
+
   const refetch = useCallback(() => {
+    cancelledRef.current = false;
     setLoadError(null);
     loadQuizMeta()
       .then((meta) => {
+        if (cancelledRef.current) return;
         setQuizMeta(meta);
         setIstGeladen(true);
 
         // Hintergrund: Alle Fragen vorladen für sofortige Verfügbarkeit
         loadAllQuizData()
           .then((data) => {
+            if (cancelledRef.current) return;
             setQuizData(data);
           })
           .catch(console.error);
       })
       .catch((err) => {
+        if (cancelledRef.current) return;
         console.error('Fehler beim Laden der Quiz-Meta:', err);
         setLoadError(err instanceof Error ? err.message : 'Laden fehlgeschlagen');
         setIstGeladen(true);
@@ -103,6 +109,7 @@ export function useQuiz() {
 
   useEffect(() => {
     refetch();
+    return () => { cancelledRef.current = true; };
   }, [refetch]);
 
   // Periodisches Backup-Prompt
