@@ -1,5 +1,39 @@
 ## [Unreleased]
 
+### Features
+
+* **persistence:** extract `usePersistentState` hook and typed storage adapters (`localStorageAdapter`, `memoryAdapter`, per-domain creators) ([#265](https://github.com/kod0r/fishermans-quiz/issues/265))
+  * `AppSettings`, `History`, `Favorites`, `Notes`, `SRS`, `MetaProgress`, `QuizRun` all migrated to adapter-backed persistence
+  * Adapters perform Zod runtime validation at the storage boundary
+* **modes:** extract game-mode policy modules from `useQuiz` into pure policy objects (`ArcadePolicy`, `HardcorePolicy`, `ExamPolicy`) ([#268](https://github.com/kod0r/fishermans-quiz/issues/268))
+  * `ModePolicy` interface: `onAnswer`, `onAbort`, `onComplete`, `onModeSwitch`, `canStartTopic`, `canRemoveTopic`, `getStartLimit`, `getDurationSeconds`
+  * Flags: `hideFeedback`, `allowsPendingRetry`
+* **engine:** extract `RunEngine` pure state-transition module from `useQuizRun` ([#266](https://github.com/kod0r/fishermans-quiz/issues/266))
+  * Pure fns: `createRun`, `extendRun`, `answerQuestion`, `selfAssess`, `nextQuestion`, `prevQuestion`, `jumpToQuestion`, `removeTopicFromRun`, `restartRun`, `interruptRun`, `completeRun`, `isRunExpired`, `detectInconsistency`, `purgeMissingQuestions`
+
+### Refactors
+
+* **startview:** extract `ModeSelector`, `StatBox`, `TopicGrid`, `StartViewDialogs` into `src/views/start/` ([#299](https://github.com/kod0r/fishermans-quiz/issues/299))
+* **quality:** cleanup assertions, unused params, barrel exports, tighten eslint rules ([#300](https://github.com/kod0r/fishermans-quiz/issues/300))
+
+### Bug Fixes
+
+* **persistence:** block cross-mode run writes and inject `gameMode` at adapter boundary ([#272](https://github.com/kod0r/fishermans-quiz/issues/272))
+* **persistence:** restore missing `gameMode` param to `createRunAdapter` calls ([#272](https://github.com/kod0r/fishermans-quiz/issues/272))
+* **persistence:** add Zod runtime validation to localStorage boundary ([#273](https://github.com/kod0r/fishermans-quiz/issues/273))
+* **store:** memoize `useQuizRun` return object to stabilize callback refs ([#274](https://github.com/kod0r/fishermans-quiz/issues/274))
+* **shuffle:** track correct key instead of text to handle duplicate answer texts ([#275](https://github.com/kod0r/fishermans-quiz/issues/275))
+* **history:** fallback UUID for non-secure HTTP contexts (`crypto.randomUUID` unavailable) ([#276](https://github.com/kod0r/fishermans-quiz/issues/276))
+* **guardrails:** edge-case hardening across persistence, modes, quiz, engine, store ([#277](https://github.com/kod0r/fishermans-quiz/issues/277) [#278](https://github.com/kod0r/fishermans-quiz/issues/278) [#279](https://github.com/kod0r/fishermans-quiz/issues/279) [#280](https://github.com/kod0r/fishermans-quiz/issues/280) [#281](https://github.com/kod0r/fishermans-quiz/issues/281) [#282](https://github.com/kod0r/fishermans-quiz/issues/282) [#283](https://github.com/kod0r/fishermans-quiz/issues/283) [#284](https://github.com/kod0r/fishermans-quiz/issues/284))
+* **ui:** stale textarea note on navigate + leaked flashcard auto-advance timeout ([#285](https://github.com/kod0r/fishermans-quiz/issues/285) [#286](https://github.com/kod0r/fishermans-quiz/issues/286))
+* **ui:** a11y dialogs, touch targets, Enter guards, menu remounts ([#287](https://github.com/kod0r/fishermans-quiz/issues/287) [#288](https://github.com/kod0r/fishermans-quiz/issues/288) [#289](https://github.com/kod0r/fishermans-quiz/issues/289) [#290](https://github.com/kod0r/fishermans-quiz/issues/290) [#291](https://github.com/kod0r/fishermans-quiz/issues/291) [#292](https://github.com/kod0r/fishermans-quiz/issues/292) [#293](https://github.com/kod0r/fishermans-quiz/issues/293) [#294](https://github.com/kod0r/fishermans-quiz/issues/294) [#295](https://github.com/kod0r/fishermans-quiz/issues/295) [#296](https://github.com/kod0r/fishermans-quiz/issues/296) [#297](https://github.com/kod0r/fishermans-quiz/issues/297) [#298](https://github.com/kod0r/fishermans-quiz/issues/298))
+* **quiz:** require all self-assessments before logging flashcard run ([#284](https://github.com/kod0r/fishermans-quiz/issues/284))
+
+### Docs
+
+* **agents:** rewrite `AGENTS.md` — remove outdated multi-agent roles, add skills & tools ([#268](https://github.com/kod0r/fishermans-quiz/issues/268))
+* **architecture:** update `ARCHITECTURE.md` with engine, modes, persistence adapters, game menu, keyboard shortcuts, flashcard flow, and data loading layers ([#268](https://github.com/kod0r/fishermans-quiz/issues/268))
+
 ## [0.3.8](https://github.com/kod0r/fishermans-quiz/compare/v0.3.7...v0.3.8) (2026-04-28)
 
 ### Features
