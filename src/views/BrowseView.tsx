@@ -137,7 +137,7 @@ export default function BrowseView({ quiz }: Props) {
                   </div>
                 ))}
               </div>
-              {selectedFrage.bild && selectedFrage.bild_url && <img src={selectedFrage.bild_url} alt="Fragenbild" className="w-full rounded-lg" loading="lazy" />}
+              {selectedFrage.bild && selectedFrage.bild_url && <img src={selectedFrage.bild_url} alt={`Fragenbild zu ${selectedFrage.topic} Frage ${selectedFrage.id}`} className="w-full rounded-lg" loading="lazy" />}
             </div>
           )}
         </DialogContent>
