@@ -3,9 +3,9 @@ import { localStorageAdapter } from './localStorageAdapter';
 import { MetaProgressionSchema } from '@/utils/quizLoader';
 import type { MetaProgression } from '@/types/quiz';
 
-const EMPTY_META: MetaProgression = {
-  fragen: {},
-  stats: {
+const EMPTY_META: MetaProgression = Object.freeze({
+  fragen: Object.freeze({}),
+  stats: Object.freeze({
     totalRuns: 0,
     totalQuestionsAnswered: 0,
     totalCorrect: 0,
@@ -13,11 +13,11 @@ const EMPTY_META: MetaProgression = {
     bestStreak: 0,
     currentStreak: 0,
     arcadeRunsCompleted: 0,
-  },
-  topics: {},
-  arcadeStars: {},
-  bestArcadeScore: {},
-};
+  }),
+  topics: Object.freeze({}),
+  arcadeStars: Object.freeze({}),
+  bestArcadeScore: Object.freeze({}),
+});
 
 export function createMetaAdapter(base: PersistenceAdapter<unknown> = localStorageAdapter): PersistenceAdapter<MetaProgression> {
   return {

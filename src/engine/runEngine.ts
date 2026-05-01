@@ -228,11 +228,31 @@ export function purgeMissingQuestions(run: QuizRun, quizData: QuizData): QuizRun
       bereinigteAntworten[id] = run.antworten[id];
     }
   }
+
+  let bereinigteAnswerShuffle = run.answerShuffle ? { ...run.answerShuffle } : undefined;
+  if (bereinigteAnswerShuffle) {
+    for (const id of fehlendeIds) {
+      delete bereinigteAnswerShuffle[id];
+    }
+    if (Object.keys(bereinigteAnswerShuffle).length === 0) {
+      bereinigteAnswerShuffle = undefined;
+    }
+  }
+
+  const bereinigteSelfAssessments = run.selfAssessments ? { ...run.selfAssessments } : undefined;
+  if (bereinigteSelfAssessments) {
+    for (const id of fehlendeIds) {
+      delete bereinigteSelfAssessments[id];
+    }
+  }
+
   const bereinigterIndex = Math.min(run.aktuellerIndex, bereinigteIds.length - 1);
   return {
     ...run,
     frageIds: bereinigteIds,
     antworten: bereinigteAntworten,
     aktuellerIndex: bereinigterIndex,
+    answerShuffle: bereinigteAnswerShuffle,
+    selfAssessments: bereinigteSelfAssessments,
   };
 }
