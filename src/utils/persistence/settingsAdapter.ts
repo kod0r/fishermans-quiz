@@ -11,7 +11,9 @@ export function createSettingsAdapter(base: PersistenceAdapter<unknown> = localS
       const raw = base.load(key);
       const parsed = AppSettingsSchema.safeParse(raw);
       if (!parsed.success) {
-        console.warn('[Storage] Invalid settings, using defaults:', parsed.error.format());
+        if (raw !== null) {
+          console.warn('[Storage] Invalid settings, using defaults:', parsed.error.format());
+        }
         return DEFAULT_SETTINGS;
       }
       return parsed.data;
