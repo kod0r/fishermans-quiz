@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { Frage, QuizRun, QuizData, GameMode, SessionType, SelfAssessmentGrade } from '@/types/quiz';
 import { usePersistentStatePerMode } from '@/hooks/usePersistentState';
 import type { PersistenceAdapter } from '@/utils/persistence';
@@ -21,16 +21,23 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
     setRun(next);
   }, [setRun]);
 
+  const runRef = useRef(run);
+
+  useEffect(() => {
+    runRef.current = run;
+  });
+
   // Daten-Inkonsistenz erkennen und bereinigen (Issue #17)
   useEffect(() => {
-    if (!run || !quizData) return;
-    const bereinigt = RunEngine.purgeMissingQuestions(run, quizData);
-    if (bereinigt !== run) {
-      const fehlendeIds = RunEngine.detectInconsistency(run, quizData);
+    if (!runRef.current || !quizData) return;
+    const bereinigt = RunEngine.purgeMissingQuestions(runRef.current, quizData);
+    if (bereinigt !== runRef.current) {
+      const fehlendeIds = RunEngine.detectInconsistency(runRef.current, quizData);
       console.warn(`[quizRun] ${fehlendeIds.length} Frage(n) aus dem Run nicht mehr im Katalog vorhanden. Bereinige...`, fehlendeIds);
       setRun(bereinigt);
     }
-  }, [run, quizData, setRun, gameMode]);
+     
+  }, [quizData, setRun, run?.frageIds.length]);
 
   const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean) => {
     const qd = overrideData || quizData;
