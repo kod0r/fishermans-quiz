@@ -14,7 +14,7 @@ import { isMastered } from '@/utils/srs';
 interface Props { quiz: QuizContext; }
 
 export default function BrowseView({ quiz }: Props) {
-  const { quizData, favorites, metaProgress, srsMap } = quiz;
+  const { quizData, loadError, refetch, favorites, metaProgress, srsMap } = quiz;
   const [query, setQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [hasImage, setHasImage] = useState(false);
@@ -41,6 +41,15 @@ export default function BrowseView({ quiz }: Props) {
   const toggleTopic = useCallback((topic: string) => {
     setSelectedTopics((prev) => prev.includes(topic) ? prev.filter((b) => b !== topic) : [...prev, topic]);
   }, []);
+
+  if (loadError) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <p className="text-red-600 dark:text-red-400">Fehler: {loadError}</p>
+        <Button onClick={refetch} variant="outline">Erneut versuchen</Button>
+      </div>
+    );
+  }
 
   if (!quizData) return <div className="min-h-screen flex items-center justify-center"><p className="text-slate-500 dark:text-slate-400">Lade Fragenkatalog...</p></div>;
 

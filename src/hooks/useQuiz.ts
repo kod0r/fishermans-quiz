@@ -80,31 +80,30 @@ export function useQuiz() {
   // 1. Meta sofort laden (~360 Bytes) → App wird sofort nutzbar
   // 2. Alle Fragen im Hintergrund nachladen (~420KB)
   // 3. Falls User schneller ist als Hintergrund-Load → on-demand laden
-  useEffect(() => {
-    let cancelled = false;
-
+  const refetch = useCallback(() => {
+    setLoadError(null);
     loadQuizMeta()
       .then((meta) => {
-        if (cancelled) return;
         setQuizMeta(meta);
         setIstGeladen(true);
 
         // Hintergrund: Alle Fragen vorladen für sofortige Verfügbarkeit
         loadAllQuizData()
           .then((data) => {
-            if (!cancelled) setQuizData(data);
+            setQuizData(data);
           })
           .catch(console.error);
       })
       .catch((err) => {
-        if (cancelled) return;
         console.error('Fehler beim Laden der Quiz-Meta:', err);
         setLoadError(err instanceof Error ? err.message : 'Laden fehlgeschlagen');
         setIstGeladen(true);
       });
-
-    return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // Periodisches Backup-Prompt
   const [showBackupPrompt, setShowBackupPrompt] = useState(false);
@@ -452,6 +451,7 @@ export function useQuiz() {
     quizData,
     istGeladen,
     loadError,
+    refetch,
     view,
 
     // Settings
