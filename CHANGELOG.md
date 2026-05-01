@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.4.0](https://github.com/kod0r/fishermans-quiz/compare/v0.3.8...v0.4.0) (2026-05-01)
+
 ### Features
 
 * **persistence:** extract `usePersistentState` hook and typed storage adapters (`localStorageAdapter`, `memoryAdapter`, per-domain creators) ([#265](https://github.com/kod0r/fishermans-quiz/issues/265))
