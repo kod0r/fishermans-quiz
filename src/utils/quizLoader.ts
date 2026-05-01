@@ -140,6 +140,10 @@ export const AppBackupSchema = z.object({
 let metaCache: QuizMeta | null = null;
 const fragenCache: Map<string, Frage[]> = new Map();
 
+function getBaseUrl(): string {
+  return String(import.meta.env.BASE_URL).replace(/\/?$/, '/');
+}
+
 /**
  * Lädt die Metadaten (sehr klein: ~360 Bytes).
  * Enthält Bereichs-Übersicht ohne Fragen.
@@ -147,7 +151,7 @@ const fragenCache: Map<string, Frage[]> = new Map();
 export async function loadQuizMeta(): Promise<QuizMeta> {
   if (metaCache) return metaCache;
 
-  const res = await fetch(`${import.meta.env.BASE_URL}data/quiz_meta.json`);
+  const res = await fetch(`${getBaseUrl()}data/quiz_meta.json`);
   if (!res.ok) throw new Error(`Meta laden fehlgeschlagen: ${res.status}`);
 
   const raw = await res.json();
@@ -174,7 +178,7 @@ export async function loadTopicQuestions(topics: string[]): Promise<Frage[]> {
       const filename = meta.topicFiles[topic];
       if (!filename) throw new Error(`Unbekanntes Thema: ${topic}. Kein Dateiname in den Metadaten gefunden.`);
 
-      const res = await fetch(`${import.meta.env.BASE_URL}data/topics/${filename}`);
+      const res = await fetch(`${getBaseUrl()}data/topics/${filename}`);
       if (!res.ok) throw new Error(`Thema ${topic} laden fehlgeschlagen: ${res.status}`);
 
       const raw = await res.json();
