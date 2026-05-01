@@ -1,0 +1,53 @@
+#!/bin/bash
+# commit-msg-issue-guard
+# Enforces: never commit to a closed issue; warn if pending-review label missing.
+
+MSG_FILE="$1"
+MSG=$(cat "$MSG_FILE")
+
+# Extract issue references like #273
+REFERENCES=$(echo "$MSG" | grep -oE '#[0-9]+' | sed 's/#//')
+
+if [ -z "$REFERENCES" ]; then
+  exit 0
+fi
+
+ERRORS=0
+WARNINGS=0
+
+for ISSUE in $REFERENCES; do
+  DATA=$(gh issue view "$ISSUE" --json state,labels --jq '{state: .state, labels: [.labels[].name]}' 2>/dev/null)
+  if [ -z "$DATA" ]; then
+    echo "⚠️  Issue #$ISSUE not found or no access. Skipping guard."
+    continue
+  fi
+
+  STATE=$(echo "$DATA" | jq -r '.state')
+  HAS_PENDING=$(echo "$DATA" | jq '.labels | contains(["pending-review"])')
+
+  if [ "$STATE" = "CLOSED" ]; then
+    echo "❌ ERROR: Issue #$ISSUE is CLOSED."
+    echo "   Do NOT close issues. Add 'pending-review' label + comment instead."
+    ERRORS=$((ERRORS + 1))
+    continue
+  fi
+
+  if [ "$HAS_PENDING" != "true" ]; then
+    echo "⚠️  WARNING: Issue #$ISSUE is open but missing 'pending-review' label."
+    echo "   After completing work: add label + comment with summary before finishing."
+    WARNINGS=$((WARNINGS + 1))
+  fi
+done
+
+if [ "$ERRORS" -gt 0 ]; then
+  echo ""
+  echo "Commit blocked. Fix issue state or remove the reference."
+  exit 1
+fi
+
+if [ "$WARNINGS" -gt 0 ]; then
+  echo ""
+  echo "Commit allowed, but label the issue before declaring completion."
+fi
+
+exit 0

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+echo "→ Running lint-staged..."
+npx lint-staged
+
+echo "→ Running typecheck..."
+npx tsc -b
+
+echo "→ Running tests..."
+npm run test:run
