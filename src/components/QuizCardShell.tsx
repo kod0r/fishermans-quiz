@@ -24,7 +24,7 @@ export function QuizCardShell({
   onNoteChange,
 }: Props) {
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[680px] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
+    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[680px] max-h-[calc(100dvh-180px)] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
       {/* Topic + Favorite */}
       <div className="mb-2 flex items-center justify-between">
         {frage.bild ? (
