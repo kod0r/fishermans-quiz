@@ -140,6 +140,22 @@ export const AppBackupSchema = z.object({
 let metaCache: QuizMeta | null = null;
 const fragenCache: Map<string, Frage[]> = new Map();
 
+// Fragen zum Bayerischen Fischereigesetz – ausgeblendet, nicht entfernt
+const BAYERISCHE_FISCHEREI_GESETZ_IDS = new Set([
+  '1.010','1.012','1.306','3.050','3.134',
+  '5.002','5.004','5.005','5.006','5.010','5.030','5.047','5.048',
+  '5.069','5.070','5.071','5.072','5.073',
+  '5.077','5.078','5.079','5.080','5.081','5.082','5.083','5.084','5.085','5.086','5.087','5.088',
+  '5.089','5.090','5.091','5.092','5.093','5.094','5.095','5.096','5.097','5.098','5.099','5.100','5.101','5.102','5.103','5.104','5.105','5.106','5.107','5.108','5.109','5.110',
+  '5.112','5.113','5.114','5.115','5.116','5.117','5.118','5.119','5.120','5.121','5.122','5.123','5.124','5.125','5.126','5.127',
+  '5.130',
+  '5.135','5.136','5.137',
+  '5.140','5.141','5.142','5.143','5.144','5.145','5.146',
+  '5.150','5.151','5.152','5.153','5.154','5.155','5.156','5.157','5.158',
+  '5.162',
+  '5.193','5.199','5.201','5.202','5.208','5.217','5.219','5.222',
+]);
+
 function getBaseUrl(): string {
   return String(import.meta.env.BASE_URL).replace(/\/?$/, '/');
 }
@@ -195,7 +211,9 @@ export async function loadTopicQuestions(topics: string[]): Promise<Frage[]> {
     await Promise.all(promises);
   }
 
-  return topics.flatMap(b => fragenCache.get(b) ?? []);
+  return topics
+    .flatMap(b => fragenCache.get(b) ?? [])
+    .filter(f => !BAYERISCHE_FISCHEREI_GESETZ_IDS.has(f.id));
 }
 
 /**

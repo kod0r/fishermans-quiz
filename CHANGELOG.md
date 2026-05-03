@@ -1,5 +1,21 @@
 ## [Unreleased]
 
+## [0.4.1](https://github.com/kod0r/fishermans-quiz/compare/v0.4.0...v0.4.1) (2026-05-03)
+
+### Features
+
+* **scope:** removed bavarian questions for now!
+  * 97 BY-scoped question IDs hardcoded in `quizLoader.ts` and filtered at load time
+  * `quiz_meta.json` counts updated: 955 total, Recht 130, Biologie 316, Gewässerpflege 134
+  * Topic data files untouched — questions are hidden, not removed
+
+### UI
+
+* **quiz:** fixed answer box height (`h-16 sm:h-[72px]`) to fit multi-line answer text
+* **quiz:** removed `truncate` from answer text — full text now wraps inside fixed-height boxes
+* **quiz:** single-line answer text vertically centered with A/B/C badge
+* **card:** hardcoded card height to `h-[620px]` for consistent layout
+
 ## [0.4.0](https://github.com/kod0r/fishermans-quiz/compare/v0.3.8...v0.4.0) (2026-05-01)
 
 ### Features
