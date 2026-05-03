@@ -66,9 +66,11 @@ export const AnswerGrid = React.memo(function AnswerGrid({
               {buchstabe}
             </span>
             <span
-              className={`flex-1 leading-snug text-sm overflow-y-auto max-h-[56px] sm:max-h-[64px] ${hasAnswered && isCorrect && !hideFeedback ? 'text-emerald-600 dark:text-emerald-300' : hasAnswered && isSelected && !isCorrect && !hideFeedback ? 'text-red-600 dark:text-red-300' : isPendingSelection ? 'text-red-600 dark:text-red-300' : 'text-slate-700 dark:text-slate-200'}`}
+              className={`flex-1 leading-snug text-sm flex items-center ${hasAnswered && isCorrect && !hideFeedback ? 'text-emerald-600 dark:text-emerald-300' : hasAnswered && isSelected && !isCorrect && !hideFeedback ? 'text-red-600 dark:text-red-300' : isPendingSelection ? 'text-red-600 dark:text-red-300' : 'text-slate-700 dark:text-slate-200'}`}
             >
-              {frage.antworten[buchstabe]}
+              <span className="block w-full max-h-[56px] sm:max-h-[64px] overflow-y-auto">
+                {frage.antworten[buchstabe]}
+              </span>
             </span>
 
             {isPendingSelection && (
