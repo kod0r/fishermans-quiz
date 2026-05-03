@@ -51,7 +51,7 @@ export function QuizCardShell({
         </button>
       </div>
 
-      <h2 className="text-slate-900 text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 leading-snug dark:text-white">
+      <h2 className="text-slate-900 text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 leading-snug flex-shrink-0 dark:text-white">
         {frage.frage}
       </h2>
 
