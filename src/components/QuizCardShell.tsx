@@ -24,7 +24,7 @@ export function QuizCardShell({
   onNoteChange,
 }: Props) {
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[680px] max-h-[calc(100dvh-180px)] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
+    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 min-h-[680px] flex flex-col dark:bg-slate-800/60 dark:border-slate-700/50">
       {/* Topic + Favorite */}
       <div className="mb-2 flex items-center justify-between">
         {frage.bild ? (
@@ -55,43 +55,41 @@ export function QuizCardShell({
         {frage.frage}
       </h2>
 
-      {frage.bild_url && (
-        <div className="mb-2 sm:mb-3 flex justify-center flex-shrink-0">
+      <div className={`mb-2 sm:mb-3 flex justify-center flex-shrink-0 ${frage.bild_url ? '' : 'h-0 overflow-hidden'}`}>
+        {frage.bild_url && (
           <img
             src={frage.bild_url}
             alt={`Bild zur Frage ${aktuellerIndex + 1}: ${frage.frage}`}
             className="max-w-full h-28 sm:h-36 md:h-44 object-contain rounded-lg border border-slate-300/50 bg-slate-100/50 dark:border-slate-600/50 dark:bg-slate-900/50"
             loading="lazy"
           />
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Dynamic answer area */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
+      <div className="flex-1 min-h-0">
         {children}
       </div>
 
-      {/* Notiz — nur nach Beantworten */}
-      {hasAnswered && onNoteChange && (
-        <div className="mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50 flex-shrink-0">
-          <label
-            htmlFor={`note-${frage.id}`}
-            className="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-1.5 dark:text-slate-400"
-          >
-            <StickyNote className="w-3.5 h-3.5" aria-hidden="true" />
-            Persönliche Notiz
-          </label>
-          <textarea
-            key={frage.id}
-            id={`note-${frage.id}`}
-            defaultValue={note}
-            onBlur={(e) => onNoteChange(e.target.value)}
-            placeholder="Merksatz, Eselsbrücke, Hinweis …"
-            className="w-full rounded-lg border border-slate-300/50 bg-slate-50/50 px-3 py-2 text-xs text-slate-700 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600/50 dark:bg-slate-900/50 dark:text-slate-200 dark:placeholder:text-slate-500 dark:focus-visible:ring-offset-slate-900 resize-none"
-            rows={2}
-          />
-        </div>
-      )}
+      {/* Notiz — immer gleiche Höhe reserviert */}
+      <div className={`mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50 flex-shrink-0 ${hasAnswered ? '' : 'invisible'}`}>
+        <label
+          htmlFor={`note-${frage.id}`}
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-1.5 dark:text-slate-400"
+        >
+          <StickyNote className="w-3.5 h-3.5" aria-hidden="true" />
+          Persönliche Notiz
+        </label>
+        <textarea
+          key={frage.id}
+          id={`note-${frage.id}`}
+          defaultValue={note}
+          onBlur={(e) => onNoteChange?.(e.target.value)}
+          placeholder="Merksatz, Eselsbrücke, Hinweis …"
+          className="w-full rounded-lg border border-slate-300/50 bg-slate-50/50 px-3 py-2 text-xs text-slate-700 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-600/50 dark:bg-slate-900/50 dark:text-slate-200 dark:placeholder:text-slate-500 dark:focus-visible:ring-offset-slate-900 resize-none"
+          rows={2}
+        />
+      </div>
     </div>
   );
 }

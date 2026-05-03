@@ -97,7 +97,7 @@ describe('QuizCardShell', () => {
     expect(img).toHaveAttribute('src', '/img.png');
   });
 
-  it('does not show note textarea when not answered', () => {
+  it('hides note textarea visually when not answered', () => {
     render(
       <QuizCardShell
         frage={mockFrage}
@@ -111,7 +111,8 @@ describe('QuizCardShell', () => {
       </QuizCardShell>
     );
 
-    expect(screen.queryByLabelText(/Persönliche Notiz/i)).not.toBeInTheDocument();
+    const noteSection = screen.getByLabelText(/Persönliche Notiz/i).closest('div.mt-3');
+    expect(noteSection).toHaveClass('invisible');
   });
 
   it('shows note textarea when answered and calls onNoteChange on blur', () => {
