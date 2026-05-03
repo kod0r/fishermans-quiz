@@ -12,9 +12,9 @@ describe('Backup / Settings', () => {
     memoryAdapter.clear(TEST_KEY);
   });
 
-  it('sollte backupReminderEnabled default false haben', () => {
+  it('sollte backupReminderEnabled default true haben', () => {
     const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
-    expect(result.current.backupReminderEnabled).toBe(false);
+    expect(result.current.backupReminderEnabled).toBe(true);
     expect(result.current.lastBackupPrompt).toBeUndefined();
   });
 
@@ -39,7 +39,7 @@ describe('Backup / Settings', () => {
   it('sollte korrupte Settings mit Defaults ersetzen', () => {
     memoryAdapter.save(TEST_KEY, { backupReminderEnabled: 'ja' });
     const { result } = renderHook(() => useSettings(createSettingsAdapter(memoryAdapter)));
-    expect(result.current.backupReminderEnabled).toBe(false);
+    expect(result.current.backupReminderEnabled).toBe(true);
   });
 });
 

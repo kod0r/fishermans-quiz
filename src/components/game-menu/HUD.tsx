@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Home, Menu, Pause, Play, Zap, Timer, Shield, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { QuizContext } from "@/hooks/useQuiz";
@@ -23,11 +23,6 @@ function formatRemaining(totalSeconds: number): string {
 }
 
 export function HUD({ quiz, gameMenu }: HUDProps) {
-  const [hidden, setHidden] = useState(false);
-  const touchStartY = useRef<number | null>(null);
-  const lastButtonTapRef = useRef<number>(0);
-  const hudRef = useRef<HTMLDivElement>(null);
-
   const isQuizActive = quiz.isActive;
   const currentView = quiz.view;
   const isExam = quiz.gameMode === "exam";
@@ -61,45 +56,6 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
     };
   }, [isExam, isQuizActive, quiz.rawRun?.startedAt, quiz.rawRun?.durationSeconds]);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    if (e.target instanceof Element && e.target.closest('button')) {
-      lastButtonTapRef.current = Date.now();
-    }
-  }, []);
-
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent) => {
-      if (touchStartY.current === null) return;
-      if (Date.now() - lastButtonTapRef.current < 200) return;
-      const diff = e.touches[0].clientY - touchStartY.current;
-      // Bottom HUD: swipe down to hide, swipe up to show
-      if (diff > 100 && !hidden) {
-        setHidden(true);
-        touchStartY.current = null;
-      } else if (diff < -100 && hidden) {
-        setHidden(false);
-        touchStartY.current = null;
-      }
-    },
-    [hidden],
-  );
-
-  const handleTouchEnd = useCallback(() => {
-    touchStartY.current = null;
-  }, []);
-
-  // Keyboard: H to toggle HUD
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "h" || e.key === "H") {
-        setHidden((prev) => !prev);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
   const modeBadge = useMemo(() => {
     if (!isQuizActive) return null;
     switch (quiz.gameMode) {
@@ -130,38 +86,15 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
   }, [isQuizActive, quiz.gameMode]);
 
   return (
-    <>
-      {/* Invisible touch strip when hidden to enlarge swipe-up / tap target */}
-      {hidden && (
-        <div
-          className="fixed bottom-0 left-0 right-0 z-40 h-14 touch-none"
-          onClick={() => setHidden(false)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        />
-      )}
-
-      <div
-        ref={hudRef}
-        data-testid="hud-bar"
-        className={`
-          fixed bottom-0 left-0 right-0 z-50
-          flex justify-center
-          transition-transform duration-300 ease-out
-          touch-none
-          pb-[env(safe-area-inset-bottom)]
-          ${hidden ? "translate-y-[calc(100%-12px)]" : "translate-y-0"}
-        `}
-        onClick={hidden ? () => setHidden(false) : undefined}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div className="relative flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
-          {/* Grabber indicator seamlessly on upper inside edge */}
-          <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-10 h-0.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-
+    <div
+      data-testid="hud-bar"
+      className="
+        fixed bottom-0 left-0 right-0 z-50
+        flex justify-center
+        pb-[env(safe-area-inset-bottom)]
+      "
+    >
+      <div className="relative flex items-center gap-1.5 bg-white/90 backdrop-blur-xl border border-slate-200/60 rounded-2xl px-2.5 py-1.5 shadow-lg shadow-black/10 dark:bg-slate-900/90 dark:border-slate-700/60 dark:shadow-black/20">
         {modeBadge && (
           <div className="flex items-center px-2">
             {modeBadge}
@@ -235,6 +168,5 @@ export function HUD({ quiz, gameMenu }: HUDProps) {
         )}
       </div>
     </div>
-    </>
   );
 }

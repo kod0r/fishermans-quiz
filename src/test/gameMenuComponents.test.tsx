@@ -148,7 +148,7 @@ describe('HUD', () => {
     }).not.toThrow();
   });
 
-  it('keyboard H toggles hidden class', () => {
+  it(' HUD bar is always visible', () => {
     const quiz = createMockQuiz({ isActive: true, view: 'quiz' });
     const gameMenu = createMockGameMenu();
 
@@ -159,12 +159,6 @@ describe('HUD', () => {
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h' }));
-    });
-
-    expect(hudBar.className).toContain('translate-y-[calc(100%-12px)]');
-
-    act(() => {
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'H' }));
     });
 
     expect(hudBar.className).not.toContain('translate-y-[calc(100%-12px)]');

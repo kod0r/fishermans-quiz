@@ -58,7 +58,7 @@ export function ModeSelector({ currentMode, onSwitchMode }: ModeSelectorProps) {
         currentMode={currentMode}
         icon={Zap}
         label="Arcade"
-        subtitle="Ein Retry pro Frage. Themen jederzeit änderbar."
+        subtitle="Ein Retry pro Frage."
         activeClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
         onClick={() => onSwitchMode("arcade")}
       />
@@ -67,7 +67,7 @@ export function ModeSelector({ currentMode, onSwitchMode }: ModeSelectorProps) {
         currentMode={currentMode}
         icon={Timer}
         label="Prüfung"
-        subtitle="60 Fragen, 60 Minuten, 60 % zum Bestehen."
+        subtitle="60 Fragen, 60 Minuten."
         activeClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
         onClick={() => onSwitchMode("exam")}
       />
@@ -76,7 +76,7 @@ export function ModeSelector({ currentMode, onSwitchMode }: ModeSelectorProps) {
         currentMode={currentMode}
         icon={Shield}
         label="Hardcore"
-        subtitle="Ein Fehler sperrt das Thema. Keine Retries."
+        subtitle="Fehler sperrt Thema. Kein Retry."
         activeClass="bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400"
         onClick={() => onSwitchMode("hardcore")}
       />
