@@ -57,7 +57,7 @@ export const AnswerGrid = React.memo(function AnswerGrid({
             aria-checked={isSelected || isPendingSelection}
             aria-disabled={isDisabled}
             aria-label={`Antwort ${buchstabe}: ${frage.antworten[buchstabe]}`}
-            className={`w-full text-left min-h-[72px] sm:min-h-20 h-auto py-3 rounded-lg border transition-all flex items-center gap-3 px-3 ${cls} ${isDisabled ? 'cursor-default opacity-50' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900'}`}
+            className={`w-full text-left h-[72px] sm:h-20 rounded-lg border transition-all flex items-center gap-3 px-3 ${cls} ${isDisabled ? 'cursor-default opacity-50' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900'}`}
           >
             <span
               className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center font-bold text-sm ${hasAnswered && isCorrect && !hideFeedback ? 'bg-emerald-500 text-white' : hasAnswered && isSelected && !isCorrect && !hideFeedback ? 'bg-red-500 text-white' : isPendingSelection ? 'bg-red-500 text-white' : isSelected ? 'bg-teal-400 text-slate-900' : 'bg-slate-300/50 text-slate-600 dark:bg-slate-600/50 dark:text-slate-300'}`}
@@ -66,7 +66,7 @@ export const AnswerGrid = React.memo(function AnswerGrid({
               {buchstabe}
             </span>
             <span
-              className={`flex-1 leading-snug text-sm flex items-center ${hasAnswered && isCorrect && !hideFeedback ? 'text-emerald-600 dark:text-emerald-300' : hasAnswered && isSelected && !isCorrect && !hideFeedback ? 'text-red-600 dark:text-red-300' : isPendingSelection ? 'text-red-600 dark:text-red-300' : 'text-slate-700 dark:text-slate-200'}`}
+              className={`flex-1 leading-snug text-sm overflow-y-auto max-h-[56px] sm:max-h-[64px] ${hasAnswered && isCorrect && !hideFeedback ? 'text-emerald-600 dark:text-emerald-300' : hasAnswered && isSelected && !isCorrect && !hideFeedback ? 'text-red-600 dark:text-red-300' : isPendingSelection ? 'text-red-600 dark:text-red-300' : 'text-slate-700 dark:text-slate-200'}`}
             >
               {frage.antworten[buchstabe]}
             </span>
