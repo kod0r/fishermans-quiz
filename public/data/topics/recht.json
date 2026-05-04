@@ -482,30 +482,6 @@
       "bild": false
     },
     {
-      "id": "5.041",
-      "topic": "Recht",
-      "frage": "Welche Fischereierlaubnisscheine bedürfen keiner Genehmigung der Kreisverwaltungsbehörde?",
-      "antworten": {
-        "A": "Erlaubnisscheine für Inhaber von Jugendfischereischeinen",
-        "B": "Erlaubnisscheine für Be- und Entwässerungsgräben",
-        "C": "Erlaubnisscheine für Rinnsale und kleinere Abzweigungen"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.042",
-      "topic": "Recht",
-      "frage": "Benötigt der Inhaber eines Jugendfischereischeins zum Fischen einen Erlaubnisschein?",
-      "antworten": {
-        "A": "nein",
-        "B": "nein, es gilt der Erlaubnisschein des ihn begleitenden, volljährigen Inhabers eines Fischereischeins",
-        "C": "ja"
-      },
-      "richtige_antwort": "C",
-      "bild": false
-    },
-    {
       "id": "5.043",
       "topic": "Recht",
       "frage": "In welchem Fall benötigt der Fischer zur Ausübung der Fischerei keinen Fischereierlaubnisschein?",
@@ -518,18 +494,6 @@
       "bild": false
     },
     {
-      "id": "5.044",
-      "topic": "Recht",
-      "frage": "Unter welchen Voraussetzungen genehmigt die Kreisverwaltungsbehörde die Ausstellung von Fischereierlaubnisscheinen?",
-      "antworten": {
-        "A": "wenn der Fischereiberechtigte seit mindestens drei Jahren Inhaber eines Fischereischeines ist",
-        "B": "wenn dadurch keine Nachteile für das Fischwasser und für die mit ihm zusammenhängenden Fischwasser zu befürchten sind",
-        "C": "wenn der Erlaubnisschein einer Person erteilt werden soll, die Inhaber eines Jugendfischereischeines ist"
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
       "id": "5.045",
       "topic": "Recht",
       "frage": "Wie viele Fischereischeininhaber dürfen maximal in Begleitung des Fischereiberechtigten oder des Fischereipächters den Fischfang mit der Handangel ohne Erlaubnisschein ausüben?",
@@ -537,18 +501,6 @@
         "A": "drei",
         "B": "fünf",
         "C": "zwei"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.046",
-      "topic": "Recht",
-      "frage": "Müssen Erlaubnisscheine für Inhaber von Jugendfischereischeinen durch die Kreisverwaltungsbehörde genehmigt und bestätigt werden?",
-      "antworten": {
-        "A": "nein",
-        "B": "nur, wenn die Inhaber der Jugendfischereischeine älter als 16 Jahre sind",
-        "C": "ja"
       },
       "richtige_antwort": "A",
       "bild": false
@@ -599,54 +551,6 @@
         "C": "nein"
       },
       "richtige_antwort": "C",
-      "bild": false
-    },
-    {
-      "id": "5.051",
-      "topic": "Recht",
-      "frage": "Ein Fischereischein für Jugendliche (Jugendfischereischein) kann frühestens ausgestellt werden",
-      "antworten": {
-        "A": "an Personen, die das 8. Lebensjahr vollendet haben",
-        "B": "an Personen, die das 14. Lebensjahr vollendet haben",
-        "C": "an Personen, die das 10. Lebensjahr vollendet haben"
-      },
-      "richtige_antwort": "C",
-      "bild": false
-    },
-    {
-      "id": "5.052",
-      "topic": "Recht",
-      "frage": "Welche Besonderheit hat der Jugendfischereischein gegenüber einem vollgültigen Fischereischein?",
-      "antworten": {
-        "A": "Er gilt nur in Begleitung eines Erziehungsberechtigten.",
-        "B": "Er berechtigt zur Ausübung des Fischfanges nur in verantwortlicher Begleitung eines volljährigen Fischereischeininhabers.",
-        "C": "Er berechtigt nicht zum Fischfang mit der Handangel."
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
-      "id": "5.053",
-      "topic": "Recht",
-      "frage": "Für welchen Zeitraum gilt der Jugendfischereischein?",
-      "antworten": {
-        "A": "vom Tag der Ausstellung bis zum vollendeten 18. Lebensjahr",
-        "B": "vom Tag der Ausstellung bis zum vollendeten 14. Lebensjahr",
-        "C": "vom Tag der Ausstellung jeweils für ein Jahr"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.054",
-      "topic": "Recht",
-      "frage": "Welche Nachweise muss man beim Angeln mit sich führen?",
-      "antworten": {
-        "A": "den Fischereischein und den Erlaubnisschein (sofern nicht befreit von der Erlaubnisscheinpflicht)",
-        "B": "das Zeugnis über die bestandene Fischerprüfung",
-        "C": "den Bundespersonalausweis"
-      },
-      "richtige_antwort": "A",
       "bild": false
     },
     {
@@ -842,18 +746,6 @@
       "bild": false
     },
     {
-      "id": "5.071",
-      "topic": "Recht",
-      "frage": "Welcher Fisch ist nach der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) ganzjährig geschont?",
-      "antworten": {
-        "A": "Schlammpeitzger",
-        "B": "Elritze",
-        "C": "Rotfeder"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
       "id": "5.072",
       "topic": "Recht",
       "frage": "Welcher Fisch ist nach der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) ganzjährig geschont?",
@@ -959,18 +851,6 @@
         "C": "Schneider"
       },
       "richtige_antwort": "B",
-      "bild": false
-    },
-    {
-      "id": "5.081",
-      "topic": "Recht",
-      "frage": "Welche Art ist nach der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) nicht ganzjährig geschont?",
-      "antworten": {
-        "A": "Hasel",
-        "B": "Zope",
-        "C": "Sichling"
-      },
-      "richtige_antwort": "A",
       "bild": false
     },
     {
@@ -1526,30 +1406,6 @@
       "bild": false
     },
     {
-      "id": "5.128",
-      "topic": "Recht",
-      "frage": "Für welche Tierart gilt in der Forellenregion der Fließgewässer keine Schonbestimmung?",
-      "antworten": {
-        "A": "Bachneunauge",
-        "B": "Aal",
-        "C": "Rutte (Quappe, Trüsche)"
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
-      "id": "5.129",
-      "topic": "Recht",
-      "frage": "In welchen Gewässern gelten für Hechte und Aale keine Fangbeschränkungen nach Zeit und Maß?",
-      "antworten": {
-        "A": "in Fließgewässern der Brachsenregion",
-        "B": "in Fließgewässern der Barbenregion",
-        "C": "in Fließgewässern der Forellenregion"
-      },
-      "richtige_antwort": "C",
-      "bild": false
-    },
-    {
       "id": "5.130",
       "topic": "Recht",
       "frage": "In welchen Fällen sind Gemeinschaftsfischen im Sinne der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) zulässig?",
@@ -1790,18 +1646,6 @@
       "bild": false
     },
     {
-      "id": "5.150",
-      "topic": "Recht",
-      "frage": "Welche Tierart darf gemäß der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) nicht in Fließgewässer der Forellen- oder Äschenregion ausgesetzt werden?",
-      "antworten": {
-        "A": "Mühlkoppe",
-        "B": "Edelkrebs",
-        "C": "Aal"
-      },
-      "richtige_antwort": "C",
-      "bild": false
-    },
-    {
       "id": "5.151",
       "topic": "Recht",
       "frage": "Welche Tierart muss gemäß der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) nach dem Fang in einem Fließgewässer der Forellen- oder Äschenregion zurückgesetzt werden?",
@@ -1881,18 +1725,6 @@
         "A": "Schleie",
         "B": "Marmorierte Grundel",
         "C": "Zwergwels"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.158",
-      "topic": "Recht",
-      "frage": "Ab welchem Alter kann in Bayern für die Ausübung des Fischfangs ein Jugendfischereischein ausgestellt werden?",
-      "antworten": {
-        "A": "ab vollendetem 10. Lebensjahr",
-        "B": "ab vollendetem 12. Lebensjahr",
-        "C": "ab vollendetem 14. Lebensjahr"
       },
       "richtige_antwort": "A",
       "bild": false
@@ -2486,18 +2318,6 @@
       "bild": false
     },
     {
-      "id": "5.208",
-      "topic": "Recht",
-      "frage": "Welcher Fisch unterliegt gemäß der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) keiner Schonbestimmung?",
-      "antworten": {
-        "A": "Sichling",
-        "B": "Moderlieschen",
-        "C": "Donaukaulbarsch"
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
       "id": "5.209",
       "topic": "Recht",
       "frage": "Darf ein Angler, der im Besitz einer gültigen Fischereierlaubnis ist, selbstständig Besatzmaßnahmen vornehmen?",
@@ -2529,42 +2349,6 @@
         "A": "Der Fischer kann nach eigenem Ermessen Fische fangen, sich aneignen oder schonend zurücksetzen.",
         "B": "Es gelten für alle Fische die gesetzlichen Schonzeiten und Schonmaße.",
         "C": "Der Erlaubnisschein ist ungültig."
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
-      "id": "5.212",
-      "topic": "Recht",
-      "frage": "Muss der verantwortliche Begleiter eines Jugendlichen mit Jugendfischereischein einen auf seinen Namen lautenden Erlaubnisschein besitzen, wenn er nicht selbst angelt?",
-      "antworten": {
-        "A": "nein",
-        "B": "Das Prüfungszeugnis über die bestandene Fischerprüfung reicht völlig aus.",
-        "C": "ja"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.213",
-      "topic": "Recht",
-      "frage": "Darf ein 17-jähriger Inhaber eines Fischereischeins auf Lebenszeit einen Jugendlichen mit Jugendfischereischein beim Fischfang verantwortlich begleiten?",
-      "antworten": {
-        "A": "nein",
-        "B": "Nur, wenn er ausreichende Sachkenntnisse besitzt.",
-        "C": "ja"
-      },
-      "richtige_antwort": "A",
-      "bild": false
-    },
-    {
-      "id": "5.214",
-      "topic": "Recht",
-      "frage": "Ist in einer Bundesschifffahrtsstraße (z. B. Europakanal) die Hälterung der gefangenen Fische erlaubt?",
-      "antworten": {
-        "A": "Die Hälterung ist zwingend geboten.",
-        "B": "Die Hälterung ist erlaubt, sofern eine Schädigung der gehälterten Fische nicht zu erwarten ist.",
-        "C": "Die Hälterung ist verboten."
       },
       "richtige_antwort": "B",
       "bild": false
@@ -2615,18 +2399,6 @@
         "C": "Ja, aber nur in geschlossenen Gewässern."
       },
       "richtige_antwort": "B",
-      "bild": false
-    },
-    {
-      "id": "5.219",
-      "topic": "Recht",
-      "frage": "Welche Fischart ist nach der Verordnung zur Ausführung des Bayerischen Fischereigesetzes (AVBayFiG) ganzjährig geschont?",
-      "antworten": {
-        "A": "Hasel",
-        "B": "Mühlkoppe",
-        "C": "Karausche"
-      },
-      "richtige_antwort": "C",
       "bild": false
     },
     {

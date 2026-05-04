@@ -353,19 +353,6 @@
       "bild_url": "images/page145_img2.jpeg"
     },
     {
-      "id": "B2.22",
-      "topic": "Bilderkennung",
-      "frage": "Welche Fischart ist hier abgebildet?",
-      "antworten": {
-        "A": "Schleie",
-        "B": "Giebel",
-        "C": "Karausche"
-      },
-      "richtige_antwort": "C",
-      "bild": true,
-      "bild_url": "images/page145_img3.jpeg"
-    },
-    {
       "id": "B2.23",
       "topic": "Bilderkennung",
       "frage": "Welche Fischart ist hier abgebildet?",
@@ -468,19 +455,6 @@
       "richtige_antwort": "A",
       "bild": true,
       "bild_url": "images/page148_img1.jpeg"
-    },
-    {
-      "id": "B3.7",
-      "topic": "Bilderkennung",
-      "frage": "Welchen der abgebildeten Haken bezeichnet man als Schonhaken?",
-      "antworten": {
-        "A": "c)",
-        "B": "a)",
-        "C": "b)"
-      },
-      "richtige_antwort": "A",
-      "bild": true,
-      "bild_url": "images/page148_img2.jpeg"
     },
     {
       "id": "B3.8",

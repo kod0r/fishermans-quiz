@@ -1574,18 +1574,6 @@
       "bild": false
     },
     {
-      "id": "1.132",
-      "topic": "Biologie",
-      "frage": "Wie ist die Stellung der Rückenflosse bei der Rotfeder?",
-      "antworten": {
-        "A": "Das Hinterende der Rückenflosse liegt mehr oder weniger senkrecht über dem Ansatz der Bauchflosse.",
-        "B": "Der Ansatz der Rückenflosse liegt hinter dem Ansatz der Bauchflosse.",
-        "C": "Der Ansatz der Rückenflosse liegt mehr oder weniger senkrecht über dem Ansatz der Bauchflosse."
-      },
-      "richtige_antwort": "B",
-      "bild": false
-    },
-    {
       "id": "1.133",
       "topic": "Biologie",
       "frage": "Welche Fischart hat Knochenplatten statt Schuppen?",

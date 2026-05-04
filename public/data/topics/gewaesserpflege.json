@@ -650,18 +650,6 @@
       "bild": false
     },
     {
-      "id": "3.055",
-      "topic": "Gewässerpflege",
-      "frage": "Was ist zu tun, wenn Sie in einem Gewässer ein Fischsterben feststellen?",
-      "antworten": {
-        "A": "die Angelfischerei intensivieren, um noch überlebende Tiere zu fangen",
-        "B": "den Gewässerwart bitten, die Bestandslücken durch Besatz auszugleichen",
-        "C": "die Polizei und die zuständige Kreisverwaltungsbehörde informieren"
-      },
-      "richtige_antwort": "C",
-      "bild": false
-    },
-    {
       "id": "3.056",
       "topic": "Gewässerpflege",
       "frage": "Eine Brachse mit Laichausschlag",
