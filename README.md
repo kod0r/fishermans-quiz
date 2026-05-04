@@ -1,6 +1,6 @@
 # 🐟 Fisherman's Quiz
 
-> Interactive web app for learning the **Bavarian state fishing exam** — based on the official question catalog (as of: 2026-03-11).
+> Interactive web app for learning the **State fishing exam** — based on the official bavarian question catalog (as of: 2026-03-11).
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/kod0r/fishermans-quiz)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
@@ -24,7 +24,7 @@ The dataset of 1,052 questions is GO with TARGETED FIXES. The severe defect rate
 
 ## ✨ Features
 
-- **1,052 questions** across 6 areas (Biology, Water Science, Water Conservation, Fishing Gear & Methods, Law, Image Recognition)
+- **900+ questions** across 6 areas (Biology, Water Science, Water Conservation, Fishing Gear & Methods, Law, Image Recognition)
 - **Meta-learning system:** Questions are only marked "mastered" after **3 consecutive correct answers**
 - **Session runs:** Areas can be combined and expanded during a run
 - **Progress tracking:** Correct rate, best streak, per-area statistics
@@ -99,7 +99,7 @@ feat(ui): add new progress indicator
 fix(hooks): prevent empty quiz navigation
 perf(data): optimize chunk loading
 ```
- 
+
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for coding guidelines.
 
 ---

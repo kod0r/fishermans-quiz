@@ -1,5 +1,31 @@
 ## [Unreleased]
 
+## [0.4.2](https://github.com/kod0r/fishermans-quiz/compare/v0.4.1...v0.4.2) (2026-05-04)
+
+### Data
+
+* **dataset:** removed 22 redacted/truncated questions permanently from catalog
+  * Biologie (1), Gewässerpflege (1), Recht (19), Bilderkennung (2)
+  * `quiz_meta.json` synced: 938 total, 938 fragenIndex entries
+  * `BAYERISCHE_FISCHEREI_GESETZ_IDS` filter set cleaned of removed IDs
+  * deleted unused monolith `quiz_data.json` and 2 orphaned images
+* **dataset:** fixed typo `Schlaufenverbindungskno ten` → `Schlaufenverbindungsknoten` in Bilderkennung
+
+### UI
+
+* **topics:** reordered topic selection list for all game modes
+  * Biologie → Fanggeräte & Methoden → Gewässerkunde → Gewässerpflege → Recht → Bilderkennung
+* **theme:** default to dark mode on first visit (`defaultTheme="dark"`)
+
+### Settings
+
+* **defaults:** shuffle answers ON, game mode arcade, backup reminders ON
+* **hud:** removed swipe-to-hide gesture; HUD always visible
+
+### Docs
+
+* **readme:** generalized app description (State fishing exam), updated question count to 900+
+
 ## [0.4.1](https://github.com/kod0r/fishermans-quiz/compare/v0.4.0...v0.4.1) (2026-05-03)
 
 ### Features

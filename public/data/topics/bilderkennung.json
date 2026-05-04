@@ -632,7 +632,7 @@
       "antworten": {
         "A": "Hakenschaftknoten",
         "B": "Rapalaknoten",
-        "C": "Schlaufenverbindungskno ten"
+        "C": "Schlaufenverbindungsknoten"
       },
       "richtige_antwort": "C",
       "bild": true,
@@ -643,7 +643,7 @@
       "topic": "Bilderkennung",
       "frage": "Welcher Knoten ist hier abgebildet?",
       "antworten": {
-        "A": "Schlaufenverbindungskno ten",
+        "A": "Schlaufenverbindungsknoten",
         "B": "Blutknoten",
         "C": "Spulenachsenknoten"
       },
