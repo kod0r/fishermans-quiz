@@ -29,6 +29,15 @@ export const TOPICS: TopicDef[] = [
     selectedBg: "bg-emerald-500",
   },
   {
+    id: "Fanggeräte und -methoden",
+    label: "Fanggeräte & Methoden",
+    icon: Crosshair,
+    color: "text-amber-400",
+    bg: "bg-amber-400/10",
+    border: "border-amber-400/20",
+    selectedBg: "bg-amber-500",
+  },
+  {
     id: "Gewässerkunde",
     label: "Gewässerkunde",
     icon: Waves,
@@ -45,15 +54,6 @@ export const TOPICS: TopicDef[] = [
     bg: "bg-cyan-400/10",
     border: "border-cyan-400/20",
     selectedBg: "bg-cyan-500",
-  },
-  {
-    id: "Fanggeräte und -methoden",
-    label: "Fanggeräte & Methoden",
-    icon: Crosshair,
-    color: "text-amber-400",
-    bg: "bg-amber-400/10",
-    border: "border-amber-400/20",
-    selectedBg: "bg-amber-500",
   },
   {
     id: "Recht",
