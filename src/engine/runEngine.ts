@@ -6,6 +6,7 @@ export interface CreateRunOptions {
   durationSeconds?: number;
   sessionType?: SessionType;
   enableShuffle?: boolean;
+  filter?: 'weak' | 'all' | 'srs-due';
 }
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -48,6 +49,7 @@ export function createRun(quizData: QuizData, topics: string[], gameMode: GameMo
     sessionType: sessionType ?? 'quiz',
     answerShuffle,
     gameMode,
+    filter: options?.filter ?? 'all',
   };
 }
 
@@ -56,6 +58,7 @@ export function extendRun(
   quizData: QuizData,
   topics: string[],
   enableShuffle?: boolean,
+  filter?: 'weak' | 'all' | 'srs-due',
 ): QuizRun | null {
   if (run.durationSeconds) return null;
 
@@ -80,6 +83,7 @@ export function extendRun(
     startedAt: new Date().toISOString(),
     completedAt: undefined,
     answerShuffle: newAnswerShuffle,
+    filter: filter ?? run.filter ?? 'all',
   };
 }
 

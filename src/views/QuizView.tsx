@@ -93,6 +93,9 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
 
   const checkTopicComplete = useCallback(
     (frageId: string) => {
+      // Skip topic-complete popup in filtered sessions (Schwächentrainer, SRS-due)
+      if (rawRun?.filter && rawRun.filter !== 'all') return;
+
       const frage = aktiveFragen.find((f) => f.id === frageId);
       if (!frage) return;
 
@@ -107,7 +110,7 @@ export default function QuizView({ quiz, onOpenRunActions, gameMenuOpen }: Props
         setTopicComplete(frage.topic);
       }
     },
-    [aktiveFragen, antworten],
+    [aktiveFragen, antworten, rawRun],
   );
 
   const userAntwort = antworten[aktuelleFrage?.id || ''];

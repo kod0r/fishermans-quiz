@@ -39,16 +39,16 @@ export function useQuizRun(quizData: QuizData | null, gameMode: GameMode, adapte
      
   }, [quizData, setRun, run?.frageIds.length]);
 
-  const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean) => {
+  const starteRun = useCallback((topics: string[], overrideData?: QuizData, limit?: number, durationSeconds?: number, sessionType?: SessionType, enableShuffle?: boolean, filter?: 'weak' | 'all' | 'srs-due') => {
     const qd = overrideData || quizData;
     if (!qd) return;
 
     if (run?.isActive) {
-      const extended = RunEngine.extendRun(run, qd, topics, enableShuffle);
+      const extended = RunEngine.extendRun(run, qd, topics, enableShuffle, filter);
       if (!extended) return;
       persistRun(extended);
     } else {
-      const created = RunEngine.createRun(qd, topics, gameMode, { limit, durationSeconds, sessionType, enableShuffle });
+      const created = RunEngine.createRun(qd, topics, gameMode, { limit, durationSeconds, sessionType, enableShuffle, filter });
       persistRun(created);
     }
   }, [quizData, run, persistRun, gameMode]);

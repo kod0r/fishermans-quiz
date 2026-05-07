@@ -291,7 +291,7 @@ export function useQuiz() {
     const isNewRun = !run.isActive;
     const durationSeconds = policy.getDurationSeconds();
     const sessionType = options.sessionType ?? 'quiz';
-    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType, shuffleAnswers);
+    run.starteRun(topics, filteredData, limit, durationSeconds, sessionType, shuffleAnswers, filter);
     if (isNewRun) meta.recordRunStart();
     setView('quiz');
   }, [run, meta, quizData, quizMeta, fav.favorites, policy, srs.dueFrageIds, shuffleAnswers]);
