@@ -16,7 +16,9 @@ export const localStorageAdapter: PersistenceAdapter<unknown> = {
     } catch (err) {
       if (err instanceof DOMException && err.name === 'QuotaExceededError') {
         console.warn('[localStorageAdapter] Quota exceeded, write dropped');
+        window.dispatchEvent(new CustomEvent('storage:error', { detail: { key, error: err.message } }));
       } else {
+        window.dispatchEvent(new CustomEvent('storage:error', { detail: { key, error: err instanceof Error ? err.message : String(err) } }));
         throw err;
       }
     }

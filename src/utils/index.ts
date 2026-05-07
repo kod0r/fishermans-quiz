@@ -5,5 +5,5 @@ export { sm2, calculateNextReview, isMastered, isLearning } from './srs';
 export { canSelectTopic, isTopicLocked } from './topicLocks';
 export { escapeCsvField, buildCsv } from './csvExport';
 export { filterFragen, filterQuizDataByFavorites, filterQuizDataByWeakness, filterQuizDataBySRSDue } from './filter';
-export { loadJson, saveJson, removeKey, getStorageUsage, migrateLegacyStorage } from './storage';
+export { migrateLegacyStorage } from '@/utils/persistence/legacyMigration';
 export * from './persistence';

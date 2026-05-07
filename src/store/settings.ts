@@ -3,7 +3,7 @@ import type { AppSettings, GameMode } from "@/types/quiz";
 import { usePersistentState } from "@/hooks/usePersistentState";
 import { createSettingsAdapter } from "@/utils/persistence/settingsAdapter";
 import type { PersistenceAdapter } from "@/utils/persistence";
-import { migrateLegacyStorage } from "@/utils/storage";
+import { migrateLegacyStorage } from "@/utils/persistence/legacyMigration";
 
 const STORAGE_KEY_SETTINGS = "fmq:settings:v1";
 const DEFAULT_SETTINGS: AppSettings = { gameMode: "arcade", backupReminderEnabled: true, shuffleAnswers: true };
