@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+## [0.4.3](https://github.com/kod0r/fishermans-quiz/compare/v0.4.2...v0.4.3) (2026-05-07)
+
+### UI
+
+* **QuizCardShell:** fixed card height at 646px; images no longer expand the card
+* **QuizCardShell:** note area collapses when unanswered instead of reserving empty space
+* **QuizCardShell:** removed "Persönliche Notiz" label and border line
+
 ## [0.4.2](https://github.com/kod0r/fishermans-quiz/compare/v0.4.1...v0.4.2) (2026-05-04)
 
 ### Data
