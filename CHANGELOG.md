@@ -7,6 +7,7 @@
 * **QuizCardShell:** fixed card height at 646px; images no longer expand the card
 * **QuizCardShell:** note area collapses when unanswered instead of reserving empty space
 * **QuizCardShell:** removed "Persönliche Notiz" label and border line
+* **QuizView:** topic-complete popup no longer fires in Schwächentrainer / SRS-due sessions
 
 ## [0.4.2](https://github.com/kod0r/fishermans-quiz/compare/v0.4.1...v0.4.2) (2026-05-04)
 
