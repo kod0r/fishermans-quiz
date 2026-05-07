@@ -111,8 +111,8 @@ describe('QuizCardShell', () => {
       </QuizCardShell>
     );
 
-    const noteSection = screen.getByLabelText(/Persönliche Notiz/i).closest('div.mt-3');
-    expect(noteSection).toHaveClass('invisible');
+    const noteSection = screen.getByPlaceholderText(/Merksatz/i).closest('div');
+    expect(noteSection).toHaveClass('hidden');
   });
 
   it('shows note textarea when answered and calls onNoteChange on blur', () => {
@@ -131,7 +131,7 @@ describe('QuizCardShell', () => {
       </QuizCardShell>
     );
 
-    const textarea = screen.getByLabelText(/Persönliche Notiz/i);
+    const textarea = screen.getByPlaceholderText(/Merksatz/i);
     expect(textarea).toBeInTheDocument();
     expect(textarea).toHaveValue('my note');
 
