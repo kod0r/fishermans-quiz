@@ -1,4 +1,4 @@
-import { Star, StickyNote } from 'lucide-react';
+import { Star } from 'lucide-react';
 import type { Frage } from '@/types/quiz';
 import type { ReactNode } from 'react';
 
@@ -24,7 +24,7 @@ export function QuizCardShell({
   onNoteChange,
 }: Props) {
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 min-h-[680px] flex flex-col dark:bg-slate-800/60 dark:border-slate-700/50">
+    <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 h-[646px] flex flex-col overflow-hidden dark:bg-slate-800/60 dark:border-slate-700/50">
       {/* Topic + Favorite */}
       <div className="mb-2 flex items-center justify-between">
         {frage.bild ? (
@@ -71,15 +71,8 @@ export function QuizCardShell({
         {children}
       </div>
 
-      {/* Notiz — immer gleiche Höhe reserviert */}
-      <div className={`mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50 flex-shrink-0 ${hasAnswered ? '' : 'invisible'}`}>
-        <label
-          htmlFor={`note-${frage.id}`}
-          className="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-1.5 dark:text-slate-400"
-        >
-          <StickyNote className="w-3.5 h-3.5" aria-hidden="true" />
-          Persönliche Notiz
-        </label>
+      {/* Notiz — nur sichtbar wenn beantwortet */}
+      <div className={`mt-3 flex-shrink-0 ${hasAnswered ? '' : 'hidden'}`}>
         <textarea
           key={frage.id}
           id={`note-${frage.id}`}

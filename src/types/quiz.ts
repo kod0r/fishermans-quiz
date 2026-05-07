@@ -41,6 +41,7 @@ export interface QuizRun {
   completedAt?: string; // verhindert doppeltes Loggen
   answerShuffle?: Record<string, ('A' | 'B' | 'C')[]>;
   gameMode?: GameMode;
+  filter?: 'weak' | 'all' | 'srs-due';
 }
 
 // ── History Entry ──
