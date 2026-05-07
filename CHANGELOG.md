@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.4.4](https://github.com/kod0r/fishermans-quiz/compare/v0.4.3...v0.4.4) (2026-05-07)
+
 ### Chore
 
 * **persistence:** removed dead `storage.ts` layer, migrated `legacyMigration` to `persistence/` folder, added edge case tests for adapter error handling
