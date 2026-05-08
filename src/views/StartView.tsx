@@ -56,7 +56,6 @@ export default function StartView({ quiz }: Props) {
 
   const {
     metaProgress,
-    lernCount,
     isActive,
     loadedTopics,
     statistiken,
@@ -277,12 +276,6 @@ export default function StartView({ quiz }: Props) {
                       label="Gemeisterte Themen"
                     />
                     <StatBox
-                      icon={Target}
-                      iconColor="text-blue-400"
-                      value={lernCount}
-                      label="In Bearbeitung"
-                    />
-                    <StatBox
                       icon={Flame}
                       iconColor="text-orange-400"
                       value={metaProgress.stats.bestStreak}
@@ -375,12 +368,6 @@ export default function StartView({ quiz }: Props) {
                       label="Bestandene Themen"
                     />
                     <StatBox
-                      icon={Target}
-                      iconColor="text-blue-400"
-                      value={lernCount}
-                      label="In Bearbeitung"
-                    />
-                    <StatBox
                       icon={Flame}
                       iconColor="text-orange-400"
                       value={metaProgress.stats.bestStreak}
@@ -445,14 +432,6 @@ export default function StartView({ quiz }: Props) {
                   const gem = fragenIds.filter((id) =>
                     isMastered(metaProgress.fragen[id], quiz.srsMap[id])
                   ).length;
-                  const lern = fragenIds.filter((id) => {
-                    const meta = metaProgress.fragen[id];
-                    return (
-                      meta &&
-                      meta.attempts > 0 &&
-                      !isMastered(meta, quiz.srsMap[id])
-                    );
-                  }).length;
                   const pct = fragenIds.length
                     ? Math.round((gem / fragenIds.length) * 100)
                     : 0;
@@ -475,15 +454,10 @@ export default function StartView({ quiz }: Props) {
                         className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700"
                         aria-label={`${b.label}: ${pct}% gemeistert`}
                       />
-                      <div className="flex items-center justify-end gap-1.5 w-16 sm:w-20 shrink-0 text-right">
+                      <div className="flex items-center justify-end w-14 sm:w-16 shrink-0 text-right">
                         <span className="text-slate-500 text-[10px] dark:text-slate-400">
                           {gem}/{fragenIds.length}
                         </span>
-                        {lern > 0 && (
-                          <span className="text-blue-600 text-[9px] dark:text-blue-400">
-                            {lern}
-                          </span>
-                        )}
                       </div>
                     </div>
                   );

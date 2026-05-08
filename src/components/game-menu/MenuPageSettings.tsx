@@ -141,7 +141,7 @@ export function MenuPageSettings({ onPush, quiz }: MenuPageSettingsProps) {
         {/* Info */}
         <section className="px-4 py-2">
           <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-            Fisherman&apos;s Quiz v0.4.0
+            Fisherman&apos;s Quiz v0.4.5
           </p>
         </section>
       </div>
