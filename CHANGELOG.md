@@ -19,6 +19,8 @@
 
 * **progress:** removed "In Bearbeitung" stat and blue topic-progress numbers
   * Users could not act on this statistic; it added clutter without value
+* **start:** removed misleading "Gesamtfortschritt" subtitle
+  * Stats boxes below already show real numbers; subtitle falsely claimed "Noch keine..." when activity existed because it gated on topic mastery instead of actual activity
 * **TopicGrid:** 0-star state explicitly renders no badge instead of falling through to mastered
 * **TopicGrid:** star unicode badge bumped to `text-lg font-bold`
 
