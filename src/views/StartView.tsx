@@ -61,7 +61,6 @@ export default function StartView({ quiz }: Props) {
     statistiken,
     gameMode,
   } = quiz;
-  const totalTopics = TOPICS.length;
 
   const effektivAusgewaehlt = useMemo(
     () =>
@@ -241,21 +240,7 @@ export default function StartView({ quiz }: Props) {
                     <p className="text-slate-900 font-medium text-sm dark:text-white">
                       Gesamtfortschritt
                     </p>
-                    <p className="text-slate-500 text-xs dark:text-slate-400">
-                      {gameMode === "arcade"
-                        ? quiz.passedTopicsArcade > 0
-                          ? `${quiz.passedTopicsArcade} von ${totalTopics} Themen gemeistert • ${metaProgress.stats.totalQuestionsAnswered} beantwortete Fragen`
-                          : "Noch keine Fragen beantwortet"
-                        : gameMode === "exam"
-                          ? metaProgress.examMeta &&
-                            metaProgress.examMeta.attempts > 0
-                            ? `Prüfungsversuche: ${metaProgress.examMeta.attempts} | Bestanden: ${metaProgress.examMeta.passedCount} | Bestes Ergebnis: ${metaProgress.examMeta.bestScore}%`
-                            : "Noch keine Prüfung absolviert"
-                          : quiz.masteredTopicsHardcore > 0 ||
-                              quiz.passedTopicsHardcore > 0
-                            ? `${quiz.masteredTopicsHardcore} von ${totalTopics} gemeistert • ${quiz.passedTopicsHardcore} bestanden`
-                            : "Noch keine Themen absolviert"}
-                    </p>
+
                   </div>
                 </div>
 
