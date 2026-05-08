@@ -1,5 +1,31 @@
 ## [Unreleased]
 
+## [0.4.5](https://github.com/kod0r/fishermans-quiz/compare/v0.4.4...v0.4.5) (2026-05-08)
+
+### Features
+
+* **ending:** proper run completion screen for all game modes
+  * Auto-transition to progress view when non-exam runs complete
+  * Mode-aware results: exam pass/fail, session completion, schwächetrainer/SRS-due labels
+  * Clear CTAs: "Zum Hauptmenü" always, "Zurück zum Quiz" only while active
+  * `completeRun` now sets `isActive=false` — HUD hides play/pause/mode badge on completion
+* **arcade:** star threshold rework (#314)
+  * Stars now 0|1|2|3 with thresholds <60% / 60-79% / 80-89% / 90-100%
+  * `arcadeStars` overwrites per latest full-session run (no more Math.max)
+  * `bestArcadeScore` keeps personal best via Math.max
+  * Filtered sessions (weak, srs-due) no longer write arcade completions
+
+### UI
+
+* **progress:** removed "In Bearbeitung" stat and blue topic-progress numbers
+  * Users could not act on this statistic; it added clutter without value
+* **TopicGrid:** 0-star state explicitly renders no badge instead of falling through to mastered
+* **TopicGrid:** star unicode badge bumped to `text-lg font-bold`
+
+### Fixes
+
+* **runEngine:** `completeRun` now also sets `isActive=false` for clean session termination
+
 ## [0.4.4](https://github.com/kod0r/fishermans-quiz/compare/v0.4.3...v0.4.4) (2026-05-07)
 
 ### Chore

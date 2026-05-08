@@ -59,7 +59,6 @@ function createMockQuiz(overrides: Partial<QuizContext> = {}): QuizContext {
       fragenIndex: { '1': 'Biologie', '2': 'Gewässerkunde', '3': 'Gewässerpflege', '4': 'Fanggeräte und -methoden', '5': 'Recht', '6': 'Bilderkennung' },
     },
     metaProgress,
-    lernCount: 0,
     passedTopicsArcade: 0,
     passedTopicsHardcore: 0,
     masteredTopicsHardcore: 0,

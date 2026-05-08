@@ -435,14 +435,6 @@ export function useQuiz() {
     [meta.meta.fragen, srs.srsMap]
   );
 
-  const lernCount = useMemo(() => {
-    let count = 0;
-    for (const [id, m] of Object.entries(meta.meta.fragen)) {
-      if (m.attempts > 0 && !isMastered(m, srs.srsMap[id])) count += 1;
-    }
-    return count;
-  }, [meta.meta.fragen, srs.srsMap]);
-
   // Arcade: Topics die vollständig gemeistert sind (SRS oder legacy)
   const passedTopicsArcade = useMemo(() => {
     if (!quizMeta) return 0;
@@ -480,7 +472,6 @@ export function useQuiz() {
     // Meta (Persistent)
     metaProgress: meta.meta,
     meisterCount,
-    lernCount,
     passedTopicsArcade,
     passedTopicsHardcore: meta.passedTopicsHardcore,
     masteredTopicsHardcore: meta.masteredTopicsHardcore,
