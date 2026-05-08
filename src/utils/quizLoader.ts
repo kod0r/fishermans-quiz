@@ -111,7 +111,7 @@ export const MetaProgressionSchema = z.object({
   fragen: z.record(z.string(), FrageMetaSchema),
   stats: MetaStatsSchema,
   topics: z.record(z.string(), TopicMetaSchema).default({}),
-  arcadeStars: z.record(z.string(), z.union([z.literal(1), z.literal(2), z.literal(3)])).optional().default({}),
+  arcadeStars: z.record(z.string(), z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])).optional().default({}),
   bestArcadeScore: z.record(z.string(), z.number().nonnegative()).optional().default({}),
   examMeta: ExamMetaSchema.optional(),
 });

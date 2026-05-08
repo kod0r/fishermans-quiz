@@ -92,7 +92,7 @@ export interface MetaProgression {
   fragen: Record<string, FrageMeta>;
   stats: MetaStats;
   topics: Record<string, TopicMeta>;
-  arcadeStars?: Record<string, 1 | 2 | 3>;
+  arcadeStars?: Record<string, 0 | 1 | 2 | 3>;
   bestArcadeScore?: Record<string, number>;
   examMeta?: ExamMeta;
 }

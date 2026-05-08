@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, XCircle, HelpCircle, ChevronDown, Star } from 'lucide-react';
+import { CheckCircle, XCircle, HelpCircle, ChevronDown, Star, Home, ArrowLeft } from 'lucide-react';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import type { QuizContext } from '@/hooks/useQuiz';
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function ProgressView({ quiz }: Props) {
-  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta, goToView, isActive, toggleFavorite, isFavorite } = quiz;
+  const { statistiken, aktiveFragen, antworten, springeZuFrage, getFrageMeta, goToView, isActive, toggleFavorite, isFavorite, gameMode, rawRun } = quiz;
   const [showWrong, setShowWrong] = useState(false);
   const [showUnanswered, setShowUnanswered] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -33,7 +33,54 @@ export default function ProgressView({ quiz }: Props) {
   });
 
   const pct = statistiken.gesamt > 0 ? (statistiken.korrekt / statistiken.gesamt) * 100 : 0;
-  const passed = pct >= 60;
+  const isExam = gameMode === 'exam';
+  const isCompletedRun = statistiken.gesamt > 0 && statistiken.beantwortet === statistiken.gesamt;
+
+  const headerContent = useMemo(() => {
+    if (isExam) {
+      const passed = pct >= 60;
+      return {
+        icon: passed
+          ? <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600 dark:text-emerald-400" />
+          : <XCircle className="w-7 h-7 sm:w-8 sm:h-8 text-red-600 dark:text-red-400" />,
+        title: passed ? 'Bestanden!' : 'Nicht bestanden',
+        subtitle: `${statistiken.korrekt} von ${statistiken.gesamt} richtig`,
+        subline: `${Math.round(pct)}% — 60% zum Bestehen`,
+        cardClass: passed
+          ? 'bg-emerald-50 border-emerald-300/50 dark:bg-emerald-900/20 dark:border-emerald-500/30'
+          : 'bg-red-50 border-red-300/50 dark:bg-red-900/20 dark:border-red-500/30',
+        iconBgClass: passed ? 'bg-emerald-500/20' : 'bg-red-500/20',
+        titleClass: passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400',
+      };
+    }
+
+    if (isCompletedRun) {
+      const filterLabel = rawRun?.filter === 'weak'
+        ? 'Schwächetrainer'
+        : rawRun?.filter === 'srs-due'
+          ? 'SRS-Wiederholung'
+          : 'Session';
+      return {
+        icon: <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-teal-600 dark:text-teal-400" />,
+        title: `${filterLabel} abgeschlossen!`,
+        subtitle: `${statistiken.korrekt} von ${statistiken.gesamt} richtig`,
+        subline: `${Math.round(pct)}%`,
+        cardClass: 'bg-teal-50 border-teal-300/50 dark:bg-teal-900/20 dark:border-teal-500/30',
+        iconBgClass: 'bg-teal-500/20',
+        titleClass: 'text-teal-600 dark:text-teal-400',
+      };
+    }
+
+    return {
+      icon: <HelpCircle className="w-7 h-7 sm:w-8 sm:h-8 text-slate-600 dark:text-slate-400" />,
+      title: 'Zwischenstand',
+      subtitle: `${statistiken.korrekt} von ${statistiken.gesamt} richtig`,
+      subline: `${Math.round(pct)}%`,
+      cardClass: 'bg-white border-slate-200/50 dark:bg-slate-800/50 dark:border-slate-700/50',
+      iconBgClass: 'bg-slate-500/20',
+      titleClass: 'text-slate-600 dark:text-slate-400',
+    };
+  }, [isExam, isCompletedRun, pct, statistiken, rawRun?.filter]);
 
    const topicStats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = useMemo(() => {
      const stats: Record<string, { korrekt: number; falsch: number; gesamt: number }> = {};
@@ -61,13 +108,13 @@ export default function ProgressView({ quiz }: Props) {
       <div className="container mx-auto px-3 sm:px-4 py-3 max-w-3xl pb-16">
 
         {/* Run-Ergebnis */}
-        <Card className={`mb-2 ${passed ? 'bg-emerald-50 border-emerald-300/50 dark:bg-emerald-900/20 dark:border-emerald-500/30' : 'bg-red-50 border-red-300/50 dark:bg-red-900/20 dark:border-red-500/30'}`}>
+        <Card className={`mb-2 ${headerContent.cardClass}`}>
           <CardContent className="py-3 px-3 text-center">
-            <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto mb-3 flex items-center justify-center ${passed ? 'bg-emerald-500/20' : 'bg-red-500/20'}`} aria-hidden="true">
-               {passed ? <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600 dark:text-emerald-400" /> : <XCircle className="w-7 h-7 sm:w-8 sm:h-8 text-red-600 dark:text-red-400" />}
+            <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto mb-3 flex items-center justify-center ${headerContent.iconBgClass}`} aria-hidden="true">
+               {headerContent.icon}
             </div>
-            <h2 ref={headingRef} tabIndex={-1} className={`text-lg sm:text-xl font-bold mb-1 outline-none ${passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{passed ? 'Bestanden!' : 'Nicht bestanden'}</h2>
-            <p className="text-slate-600 text-sm mb-4 dark:text-slate-300">{statistiken.korrekt} von {statistiken.gesamt} richtig</p>
+            <h2 ref={headingRef} tabIndex={-1} className={`text-lg sm:text-xl font-bold mb-1 outline-none ${headerContent.titleClass}`}>{headerContent.title}</h2>
+            <p className="text-slate-600 text-sm mb-4 dark:text-slate-300">{headerContent.subtitle}</p>
             <div className="max-w-sm mx-auto">
               <Progress
                 value={pct}
@@ -77,7 +124,7 @@ export default function ProgressView({ quiz }: Props) {
                 aria-valuemin={0}
                 aria-valuemax={100}
               />
-              <p className="text-slate-500 text-xs mt-1.5 dark:text-slate-400">{Math.round(pct)}% — 60% zum Bestehen</p>
+              <p className="text-slate-500 text-xs mt-1.5 dark:text-slate-400">{headerContent.subline}</p>
             </div>
 
             {/* Themen-Stats */}
@@ -94,6 +141,26 @@ export default function ProgressView({ quiz }: Props) {
                   </div>
                 );
               })}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="mt-5 flex flex-wrap justify-center gap-2">
+              {isActive && (
+                <button
+                  onClick={() => goToView('quiz')}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Zurück zum Quiz
+                </button>
+              )}
+              <button
+                onClick={() => goToView('start')}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-teal-600 text-white hover:bg-teal-700 transition-colors focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
+              >
+                <Home className="w-4 h-4" />
+                Zum Hauptmenü
+              </button>
             </div>
           </CardContent>
         </Card>

@@ -121,8 +121,7 @@ export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter<
 
   const recordArcadeRunComplete = useCallback((topicId: string, scorePct: number) => {
     setMeta(prev => {
-      const stars: 1 | 2 | 3 = scorePct >= 100 ? 3 : scorePct >= 75 ? 2 : 1;
-      const currentStars = prev.arcadeStars?.[topicId] ?? 0;
+      const stars: 0 | 1 | 2 | 3 = scorePct >= 90 ? 3 : scorePct >= 80 ? 2 : scorePct >= 60 ? 1 : 0;
       const currentBest = prev.bestArcadeScore?.[topicId] ?? 0;
 
       return {
@@ -133,7 +132,7 @@ export function useMetaProgress(gameMode: GameMode, adapter: PersistenceAdapter<
         },
         arcadeStars: {
           ...prev.arcadeStars,
-          [topicId]: Math.max(currentStars, stars) as 1 | 2 | 3,
+          [topicId]: stars,
         },
         bestArcadeScore: {
           ...prev.bestArcadeScore,

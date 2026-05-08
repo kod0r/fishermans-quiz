@@ -204,7 +204,7 @@ export function interruptRun(run: QuizRun): QuizRun {
 }
 
 export function completeRun(run: QuizRun): QuizRun {
-  return { ...run, completedAt: new Date().toISOString() };
+  return { ...run, completedAt: new Date().toISOString(), isActive: false };
 }
 
 export function isRunExpired(run: QuizRun): boolean {

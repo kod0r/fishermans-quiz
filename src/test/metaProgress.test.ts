@@ -204,4 +204,66 @@ describe('useMetaProgress', () => {
     expect(result.current.passedTopicsHardcore).toBe(0);
     expect(result.current.masteredTopicsHardcore).toBe(0);
   });
+
+  it('sollte Arcade-Sterne überschreiben (nicht Math.max)', () => {
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
+
+    act(() => {
+      result.current.recordArcadeRunComplete('Biologie', 100);
+    });
+    expect(result.current.meta.arcadeStars?.['Biologie']).toBe(3);
+
+    act(() => {
+      result.current.recordArcadeRunComplete('Biologie', 70);
+    });
+    expect(result.current.meta.arcadeStars?.['Biologie']).toBe(1);
+  });
+
+  it('sollte 0 Sterne bei < 60% vergeben', () => {
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
+
+    act(() => {
+      result.current.recordArcadeRunComplete('Biologie', 59);
+    });
+    expect(result.current.meta.arcadeStars?.['Biologie']).toBe(0);
+  });
+
+  it('sollte korrekte Stern-Schwellen verwenden', () => {
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
+
+    const cases: [number, 0 | 1 | 2 | 3][] = [
+      [0, 0],
+      [59, 0],
+      [60, 1],
+      [75, 1],
+      [79, 1],
+      [80, 2],
+      [85, 2],
+      [89, 2],
+      [90, 3],
+      [100, 3],
+    ];
+
+    for (const [score, expected] of cases) {
+      act(() => {
+        result.current.recordArcadeRunComplete(`topic-${score}`, score);
+      });
+      expect(result.current.meta.arcadeStars?.[`topic-${score}`]).toBe(expected);
+    }
+  });
+
+  it('sollte bestArcadeScore als Math.max behalten', () => {
+    const { result } = renderHook(() => useMetaProgress('arcade', createMetaAdapter(memoryAdapter)));
+
+    act(() => {
+      result.current.recordArcadeRunComplete('Biologie', 100);
+    });
+    expect(result.current.meta.bestArcadeScore?.['Biologie']).toBe(100);
+
+    act(() => {
+      result.current.recordArcadeRunComplete('Biologie', 50);
+    });
+    expect(result.current.meta.bestArcadeScore?.['Biologie']).toBe(100);
+    expect(result.current.meta.arcadeStars?.['Biologie']).toBe(0);
+  });
 });

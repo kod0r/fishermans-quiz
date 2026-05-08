@@ -30,6 +30,7 @@ describe('ArcadePolicy', () => {
       alleBeantwortet: false,
       aktiveFragen: fragen,
       loadedTopics: ['Biologie', 'Chemie'],
+      filter: 'all',
     });
     expect(effect.topicResults).toBeUndefined();
     expect(effect.arcadeCompletions).toBeUndefined();
@@ -44,10 +45,25 @@ describe('ArcadePolicy', () => {
       alleBeantwortet: true,
       aktiveFragen: fragen,
       loadedTopics: ['Biologie', 'Chemie'],
+      filter: 'all',
     });
     expect(effect.arcadeCompletions).toHaveLength(2);
     expect(effect.arcadeCompletions).toContainEqual({ topicId: 'Biologie', scorePct: 100 });
     expect(effect.arcadeCompletions).toContainEqual({ topicId: 'Chemie', scorePct: 0 });
+  });
+
+  it('returns no arcade completions for filtered sessions', () => {
+    const neueAntworten = { '1': 'A', '2': 'B', '3': 'X' };
+    const effect = ArcadePolicy.onAnswer({
+      frage: fragen[2],
+      isCorrect: false,
+      neueAntworten,
+      alleBeantwortet: true,
+      aktiveFragen: fragen,
+      loadedTopics: ['Biologie', 'Chemie'],
+      filter: 'weak',
+    });
+    expect(effect.arcadeCompletions).toBeUndefined();
   });
 
   it('allows removing topics', () => {
