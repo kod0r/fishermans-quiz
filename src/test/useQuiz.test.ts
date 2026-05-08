@@ -424,6 +424,68 @@ describe('useQuiz', () => {
     expect(result.current.historyEntries).toHaveLength(1);
   });
 
+  it('sollte nach Abschluss eines non-Exam-Laufs zur Progress-Ansicht wechseln', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    expect(result.current.view).toBe('quiz');
+
+    const fragen = result.current.aktiveFragen;
+    for (const frage of fragen) {
+      act(() => {
+        result.current.beantworteFrage(frage.id, frage.richtige_antwort);
+      });
+    }
+
+    expect(result.current.view).toBe('progress');
+    expect(result.current.isActive).toBe(false);
+    expect(result.current.historyEntries).toHaveLength(1);
+  });
+
+  it('sollte bei Exam-Modus nicht automatisch zur Progress-Ansicht wechseln', async () => {
+    vi.stubGlobal('fetch', createFetchMock());
+
+    const { result } = renderHook(() => useQuiz());
+
+    await waitFor(() => {
+      expect(result.current.istGeladen).toBe(true);
+    });
+
+    act(() => {
+      result.current.setGameMode('exam');
+    });
+
+    await act(async () => {
+      await result.current.starteQuiz(['Biologie']);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isActive).toBe(true);
+    });
+
+    const fragen = result.current.aktiveFragen;
+    for (const frage of fragen) {
+      act(() => {
+        result.current.beantworteFrage(frage.id, frage.richtige_antwort);
+      });
+    }
+
+    expect(result.current.view).toBe('quiz');
+  });
+
   it('sollte shuffleAnswers-Einstellung an starteRun weiterleiten', async () => {
     vi.stubGlobal('fetch', createFetchMock());
 

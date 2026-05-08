@@ -193,6 +193,10 @@ export function useQuiz() {
       duration,
       mode: gameMode,
     });
+
+    if (gameMode !== 'exam') {
+      setView('progress');
+    }
   }, [run, history, gameMode]);
 
   // Beantworten: Run + Meta synchron
@@ -215,6 +219,7 @@ export function useQuiz() {
       alleBeantwortet,
       aktiveFragen: run.aktiveFragen,
       loadedTopics: run.loadedTopics,
+      filter: run.rawRun?.filter,
     });
 
     for (const tr of effect.topicResults ?? []) {

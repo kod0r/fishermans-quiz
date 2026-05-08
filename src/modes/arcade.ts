@@ -32,8 +32,9 @@ export const ArcadePolicy: ModePolicy = {
     alleBeantwortet,
     aktiveFragen,
     loadedTopics,
+    filter,
   }): AnswerEffect {
-    if (!alleBeantwortet) {
+    if (!alleBeantwortet || filter !== 'all') {
       return {};
     }
 

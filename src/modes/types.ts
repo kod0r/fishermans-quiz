@@ -61,6 +61,7 @@ export interface ModePolicy {
     alleBeantwortet: boolean;
     aktiveFragen: Frage[];
     loadedTopics: string[];
+    filter?: 'weak' | 'all' | 'srs-due';
   }): AnswerEffect;
 
   onAbort(params: {

@@ -64,21 +64,95 @@ describe('ProgressView', () => {
     vi.clearAllMocks();
   });
 
-  it('renders passed state when >= 60%', () => {
-    const quiz = createMockQuiz();
+  it('renders passed state when >= 60% in exam mode', () => {
+    const quiz = createMockQuiz({ gameMode: 'exam' });
     render(<ProgressView quiz={quiz} />);
 
     expect(screen.getByText('Bestanden!')).toBeInTheDocument();
   });
 
-  it('renders failed state when < 60%', () => {
+  it('renders failed state when < 60% in exam mode', () => {
     const quiz = createMockQuiz({
+      gameMode: 'exam',
       statistiken: { beantwortet: 3, gesamt: 3, korrekt: 1, falsch: 2, offen: 0 },
       antworten: { '1': 'X', '2': 'X', '3': 'C' },
     });
     render(<ProgressView quiz={quiz} />);
 
     expect(screen.getByText('Nicht bestanden')).toBeInTheDocument();
+  });
+
+  it('renders completed state for non-exam run', () => {
+    const quiz = createMockQuiz({ gameMode: 'arcade', isActive: false });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.getByText('Session abgeschlossen!')).toBeInTheDocument();
+    expect(screen.queryByText('Bestanden!')).not.toBeInTheDocument();
+    expect(screen.queryByText('Nicht bestanden')).not.toBeInTheDocument();
+  });
+
+  it('renders Schwächetrainer label for weak filter completion', () => {
+    const quiz = createMockQuiz({
+      gameMode: 'arcade',
+      isActive: false,
+      rawRun: { filter: 'weak' } as QuizContext['rawRun'],
+    });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.getByText('Schwächetrainer abgeschlossen!')).toBeInTheDocument();
+  });
+
+  it('renders SRS label for srs-due filter completion', () => {
+    const quiz = createMockQuiz({
+      gameMode: 'arcade',
+      isActive: false,
+      rawRun: { filter: 'srs-due' } as QuizContext['rawRun'],
+    });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.getByText('SRS-Wiederholung abgeschlossen!')).toBeInTheDocument();
+  });
+
+  it('shows in-progress state when run is not complete', () => {
+    const quiz = createMockQuiz({
+      statistiken: { beantwortet: 1, gesamt: 3, korrekt: 1, falsch: 0, offen: 2 },
+      antworten: { '1': 'A' },
+    });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.getByText('Zwischenstand')).toBeInTheDocument();
+  });
+
+  it('shows CTA buttons for active run', () => {
+    const quiz = createMockQuiz({ isActive: true });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.getByText('Zurück zum Quiz')).toBeInTheDocument();
+    expect(screen.getByText('Zum Hauptmenü')).toBeInTheDocument();
+  });
+
+  it('hides Zurück zum Quiz for inactive run', () => {
+    const quiz = createMockQuiz({ isActive: false });
+    render(<ProgressView quiz={quiz} />);
+
+    expect(screen.queryByText('Zurück zum Quiz')).not.toBeInTheDocument();
+    expect(screen.getByText('Zum Hauptmenü')).toBeInTheDocument();
+  });
+
+  it('navigates to quiz when Zurück zum Quiz is clicked', () => {
+    const quiz = createMockQuiz({ isActive: true });
+    render(<ProgressView quiz={quiz} />);
+
+    fireEvent.click(screen.getByText('Zurück zum Quiz'));
+    expect(quiz.goToView).toHaveBeenCalledWith('quiz');
+  });
+
+  it('navigates to start when Zum Hauptmenü is clicked', () => {
+    const quiz = createMockQuiz();
+    render(<ProgressView quiz={quiz} />);
+
+    fireEvent.click(screen.getByText('Zum Hauptmenü'));
+    expect(quiz.goToView).toHaveBeenCalledWith('start');
   });
 
   it('toggles wrong answers section', () => {

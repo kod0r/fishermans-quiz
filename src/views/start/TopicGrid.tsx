@@ -28,12 +28,15 @@ function getTopicStatus(
   if (gameMode === "exam") return null;
   if (gameMode === "arcade") {
     const stars = metaProgress.arcadeStars?.[topicId];
-    if (stars) {
-      return {
-        icon: "★".repeat(stars) + "☆".repeat(3 - stars),
-        label: "",
-        cls: "text-amber-500 bg-amber-500/10 border-amber-500/20 dark:text-amber-400",
-      };
+    if (stars != null) {
+      if (stars > 0) {
+        return {
+          icon: "★".repeat(stars) + "☆".repeat(3 - stars),
+          label: "",
+          cls: "text-lg font-bold text-amber-500 bg-amber-500/10 border-amber-500/20 dark:text-amber-400",
+        };
+      }
+      return null;
     }
     const fragenIds = Object.entries(quiz.quizMeta?.fragenIndex ?? {})
       .filter(([, b]) => b === topicId)
